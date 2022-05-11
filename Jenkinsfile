@@ -1,4 +1,5 @@
 pipeline {
+    agent any
     node("MagentoStaging") {
     stages {
         stage("Build") {
