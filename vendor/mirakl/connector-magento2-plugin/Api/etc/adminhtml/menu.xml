@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirakl_Api::configuration" title="API" module="Mirakl_Api" sortOrder="10" parent="Mirakl_Core::configuration" resource="Mirakl_Config::api" action="adminhtml/system_config/edit/section/mirakl_api/"/>
+        <add id="Mirakl_Api::configuration_developer" title="Developer" module="Mirakl_Api" sortOrder="100" parent="Mirakl_Core::configuration" resource="Mirakl_Config::api_developer" action="adminhtml/system_config/edit/section/mirakl_api_developer/"/>
+    </menu>
+</config>

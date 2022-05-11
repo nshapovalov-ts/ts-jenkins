@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklQuote
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mirakl_shop">
+        <column xsi:type="float" name="min_quote_request_amount" nullable="true" default="0"/>
+        <column xsi:type="boolean" name="allow_quote_requests" nullable="true" default="true"/>
+    </table>
+    <table name="quote" resource="checkout">
+        <column xsi:type="varchar" length="30" name="mirakl_quote_id" nullable="true" comment="Mirakl Quote Id"/>
+    </table>
+    <table name="quote_item" resource="checkout">
+        <column xsi:type="varchar" length="30" name="mirakl_quote_item_id" nullable="true" comment="Mirakl Quote Item Id"/>
+    </table>
+    <table name="sales_order" resource="sales">
+        <column xsi:type="varchar" length="30" name="mirakl_quote_id" nullable="true" comment="Mirakl Quote Id"/>
+    </table>
+    <table name="sales_order_item" resource="sales">
+        <column xsi:type="varchar" length="30" name="mirakl_quote_item_id" nullable="true" comment="Mirakl Quote Item Id"/>
+    </table>
+    <table name="mirakl_offer">
+        <column xsi:type="varchar" length="64" name="shop_sku" nullable="true" default="" comment="Mirakl Offer SKU"/>
+        <column xsi:type="varchar" length="5" name="allow_quote_requests" nullable="true" default="" comment="Allow Quote Requests"/>
+        <index referenceId="MIRAKL_OFFER_ALLOW_QUOTE_REQUESTS" indexType="btree">
+            <column name="allow_quote_requests"/>
+        </index>
+    </table>
+</schema>

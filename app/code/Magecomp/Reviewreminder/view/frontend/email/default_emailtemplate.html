@@ -1,0 +1,71 @@
+<!--@subject {{trans "Magecomp Review"}} @-->
+{{inlinecss file="css/email-inline.css"}}
+<body style="background:#EDEDED; font-family: "Open Sans Regular"; font-size:12px; margin:0; padding:0;">
+
+<div style="background: #ffffff none repeat scroll 0 0;font-family: "Open Sans Regular";font-size: 12px;margin: 0 auto;padding: 0;width: 90%;">
+<div style="margin-bottom: 30px;border: 1px solid #d1d1d1;background: #ffffff none repeat scroll 0 0;font-family: "Open Sans Regular";font-size: 12px;padding: 0;width: 100%;float:left;margin-top:20px;border-radius:10px">
+<div style="width:50%;float:left;text-align:left">
+    <img src="{{var data.img_dir}}/MageComp.png" alt='your logo' />
+</div>
+
+<div style="width:50%;float:left;text-align:right">
+    <a href="{{var data.img_dir}}" style="color: #000;float: left;font-size: 18px;line-height: 81px;padding-right: 5%;text-decoration: none;width: 95%;">www.magecomp.com</a>
+</div>
+
+<div style="width:100%;float:left;box-shadow: 0 4px 10px 4px #d4d4d4;">
+    <img src="{{var data.img_dir}}/banner-1.png" width="100%"/>
+</div>
+
+<div style="float: left;padding: 25px 25px 0;width: calc(100% - 50px);">
+    <h1 style="color: rgb(104, 104, 104); font-size: 18px;">Dear {{var data.customername}},</h1>
+
+    <p style="font-size:14px">Thank you for your recent purchase from {{store name}}. We are excited to count you as a customer. Our goal is always to provide best products & services to make customers happy. We want to continue offering top notch products at best prices. To do that, we need your help in growing our business. </p>
+
+    <p style="font-size:14px">How are you liking our <a href='{{var data.purl}}'>{{var data.pname}}</a>? We would love to hear from you. Would you be willing to take five minutes to provide us a review on our website? </p>
+
+
+    <p style="float: left;font-size: 14px;margin: 49px 7px;text-align: center;width: 100%;">
+        <a  target="_blank" href="{{var data.purl}}" style="background-color: #ff741c;box-shadow: 0 6px 3px 0 #99440c;color: #fff;font-weight: bold;padding: 11px 14px;text-decoration: none;">
+            Click here to Leave a Review
+        </a>
+    </p>
+
+    <p style="font-size:14px">
+        Thank you again for helping us improve and sharing your review.
+    </p>
+
+
+    <p style="font-size:14px">
+        Best regards,
+    </p>
+    <p style="font-size:14px">
+        {{config path="general/store_information/name"}}
+    </p>
+
+</div>
+<div style="width: 100%;float: left;">
+    <ul style=" background: rgb(15, 79, 119) none repeat scroll 0 0;margin-bottom: 0;padding: 16px 25px;text-align: center;width: calc(100% - 50px);border-radius: 0 0 10px 10px;">
+        <li style="display: inline;margin-right: 5px;"><a target="_blank" href="#" ><img src="{{var data.img_dir}}/twitter.png" /></a></li>
+        <li style="display: inline;margin-right: 5px;"><a target="_blank" href="#" ><img src="{{var data.img_dir}}/facebook.png" /></a></li>
+        <li style="display: inline;margin-right: 5px;"><a target="_blank" href="#" ><img src="{{var data.img_dir}}/googleplus.png" /></a></li>
+        <li style="display: inline;margin-right: 5px;"><a target="_blank" href="#" ><img src="{{var data.img_dir}}/linkedin.png" /></a></li>
+        <li style="display: inline;"><a target="_blank" href="#" ><img src="{{var data.img_dir}}/instagram.png" /></a></li>
+    </ul>
+</div>
+</div>
+
+</div>
+<div style="margin-top: 20px;float: left;text-align: center;width: 100%;">
+    <div style="float: left;width:100%">
+        <p style="float: left;width:100%;margin-top: 0;">{{config path="general/store_information/street_line1"}}, {{config path="general/store_information/city"}}, {{config path="general/store_information/country_id"}} - {{config path="general/store_information/postcode"}} </p>
+        <p style="float: left;width:100%;margin-top: 0;">Phone : {{config path="general/store_information/phone"}}</p>
+        <div style="float: left;width:100%;text-align:center;margin-bottom:12px">
+            <img src="{{store url=''}}pub/media/review/website.png" style="float:none"/>
+            <a style="margin-left: 5px;margin-right: 5px;vertical-align: super;" href='{{store url=''}}'> {{store url=''}} </a>
+            <img src="{{store url=''}}pub/media/review/mail.png" style="float:none"/>
+            <a style="margin-left: 5px;vertical-align: super;" href="mailto:{{config path="trans_email/ident_general/email"}}">{{config path="trans_email/ident_general/email"}}</a>
+        </div>
+        <p style="float: left;width:100%;margin-top: 0;">Copyright 2018 {{config path="general/store_information/name"}} All Rights Reserved.</p>
+    </div>
+</div>
+</body>

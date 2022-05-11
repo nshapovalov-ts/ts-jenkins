@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklFrontendDemo
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mirakl\FrontendDemo\Block\Order\View" type="Retailplace\MiraklFrontendDemo\Block\Order\View"/>
+    <preference for="Mirakl\FrontendDemo\Helper\Offer" type="Retailplace\MiraklFrontendDemo\Helper\Offer"/>
+    <preference for="Mirakl\FrontendDemo\Helper\Quote\Item" type="Retailplace\MiraklFrontendDemo\Helper\Quote\Item"/>
+    <type name="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="mirakl_frontend_list_product" disabled="true"/>
+    </type>
+    <type name="Magento\CatalogSearch\Block\SearchResult\ListProduct">
+        <plugin name="mirakl_frontend_list_product" disabled="true"/>
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
+        <plugin name="retailplace_miraklfrontenddemo_product_collection" type="Retailplace\MiraklFrontendDemo\Plugin\Model\ProductCollectionPlugin"/>
+    </type>
+    <type name="Magento\ConfigurableProduct\Model\Product\Type\Configurable">
+        <plugin name="Retailplace_MiraklFrontendDemo::ConfigurableProductType" type="Retailplace\MiraklFrontendDemo\Plugin\Model\Product\Type\Configurable"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\View\AbstractView">
+        <plugin name="mirakl_frontend" disabled="true"/>
+        <plugin name="retailplace_miraklfrontenddemo_product_view"
+                type="Retailplace\MiraklFrontendDemo\Plugin\Block\Product\View\AbstractViewPlugin" sortOrder="10"/>
+    </type>
+    <type name="Mirakl\Api\Helper\Shipping">
+        <plugin name="update_shipping_prices" type="Retailplace\MiraklFrontendDemo\Plugin\Helper\Shipping"/>
+    </type>
+    <type name="Magento\Quote\Model\ShippingMethodManagement">
+        <plugin name="mirakl_frontend" disabled="true"/>
+        <plugin name="retailplace_miraklfrontenddemo_shippingmethodmanagement"
+                type="Retailplace\MiraklFrontendDemo\Plugin\Model\Quote\ShippingMethodManagementPlugin" sortOrder="11"
+                disabled="false"/>
+    </type>
+    <type name="Magento\Tax\Model\Sales\Total\Quote\CommonTaxCollector">
+        <plugin name="mirakl_frontend" disabled="true"/>
+        <plugin name="Retailplace_MiraklFrontendDemo::quoteTotalCommonTaxCollectorPlugin" type="Retailplace\MiraklFrontendDemo\Plugin\Model\Quote\Total\CommonTaxCollectorPlugin" sortOrder="10" disabled="false"/>
+    </type>
+
+    <type name="Magento\Shipping\Model\Shipping">
+        <plugin name="mirakl_frontend_collect_carrier_rates" disabled="true"/>
+        <plugin name="Retailplace_MiraklFrontendDemo::collectCarrierRates" type="Retailplace\MiraklFrontendDemo\Plugin\Model\Shipping\ShippingPlugin" sortOrder="1" disabled="false"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Quote\Address\Total\Shipping">
+        <plugin name="mirakl_frontend" disabled="true"/>
+        <plugin name="Retailplace_MiraklFrontendDemo::TotalShippingPlugin" type="Retailplace\MiraklFrontendDemo\Plugin\Model\Quote\Address\Total\ShippingPlugin" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\SalesRule\Model\Rule\Condition\Address">
+        <plugin name="retailplace_mirakl_address_condtion" type="Retailplace\MiraklFrontendDemo\Plugin\Model\Rule\Condition\AddressPlugin"/>
+    </type>
+    <preference for="Mirakl\FrontendDemo\Pricing\Render" type="Retailplace\MiraklFrontendDemo\Rewrite\Pricing\Render"/>
+
+    <preference for="Retailplace\MiraklFrontendDemo\Api\Data\MessagesResponseInterface"
+                type="Retailplace\MiraklFrontendDemo\Model\MessagesResponse"/>
+    <preference for="Retailplace\MiraklFrontendDemo\Api\Data\MessagesInterface"
+                type="Retailplace\MiraklFrontendDemo\Model\Messages"/>
+    <preference for="Retailplace\MiraklFrontendDemo\Api\Data\MessagesStatsInterface"
+                type="Retailplace\MiraklFrontendDemo\Model\MessagesStats"/>
+    <preference for="Retailplace\MiraklFrontendDemo\Api\MessagesRepositoryInterface"
+                type="Retailplace\MiraklFrontendDemo\Model\MessagesRepository"/>
+    <preference for="Retailplace\MiraklFrontendDemo\Api\MessagesStatsRepositoryInterface"
+                type="Retailplace\MiraklFrontendDemo\Model\MessagesStatsRepository"/>
+    <preference for="Retailplace\MiraklFrontendDemo\Api\Data\MessagesSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Retailplace\MiraklFrontendDemo\Api\Data\MessagesStatsSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+
+    <preference for="Mirakl\Connector\Helper\Order" type="Retailplace\MiraklFrontendDemo\Rewrite\Helper\Order"/>
+</config>

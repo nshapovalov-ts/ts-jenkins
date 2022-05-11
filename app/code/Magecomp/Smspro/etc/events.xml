@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_customer_account_createpost">
+        <observer name="sms_before_custom_create" instance="Magecomp\Smspro\Observer\Customer\CheckUserCreateObserver" />
+    </event>
+    <event name="customer_register_success">
+        <observer name="sms_customer_register_success" instance="Magecomp\Smspro\Observer\Customer\RegisterSuccessObserver" />
+    </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="sms_sales_order_save_after" instance="Magecomp\Smspro\Observer\Customer\OrderSaveObserver" />
+    </event>
+    <event name="sales_order_invoice_save_after">
+        <observer name="sms_sales_order_invoice_save_after" instance="Magecomp\Smspro\Observer\Customer\InvoiceSaveObserver" />
+    </event>
+    <event name="sales_order_shipment_save_after">
+        <observer name="sms_sales_order_shipment_save_after" instance="Magecomp\Smspro\Observer\Customer\ShipmentSaveObserver" />
+    </event>
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="sms_sales_order_creditmemo_save_after" instance="Magecomp\Smspro\Observer\Customer\CreditmemoSaveObserver" />
+    </event>
+    <event name="order_cancel_after">
+        <observer name="sms_sales_order_cancel_after" instance="Magecomp\Smspro\Observer\Customer\CancelorderSaveObserver" />
+    </event>
+    <event name="sales_order_save_after">
+        <observer name="sms_sales_order_status_change_after" instance="Magecomp\Smspro\Observer\Customer\StatuschangeObserver" />
+    </event>
+    <event name="controller_action_postdispatch_contact_index_post">
+        <observer name="sms_contact_index_post" instance="Magecomp\Smspro\Observer\Customer\ContactPostObserver" />
+    </event>
+    <event name="checkout_type_multishipping_create_orders_single">
+        <observer name="multishipping_create_orders" instance="Magecomp\Smspro\Observer\Customer\MultiShippingOrderSaveObserver"/>
+    </event>
+</config>

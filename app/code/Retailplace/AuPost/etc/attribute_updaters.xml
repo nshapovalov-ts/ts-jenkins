@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_AuPost
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Retailplace_AttributesUpdater:etc/attribute_updaters.xsd">
+    <updaters>
+        <updater class="Retailplace\AuPost\Model\Updater\AuPostExclusive" name="au_post_exclusive" sortOrder="160" />
+        <updater class="Retailplace\AuPost\Model\Updater\AuPost" name="au_post" sortOrder="150" />
+    </updaters>
+</config>

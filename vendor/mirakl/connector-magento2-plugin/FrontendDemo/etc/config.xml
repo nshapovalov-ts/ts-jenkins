@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_frontend>
+            <general>
+                <shipping_fees_cache_lifetime/>
+            </general>
+            <offer>
+                <new_state>11</new_state> <!-- New state is number 11 by default in Mirakl -->
+            </offer>
+            <choicebox>
+                <enable>1</enable>
+                <elements>5</elements>
+            </choicebox>
+        </mirakl_frontend>
+    </default>
+</config>

@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * Retailplace_MiraklFrontendDemo
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+
+/**
+ * @var $block \Mirakl\FrontendDemo\Block\Product\View\Tab\Offers
+ */
+?>
+<div class="services-sidebar">
+        <?php if ($block->isCustomerLoggedIn()): ?>
+            <?php
+                $product = $block->getProduct();
+                /** @var \Retailplace\MiraklShop\Api\Data\ShopInterface $shop */
+                $shop = $product->getShop();
+            ?>
+            <?php if ($shop): ?>
+                    <div data-bind="scope: 'minimum_amount'" class="minimum_amount">
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    </div>
+                    <?php $shopAmounts = $shop->getShopAmounts();?>
+                    <script type="text/x-magento-init">
+                    {
+                        "*": {
+                            "Magento_Ui/js/core/app": {
+                                "components": {
+                                    "minimum_amount": {
+                                        "component": "Retailplace_MiraklShop/js/view/minimum_amount",
+                                        "template": "Retailplace_MiraklShop/minimum_amount_pdp",
+                                        "isTooltip": true,
+                                        "tooltipAdditionalText": "<?= __('Visit the Supplier Showroom to add more products to your cart and reach the min order amount.')?>",
+                                        "minOrderAmount": <?= $shop->getData('min-order-amount') ?>,
+                                        "minFreeShippingOrderAmount": <?= $shopAmounts->getFreeShippingAmount() ?>,
+                                        "minQuoteRequestAmount": <?= $shopAmounts->getMinQuoteAmount() ?>,
+                                        "quoteRequestLink": "<?= $block->getUrl('quotes/actions/add', ['seller' => $shop->getId()]) ?>",
+                                        "isQuoteRequestBlockVisible": <?= ($product->getData('main_offer') && $product->getData('main_offer')->getData('allow_quote_requests') == 'false') || !$shop->getAllowQuoteRequests() ? 0 : 1 ?>,
+                                        "isFreeShipping": <?= $shop->getFreeShipping() ? 1 : 0 ?>,
+                                        "sellerShopId": <?= $shop->getId() ?>,
+                                        "sellerShopName": "<?= $shop->getName() ?>",
+                                        "currentProductId": "<?=$product->getId()?>"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    </script>
+            <?php endif; ?>
+        <?php endif; ?>
+</div>
+<?= $this->getChildHtml('product.detail.promotions'); ?>
+<?= $this->getChildHtml('sellerleft'); ?>
+<?php if ($block->isCustomerLoggedIn() && $shop->getMinOrderAmount()): ?>
+    <div class="min_amount_flow">
+        <ul>
+            <li>
+                <a href="javascript:void()" class="add_product_flow_icon"></a>
+                <span class="add_product_flow"><?= __('Add products into cart'); ?></span>
+            </li>
+            <li>
+                <a href="javascript:void()" class="goto_seller_flow_icon"></a>
+                <span class="goto_seller_flow"><?= __('Go to supplier\'s showroom to find more products to meet the minimum order amount'); ?></span>
+            </li>
+            <li>
+                <a href="javascript:void()" class="checkout_flow_icon"></a>
+                <span class="checkout_flow"><?= __('Checkout'); ?></span>
+            </li>
+        </ul>
+    </div>
+<?php endif; ?>

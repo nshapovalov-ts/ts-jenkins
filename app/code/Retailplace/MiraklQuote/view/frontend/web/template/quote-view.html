@@ -1,0 +1,238 @@
+<div class="mirakl-quote quote-view">
+    <!-- ko if: miraklShopQuoteRequest().shop_name -->
+    <div class="quote-status-progress">
+        <ul class="progress-list">
+            <li>
+                <span data-bind="attr: {class: getStepClass(1)}">1</span>
+                <span data-bind="i18n: 'Request a Quote'"></span>
+            </li>
+            <li>
+                <span data-bind="attr: {class: getStepClass(2)}">2</span>
+                <span data-bind="i18n: 'Get Supplier Quote'"></span>
+            </li>
+            <li>
+                <span data-bind="attr: {class: getStepClass(3)}">3</span>
+                <span data-bind="i18n: 'Accept or Reject'"></span>
+            </li>
+        </ul>
+    </div>
+
+    <section class="quote-request-data">
+        <div class="heading quote-request-heading">
+            <div class="quote-seller-name">
+                <span data-bind="i18n: 'Quote Request to'">:</span>
+                <span data-bind="text: miraklShopQuoteRequest().shop_name"></span>
+            </div>
+
+            <div class="quote-status">
+                <span data-bind="i18n: 'Status'"></span>:
+                <span class="status-text" data-bind="text: miraklShopQuoteRequest().state_label"></span>
+                <!-- ko if: miraklShopQuoteRequest().expiration_date_formatted -->
+                <div class="quote-expiration">
+                    <span data-bind="i18n: 'Expiration Date'"></span>
+                    <span data-bind="text: miraklShopQuoteRequest().expiration_date_formatted"></span>
+                </div>
+                <!-- /ko -->
+            </div>
+        </div>
+
+        <!-- ko if: miraklQuoteRequest().initial_request -->
+        <div class="quote-products-table">
+            <table class="quote-products">
+                <thead>
+                <tr>
+                    <th class="description" data-bind="i18n: 'Item'"></th>
+                    <th class="quantity" data-bind="i18n: 'Quantity'"></th>
+                    <th class="price" data-bind="i18n: 'Price per Unit'"></th>
+                    <th class="cost" data-bind="i18n: 'Cost'"></th>
+                </tr>
+                </thead>
+                <tbody data-bind="foreach: miraklQuoteRequest().initial_request.lines">
+                <tr>
+                    <td>
+                        <div class="image_block">
+                            <a data-bind="attr: {href: product_url}">
+                                <img data-bind="attr: {src: image_url, alt: product_title}" />
+                            </a>
+                        </div>
+                        <div>
+                            <a data-bind="attr: {href: product_url}, text: product_title"></a>
+                        </div>
+                        <!-- ko if: $data.leadtime_to_ship -->
+                        <div class="leadtime-to-ship">
+                            <div class="ship-label">
+                                <span data-bind="i18n: 'Lead time to ship'"></span>
+                                <div class="toolpick">
+                                    <div class="toolpick-ico">
+                                            <i>i</i>
+                                            <div class="toolpick-text">
+                                                <p data-bind="i18n: 'The time a Seller has to process and prepare your order for shipment prior to goods leaving the warehouse'"></p>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="ship-time">
+                                <span class="ship-time" data-bind="text: leadtime_to_ship"></span>
+                                <span class="ship-time" data-bind="text: leadtime_to_ship == 1 ? 'day' : 'days'"></span>
+                            </span>
+                        </div>
+                        <!-- /ko -->
+
+
+                        <!-- ko if: $data.options -->
+                            <div class="additional-options" data-bind="foreach: options">
+                                <div data-bind="text: $data"></div>
+                            </div>
+                        <!-- /ko -->
+
+                    </td>
+                    <td data-th="Quantity" class="quantity" data-bind="text: quantity"></td>
+                    <td data-th="Price per Unit" class="unit_price" data-bind="text: unit_price_formatted"></td>
+                    <td data-th="Cost" class="row_total" data-bind="text: row_total"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /ko -->
+    </section>
+
+    <!-- ko if: miraklShopQuoteRequest().quotes && miraklShopQuoteRequest().quotes.length && quote().entity_id -->
+    <section class="quote-request-quote-data" id="quote" afterRender="scrollToQuote">
+        <div class="heading quote-data-heading">
+            <span data-bind="text: miraklShopQuoteRequest().shop_name"></span>
+            <span data-bind="i18n: 'Quote Details'"></span>
+        </div>
+        <div class="quote-products-table">
+            <table class="quote-products">
+                <thead>
+                <tr>
+                    <th class="description" data-bind="i18n: 'Item'"></th>
+                    <th class="quantity" data-bind="i18n: 'Quantity'"></th>
+                    <th class="price" data-bind="i18n: 'Price per Unit'"></th>
+                    <th class="cost" data-bind="i18n: 'Cost'"></th>
+                </tr>
+                </thead>
+                <tbody data-bind="foreach: miraklShopQuoteRequest().quotes[0].lines">
+                    <tr>
+                        <td>
+                            <div class="image_block">
+                                <a data-bind="attr: {href: product_url}">
+                                    <img data-bind="attr: {src: image_url, alt: product_title}" />
+                                </a>
+                            </div>
+                            <div>
+                                <a data-bind="attr: {href: product_url}, text: product_title"></a>
+                            </div>
+                            <!-- ko if: $data.leadtime_to_ship -->
+                            <div class="leadtime-to-ship">
+                                <div class="ship-label">
+                                    <span data-bind="i18n: 'Lead time to ship'"></span>
+                                    <div class="toolpick">
+                                        <div class="toolpick-ico">
+                                            <i>i</i>
+                                            <div class="toolpick-text">
+                                                <p data-bind="i18n: 'The time a Seller has to process and prepare your order for shipment prior to goods leaving the warehouse'"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="ship-time">
+                                    <span class="ship-time" data-bind="text: leadtime_to_ship"></span>
+                                    <span class="ship-time" data-bind="text: leadtime_to_ship == 1 ? 'day' : 'days'"></span>
+                                </span>
+                            </div>
+
+                            <!-- ko if: $data.options -->
+                            <div class="additional-options" data-bind="foreach: options">
+                                <div data-bind="text: $data"></div>
+                            </div>
+                            <!-- /ko -->
+
+                            <!-- /ko -->
+
+                        </td>
+                        <td data-th="Quantity" class="quantity" data-bind="text: quantity"></td>
+                        <td data-th="Price per Unit" class="unit_price" data-bind="text: unit_price_formatted"></td>
+                        <td data-th="Cost" class="row_total" data-bind="text: row_total"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ko if: miraklShopQuoteRequest().totals -->
+        <div class="quote-totals-bg">
+            <div class="quote-totals" data-bind="foreach: miraklShopQuoteRequest().totals">
+                <div data-bind="attr: {class: 'total-row total-' + code}">
+                   <span class="quote-totals-title" data-bind="text: title"></span>
+                   <span class="quote-totals-value" data-bind="text: value_formatted"></span>
+                </div>
+            </div>
+            <div class="totals-additional" data-bind="i18n: 'GST Inclusive'"></div>
+        </div>
+        <!-- /ko -->
+
+        <!-- ko if: miraklShopQuoteRequest().accept_url && quote().entity_id -->
+        <div class="quote-accept-button-bg">
+            <a class="button quote-accept-button" data-bind="i18n: 'Accept', attr: {href: miraklShopQuoteRequest().accept_url}"></a>
+        </div>
+        <!-- /ko -->
+
+    </section>
+    <!-- /ko -->
+
+    <!-- ko if: miraklQuoteRequest().customer -->
+    <section class="quote-request-messages">
+
+
+        <!-- ko if: miraklShopQuoteRequest().can_send_message -->
+        <div class="section-title" data-bind="i18n: 'Latest Messages'"></div>
+
+        <div class="messages-list" data-bind="foreach: miraklMessages()">
+            <div
+                data-bind="attr: {class: 'message-block ' + direction}">
+
+                <div class="messenger-names">
+                    <strong>
+                        <span data-bind="i18n: from"></span>
+                    </strong>
+                    To
+                    <strong>
+                        <span data-bind="i18n: to"></span>
+                    </strong>
+                </div>
+
+                <div data-bind="text: date_created_formatted"></div>
+                <div data-bind="text: body"></div>
+            </div>
+        </div>
+
+        <form method="post" data-bind="submit: sendMessage,
+        attr: {
+            'data-firstname': miraklQuoteRequest().customer.firstname,
+            'data-lastname': miraklQuoteRequest().customer.lastname,
+            'data-shop-name': miraklShopQuoteRequest().shop_name
+        }">
+            <textarea placeholder="Type your message..." name="message" required="true" minlength="3"></textarea>
+            <input type="hidden" name="quote_request_id"
+                   data-bind="attr: {value: miraklShopQuoteRequest().id}"/>
+            <button type="submit">Reply</button>
+            <!-- ko if: formErrors() -->
+            <div class="error-message" data-bind="foreach: formErrors()">
+                <div data-bind="text: $data"></div>
+            </div>
+            <!-- /ko -->
+        </form>
+        <!-- /ko -->
+
+
+
+    </section>
+    <!-- /ko -->
+    <!-- /ko -->
+
+    <!-- if pageErrors().length -->
+    <div class="page-errors-block" data-bind="foreach: pageErrors()">
+        <div data-bind="text: $data"></div>
+    </div>
+    <!-- /ko -->
+</div>

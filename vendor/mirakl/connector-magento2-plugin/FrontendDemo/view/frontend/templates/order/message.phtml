@@ -1,0 +1,60 @@
+<?php /** @var \Mirakl\FrontendDemo\Block\Order\Message $block */?>
+<div class="order-details-items marketplace-messages">
+    <div class="block-content">
+        <?php /** @var \Mirakl\MMP\Common\Domain\Collection\Message\OrderMessageCollection $_messages */ ?>
+        <?php if ($_messages = $this->getMessages()): ?>
+            <div class="block-title">
+                <strong><?php echo __('Order Messages') ?></strong>
+            </div>
+            <ol class="items message-items">
+                <?php foreach ($_messages as $_message):?>
+                    <li class="item message-item <?php echo $block->isCustomerMessage($_message) ? 'message-left' : 'message-right' ?> <?php echo strtolower($_message->getUserSender()->getType()) ?>">
+                        <p class="meta">
+                            <?php echo __('By %1 - %2', $this->getSenderName($_message), $this->helper('Mirakl\Core\Helper\Data')->formatDateTime($_message->getDateCreated())) ?>
+                        </p>
+                        <p class="subject"><?php echo $block->escapeHtml($_message->getSubject()) ?></p>
+                        <p class="body"><?php echo nl2br($block->escapeHtml($_message->getBody(), ['br'])) ?></p>
+                    </li>
+                <?php endforeach;?>
+            </ol>
+        <?php endif;?>
+
+        <form action="<?php /* @escapeNotVerified */ echo $block->getAction() ?>" class="message-form" method="post" id="message-form" data-role="order-message-form" data-bind="scope: 'messsage-form'">
+            <?php echo $block->getBlockHtml('formkey'); ?>
+            <?php echo $block->getChildHtml('form_fields_before')?>
+            <fieldset class="fieldset message-fieldset" data-hasrequired="<?php __('* Required Fields'); ?>">
+                <legend class="legend message-legend"><span><?php /* @escapeNotVerified */ echo __('Send a Message'); ?></span></legend><br />
+                <div class="field message-field-summary required">
+                    <label for="summary_field" class="label"><span><?php /* @escapeNotVerified */ echo __('Topic') ?></span></label>
+                    <div class="control">
+                        <select name="subject" id="message_subject" class="" title="<?php /* @escapeNotVerified */ echo __('Topic') ?>" data-validate="{'validate-select':true}">
+                            <option value=""><?php echo __('-- Please Select --') ?></option>
+                            <?php foreach ($block->getReasons() as $reason): ?>
+                                <?php $_label = $this->escapeHtml(__($reason->getLabel()))?>
+                                <option <?php if ($block->getPostMessage('subject') == $_label):?>selected="selected" <?php endif;?>value="<?php echo $_label ?>"><?php echo $_label ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="field message-field-text required">
+                    <label for="message_body" class="label"><span><?php /* @escapeNotVerified */ echo __('Message') ?></span></label>
+                    <div class="control">
+                        <textarea name="body" id="message_body" cols="5" rows="3" data-validate="{required:true}"><?php echo $block->getPostMessage('body')?></textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="actions-toolbar message-form-actions">
+                <div class="primary actions-primary">
+                    <button type="submit" class="action submit primary"><span><?php /* @escapeNotVerified */ echo __('Send Message') ?></span></button>
+                </div>
+            </div>
+        </form>
+        <script type="text/x-magento-init">
+            {
+                "#message-form": {
+                   "validation": {}
+                }
+            }
+        </script>
+    </div>
+</div>

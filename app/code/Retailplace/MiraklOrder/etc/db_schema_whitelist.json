@@ -1,0 +1,28 @@
+{
+    "mirakl_order": {
+        "column": {
+            "entity_id": true,
+            "mirakl_order_id": true,
+            "is_affiliated": true,
+            "mirakl_shop_id": true,
+            "mirakl_shop_name": true,
+            "mirakl_order_status": true,
+            "order_lines": true,
+            "has_invoice": true,
+            "has_incident": true,
+            "last_updated_at": true,
+            "total_commission": true,
+            "total_price": true,
+            "actual_shipping_amount": true,
+            "created_at": true,
+            "updated_at": true,
+            "order_id": true,
+            "actual_shipping_uploaded": true,
+            "order_increment_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MIRAKL_ORDER_MIRAKL_ORDER_ID": true
+        }
+    }
+}

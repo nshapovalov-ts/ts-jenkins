@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_ChannelPricing
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Retailplace_ChannelPricing">
+        <sequence>
+            <module name="Magento_Customer"/>
+            <module name="Magento_Catalog"/>
+            <module name="Magento_ConfigurableProduct"/>
+            <module name="Amasty_Shopby"/>
+        </sequence>
+    </module>
+</config>

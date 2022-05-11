@@ -1,0 +1,80 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Product\View\Tab\Offers $block */
+
+use Mirakl\MMP\Front\Domain\Shipping\OfferQuantityShippingTypeTuple;
+
+$product = $block->getProduct();
+$offers = $block->getAllOffers();
+$operatorOffers = $block->getOperatorOffers();
+/** @var \Magento\Catalog\Block\Product\View $productView */
+$productView = $block->getLayout()->getBlock('product.info');
+$requestUrl = explode('/', $block->getRequest()->getRequestUri(), 3);
+$sellerParm = isset($requestUrl[1]) ? $requestUrl[1] : null;
+?>
+
+<div class="selerleft">
+    <?php if ($product->isSaleable() || $offers): ?>
+        <?php foreach ($offers as $offer): ?>
+            <?php $shop = $block->getOfferHelper()->getOfferShop($offer);?>
+            <?php $allminprice[$offer->getPrice()] = $shop->getUrl();?>
+            <?php /*if ($shop): ?>
+<a href="<?php echo $shop->getUrl() ?>" title="<?php echo $block->escapeHtml($shop->getName()) ?>"><?php echo $block->escapeHtml($shop->getName()) ?></a>
+<?php endif;*/?>
+        <?php endforeach;?>
+        <?php $calmin = min($allminprice);?>
+        <?php if ($calmin): ?>
+        <a href="<?php echo $calmin ?>"><?php echo __('Supplier Showroom'); ?></a>
+    <?php endif;?>
+    <?php $bestOffer = $block->getOfferHelper()->getBestOffer($product); ?>
+    <?php if($bestOffer) : ?>
+        <div class="postcode-error" style="display:none;">
+            <span class="postcode-error-message">
+            </span>
+            <span class="postcode-error-note">
+                <?php echo  __('Please note, the shipping postcode can be updated on the Cart page.') ?>
+            </span>
+        </div>
+        <style>
+            .postcode-error-note{
+                padding: 0;
+                background: none;
+            }
+        </style>
+        <script >
+            require([
+                'jquery',
+                'domReady!'// wait for dom ready
+            ], function ($) {
+                var customurl = "<?php echo $this->getUrl('offerprice/index/validateoffer')?>";
+                $.ajax({
+                    url: customurl,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        offer_id: '<?= $bestOffer->getId(); ?>',
+                        product_sku: '<?= $product->getSku(); ?>'
+                    },
+                    complete: function(response) {
+                        try{
+                            if(response.responseJSON.response == "failure"){
+                                $(".postcode-error-message").html(response.responseJSON.message);
+                                $(".postcode-error").show();
+                            }
+                        }catch (err){
+                            console.log(err);
+                        }
+                    },
+                    error: function (xhr, status, errorThrown) {
+                        console.log('Error happens. Try again.');
+                    }
+                });
+
+            });
+        </script>
+    <?php endif;?>
+
+    <?php endif;?>
+</div>
+
+
+

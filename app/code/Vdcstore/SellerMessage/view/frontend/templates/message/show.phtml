@@ -1,0 +1,33 @@
+<?php ?>
+<div class="seller-message-container">
+    <?php if ($block->getSellerImage()) : ?>
+        <div class="user-image-container">
+            <img class="user-image" src="<?= $block->getSellerImage() ?>"/>
+        </div>
+    <?php endif; ?>
+    <div class="seller-message-conversation">
+        <span class="start-conversation-text"><?= __("Start a conversation"); ?></span>
+        <span class="seller-name"><?= __("with %1", $block->getSellerName()); ?></span>
+    </div>
+    <div class="seller-message-box">
+        <form action="<?= $block->getSubmitUrl() ?>" name="seller_message" id="seller_message" method="post">
+            <input type="hidden" name="customer_name" value="<?= $block->getCustomer()->getName() ?>"/>
+            <input type="hidden" name="seller_name" value="<?= $block->getSellerName() ?>"/>
+            <input type="hidden" name="product_sku" value="<?= $block->getProductSku() ?>"/>
+            <input type="hidden" name="seller_image" value="<?= $block->getSellerImage() ?>"/>
+            <textarea name="message" style="resize: none;" rows="7" cols="10" placeholder="Write Your Message"
+                      maxlength="1000" data-validate="{required:true}" aria-required="true"></textarea>
+            <button type="button" id="send_message_button"
+                    class="seller-message-submit-button"><?= __("Send Message"); ?></button>
+        </form>
+    </div>
+    <div class="seller-message-comment"><?= __("Important reminder: Our "); ?><a href="<?= $block->getUrl('buyerterms'); ?>"><?= __("Terms of Use "); ?></a><?= __("only allow direct contact to suppliers about topics related to trading on TradeSquare."); ?></div>
+</div>
+<script>
+    require(
+        ['jquery', 'Vdcstore_SellerMessage/js/sellerMessage'],
+        function ($, sellerMessage) {
+            sellerMessage.sendSellerMessage();
+        }
+    );
+</script>

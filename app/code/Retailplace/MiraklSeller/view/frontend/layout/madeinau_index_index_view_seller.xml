@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="special_page_category_view_seller"/>
+    <body>
+        <referenceBlock name="category.products.made_in_au" remove="true"/>
+    </body>
+</page>

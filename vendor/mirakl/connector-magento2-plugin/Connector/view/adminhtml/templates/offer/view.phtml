@@ -1,0 +1,25 @@
+<?php
+/**
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ * @var \Mirakl\Connector\Block\Adminhtml\Offer\View $block
+ * @var \Mirakl\Core\Helper\Data $helper
+ */
+$offer = $block->getOffer();
+?>
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <strong class="title"><?php /* @escapeNotVerified */ echo __('Offer Information') ?></strong>
+    </div>
+    <div class="admin__page-section-content">
+        <table class="admin__table-secondary">
+            <tbody>
+                <?php foreach ($offer->getData() as $key => $value): ?>
+                    <tr>
+                        <th><?php /* @escapeNotVerified */ echo __(ucwords(str_replace('_', ' ', $key))) ?></th>
+                        <td><?php /* @escapeNotVerified */ echo $block->escapeHtml($value) ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+</section>

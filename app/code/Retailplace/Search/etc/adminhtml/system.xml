@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Search
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="search">
+            <group id="slow_log" translate="label" type="text" sortOrder="50" showInDefault="1" >
+                <label>Slow Log Settings</label>
+
+                <field id="slow_log_enable" translate="label" type="select" sortOrder="20" showInDefault="1" canRestore="1">
+                    <label>Add index configuration to elasticsearch</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="index.search.slowlog.threshold.query.warn" type="text" sortOrder="20" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.query.warn</label>
+                    <comment>Value in milliseconds. (default: 10000)</comment>
+                </field>
+                <field id="index.search.slowlog.threshold.query.info" type="text" sortOrder="30" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.query.info</label>
+                    <comment>Value in milliseconds. (default: 5000)</comment>
+                </field>
+                <field id="index.search.slowlog.threshold.query.debug" type="text" sortOrder="40" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.query.debug</label>
+                    <comment>Value in milliseconds. (default: 2000)</comment>
+                </field>
+                <field id="index.search.slowlog.threshold.query.trace" type="text" sortOrder="50" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.query.trace</label>
+                    <comment>Value in milliseconds. (default: 500)</comment>
+                </field>
+
+                <field id="index.search.slowlog.threshold.fetch.warn" type="text" sortOrder="60" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.fetch.warn</label>
+                    <comment>Value in milliseconds. (default: 1000)</comment>
+                </field>
+                <field id="index.search.slowlog.threshold.fetch.info" type="text" sortOrder="70" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.fetch.info</label>
+                    <comment>Value in milliseconds. (default: 800)</comment>
+                </field>
+                <field id="index.search.slowlog.threshold.fetch.debug" type="text" sortOrder="80" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.fetch.debug</label>
+                    <comment>Value in milliseconds. (default: 500)</comment>
+                </field>
+                <field id="index.search.slowlog.threshold.fetch.trace" type="text" sortOrder="90" showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.threshold.fetch.trace</label>
+                    <comment>Value in milliseconds. (default: 200)</comment>
+                </field>
+                <field id="index.search.slowlog.level" translate="label" type="select" sortOrder="100"
+                       showInDefault="1" canRestore="1">
+                    <label>index.search.slowlog.level</label>
+                    <source_model>Retailplace\Search\Model\Config\Source\Level</source_model>
+                </field>
+
+                <field id="index.indexing.slowlog.threshold.index.warn" type="text" sortOrder="110" showInDefault="1" canRestore="1">
+                    <label>index.indexing.slowlog.threshold.index.warn</label>
+                    <comment>Value in milliseconds. (default: 10000)</comment>
+                </field>
+                <field id="index.indexing.slowlog.threshold.index.info" type="text" sortOrder="120" showInDefault="1" canRestore="1">
+                    <label>index.indexing.slowlog.threshold.index.info</label>
+                    <comment>Value in milliseconds. (default: 5000)</comment>
+                </field>
+                <field id="index.indexing.slowlog.threshold.index.debug" type="text" sortOrder="130" showInDefault="1" canRestore="1">
+                    <label>index.indexing.slowlog.threshold.index.debug</label>
+                    <comment>Value in milliseconds. (default: 2000)</comment>
+                </field>
+                <field id="index.indexing.slowlog.threshold.index.trace" type="text" sortOrder="140" showInDefault="1" canRestore="1">
+                    <label>index.indexing.slowlog.threshold.index.trace</label>
+                    <comment>Value in milliseconds. (default: 500)</comment>
+                </field>
+                <field id="index.indexing.slowlog.level" translate="label" type="select" sortOrder="150"
+                       showInDefault="1" canRestore="1">
+                    <label>index.indexing.slowlog.level</label>
+                    <source_model>Retailplace\Search\Model\Config\Source\Level</source_model>
+                </field>
+                <field id="index.indexing.slowlog.source" type="text" sortOrder="160" showInDefault="1" canRestore="1">
+                    <label>index.indexing.slowlog.source</label>
+                    <comment>Elasticsearch will log first characters of the source in the slowlog.
+                        Setting it to "false" or 0 will skip
+                        logging the source entirely, while setting it to "true" will log the entire source regardless of
+                        size. (default: 1000)
+                    </comment>
+                </field>
+            </group>
+            <group id="advanced" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="wildcard_autocomplete" translate="label" type="select" sortOrder="12" showInDefault="1">
+                    <label>Wildcard search for Autocomplete</label>
+                    <source_model>Mirasvit\Search\Model\Config\Source\Wildcard</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklPromotion
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mirakl_promotion" resource="default" engine="innodb">
+        <column xsi:type="int" unsigned="true" nullable="false" name="promotion_id" identity="true" comment="Entity Id"/>
+        <column xsi:type="int" unsigned="true" nullable="false" name="shop_id" comment="Mirakl Shop Id"/>
+        <column xsi:type="varchar" length="100" nullable="false" name="internal_id" comment="Internal Id in Mirakl"/>
+        <column xsi:type="varchar" length="100" nullable="false" name="promotion_unique_id" comment="Promotion Unique Id"/>
+        <column xsi:type="tinyint" name="state" nullable="true" comment="State"/>
+        <column xsi:type="tinyint" name="type" nullable="true" comment="Type"/>
+        <column xsi:type="datetime" name="date_created" nullable="true" comment="Date Created"/>
+        <column xsi:type="datetime" name="date_updated" default="CURRENT_TIMESTAMP" on_update="true" nullable="true" comment="Date Updated"/>
+        <column xsi:type="datetime" name="start_date" nullable="true" comment="Start Date"/>
+        <column xsi:type="datetime" name="end_date" nullable="true" comment="End Date"/>
+        <column xsi:type="text" nullable="true" name="internal_description" comment="Internal Description"/>
+        <column xsi:type="float" default="0" name="percentage_off" comment="Percentage Off"/>
+        <column xsi:type="float" default="0" name="amount_off" comment="Amount Off"/>
+        <column xsi:type="int" name="free_items_quantity" unsigned="true" nullable="true" padding="10" comment="Free Items Quantity" />
+        <column xsi:type="text" nullable="true" name="public_descriptions" comment="Public Description"/>
+        <column xsi:type="text" nullable="true" name="reward_offer_ids" comment="Reward Offer Ids"/>
+        <column xsi:type="boolean" nullable="true" name="reward_on_purchased_items" comment="Reward On Purchased Items"/>
+        <column xsi:type="text" nullable="true" name="trigger_offer_ids" comment="Trigger Offer Ids"/>
+        <column xsi:type="text" nullable="true" name="media" comment="Media"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="promotion_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MIRAKL_PROMOTION_SHOP_ID_INTERNAL_ID">
+            <column name="shop_id"/>
+            <column name="internal_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MIRAKL_PROMOTION_PROMOTION_UNIQUE_ID">
+            <column name="promotion_unique_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="MIRAKL_PROMOTION_SHOP_ID_TO_MIRAKL_SHOP_ID"
+                    table="mirakl_promotion"
+                    column="shop_id"
+                    referenceTable="mirakl_shop"
+                    referenceColumn="id"
+                    onDelete="CASCADE"/>
+    </table>
+
+    <table name="mirakl_promotion_link" resource="default" engine="innodb">
+        <column xsi:type="int" unsigned="true" nullable="false" name="link_id" identity="true" comment="Link Id"/>
+        <column xsi:type="int" unsigned="true" nullable="false" name="promotion_id" comment="Mirakl Promotion Id"/>
+        <column xsi:type="int" unsigned="true" nullable="false" name="offer_id" comment="Mirakl Offer Id"/>
+        <column xsi:type="tinyint" unsigned="true" nullable="false" name="type" comment="Relation Type"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="link_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="MIRAKL_PROMOTION_LINK_OFFER_ID_PROMOTION_ID_TYPE">
+            <column name="offer_id"/>
+            <column name="promotion_id"/>
+            <column name="type"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="MIRAKL_PROMOTION_LINK_PROMOTION_ID_TO_MIRAKL_PROMOTION_PROMOTION_ID"
+                    table="mirakl_promotion_link"
+                    column="promotion_id"
+                    referenceTable="mirakl_promotion"
+                    referenceColumn="promotion_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign"
+                    referenceId="MIRAKL_PROMOTION_LINK_OFFER_ID_TO_MIRAKL_OFFER_OFFER_ID"
+                    table="mirakl_promotion_link"
+                    column="offer_id"
+                    referenceTable="mirakl_offer"
+                    referenceColumn="offer_id"
+                    onDelete="CASCADE"/>
+    </table>
+
+    <table name="quote_item" resource="checkout" comment="Sales Flat Quote Item">
+        <column xsi:type="float" name="mirakl_promotion_deduced_amount" unsigned="true" nullable="false" default="0"
+                comment="Deduced Amount from Mirakl Promotion"/>
+        <column xsi:type="text" name="mirakl_promotion_data" nullable="true" comment="Mirakl Promotions Information"/>
+    </table>
+
+    <table name="sales_order_item" resource="sales">
+        <column xsi:type="float" name="mirakl_promotion_deduced_amount" unsigned="true" nullable="false" default="0"
+                comment="Deduced Amount from Mirakl Promotion"/>
+        <column xsi:type="text" name="mirakl_promotion_data" nullable="true" comment="Mirakl Promotions Information"/>
+    </table>
+</schema>

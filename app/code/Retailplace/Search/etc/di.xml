@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Search
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mirasvit\Search\Api\Repository\IndexRepositoryInterface">
+        <arguments>
+            <argument name="indices" xsi:type="array">
+                <item name="mirakl_shop" xsi:type="string">Retailplace\Search\Index\Mirakl\Shop\Index</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Mirasvit\SearchAutocomplete\Api\Repository\IndexRepositoryInterface">
+        <arguments>
+            <argument name="instances" xsi:type="array">
+                <item name="mirakl_shop" xsi:type="object">Retailplace\Search\Index\Mirakl\Shop</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Retailplace\Search\Index\Mirakl\Shop\Index">
+        <arguments>
+            <argument name="dataMappers" xsi:type="array">
+                <item name="engine-elastic-autocomplete" xsi:type="object">Retailplace\Search\Index\Mirakl\Shop</item>
+                <item name="engine-sphinx-autocomplete" xsi:type="object">Retailplace\Search\Index\Mirakl\Shop</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Mirasvit\Search\Index\Magento\Catalog\Product\Index">
+        <arguments>
+            <argument name="dataMappers" xsi:type="array">
+                <item name="engine-elastic-product" xsi:type="object">Retailplace\Search\Index\Magento\Catalog\Product\DataMapper</item>
+                <item name="am_is_new" xsi:type="object">Retailplace\Search\Model\Adapter\DataMapper\IsNew</item>
+                <item name="am_on_sale" xsi:type="object">Retailplace\Search\Model\Adapter\DataMapper\OnSale</item>
+                <item name="am_is_salable" xsi:type="object">Retailplace\Search\Model\Adapter\DataMapper\IsSalable</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Mirasvit\Core\Model\License">
+        <plugin name="mirasvit_license" type="Retailplace\Search\Plugin\MirasvitLicense"/>
+    </type>
+    <type name="Mirasvit\SearchAutocomplete\Model\Result">
+        <plugin name="searchautocomplete_result" type="Retailplace\Search\Plugin\SearchAutocompleteResult"/>
+    </type>
+    <type name="Mirasvit\SearchElastic\Adapter\DataProvider">
+        <plugin name="elasticsearch_data_provider" type="Retailplace\Search\Plugin\ElasticSearchDataProvider"/>
+    </type>
+    <type name="Magento\Framework\Search\Request\Binder">
+        <plugin name="Retailplace_Search::search_request_mapper_aggregations_on_sale" type="Retailplace\Search\Plugin\OnSale"/>
+        <plugin name="Retailplace_Search::search_request_mapper_aggregations_is_salable" type="Retailplace\Search\Plugin\IsSalable"/>
+    </type>
+    <preference for="Mirasvit\SearchElastic\Model\Engine" type="Retailplace\Search\Model\SearchElastic\Engine"/>
+    <type name="Amasty\Shopby\Model\Request">
+        <plugin name="Retailplace_Search::FilterParamValidation" type="Retailplace\Search\Plugin\FilterParamValidation"/>
+    </type>
+
+    <type name="Mirasvit\Search\Model\Config">
+        <plugin name="Retailplace_Search::SearchConfig" type="Retailplace\Search\Plugin\Model\Config"/>
+    </type>
+
+    <type name="Mirasvit\SearchElastic\Adapter\ElasticAdapter">
+        <plugin name="Retailplace_Search::AggregationBuilder"
+                type="Retailplace\Search\Plugin\Adapter\ElasticAdapter" sortOrder="100"/>
+    </type>
+</config>

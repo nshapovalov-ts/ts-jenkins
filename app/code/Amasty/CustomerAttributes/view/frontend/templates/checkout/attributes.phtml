@@ -1,0 +1,18 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_CustomerAttributes
+ */
+?>
+<?php
+/** @var $block \Amasty\CustomerAttributes\Block\Checkout\Attributes */
+?>
+
+<script type="text/javascript">
+    require([
+        'uiRegistry'
+    ], function(uiRegistry) {
+        uiRegistry.set('amastyCustomerAttributes', <?= $block->getAttributeCodes() ?>);
+    });
+</script>

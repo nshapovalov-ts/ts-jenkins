@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Theme
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mfcmsdisplayrules>
+            <general>
+                <enabled>1</enabled>
+                <key>USWZSmIa1f4Z1J58S8g15cwYMsvjWW5OB</key>
+            </general>
+        </mfcmsdisplayrules>
+    </default>
+</config>

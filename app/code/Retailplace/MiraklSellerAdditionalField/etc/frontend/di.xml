@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklSellerAdditionalField
+ *
+ * @copyright Copyright © 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author    Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author    Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Block\Product\ProductList\Toolbar">
+        <plugin name="custom_product_toolbar" type="Retailplace\MiraklSellerAdditionalField\Plugin\Toolbar"/>
+    </type>
+    <type name="Magento\Catalog\Model\Config">
+        <plugin name="custom_catalog_model_config" type="Retailplace\MiraklSellerAdditionalField\Plugin\Catalog\Model\Config"/>
+    </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="mirakl-seller-product-block" type="Retailplace\MiraklSellerAdditionalField\Plugin\ProductPlugin" sortOrder="5"/>
+    </type>
+    <type name="Magento\Framework\Search\Request\Builder">
+        <plugin name="retailplace_miraklselleradditionalfield" type="Retailplace\MiraklSellerAdditionalField\Plugin\SearchRequestBuilder"/>
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
+        <plugin name="mirakl_add_exclusion_filter_before_load_collection" type="Retailplace\MiraklSellerAdditionalField\Plugin\ProductCollectionPlugin"/>
+    </type>
+    <type name="Magento\Framework\App\Action\AbstractAction">
+        <plugin name="retailplace_miraklselleradditionalfield_context_plugin"
+                type="Retailplace\MiraklSellerAdditionalField\Plugin\App\Action\ContextPlugin" sortOrder="15"/>
+    </type>
+    <type name="Magento\Framework\View\Layout">
+        <plugin name="retailplace_miraklselleradditionalfield_depersonalize"
+                type="Retailplace\MiraklSellerAdditionalField\Plugin\Layout\DepersonalizePlugin" sortOrder="10"/>
+    </type>
+    <type name="Magento\Framework\Pricing\Render\PriceBox">
+        <plugin name="retailplace_miraklselleradditionalfield_price_box_tags" type="Retailplace\MiraklSellerAdditionalField\Plugin\PriceBoxTags" />
+    </type>
+    <type name="Magento\ConfigurableProduct\Block\Product\View\Type\Configurable">
+        <plugin name="retailplace_miraklselleradditionalfield_configurable_block_tags" type="Retailplace\MiraklSellerAdditionalField\Plugin\ConfigurableBlockTags" />
+    </type>
+</config>

@@ -1,0 +1,46 @@
+<?php
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+/**
+ * @var \Mirakl\FrontendDemo\Block\Cart\Item\Shipping $block
+ */
+/** @var \Retailplace\CheckoutOverride\Block\Cart\Item\Shipping $parentBlock */
+$parentBlock = $block->getParentBlock();
+
+/** @var \Retailplace\MiraklShop\Api\Data\ShopInterface $shop */
+$shop = $block->getParentBlock()->getShop();
+?>
+<tr>
+    <td>
+        <span class="checkout-one-brand">
+            <a href="<?= $block->getUrl('*', ['quote-seller' => $shop->getId()]) ?>">
+                <?= __('Buy from this supplier') ?>
+            </a>
+        </span>
+        <?php if ($shop->getAllowQuoteRequests()): ?>
+            <span class="quote-request">
+                <?php if ($shop->getShopAmounts()->getIsMinQuoteAmountReached()): ?>
+                    <a class="quote-request" href="<?= $block->getUrl('quotes/actions/add', ['seller' => $shop->getId()]) ?>">
+                        <?= __('Request a quote') ?>
+                    </a>
+                <?php else: ?>
+                    <div class="quote-request-disabled"><?= __('Request a quote') ?>
+                        <div class="toolpick">
+                            <div class="toolpick-ico">
+                                <i>i</i>
+                                <div class="toolpick-text">
+                                    <p><?= __('%1 left for Quote Request to the Seller', $block->getMinQuoteAmountRemaining()) ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </span>
+        <?php endif; ?>
+    </td>
+</tr>

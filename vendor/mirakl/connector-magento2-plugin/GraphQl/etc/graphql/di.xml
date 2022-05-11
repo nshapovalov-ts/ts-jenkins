@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\QuoteGraphQl\Model\Cart\BuyRequest\BuyRequestBuilder">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="offer_id" xsi:type="object">Mirakl\GraphQl\Model\Cart\BuyRequest\OfferDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\SetShippingMethodsOnCart">
+        <plugin name="mirakl_graphql" type="Mirakl\GraphQl\Plugin\Model\Resolver\SetShippingMethodsOnCartPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Cart\GetCartForUser">
+        <plugin name="mirakl_graphql" type="Mirakl\GraphQl\Plugin\Model\Cart\GetCartForUserPlugin" sortOrder="10" />
+    </type>
+</config>

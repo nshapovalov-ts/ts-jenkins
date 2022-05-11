@@ -1,0 +1,15 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="\Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="Magecomp_Smspro::smsOnOrderView" type="Magecomp\Smspro\Plugin\PluginBtnOrderView" />
+    </type>
+    <type name="\Magento\Sales\Block\Adminhtml\Order\Invoice\View">
+        <plugin name="Magecomp_Smspro::smsOnOrderView" type="Magecomp\Smspro\Plugin\PluginBtnInvoiceView" />
+    </type>
+    <type name="\Magento\Shipping\Block\Adminhtml\View">
+        <plugin name="Magecomp_Smspro::smsOnOrderView" type="Magecomp\Smspro\Plugin\PluginBtnShipmentView" />
+    </type>
+    <type name="\Magento\Shipping\Block\Adminhtml\View">
+        <plugin name="Magecomp_Smspro::smsOnShipmentTrackView" type="Magecomp\Smspro\Plugin\PluginBtnShipmentTrackingView" />
+    </type>
+
+</config>

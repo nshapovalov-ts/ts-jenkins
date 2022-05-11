@@ -1,0 +1,53 @@
+<?php
+/**
+ * Retailplace_Recentview
+ *
+ * @copyright   Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Satish Gumudavelly <satish@kipanga.com.au>
+ */
+/** @var Magento\Customer\Block\CustomerData $block */
+?>
+<div class="list-product-home list-product-home-custom recentview-section 1" data-bind="scope: 'recentview'">
+    <div data-bind="html: recentsection()"></div>
+</div>
+<script type="text/x-magento-init">
+    {
+        ".recentview-section": {
+            "Retailplace_Wishlist/js/ajax-wishlist" : {}
+        }
+    }
+</script>
+<script type="text/x-magento-init">
+    {
+    	"*": {
+        	"Magento_Ui/js/core/app": {
+            	"components": {
+                	"recentview": {
+                    	"component": "Retailplace_Recentview/js/recentview"
+                	}
+            	}
+        	}
+    	}
+    }
+</script>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'Magento_Customer/js/customer-data',
+        'domReady!'
+    ], function ($, customerData) {
+        $(document).ready(function () {
+            customerData['Magento_Customer/js/customer-data']({
+                "sectionLoadUrl": "<?= $block->getCustomerDataUrl('customer/section/load') ?>",
+                "expirableSectionLifetime": <?= (int)$block->getExpirableSectionLifetime() ?>,
+                "expirableSectionNames": <?= /* @noEscape */ $this->helper(\Magento\Framework\Json\Helper\Data::class)->jsonEncode($block->getExpirableSectionNames()) ?>,
+                "cookieLifeTime": "<?= $block->getCookieLifeTime() ?>",
+                "updateSessionUrl": "<?= $block->getCustomerDataUrl('customer/account/updateSession') ?>"
+            });
+            var sections = ['recently_viewed_product'];
+            //customerData.invalidate(sections);
+            customerData.reload(sections, true);
+        });
+    });
+</script>
+

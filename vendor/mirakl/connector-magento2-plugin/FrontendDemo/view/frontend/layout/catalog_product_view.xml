@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mirakl_FrontendDemo::css/marketplace.css"/>
+    </head>
+    <body>
+        <referenceBlock name="product.info.details">
+            <block class="Mirakl\FrontendDemo\Block\Product\View\Tab\Offers" name="mirakl_offers.tab" as="marketplace_offers" template="Mirakl_FrontendDemo::product/view/mirakl_offers.phtml" group="detailed_info">
+                <arguments>
+                    <argument name="sort_order" xsi:type="string">40</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="product.info.form.content">
+            <block class="Mirakl\FrontendDemo\Block\Product\View" name="product.info.addtocart" as="addtocart" template="Mirakl_FrontendDemo::product/view/addtocart.phtml" />
+        </referenceContainer>
+        <referenceBlock name="product.info.options.wrapper.bottom">
+            <block class="Mirakl\FrontendDemo\Block\Product\View" name="product.info.addtocart.additional" as="product.info.addtocart" template="Mirakl_FrontendDemo::product/view/addtocart.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="product.info.extrahint.qtyincrements">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Mirakl_FrontendDemo::product/view/qtyincrements.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="product.info.main">
+            <referenceContainer name="product.info.price">
+                <block class="Mirakl\FrontendDemo\Pricing\Render" name="product.price.final" after="product.info.sku">
+                    <arguments>
+                        <argument name="price_render" xsi:type="string">product.price.render.default</argument>
+                        <argument name="price_type_code" xsi:type="string">final_price</argument>
+                        <argument name="zone" xsi:type="string">item_view</argument>
+                    </arguments>
+                </block>
+            </referenceContainer>
+            <block class="Mirakl\FrontendDemo\Block\Product\View\ChoiceBox" name="product.info.choicebox" as="product.info.choicebox" template="Mirakl_FrontendDemo::product/view/choicebox.phtml" after="product.info.addtocart.additional"/>
+        </referenceContainer>
+    </body>
+</page>

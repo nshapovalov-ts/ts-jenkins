@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.document.type.grid.container">
+            <block class="Magento\Backend\Block\Widget\Grid" name="document.type.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">documnt_type_grid</argument>
+                    <argument name="dataSource" xsi:type="object">Mirakl\Core\Model\ResourceModel\Document\Type\Collection</argument>
+                    <argument name="default_sort" xsi:type="string">id</argument>
+                    <argument name="default_dir" xsi:type="string">ASC</argument>
+                    <argument name="save_parameters_in_session" xsi:type="string">1</argument>
+                </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" name="document.type.grid.columnSet" as="grid.columnSet">
+                    <arguments>
+                        <argument name="rowUrl" xsi:type="array">
+                            <item name="path" xsi:type="string">mirakl/*/edit</item>
+                            <item name="extraParamsTemplate" xsi:type="array">
+                                <item name="id" xsi:type="string">getId</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="label">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Label</argument>
+                            <argument name="index" xsi:type="string">label</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="code">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Code</argument>
+                            <argument name="index" xsi:type="string">code</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

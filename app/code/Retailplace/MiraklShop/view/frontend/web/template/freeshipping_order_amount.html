@@ -1,0 +1,54 @@
+<!-- ko if: isAllFreeShipping() -->
+<div class="service-content-shipping">
+    <div class="service-icon toolpick-ico" style="font-size: 30px;">
+        <div class="delivery_icon_new_icon"></div>
+    </div>
+    <div class="service-info">
+        <h4>
+            <span data-bind="i18n: 'Free shipping'"></span>
+            <div class="toolpick" data-bind="if: isShowTooltip()">
+                <div class="toolpick-ico">
+                    <i>i</i>
+                    <div class="toolpick-text">
+                        <p>
+                            <span data-bind="i18n: 'Free shipping for all the products of '"></span>
+                            <span data-bind="text: sellerShopName"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </h4>
+    </div>
+</div>
+<!-- /ko -->
+<!-- ko if: !isAllFreeShipping() && hasFreeshippingOrderAmount()-->
+<div class="service-content-shipping" data-bind="with: getFreeShippingAmountData()">
+    <div class="service-icon" style="font-size: 30px;">
+        <div data-bind="attr:{class: percentClass}">
+            <span></span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+    <div class="service-info">
+        <h4>
+            <span data-bind="text: description"></span>
+            <div class="toolpick" data-bind="if: $parent.isShowTooltip()">
+                <div class="toolpick-ico">
+                    <i>i</i>
+                    <div class="toolpick-text">
+                        <p>
+                            <span data-bind="i18n: 'FREE shipping available for orders above '"></span>
+                            <span class="price" data-bind="text: shippingAmount + '.'"></span>
+                            <span data-bind="text: tooltip"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </h4>
+        <p data-bind="text: comment"></p>
+    </div>
+</div>
+<!-- /ko -->

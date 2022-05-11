@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+ -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job instance="Retailplace\Stripe\Cron\PayInvoices" method="execute" name="retailplace_stripe_pay_invoices">
+            <schedule>0 8 * * *</schedule>
+        </job>
+    </group>
+</config>
+

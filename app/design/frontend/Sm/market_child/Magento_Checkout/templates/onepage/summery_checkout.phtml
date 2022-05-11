@@ -1,0 +1,80 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$currencysymbol = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currency = $currencysymbol->getStore()->getCurrentCurrencyCode();
+$currency = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($currency);
+$currencySymbol = $currency->getCurrencySymbol();
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+    ->getStore()
+    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$items = $cart->getQuote()->getAllItems();
+$minOrderAmount = 0;
+$checkbrand = 0;
+$countseller = 0;
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+?>
+<?php if (!empty($items)): ?>
+    <div class="selle-all">
+        <?php foreach ($items as $item): ?>
+            <?php if ($item->getMiraklShopId()): ?>
+                <?php $allmiraklshopId[] = $item->getMiraklShopId(); ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <?php if (!empty($allmiraklshopId)): ?>
+            <?php $allmiraklshopId_unique = array_unique($allmiraklshopId); ?>
+
+            <?php $countseller = count($allmiraklshopId_unique); ?>
+
+            <?php foreach ($allmiraklshopId_unique as $miraklshopId): ?>
+                <div class="seller-all-data">
+                    <?php $selleritemtotal = 0; ?>
+                    <?php
+                    $connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+                    $miracaldata = $connection->fetchAll("SELECT * FROM mirakl_shop where id='$miraklshopId'");
+                    ?>
+                    <?php foreach ($miracaldata as $value): ?>
+                        <?php $_info = $value['additional_info']; ?>
+                        <div class="seller-name-icon">
+                            <div class="seller-name">
+                                <?php echo $value['name'] . " : "; ?>
+                            </div>
+                            <?php
+                            $data = $this->helper(\Retailplace\Utility\Helper\Data::class)->unserialize($_info);
+                            $minOrderAmount = $value['min-order-amount'];
+                            ?>
+                            <?php foreach ($items as $item): ?>
+                                <?php if ($item->getMiraklShopId() == $miraklshopId): ?>
+                                    <?php $selleritemtotal += $item->getBaseRowTotalInclTax(); ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+
+
+                            <?php //echo $minOrderAmount;?>
+                            <?php if (!$cart->getQuote()->getData(\Retailplace\MiraklQuote\Api\Data\MiraklQuoteAttributes::MIRAKL_QUOTE_ID)
+                                && $selleritemtotal < $minOrderAmount): ?>
+                                <?php $checkbrand++; ?>
+                                <div class="seller-not-ready-icon cart-not-raady-icon">
+                                    <div class="cart-not-raady-icon"></div>
+                                </div>
+                                <div class="toolpick-taxt">
+                                <span>
+                                    <?php echo __('Your order cannot be processed. The minimum order amount has not been met for a Supplier Showroom. Please add additional products to the cart from this Supplier'); ?>
+                                </span>
+                                </div>
+                            <?php else: ?>
+                                <div class="seller-ready-icon">
+                                    <img src="<?php echo $mediaUrl . "wysiwyg/cart-ready-icon.png"; ?>" alt=""/>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endforeach; ?>
+                    <div class="seller-total">
+                        <?php echo $currencySymbol . number_format($selleritemtotal, 2); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

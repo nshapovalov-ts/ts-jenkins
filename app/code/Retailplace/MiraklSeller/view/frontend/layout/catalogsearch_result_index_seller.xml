@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product-tab-search" remove="true"/>
+        <referenceContainer name="content">
+            <referenceContainer name="seller-product-search">
+                <container name="seller-tab-search" htmlTag="div" htmlClass="seller-tab">
+                    <block class="Retailplace\MiraklSeller\Block\Seller"
+                           name="category.seller.list" as="product_list"
+                           template="Retailplace_MiraklSeller::product/seller-list.phtml"/>
+                </container>
+            </referenceContainer>
+        </referenceContainer>
+        <referenceBlock name="topfilter.sorting" remove="true"/>
+    </body>
+</page>

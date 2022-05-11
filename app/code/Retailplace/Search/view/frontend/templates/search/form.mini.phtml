@@ -1,0 +1,98 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+use Magento\Framework\View\Element\Template;
+
+// codingStandardsIgnoreFile
+?>
+<?php
+/** @var $block Template */
+/** @var $helper \Magento\Search\Helper\Data */
+$helper = $this->helper(\Magento\Search\Helper\Data::class);
+?>
+
+<div class="block block-search">
+    <div class="block block-title"><strong><?= /* @escapeNotVerified */
+            __('Search') ?></strong></div>
+    <div class="block block-content">
+        <form class="form minisearch" id="search_mini_form" action="<?= /* @escapeNotVerified */
+        $helper->getResultUrl() ?>" method="get">
+            <div class="field search">
+                <label class="label" for="search" data-role="minisearch-label">
+                    <span><?= /* @escapeNotVerified */
+                        __('Search') ?></span>
+                </label>
+                <div class="control">
+
+                    <div class="control_bg">
+                        <input id="search"
+                               data-mage-init='{"quickSearch":{
+                                "formSelector":"#search_mini_form",
+                                "url":"<?php /* @escapeNotVerified */
+                               echo $block->getUrl('search/ajax/suggest'); ?>",
+                                "destinationSelector":"#search_autocomplete"}
+                           }'
+                               type="text"
+                               name="<?= /* @escapeNotVerified */
+                               $helper->getQueryParamName() ?>"
+                               value="<?= /* @escapeNotVerified */
+                               $helper->getEscapedQueryText() ?>"
+                               placeholder="<?= /* @escapeNotVerified */
+                               __('Search Professional Services') ?>"
+                               class="input-text"
+                               maxlength="<?= /* @escapeNotVerified */
+                               $helper->getMaxQueryLength() ?>"
+                               role="combobox"
+                               aria-haspopup="false"
+                               aria-autocomplete="both"
+                               autocomplete="off"/>
+
+                        <div class="search-loader search-loader-hide"></div>
+                        <div id="search_autocomplete" class="search-autocomplete category-suggetions"></div>
+                    </div>
+                    <div class="actions">
+                        <button type="submit"
+                                title="<?= $block->escapeHtml(__('Search')) ?>"
+                                class="action search">
+                            <span><?= /* @escapeNotVerified */
+                                __('Search') ?></span>
+                        </button>
+                    </div>
+                    <?= $block->getChildHtml() ?>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'jquery/ui'], function ($) {
+        $(document).ready(function () {
+            $('#search')
+                .click(function () {
+                    if ($("#primary_category_suggest ul > li").length > 0) {
+                        $("#primary_category_suggest").slideToggle();
+                    }
+                })
+                .keyup(function () {
+                    $("#primary_category_suggest").hide();
+                    if ($(this).val().length >= 2) {
+                        $(".search-loader").removeClass('search-loader-hide');
+                    }
+                    if ($(this).val().length < 2) {
+                        $(".search-loader").addClass('search-loader-hide');
+                    }
+                });
+        })
+    });
+</script>
+<style>
+    div#search_autocomplete {
+        background: white;
+        border: 1px solid grey;
+    }
+</style>
+
+

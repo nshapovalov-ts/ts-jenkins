@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_EmailConfirmation
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="customer_entity">
+        <column xsi:type="varchar" length="10" name="confirmation_alt" nullable="true" comment="Digital Confirmation Code"/>
+        <column xsi:type="smallint" name="email_validate_failures_num" padding="6"
+                unsigned="false" nullable="true" default="0" comment="Email OTP Code Failure Number"/>
+        <column xsi:type="timestamp" name="email_validate_first_failure" on_update="false"
+                nullable="true" comment="Email OTP Code First Failure"/>
+        <column xsi:type="timestamp" name="email_validate_lock_expires" on_update="false"
+                nullable="true" comment="Email OTP Code Lock Expiration Date"/>
+    </table>
+</schema>

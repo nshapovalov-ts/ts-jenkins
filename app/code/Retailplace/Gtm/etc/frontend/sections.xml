@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Gtm
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="rest/V1/customers/me/update">
+        <section name="gtm"/>
+    </action>
+    <action name="sign-up-page/account/createPost">
+        <section name="gtm"/>
+    </action>
+</config>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mirakl_FrontendDemo::css/marketplace.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Mirakl\FrontendDemo\Block\Shop\View" name="mirakl.shop.view" template="shop/view.phtml" cacheable="false"/>
+            <block class="Mirakl\FrontendDemo\Block\Shop\View" name="product.info.details" template="shop/details.phtml">
+                <block class="Mirakl\FrontendDemo\Block\Shop\View" name="description" group="shop_detailed_info" template="shop/description.phtml" />
+                <block class="Mirakl\FrontendDemo\Block\Shop\Evaluations" name="reviews" group="shop_detailed_info" />
+                <block class="Magento\Theme\Block\Html\Pager" name="mirakl.shop.evaluations.toolbar" />
+                <block class="Mirakl\FrontendDemo\Block\Shop\ReturnPolicy" name="return-policy" group="shop_detailed_info" template="shop/return-policy.phtml" />
+                <block class="Mirakl\FrontendDemo\Block\Shop\Shipping" name="shipping-methods" group="shop_detailed_info" template="shop/shipping-methods.phtml" />
+                <block class="Mirakl\FrontendDemo\Block\Shop\ContactInfo" name="contact" group="shop_detailed_info" template="shop/contact-info.phtml" />
+                <block class="Mirakl\FrontendDemo\Block\Shop\FavoriteRankOffers" name="favorite-products" group="shop_detailed_info" template="shop/favorite-rank-offers.phtml" />
+            </block>
+        </referenceContainer>
+    </body>
+</page>

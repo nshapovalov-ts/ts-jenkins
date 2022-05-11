@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/**
+ * @var \Mirakl\FrontendDemo\Block\Cart\Item\Shipping $block
+ */
+$mediaUrl = $block->getUrl('', ['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]);
+
+/** @var \Retailplace\CheckoutOverride\ViewModel\CartItemRenderer $viewModel */
+$viewModel = $block->getViewModel();
+$viewModel->setQuoteItem($block->getItem());
+$minOrderAmount = $viewModel->getMinimumOrderSum();
+$shopOrderTotal = $viewModel->getCartTotalForShop();
+?>
+<?php if ($minOrderAmount): ?>
+    <?php $checkreached = $minOrderAmount - $shopOrderTotal ?>
+    <?php if ($checkreached > 0): ?>
+        <div class="seller-not-ready">
+            <div class="selller-left">
+                <img src="<?php echo $mediaUrl . "wysiwyg/service_icon_1.png"; ?>" alt=""/>
+                <div class="seller_left_text">
+                    <p>
+                        <strong><?= $block->escapeHtml($viewModel->getShopName()) . __('</strong> has a minimum order amount of <strong>') . $viewModel->getCurrencySymbol() . $minOrderAmount . __('.</strong>'); ?>
+                    </p>
+                    <?php $seller = "by purchasing more products from supplier's showroom."; ?>
+                    <p><?= __('Please add <strong>') . $viewModel->getCurrencySymbol() . ($minOrderAmount - $shopOrderTotal) . __('</strong> ') . $seller; ?>
+                    </p>
+                </div>
+            </div>
+            <div class="seller-right">
+                <a href="<?= $viewModel->getShopUrl() ?>"
+                   title="<?= $block->escapeHtml($viewModel->getShopName()) ?>"><?php echo __('Supplier Showroom'); ?></a>
+            </div>
+        </div>
+    <?php elseif ($checkreached <= 0): ?>
+        <!-- <div class="seller-ready">
+                       <div class="selller-left">
+                        <img src="<?php //echo $mediaUrl."wysiwyg/reached.png";?>" alt="" />
+                        <p><?php //= __('Ready to checkout');?></p>
+                       </div>
+
+                       <div class="seller-right">
+                        <a href="<?php //echo $_shop->getUrl()?>" title="<?php //echo $block->escapeHtml($_shop->getName())?>"><?php //echo __('Seller Showroom');?></a>
+                       </div>
+                   </div> -->
+    <?php endif; ?>
+<?php else: ?>
+    <!-- <div class="seller-ready">
+               <div class="selller-left">
+                <img src="<?php //echo $mediaUrl."wysiwyg/reached.png";?>" alt="" />
+                <p><?php //= __('Ready to checkout');?></p>
+               </div>
+
+               <div class="seller-right">
+                <a href="<?php //echo $_shop->getUrl()?>" title="<?php //echo $block->escapeHtml($_shop->getName())?>"><?php //echo __('Seller Showroom');?></a>
+               </div>
+           </div> -->
+<?php endif; ?>

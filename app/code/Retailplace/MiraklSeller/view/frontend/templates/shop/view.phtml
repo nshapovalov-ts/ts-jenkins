@@ -1,0 +1,275 @@
+<?php
+
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright © 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+
+/**
+ * @var $block \Retailplace\SellerTags\Block\Shop\View
+ */
+?>
+<?php
+/** @var Mirakl\FrontendDemo\Block\Shop\View $this */
+/** @var Mirakl\Core\Model\Shop $shop */
+$shop = $this->getShop();
+$_info = $shop->getAdditionalInfo();
+?>
+<?php if ($shop->getId()): ?>
+    <?php
+    $minOrderAmount = $shop->getData('min-order-amount') ?? 0;
+    ?>
+    <div class="seller-shop">
+        <div class="block-content banner">
+            <div class="main-banner-img">
+                <?php if (!empty($_info['banner'])): ?>
+                    <img src="<?php echo $_info['banner'] ?>"
+                         alt="<?php echo $this->escapeHtml(__('Your banner goes here')) ?>"/>
+                <?php endif ?>
+            </div>
+            <div class="block-content">
+                <div class="container">
+                    <?php if ($shop->getLogo()): ?>
+                        <div class="seller-shop-logo">
+                            <img src="<?php echo $shop->getLogo() ?>"
+                                 alt="<?php echo $this->escapeHtml($shop->getName()) ?>"
+                                 title="<?php echo $this->escapeHtml($shop->getName()) ?>"/>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
+        </div>
+        <div class="block-content seller-info-bg">
+            <div class="container">
+                <div class="seller-info">
+                    <div class="seller-left-part">
+                    <span class="shop-name">
+                        <strong><?php echo $this->escapeHtml(strtoupper($shop->getName())) ?></strong>
+                    </span>
+                        <?php if (!empty($block->getTagsBlockContent())): ?>
+                        <div class="tags-data">
+                            <strong><?=__('Christmas Closure & Dispatch Information:')?></strong>
+                            <?=$block->getTagsBlockContent()?>.
+                        </div>
+                        <?php endif; ?>
+                        <div class="contact-info">
+                            <?php if ($_info->getDataByKey('contact_info')): ?>
+                                <?php echo $_info['contact_info']['city'] ?>
+                                <?php echo isset($_info['contact_info']['country']) ? ', ' . $_info['contact_info']['country'] : '' ?>
+                            <?php endif; ?>
+                            <div class="lead-time-to-ship-info">
+                                <div class="lead_time_to_ship_icon"></div>
+                                <span><?= $block->getLeadTimeToShipLabel($shop); ?></span>
+                                <div class="toolpick">
+                                    <div class="toolpick-ico">
+                                        <i>i</i>
+                                        <div class="toolpick-text">
+                                            <p><?php echo __('The time a Supplier has to process and prepare your order for shipment prior to goods leaving the warehouse');?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if ($block->isShopHolidayClosed($shop)): ?>
+                                <div class="closed-to-label">
+                                    <span><?= __($block->getClosedShopLabel($shop)); ?></span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php $evaluation = $shop->getFormattedGrade() ?>
+                        <div class="rating-summary shop-review-rate">
+                            <div class="rating-result" title="<?php echo round($evaluation * 5 / 100) ?>/5">
+                            <span style="width:<?php echo $evaluation ?>%">
+                                <span>
+                                    <span><?php echo $evaluation ?></span>
+                                </span>
+                            </span>
+                            </div>
+                            <span class="count">(<?php echo __('%1 reviews', $shop->getEvaluationsCount()) ?>)</span>
+                        </div>
+                        <?php if (!empty($_info['description'])): ?>
+                            <div class="seller-info-section">
+                                <strong><?php echo __('Supplier info') ?></strong>
+                                <p class="seller-info">
+                                    <?php echo $_info->getDataByKey('description'); ?>
+                                </p>
+                            </div>
+                        <?php endif; ?>
+                        <?php
+                        $test = 1;
+                        ?>
+                        <?php if ($_info->getAdditionalFieldValues()) : ?>
+                            <?php foreach ($_info->getAdditionalFieldValues() as $key => $value): ?>
+                                <?php if (($value['code'] == 'differentiators') || ($value['code'] == 'sellerindustry') && is_array($value['value'])): ?>
+                                    <?php $test++; ?>
+                                    <div class="differentiators <?php echo "difseldu" . $test; ?>">
+                                        <?php if (($value['code'] == 'differentiators') && is_array($value['value'])): ?>
+                                            <?php foreach ($value['value'] as $differentiatorsValue): ?>
+                                                <button
+                                                    class="differentiators-black"><?= $differentiatorsValue; ?></button>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                        <?php if (($value['code'] == 'sellerindustry') && is_array($value['value'])) { ?>
+                                            <?php foreach ($value['value'] as $sellerindustry) { ?>
+                                                <button class="sellerindustry-white"><?= $sellerindustry; ?></button>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    <?php $shopAmounts = $shop->getShopAmounts();?>
+                    <div class="seller-right-part" data-bind="scope: 'minimum_amount'">
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                        <script type="text/x-magento-init">
+                            {
+                                "*": {
+                                    "Magento_Ui/js/core/app": {
+                                        "components": {
+                                            "minimum_amount": {
+                                                "component": "Retailplace_MiraklShop/js/view/minimum_amount",
+                                                "template": "Retailplace_MiraklShop/minimum_amount_seller",
+                                                "isTooltip": true,
+                                                "tooltipAdditionalText": "<?= __('Please add more products to your cart and reach the min order amount.')?>",
+                                                "minOrderAmount": <?= $shop->getData('min-order-amount') ?>,
+                                                "minFreeShippingOrderAmount": <?= $shop->getShopAmounts()->getFreeShippingAmount() ?>,
+                                                "minQuoteRequestAmount": <?= $shopAmounts->getMinQuoteAmount() ?>,
+                                                "quoteRequestLink": "<?= $block->getUrl('quotes/actions/add', ['seller' => $shop->getId()]) ?>",
+                                                "isQuoteRequestBlockVisible": <?= $shop->getAllowQuoteRequests() ? 1 : 0 ?>,
+                                                "isFreeShipping": <?= $shop->getFreeShipping() ? 1 : 0 ?>,
+                                                "sellerShopId": <?= $shop->getId() ?>,
+                                                "sellerShopName": "<?= $shop->getName() ?>"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                    </script>
+                        <?php if ($_info->getAdditionalFieldValues()) : ?>
+                            <?php foreach ($_info->getAdditionalFieldValues() as $key => $value): ?>
+                                <?php
+                                global $brand_dna;
+                                ?>
+                                <?php if (($value['code'] == '11') && !is_array($value['value'])): ?>
+                                    <?php $our_story = $value['value']; ?>
+                                    <?php $our_story_char_count = strlen($our_story) > 200 ? substr($our_story, 0, 200) . "..." : $our_story; ?>
+                                <?php endif; ?>
+
+
+                                <?php if (($value['code'] == 'branddna') && !is_array($value['value'])): ?>
+                                    <?php $brand_dna = $value['value']; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <div class="our-story">
+                            <h2><?= __('Our Story'); ?></h2>
+                            <div class="our-dna">
+                                        <span>
+                                			<?php if (isset($brand_dna) && $brand_dna): ?>
+                                                <p><b><?= __('Our DNA: '); ?></b>
+                                					<?php echo $brand_dna; ?>
+                                				</p>
+                                            <?php endif; ?>
+                                            <p><?= $our_story_char_count ?? ""; ?></p>
+                                        </span>
+                            </div>
+                        </div>
+                        <?php if (isset($our_story) && strlen($our_story) > 200): ?>
+                            <div class="read-their-story">
+                                <a href="javascript:void(0)"
+                                   onclick="document.getElementById('light-our-story').style.display='block';document.getElementById('fade-our-story').style.display='block'">
+                                    <div class="return-policy">
+                                        <h5><?php echo __('read their story'); ?></h5>
+                                    </div>
+                                </a>
+
+                                <div id="light-our-story" class="white_content">
+                                    <a class="close_popup_bt" href="javascript:void(0)"
+                                       onclick="document.getElementById('light-our-story').style.display='none';document.getElementById('fade-our-story').style.display='none'">+</a>
+                                    <?php
+                                    $professioninfo = $_info->getProfessionalInfo();
+                                    ?>
+                                    <?php if ($shop->getName()): ?>
+                                        <h4>
+                                            <?php echo $this->escapeHtml(strtoupper($shop->getName())) . ' - Our Story'; ?>
+                                        </h4>
+                                    <?php else: ?>
+                                        <h4> <?php echo __('Our Story'); ?></h4>
+                                    <?php endif; ?>
+                                    <?php echo $our_story; ?>
+                                </div>
+                                <div id="fade-our-story" class="black_overlay"></div>
+                            </div>
+
+                        <?php endif; ?>
+
+                        <div class="Return-policy">
+                            <a href="javascript:void(0)"
+                               onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
+                                <div class="return-policy">
+                                    <?php if ($_info->getDataByKey('return_policy')): ?>
+                                        <h5><?php echo __('Return Policy'); ?></h5>
+                                    <?php endif; ?>
+                                </div>
+                            </a>
+
+                            <div id="light" class="white_content">
+                                <a class="close_popup_bt" href="javascript:void(0)"
+                                   onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">+</a>
+                                <?php
+                                echo $this->getLayout()
+                                    ->createBlock('Mirakl\FrontendDemo\Block\Shop\ReturnPolicy')
+                                    ->setTemplate('Mirakl_FrontendDemo::shop/return-policy.phtml')
+                                    ->toHtml();
+                                ?>
+                            </div>
+                            <div id="fade" class="black_overlay"></div>
+                        </div>
+                    </div>
+                    <?php if ($block->isYouTubeEnable($shop)):?>
+                        <div class="seller-bottom-part">
+                            <div class="video-block">
+                                <div class="video-preview">
+                                    <p id="youtube-video" class="round-button"><i class="fa fa-play fa-2x"></i></p>
+                                    <img src="<?= $block->getYoutubeThumbnailLink($shop) ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="modal">
+                            <div id="video" class="modal-body-content loading-content"></div>
+                        </div>
+                        <script type="text/x-magento-init">
+                            {
+                                "*": {
+                                    "Retailplace_MiraklSeller/js/view/youtubePopup": {
+                                        "shopName": "<?= $shop->getName() ?>",
+                                        "youTubeLink": "<?= $block->getYoutubeVideoLink($shop) ?>"
+                                    }
+                                }
+                            }
+                        </script>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif ?>
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $(document).ready(function () {
+            $(".seller-info-section > strong").click(function () {
+                $(this).toggleClass("active");
+                $(this).next().slideToggleseller - shop
+            });
+            $(".our-story > h2").click(function () {
+                $(this).toggleClass("active");
+                $(this).next().slideToggle();
+            });
+        });
+    });
+</script>

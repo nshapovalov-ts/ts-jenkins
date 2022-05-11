@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Product\Type\AbstractType">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Catalog\Product\Type\AbstractTypePlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Catalog\ProductPlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\CatalogInventory\Model\Quote\Item\QuantityValidator">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\CatalogInventory\Quote\Item\QuantityValidatorPlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\Checkout\Model\Cart">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Checkout\CartPlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\Catalog\Helper\Product\Configuration">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Helper\Catalog\Product\ConfigurationPlugin" sortOrder="60" />
+    </type>
+    <type name="Magento\Checkout\Block\Cart">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Block\CartPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address\Total\Shipping">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Quote\Address\Total\ShippingPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Tax\Model\Sales\Total\Quote\CommonTaxCollector">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Quote\Total\CommonTaxCollectorPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Checkout\ShippingInformationManagementPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Checkout\Model\TotalsInformationManagement">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Checkout\TotalsInformationManagementPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\View\AbstractView">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Block\Product\View\AbstractViewPlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\ConfigurableProduct\Block\Product\View\Type\Configurable">
+        <plugin name="mirakl_frontend_configurable_type" type="Mirakl\FrontendDemo\Plugin\Block\Product\View\Type\ConfigurablePlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\Swatches\Block\Product\Renderer\Listing\Configurable">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Block\Product\Swatches\Renderer\Listing\ConfigurablePlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="mirakl_frontend_list_product" type="Mirakl\FrontendDemo\Plugin\Block\Product\ListProductPlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\CatalogSearch\Block\SearchResult\ListProduct">
+        <plugin name="mirakl_frontend_list_product" type="Mirakl\FrontendDemo\Plugin\Block\Product\ListProductPlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <plugin name="mirakl_frontend_widget_products_list" type="Mirakl\FrontendDemo\Plugin\Block\Product\WidgetProductsListPlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\OfflineShipping\Model\Carrier\Freeshipping">
+        <plugin name="mirakl_frontend_freeshipping" type="Mirakl\FrontendDemo\Plugin\Model\Carrier\FreeshippingPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Shipping\Model\CarrierFactory">
+        <plugin name="mirakl_frontend_freeshipping" type="Mirakl\FrontendDemo\Plugin\Model\Carrier\CarrierFactoryPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Quote\AddressPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Sales\OrderPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\ShippingMethodManagement">
+        <plugin name="mirakl_frontend" type="Mirakl\FrontendDemo\Plugin\Model\Quote\ShippingMethodManagementPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Shipping\Model\Shipping">
+        <plugin name="mirakl_frontend_collect_carrier_rates" type="Mirakl\FrontendDemo\Plugin\Model\Shipping\ShippingPlugin" sortOrder="1" />
+    </type>
+</config>

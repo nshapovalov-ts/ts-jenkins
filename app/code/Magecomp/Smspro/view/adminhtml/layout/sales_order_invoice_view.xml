@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      label="Email Order Items List" design_abstraction="custom">
+    <head>
+        <css src="Magecomp_Smspro::css/smspro.css"/>
+    </head>
+    <body>
+        <referenceBlock name="form">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Magecomp_Smspro::order/invoice/view/info.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

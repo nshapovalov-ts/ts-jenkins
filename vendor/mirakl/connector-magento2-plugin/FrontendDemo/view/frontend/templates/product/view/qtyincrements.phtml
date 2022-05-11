@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\CatalogInventory\Block\Qtyincrements $block */
+$product = $block->getProduct();
+
+/** @var \Mirakl\Connector\Model\Offer $mainOffer */
+$mainOffer = $product->getData('main_offer');
+?>
+<?php if ($mainOffer) : ?>
+    <?php if ($mainOffer->getPackageQuantity()) : ?>
+        <div class="product pricing">
+            <?= /* @escapeNotVerified */ __('%1 is available to buy in increments of %2', $block->getProductName(), $mainOffer->getPackageQuantity()) ?>
+        </div>
+    <?php endif; ?>
+<?php elseif ($block->getProductQtyIncrements()) : ?>
+    <div class="product pricing">
+        <?= /* @escapeNotVerified */ __('%1 is available to buy in increments of %2', $block->getProductName(), $block->getProductQtyIncrements()) ?>
+    </div>
+<?php endif; ?>

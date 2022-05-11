@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_CatalogSort
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="SortScoreCalculatedUpdate" xsi:type="object">Retailplace\CatalogSort\Console\SortScoreCalculatedUpdate</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

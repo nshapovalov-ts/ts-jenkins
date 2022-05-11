@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mirakl_FrontendDemo::css/marketplace.css"/>
+    </head>
+    <body>
+        <referenceBlock name="product.info.addtocart">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart.mirakl.additional" as="product.info.additional" template="Mirakl_FrontendDemo::product/view/mirakl_additional_field.phtml"/>
+        </referenceBlock>
+        <referenceContainer name="product.info.stock.sku">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.margin" template="Mirakl_FrontendDemo::product/view/margin.phtml" after="product.info.sku" />
+        </referenceContainer>
+        <referenceBlock name="product.info.choicebox" remove="true"/>
+    </body>
+</page>

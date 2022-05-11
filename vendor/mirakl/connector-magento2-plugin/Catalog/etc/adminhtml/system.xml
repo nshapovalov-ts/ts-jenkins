@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_sync">
+            <group id="categories" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label">
+                <label>Marketplace Categories Synchronization (CA01)</label>
+                <comment>Export enabled marketplace categories to Mirakl</comment>
+                <field id="enable_categories" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable</label>
+                    <comment>Warning: Please do not activate this synchronization in production without having tested it before as it may have impacts on Mirakl catalog and offers.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="last_sync_categories" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="text">
+                    <label>Last Synchronization Date</label>
+                    <comment><![CDATA[Last synchronization date of marketplace categories.]]></comment>
+                </field>
+                <field id="button_categories" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="22" translate="button_label">
+                    <frontend_model>Mirakl\Catalog\Block\Adminhtml\System\Config\Button\Sync\Categories</frontend_model>
+                </field>
+            </group>
+            <group id="products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label">
+                <label>Products Synchronization (P21)</label>
+                <comment>Export enabled products to Mirakl</comment>
+                <field id="enable_products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable</label>
+                    <comment>Warning: Please do not activate this synchronization in production without having tested it before as it may have impacts on Mirakl catalog and offers.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="last_sync_products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="text">
+                    <label>Last Synchronization Date</label>
+                    <comment><![CDATA[Last synchronization date of Magento products.]]></comment>
+                </field>
+                <field id="button_products" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="22" translate="button_label">
+                    <frontend_model>Mirakl\Catalog\Block\Adminhtml\System\Config\Button\Sync\Products</frontend_model>
+                </field>
+            </group>
+        </section>
+        <section id="mirakl_connector">
+            <group id="product_attributes" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label">
+                <label>Product Attributes</label>
+                <group id="products_heading" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                    <label>Products Synchronization (P21)</label>
+                    <field id="store" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label comment" type="select">
+                        <label>Exported Store</label>
+                        <comment><![CDATA[Products of the specified store will be selected to export the catalog. The locale of this store view will be used.]]></comment>
+                        <source_model>Mirakl\Catalog\Model\System\Config\Source\Store</source_model>
+                    </field>
+                    <field id="brand" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                        <label>Brand Attribute</label>
+                        <comment><![CDATA[If you want to map a Magento brand attribute with the Mirakl brand attribute while exporting products.]]></comment>
+                        <source_model>Mirakl\Catalog\Model\System\Config\Source\Attribute\Product\Brand</source_model>
+                    </field>
+                    <field id="identifiers" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="multiselect">
+                        <label>Identifier Attributes</label>
+                        <comment><![CDATA[If you want to send product references to Mirakl (EAN, ISBN, and so on). Only attributes defined as unique and in global scope are listed here, except SKU because implicitly sent.]]></comment>
+                        <source_model>Mirakl\Core\Model\System\Config\Source\Attribute\Product\Identifier</source_model>
+                        <can_be_empty>1</can_be_empty>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

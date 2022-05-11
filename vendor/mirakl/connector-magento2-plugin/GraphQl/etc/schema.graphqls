@@ -1,0 +1,490 @@
+type Query {
+    mpShop(shop_id: Int!): mpShop
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\ShopResolver")
+        @doc(description:"Returns information about a marketplace shop")
+    mpThreads(input: mpThreadsInput, limit: Int, page_token: String): mpThreadsOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Thread\\ThreadsResolver")
+        @doc(description: "List all threads")
+    mpThreadDetail(thread_id: String!): mpThreadDetailOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Thread\\ThreadDetailResolver")
+        @doc(description: "Retrieve a thread")
+    mpDownloadThreadDocument(attachment_id: String!): mpFile
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Thread\\DownloadThreadDocumentResolver")
+        @doc(description: "Download an attachment")
+    mpReasons(reason_type: mpReasonType!): mpReasonsOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\ReasonsResolver")
+        @doc(description: "List refund, incident, and message reasons by type")
+    mpRatingTypes: mpRatingTypesOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\RatingTypesResolver")
+        @doc(description: "List rating types on your platform")
+}
+
+type Mutation {
+    mpOpenIncident(input: mpOpenIncidentInput): Boolean
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Order\\OpenIncidentResolver")
+        @doc(description: "Open an incident on an order line")
+    mpCloseIncident(input: mpCloseIncidentInput): Boolean
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Order\\CloseIncidentResolver")
+        @doc(description: "Close an incident on an order line")
+    mpThreadReply(input: mpThreadReplyInput!): mpThreadReplyOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Thread\\ThreadReplyResolver")
+        @doc(description: "Reply to a thread")
+    mpSellerThread(input: mpSellerThreadInput!): mpSellerThreadOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Offer\\SellerThreadResolver")
+        @doc(description: "Send a message to a seller")
+    mpOrderThread(input: mpOrderThreadInput!): mpOrderThreadOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Order\\OrderThreadResolver")
+        @doc(description: "Create a thread on an order")
+    mpOrderReceipt(mp_order_id: String!): Boolean
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Order\\OrderReceiptResolver")
+        @doc(description: "Validate the receipt of an order")
+    mpOrderEvaluation(input: mpOrderEvaluationInput): Boolean
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Order\\OrderEvaluationResolver")
+        @doc(description: "Add an evaluation on an order")
+    mpValidateShipmentsReceipt(mp_shipment_ids: [String]!): mpValidateShipmentsReceiptOutput
+        @resolver (class: "\\Mirakl\\GraphQl\\Model\\Resolver\\Shipment\\ValidateShipmentsReceiptResolver")
+        @doc(description: "Validate shipments receipt")
+}
+
+interface ProductInterface {
+    mp_info: mpProductMarketplaceInfo
+        @doc(description: "Offer associated to the product")
+        @resolver(class: "\\Mirakl\\GraphQl\\Model\\Resolver\\ProductMarketplaceInfoResolver")
+}
+
+type mpProductMarketplaceInfo {
+    offers: [mpOffer]
+}
+
+type mpOffer {
+    offer_id: Int!
+    product_sku: String!
+    min_shipping_price: Float
+    min_shipping_price_additional: Float
+    min_shipping_zone: String
+    min_shipping_type: String
+    price: Float
+    total_price: Float
+    price_additional_info: String
+    quantity: Int
+    description: String
+    state_code: Int
+    shop_id: Int
+    shop_name: String
+    shop: mpShop @resolver(class: "Mirakl\\GraphQl\\Model\\Resolver\\Batch\\Shop")
+    professional: String
+    premium: String
+    logistic_class: String
+    active: String
+    favorite_rank: Int
+    channels: String
+    deleted: String
+    origin_price: Float
+    discount_start_date: String
+    discount_end_date: String
+    available_start_date: String
+    available_end_date: String
+    discount_price: Float
+    currency_iso_code: String
+    discount_ranges: String
+    leadtime_to_ship: String
+    allow_quote_requests: String
+    price_ranges: String
+    min_order_quantity: Int
+    max_order_quantity: Int
+    package_quantity: Int
+    product_tax_code: String
+    additional_info: mpOfferAdditionalInfo
+    formatted_price: mpOfferFormatedPrice @resolver(class: "Mirakl\\GraphQl\\Model\\Resolver\\Offer\\FormattedPriceResolver")
+}
+
+type mpOfferAdditionalInfo {
+    json_string: String
+}
+
+type mpOfferFormatedPrice {
+    price: ProductPrice! @doc(description: "The price for the offer") @resolver(class: "Mirakl\\GraphQl\\Model\\Resolver\\Offer\\PriceResolver")
+    price_tiers: [mpOfferTierPrice] @doc(description: "An array of TierPrice objects.") @resolver(class: "Mirakl\\GraphQl\\Model\\Resolver\\Offer\\PriceTiersResolver")
+}
+
+type mpOfferTierPrice @doc(description: "A price based on the quantity purchased.") {
+    final_price: Money @doc(desription: "The price of the product at this tier.")
+    quantity: Float @doc(description: "The minimum number of items that must be purchased to qualify for this price tier.")
+    discount: ProductDiscount @doc(description: "The price discount that this tier represents.")
+}
+
+type Cart {
+    items: [CartItemInterface] @resolver(class: "\\Mirakl\\GraphQl\\Model\\Resolver\\CartItems")
+    mp_info: CartMarketplaceInfo @resolver(class: "\\Mirakl\\GraphQl\\Model\\Resolver\\CartMarketplaceInfoResolver")
+}
+
+type CartMarketplaceInfo {
+    shipping_zone: String
+    is_offer_incl_tax: Boolean
+    is_shipping_incl_tax: Boolean
+    base_shipping_fee: Money
+    shipping_fee: Money
+    base_shipping_tax_amount: Money
+    shipping_tax_amount: Money
+    base_custom_shipping_tax_amount: Money
+    custom_shipping_tax_amount: Money
+    orders: [mpOrderShippingFee] @resolver(class: "\\Mirakl\\GraphQl\\Model\\Resolver\\CartMarketplaceOrdersResolver")
+}
+
+type mpOrderShippingFee {
+    currency_iso_code: String
+    leadtime_to_ship: Int
+    offers: [mpShippingRateOffer]
+    selected_shipping_type: mpSelectedShippingType
+    shipping_types: [mpShippingFeeType]
+}
+
+type mpShippingRateOffer {
+    id: Int!
+    price: Float
+    quantity: Int
+    allow_quote_requests: Boolean
+    allowed_shipping_types: [mpShippingType]
+    line_only_shipping_price: Float
+    line_only_total_price: Float
+    line_original_quantity: Int
+    line_price: Float
+    line_quantity: Int
+    line_shipping_price: Float
+    line_total_price: Float
+    offer_additional_fields: [mpAdditionalField]
+    product_category_code: String
+    shipping_price_additional_unit: Float
+    shipping_price_unit: Float
+}
+
+type mpSelectedShippingType {
+    code: String!
+    label: String!
+    additional_fields_values: [mpAdditionalField]
+    delivery_time: mpShippingTypeDeliveryTime
+}
+
+type mpShippingFeeType {
+    code: String!
+    label: String!
+    additional_fields_values: [mpAdditionalField]
+    delivery_time: mpShippingTypeDeliveryTime
+    total_shipping_price: Float
+}
+
+type mpShippingType {
+    code: String!
+    label: String!
+    delivery_time: [mpShippingTypeDeliveryTime]
+    shipping_additional_fields: [mpAdditionalField]
+}
+
+type mpShippingTypeDeliveryTime {
+    earliest_days: Int!
+    latest_days: Int!
+}
+
+type mpAdditionalField {
+    code: String!
+    value: String! @resolver(class: "\\Mirakl\\GraphQl\\Model\\Resolver\\AdditionalFieldValueResolver")
+    type: mpAdditionalFieldType
+}
+
+interface CartItemInterface {
+    mp_info: CartItemMarketplaceInfo @resolver(class: "\\Mirakl\\GraphQl\\Model\\Resolver\\CartItemMarketplaceInfoResolver")
+}
+
+type CartItemMarketplaceInfo {
+    offer_id: Int
+    shop_id: Int
+    shop_name: String
+    leadtime_to_ship: Int
+    shipping_type: String
+    shipping_type_label: String
+    base_shipping_fee: Money
+    shipping_fee: Money
+    shipping_tax_percent: Float
+    base_shipping_tax_amount: Money
+    shipping_tax_amount: Money
+    shipping_tax_applied: String
+    custom_tax_applied: String
+    base_custom_shipping_tax_amount: Money
+    custom_shipping_tax_amount: Money
+}
+
+input CartItemInput {
+    offer_id: Int
+}
+
+type mpShop {
+    id: Int
+    name: String
+    eav_option_id: Int
+    state: String
+    date_created: String
+    description: String
+    logo: String
+    free_shipping: Boolean
+    professional: Boolean
+    premium: Boolean
+    closed_from: String
+    closed_to: String
+    grade: Float
+    evaluations_count: Int
+    additional_info: mpShopAdditionalInfo
+}
+
+type mpShopAdditionalInfo {
+    banner: String
+    return_policy: String
+    json_string: String
+}
+
+input SetShippingMethodsOnCartInput {
+    mp_shipping_methods: [mpShippingMethodInput]
+}
+
+input mpShippingMethodInput {
+    offer_id: Int!
+    shipping_type_code: String!
+}
+
+input mpOpenIncidentInput {
+    mp_order_id: String! @doc(description: "Order identifier")
+    mp_order_line_id: String! @doc(description: "Order line identifier")
+    reason_code: String! @doc(description: "Incident opening reason code")
+}
+
+input mpCloseIncidentInput {
+    mp_order_id: String! @doc(description: "Order identifier")
+    mp_order_line_id: String! @doc(description: "Order line identifier")
+    reason_code: String @doc(description: "Incident closing reason code. Required if an incident is not \"marked as resolved\" by shop.")
+}
+
+input mpThreadsInput {
+    entity_type: mpThreadEntityType @doc(description: "Entity type to include in result (default: include all).")
+    entity_id: [String] @doc(description: "The entity_type must be specified to use this filter, otherwise an error 400 will be returned.")
+}
+
+input mpThreadReplyInput {
+    thread_id: String! @doc(description: "The ID of the thread to reply to.")
+    message_input: mpThreadMessageInput! @doc(description: "The message data")
+    files: [mpUploadInput] @doc(description: "List of attachments for the message. Maximum 50 across all threads of the same entity. For example, for a given order, you can not have more than 50 attachments across all its threads.")
+}
+
+input mpThreadMessageInput {
+    body: String! @doc(description: "Message body. min length: 3\n - max length: 50000")
+    to: [mpThreadParticipantInput]! @doc(description: "List of recipients of the message")
+    topic: mpThreadTopicInput @doc(description: "New topic for the thread. Leave empty if you don't want to update it.")
+}
+
+input mpThreadParticipantInput {
+    type: mpThreadParticipantType! @doc(description: "Participant type")
+    id: String @doc(description: "Participant id.\nThe id is required except when type equals OPERATOR")
+}
+
+input mpThreadTopicInput {
+    type: mpThreadTopicType!
+    value: String! @doc(description: "Code of the reason for REASON_CODE type. Topic value for FREE_TEXT type")
+}
+
+input mpUploadInput @doc(description: "mpUpload contains a file in base64 format and basic information about the file.") {
+    base64_encoded_data: String @doc(description: "The file in base64 format.")
+    type: String @doc(description: "The MIME type of the file, such as application/pdf.")
+    name: String @doc(description: "The file name.")
+}
+
+input mpSellerThreadInput {
+    offer: Int! @doc(description: "Offer identifier")
+    subject: String! @doc(description: "Message subjet\n - min length: 3\n - max length: 200")
+    body: String! @doc(description: "Message body\n - min length: 3\n - max length: 50000")
+    locale: String @doc(description: "Customer's locale")
+    visible: Boolean @doc(description: "Visibility of the message. Default to false")
+}
+
+input mpOrderThreadInput {
+    mp_order_id: String! @doc(description: "Order identifier")
+    thread_input: mpOrderThreadMessageInput! @doc(description: "Thread content: body, topic, participants..")
+    files: [mpUploadInput] @doc(description: "List of attachments for the first message of the thread")
+}
+
+input mpOrderThreadMessageInput {
+    body: String! @doc(description: "Message body.\n -  min length: 3\n - max length: 50000")
+    to: [mpThreadParticipantType]! @doc(description: "Message recipients")
+    topic: mpThreadTopicInput! @doc(description: "The topic can either have a free or a fixed value depending on the topic type")
+
+}
+
+input mpOrderEvaluationInput {
+    mp_order_id: String! @doc(description: "Order identifier")
+    assessments: [mpOrderEvaluationAssessmentsInput]! @doc(description: "List of the evaluation criteria expected by the operator. Each criteria has to be filled for the evaluation to be accepted.")
+    comment: String @doc(description: "A brief comment associated with the evaluation to explain the mark\n - max length: 10000")
+    grade: Int! @doc(description: "The global mark of the evaluation which is an integer among 0, 1, 2, 3, 4, 5.")
+    visible: Boolean @doc(description: "The visibility of the evaluation")
+}
+
+input mpOrderEvaluationAssessmentsInput {
+    code: String! @doc(description: "Code of the answered assessment")
+    response: String! @doc(description: "Response associated with the assessment. The response is either:\n - a grade represented by an integer among 0, 1, 2, 3, 4, 5.\n - a boolean represented by a string whom possible values are : 'true', 'false'.")
+}
+
+type mpThreadsOutput {
+    data: [mpThread]
+    next_page_token: String
+    previous_page_token: String
+}
+
+type mpThread {
+    id: String!
+    topic: mpThreadTopic
+    date_created: String!
+    date_updated: String!
+    authorized_participants: [mpThreadParticipant]!
+    current_participants: [mpThreadParticipant]!
+    entities: [mpThreadEntity]
+    metadata: mpThreadMetadata
+}
+
+type mpThreadTopic {
+    type: mpThreadTopicType!
+    value: String!
+}
+
+type mpThreadParticipant {
+    id: String
+    display_name: String!
+    type: mpThreadParticipantType!
+}
+
+type mpThreadEntity {
+    id: String!
+    label: String!
+    type: mpThreadEntityType!
+}
+
+type mpThreadMetadata {
+    last_message_date: String!
+    total_count: Int!
+}
+
+type mpThreadDetailOutput {
+    id: String!
+    topic: mpThreadTopic
+    messages: [mpThreadMessage]!
+    date_created: String!
+    date_updated: String!
+    authorized_participants: [mpThreadParticipant]!
+    current_participants: [mpThreadParticipant]!
+    entities: [mpThreadEntity]
+    metadata: mpThreadMetadata
+}
+
+type mpThreadMessage {
+    id: String!
+    from: mpThreadSender!
+    to: [mpThreadParticipant]!
+    body: String!
+    date_created: String!
+    attachments: [mpAttachment]
+}
+
+type mpThreadSender {
+    type: mpThreadSenderType!
+    display_name: String!
+    organization_details: mpThreadOrganization
+}
+
+type mpThreadOrganization {
+    id: String
+    display_name: String!
+    type: mpThreadParticipantType!
+}
+
+type mpAttachment {
+    id: String!
+    name: String!
+    size: String!
+}
+
+type mpThreadReplyOutput {
+    message_id: String
+    thread_id: String
+}
+
+type mpFile {
+    base64_encoded_data: String @doc(description: "The file in base64 format.")
+    type: String @doc(description: "The MIME type of the file, such as application/pdf.")
+    name: String @doc(description: "The file name.")
+}
+
+type mpSellerThreadOutput {
+    id: Int!
+}
+
+type mpOrderThreadOutput {
+    message_id: String!
+    thread_id: String!
+}
+
+type mpReasonsOutput {
+    reasons: [mpReason]!
+}
+
+type mpReason {
+    code: String!
+    label: String!
+}
+
+type mpRatingTypesOutput {
+    assessments: [mpRatingTypeAssessment]
+}
+
+type mpRatingTypeAssessment {
+    code: String!
+    label: String!
+    type: mpAssessmentType
+}
+
+type mpValidateShipmentsReceiptOutput {
+    shipment_errors: [mpShipmentReceiptError]
+    shipment_success: [mpShipmentReceiptSuccess]
+}
+
+type mpShipmentReceiptError {
+    id: String
+    message: String
+}
+
+type mpShipmentReceiptSuccess {
+    id: String!
+}
+
+enum mpThreadEntityType {
+    MMP_ORDER, MMP_OFFER, MPS_ORDER, MPS_SERVICE
+}
+
+enum mpThreadParticipantType {
+    OPERATOR, SHOP, CUSTOMER
+}
+
+enum mpThreadTopicType {
+    FREE_TEXT, REASON_CODE
+}
+
+enum mpThreadSenderType {
+    OPERATOR, OPERATOR_USER, SHOP_USER, CUSTOMER, CUSTOMER_USER
+}
+
+enum mpAdditionalFieldType {
+    STRING, DATE, NUMERIC, BOOLEAN, LINK, REGEX, TEXTAREA, LIST, MULTIPLE_VALUES_LIST
+}
+
+enum mpReasonType {
+    INCIDENT_OPEN, INCIDENT_CLOSE, OFFER_MESSAGING, ORDER_MESSAGING, CANCELATION, MPS_INCIDENT_OPEN,
+    MPS_INCIDENT_CLOSE, MPS_ORDER_MESSAGING, MPS_OFFER_MESSAGING
+}
+
+enum mpAssessmentType {
+    GRADE, BOOLEAN
+}

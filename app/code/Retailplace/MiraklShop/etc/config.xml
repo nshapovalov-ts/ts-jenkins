@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklShop
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <retailplace_attribute_updater>
+            <has_new_products>
+                <nb_days_to_label_new>60</nb_days_to_label_new>
+            </has_new_products>
+        </retailplace_attribute_updater>
+    </default>
+</config>

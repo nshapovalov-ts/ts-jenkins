@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Offerdetail
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_frontend>
+            <offer>
+                <enable_default_lead_time>1</enable_default_lead_time>
+                <default_value_lead_time>5</default_value_lead_time>
+            </offer>
+            <seller_youtube_settings>
+                <enable>1</enable>
+                <youtube_video_link>https://www.youtube.com/embed/{{YOUTUBE_ID}}?autoplay=1</youtube_video_link>
+                <youtube_thumbnail_link>https://img.youtube.com/vi/{{YOUTUBE_ID}}/0.jpg</youtube_thumbnail_link>
+            </seller_youtube_settings>
+        </mirakl_frontend>
+    </default>
+</config>

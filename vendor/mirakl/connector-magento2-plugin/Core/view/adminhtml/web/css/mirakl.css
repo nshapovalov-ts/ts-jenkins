@@ -1,0 +1,188 @@
+@font-face {
+    font-family: 'Mirakl-Font-Icons';
+    src: url('../fonts/Mirakl-Font-Icons.eot?iefa9n');
+    src: url('../fonts/Mirakl-Font-Icons.eot?iefa9n#iefix') format('embedded-opentype'),
+        url('../fonts/Mirakl-Font-Icons.ttf?iefa9n') format('truetype'),
+        url('../fonts/Mirakl-Font-Icons.woff?iefa9n') format('woff'),
+        url('../fonts/Mirakl-Font-Icons.svg?iefa9n#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.admin__menu #menu-mirakl-core-head.level-0 > a:before {
+    font-family: 'Mirakl-Font-Icons';
+    content: "\e900";
+}
+
+.admin__page-nav-item.mirakl a > span,
+.admin__page-nav-item a.mirakl > span {
+    padding-left: 40px;
+    display: block;
+}
+
+.catalog-product-new div[data-index="mirakl-marketplace"],
+.catalog-product-edit div[data-index="mirakl-marketplace"],
+.catalog-category-add div[data-index="mirakl"],
+.catalog-category-edit div[data-index="mirakl"],
+.admin__page-nav-item.mirakl .tab-item-link,
+.admin__page-nav-item.mirakl:hover .admin__page-nav-link,
+.admin__page-nav-item.ui-state-active.mirakl .admin__page-nav-link,
+.admin__page-nav-item .mirakl.tab-item-link,
+.admin__page-nav-item .mirakl.admin__page-nav-link:hover,
+.admin__page-nav-item.ui-state-active .mirakl.admin__page-nav-link,
+.config-nav-block._collapsed._show.mirakl ._collapsible,
+.config-nav-block._collapsed.mirakl ._collapsible,
+.config-nav-block._collapsed.mirakl ._collapsible:hover,
+.x-tree-node-el.mirakl > a,
+#mirakl_send_order {
+    background-image: url('../images/logo_blue_256px.png');
+    background-repeat: no-repeat;
+    background-position: .8em center;
+    background-size: 32px;
+}
+
+.catalog-product-new div[data-index="mirakl-marketplace"],
+.catalog-product-edit div[data-index="mirakl-marketplace"],
+.catalog-category-add div[data-index="mirakl"],
+.catalog-category-edit div[data-index="mirakl"] {
+    background-position: .8em 1em;
+}
+
+.catalog-product-new div[data-index="mirakl-marketplace"],
+.catalog-product-edit div[data-index="mirakl-marketplace"],
+.catalog-category-add div[data-index="mirakl"],
+.catalog-category-edit div[data-index="mirakl"],
+.config-nav-block._collapsed.mirakl ._collapsible,
+#mirakl_send_order {
+    padding-left: 55px;
+}
+
+.catalog-category-add .x-tree-node-el.mirakl > a,
+.catalog-category-edit .x-tree-node-el.mirakl > a {
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 16px;
+    padding-right: 18px;
+}
+
+.data-grid td.pre,
+.report-output table td {
+    font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    line-height: 16px;
+}
+
+.report-status {
+    float: left;
+    font-size: 1.3rem;
+}
+
+.report-output {
+    clear: both;
+}
+
+.report-output-content {
+    max-height: 450px;
+    border: 1px solid #d6d6d6;
+    border-radius: 3px;
+    padding: 8px 10px;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+
+.report-output table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.report-output table td {
+    padding: 0 4px;
+}
+
+.report-output table td.num {
+    color: rgba(0, 0 , 0, .3);
+    width: 1%;
+    vertical-align: top;
+    border-right: 1px solid #d6d6d6;
+    white-space: nowrap;
+    text-align: right;
+    padding: 0 4px;
+}
+
+.report-output table td.line {
+    color: #333;
+    word-wrap: normal;
+}
+
+.report-output table td.pre {
+    white-space: pre;
+}
+
+.mirakl-process-view .admin__table-secondary th,
+.mirakl-offer-view .admin__table-secondary th {
+    width: 250px;
+}
+
+.mirakl-event-index .grid-severity-minor,
+.mirakl-event-view .grid-severity-minor,
+.mirakl-process-index .grid-severity-minor,
+.mirakl-process-view .grid-severity-minor {
+    background: #feeee1 none repeat scroll 0 0;
+    color: #ff9C00;
+    border-color: #ff9C00;
+    white-space: nowrap;
+}
+
+.mirakl-event-index .grid-severity-major,
+.mirakl-event-view .grid-severity-major,
+.mirakl-process-index .grid-severity-major,
+.mirakl-process-view .grid-severity-major {
+    background: #feeee1 none repeat scroll 0 0;
+    color: #f55600;
+    border-color: #f55600;
+}
+
+#mirakl_orders_grid .nobr,
+#event_grid_table .nobr {
+    white-space: nowrap;
+}
+
+td span.magento,
+td span.marketplace {
+    text-transform: none;
+    font-weight: normal;
+    text-shadow: 0 1px 0 #bc3918;
+    background: linear-gradient(to bottom, #ee5a27 0, #ca3a0f 100%) repeat-x;
+    border-color: #1b5381;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 4px;
+    line-height: 13px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+td span.marketplace.product,
+td span.marketplace {
+    text-shadow: 0 1px 0 #1b5381;
+    background: linear-gradient(to bottom, #4495d8 0, #2867c1 100%) repeat-x;
+}
+
+td span.marketplace.offer,
+td span.magento.marketplace {
+    text-shadow: 0 1px 0 #446b1f;
+    background: linear-gradient(to bottom, #83c841 0, #5aa630 100%) repeat-x;
+}
+
+.mirakl-sync-index .data-grid td {
+    vertical-align: middle;
+}
+
+.mirakl-sync-index .data-grid .col-buttons {
+    width: 100px;
+    white-space: nowrap;
+}
+
+.mirakl-mcm-on div[data-index="mirakl_sync"],
+.mirakl-mcm-on .mirakl-sync-all {
+    display: none;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklPromotion
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Retailplace\MiraklPromotion\Api\Data\PromotionSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Retailplace\MiraklPromotion\Api\Data\PromotionInterface"
+                type="Retailplace\MiraklPromotion\Model\Promotion"/>
+    <preference for="Retailplace\MiraklPromotion\Api\PromotionRepositoryInterface"
+                type="Retailplace\MiraklPromotion\Model\PromotionRepository"/>
+    <preference for="Mirakl\Sync\Console\Command\RunCommand"
+                type="Retailplace\MiraklPromotion\Console\Command\RunCommand"/>
+    <type name="Magento\SalesRule\Model\RulesApplier">
+        <plugin name="mirakl_promotion_cart_rule" type="Retailplace\MiraklPromotion\Plugin\CartRulesApplier"
+                sortOrder="100"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="mirakl_promotion_quote_to_order_transfer" type="Retailplace\MiraklPromotion\Plugin\ToOrderItem"
+                sortOrder="100"/>
+    </type>
+    <preference for="Mirakl\Connector\Model\Order\Converter"
+                type="Retailplace\MiraklPromotion\Model\MiraklConverter"/>
+</config>

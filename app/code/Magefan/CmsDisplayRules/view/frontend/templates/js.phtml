@@ -1,0 +1,61 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+<?php
+$viewModel = $block->getData('viewModel');
+$productId = null;
+if ($product = $viewModel->getProduct()) {
+    $productId = $product->getId();
+}
+?>
+<?php
+    $url = $block->getUrl(
+        'mfcmsdr/block/get',
+        [
+            'product_id' => $productId
+        ]
+    );
+?>
+<?php if ($viewModel->isEnabled()) { ?>
+    <script>
+        require(["jquery", "domReady!"], function($) {
+            var ids = {};
+            var count = 0;
+            $("div[id^=mfcmsdr]").each(function(){
+                var id = $(this).data('blockid');
+                var secret = $(this).data('secret');
+                ids[id] = secret;
+                count++;
+            });
+            if (count) {
+                require(["jquery", "domReady!"], function($){
+                    $.get("<?= $block->escapeUrl($url)  ?>", {
+                        "block_id" : ids,
+                        "t": Date.now(),
+                        "p": window.location.toString()
+                    }, function(data){
+                        if (data.html) {
+                            for (var i in data.html) {
+                                var content = $(data.html[i]);
+                                $(".mfcmsdr-" + i).replaceWith(content);
+
+                                if ((data.html[i].indexOf('data-bind') != -1)  || (data.html[i].indexOf('data-mage-init')  != -1) || (data.html[i].indexOf('x-magento-init') != -1)) {
+                                    content.trigger('contentUpdated');
+                                    content.find('[data-bind]').applyBindings();
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+    <style>
+        .block-static-block.widget {
+            margin-bottom: 0px;
+        }
+    </style>
+<?php } ?>

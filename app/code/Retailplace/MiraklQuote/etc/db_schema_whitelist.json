@@ -1,0 +1,37 @@
+{
+    "mirakl_shop": {
+        "column": {
+            "min_quote_request_amount": true,
+            "allow_quote_requests": true
+        }
+    },
+    "quote": {
+        "column": {
+            "mirakl_quote_id": true
+        }
+    },
+    "quote_item": {
+        "column": {
+            "mirakl_quote_item_id": true
+        }
+    },
+    "sales_order": {
+        "column": {
+            "mirakl_quote_id": true
+        }
+    },
+    "sales_order_item": {
+        "column": {
+            "mirakl_quote_item_id": true
+        }
+    },
+    "mirakl_offer": {
+        "column": {
+            "shop_sku": true,
+            "allow_quote_requests": true
+        },
+        "index": {
+            "MIRAKL_OFFER_ALLOW_QUOTE_REQUESTS": true
+        }
+    }
+}

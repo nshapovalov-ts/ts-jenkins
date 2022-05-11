@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+        <section id="usertemplate">
+            <group id="reviewreminder" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Review Reminder</label>
+                <field id="reviewremindertypes" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Review Reminder Type</label>
+                    <source_model>Magecomp\Reviewreminder\Model\Config\Types</source_model>
+                    <validate>required-entry validate-number</validate>
+                </field>
+                <field id="reviewdays" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Review Reminder Frequency</label>
+                    <comment><![CDATA[Set the Number of days after which you want to send review reminder.]]></comment>
+                    <validate>required-entry validate-number</validate>
+                    <depends>
+                        <field id="usertemplate/reviewreminder/reviewremindertypes" separator=",">1,2,3</field>
+                    </depends>
+                </field>
+                <field id="templateemail" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="usertemplate/reviewreminder/reviewremindertypes" separator=",">3,1</field>
+                    </depends>
+                    <comment><![CDATA[Email Notification will be Sent To Customer After Number of Days Configured in Above Settings]]></comment>
+                </field>
+                <field id="sender_email_identity" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                    <depends>
+                        <field id="usertemplate/reviewreminder/reviewremindertypes" separator=",">3,1</field>
+                    </depends>
+                </field>
+                <field id="reviewsmstext" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SMS Notification Text</label>
+                    <comment><![CDATA[SMS Notification will be Sent To Customer After Number of Days Configured in Above Settings.</br>
+                           <b> Objects : </b> order (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)  </br>  <b>Variables : </b> {{var mobilenumber}},{{var order_total}},{{var prod_name}},{{var prod_url}},{{var order.customerFirstname}},{{var order.customerLastname}}  ]]></comment>
+                    <depends>
+                        <field id="usertemplate/reviewreminder/reviewremindertypes" separator=",">3,2</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends>
+                        <field id="usertemplate/reviewreminder/reviewremindertypes" separator=",">3,2</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_ChannelPricing
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Retailplace_AttributesUpdater:etc/attribute_updaters.xsd">
+    <updaters>
+        <updater class="Retailplace\ChannelPricing\Model\Updater\TierPrice" name="tier_price" sortOrder="130" />
+        <updater class="Retailplace\ChannelPricing\Model\Updater\NlnaExclusive" name="nlna_exclusive" sortOrder="170" />
+    </updaters>
+</config>

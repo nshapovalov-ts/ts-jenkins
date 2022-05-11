@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/**
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ * @var \Mirakl\FrontendDemo\Block\Cart\Item\Shipping $block
+ */
+$_item = $block->getItem();
+$mediaUrl = $block->getUrl('', ['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]);
+
+/** @var \Retailplace\CheckoutOverride\ViewModel\CartItemRenderer $viewModel */
+$viewModel = $block->getParentBlock()->getViewModel();
+$minOrderAmount = $viewModel->getMinimumOrderSum();
+$shopOrderTotal = $viewModel->getCartTotalForShop();
+?>
+<?php if($_item->getShowShopname()): ?>
+<tbody class="shop-header shop-header-<?= $_item->getMiraklShopId() ?>" shop-id="<?= $_item->getMiraklShopId() ?>" group-id="<?= $viewModel->getItemGroupId($_item) ?>">
+    <tr>
+        <td colspan="5" class="cart_shipping_bg" style="padding: 0px; border: none;">
+            <div class="cart_shipping_top">
+                <div class="cart_shipping_left">
+                    <div class="number-count">
+                        <?= $viewModel->getCounter() ?>
+                    </div>
+                    <h4>
+                        <a href="<?= $viewModel->getShopUrl() ?>"><?= $block->escapeHtml($viewModel->getShopName()) ?>
+                        </a>
+                    </h4>
+                    <?php if ($viewModel->isShopHolidayClosed()): ?>
+                        <div class="cart-shipping-bottom">
+                            <div class="closed-to-label">
+                                <span><?= __($viewModel->getClosedShopLabel($_item)); ?></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <?php /*if ($_shop->getLogo()): ?>
+                <p><img src="<?php echo $block->escapeHtml($_shop->getLogo()) ?>" /></p>
+            <?php endif */ ?>
+                <div class="cart_shipping_right">
+                    <?= $block->getChildHtml($block->getNameInLayout() . '.item', false) ?>
+                    <!-- <div class="shipp_button_bg">
+                <button type="submit" name="update_cart_action" data-cart-item-update value="update_shipping_type" title="<?php //echo $block->escapeHtml(__('Update'));?>" class="button btn-update">
+                    <span><span><?php //echo __('Update');?></span></span>
+                </button>
+            </div> -->
+                </div>
+            </div>
+        </td>
+    </tr>
+    <?php
+        $shopId = null;
+        if ($shop = $viewModel->getShop()) {
+            $shopId = $shop->getId();
+        }
+    ?>
+    <tr class="shipping_limitation">
+        <td colspan="5" class="cart_shipping_bg" style="padding:0px; border: none; ">
+            <?= $block->getChildHtml($block->getNameInLayout() . '.seller.limitation', false) ?>
+        </td>
+    </tr>
+    <tr class="cart_table_head">
+        <th class="col item" scope="col"><span><?= $block->escapeHtml(__('Item')) ?></span></th>
+        <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Quantity')) ?></span></th>
+        <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Price Per Unit')) ?></span></th>
+        <th class="col subtotal" scope="col"><span><?= $block->escapeHtml(__('Cost')) ?></span></th>        
+    </tr>
+</tbody>
+<?php endif; ?>

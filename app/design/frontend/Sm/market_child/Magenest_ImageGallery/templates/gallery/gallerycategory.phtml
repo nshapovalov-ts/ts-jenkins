@@ -1,0 +1,111 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$scopeConfig = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface');
+$enableModule = $scopeConfig->getValue('plpseller/plpseller/enable_module');
+if ($enableModule) : ?>
+    <?php
+
+    $resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+    $connection = $resource->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+    $mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+        ->getStore()
+        ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+    $priceHelper = $objectManager->get("\Magento\Directory\Model\PriceCurrency");
+
+    $title = $scopeConfig->getValue('plpseller/plpseller/title');
+
+    $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+    $currentCatId = $category->getId();
+    $wholesalePartnersSql = $connection->select()
+        ->from(['rp' => $resource->getTableName('retailplace_plpseller')])
+        ->joinLeft(["mo" => $resource->getTableName('mirakl_shop')], "mo.id = rp.seller_id")
+        ->where("mo.state = ?", "open")
+        ->where("rp.status = ?", 1)
+        ->where("FIND_IN_SET(?, rp.category_id)", $currentCatId)
+        ->limit(16);
+    $wholesalePartners = $connection->fetchAll($wholesalePartnersSql);
+    $sellerCounter = count($wholesalePartners);
+    ?>
+    <?php if ($sellerCounter > 0): ?>
+
+        <div class="container">
+            <div class="wholesale-parter categorypage">
+                <?php if ($wholesalePartners): ?>
+                    <h2><?php echo $title; ?></h2>
+                <?php endif; ?>
+                <ul class="slider-post-seller owl-carousel owl-theme">
+                    <?php $i = 0; ?>
+                    <?php foreach ($wholesalePartners as $wholesalePartner): ?>
+                        <?php $selerid = $wholesalePartner['seller_id']; ?>
+                        <li>
+                            <div class="seller_block_bg">
+                                <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $selerid ?>">
+                                    <img src="<?php echo $mediaUrl . $wholesalePartner['image']; ?>" alt=""
+                                         width="300" height="200" class="no-lazy"/>
+                                </a>
+                                <div class="parternt">
+                                    <div class="seller-name">
+                                        <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $selerid ?>">
+                                            <?php echo $wholesalePartner['name']; ?>
+                                        </a>
+                                    </div>
+                                    <?php $minOrderAmount = $wholesalePartner['min-order-amount']; ?>
+                                    <?php if ($minOrderAmount > 0): ?>
+                                        <?php echo $priceHelper->convertAndFormat($minOrderAmount, true, 0) . ' Minimum'; ?>
+                                    <?php else: ?>
+                                        <?php echo __('No Minimum'); ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        <script type="text/javascript">
+            require([
+                'jquery',
+                'owlcarousel'
+            ], function ($) {
+                $(".slider-post-seller").owlCarousel({
+                    responsive: {
+                        0: {
+                            items: 1,
+                            nav: false,
+                            dots: true,
+                        },
+                        480: {
+                            items: 2,
+                            slideBy: 2,
+                            nav: false,
+                            dots: true,
+                        },
+                        768: {
+                            items: 2,
+                            slideBy: 2
+                        },
+                        992: {
+                            items: 3,
+                            slideBy: 3
+                        },
+                        1200: {
+                            items: 4
+                        },
+                    },
+                    slideBy: 4,
+                    autoplay: false,
+                    loop: false,
+                    <?php  if ($sellerCounter >= 5): ?>
+                    nav: true,
+                    <?php else: ?>
+                    nav: false,
+                    <?php endif; ?>
+                    navRewind: false,
+                    dots: false,
+                    autoplayHoverPause: true,
+                    margin: 10
+                });
+            });
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

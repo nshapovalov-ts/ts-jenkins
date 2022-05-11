@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_CheckoutOverride
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Catalog:etc/catalog_attributes.xsd">
+    <group name="quote_item">
+        <attribute name="unit_type"/>
+        <attribute name="number_of_unit_per_pack"/>
+    </group>
+</config>

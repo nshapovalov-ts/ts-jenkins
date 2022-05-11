@@ -1,0 +1,74 @@
+<?php
+/** @var View $block */
+
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadEntity;
+use Mirakl\FrontendDemo\Block\Message\View;
+
+$helper = $block->getMessageHelper();
+$thread = $block->getThread();
+?>
+<div class="marketplace-messages">
+    <div class="page-title-wrapper">
+        <h1 class="page-title"><?= $block->getPageTitle() ?></h1>
+    </div>
+    <div class="block-content">
+        <div class="customer-messages-participants"><span>Participants: <span><b><?= implode('</b>,</span> <span><b>', array_reverse($helper->getCurrentParticipantsNames($thread))) ?></b></span></div>
+        <ol class="items message-items">
+            <?php /** @var ThreadMessage $message */ ?>
+            <?php $messagesGroup = $block->getMessagesGroupedByDays($thread->getMessages()) ?>
+            <?php foreach ($messagesGroup as $messageGroupKey => $messages): ?>
+
+                <?php if ($messageGroupKey < 1): ?>
+                    <div class="message-item-label"><?= __('Today') ?></div>
+                <?php else: ?>
+                    <div class="message-item-label"><?= __('%1 days ago', $messageGroupKey) ?></div>
+                <?php endif; ?>
+
+                <?php foreach ($messages as $messageKey => $message): ?>
+                    <li class="item message-item <?= $messageKey == 0 ? 'first-item' : '' ?> <?php echo strtolower($message->getFrom()->getType()) ?>">
+                        <div class="message-item-title">
+                            <?= __('<b>%1</b> to <b>%2</b>', __($block->getSenderName($message))->render(), implode('</b>, <b>', $block->getRecipientNames($message))) ?>
+                        </div>
+                        <dev class="message-item-title-date">
+                            <?php echo $block->formatDateTime($helper->getMiraklDate($message->getDateCreated()->format(DateTime::ISO8601))) ?>
+                        </dev>
+                        <div class="message-text"><?php echo $block->escapeHtml($message->getBody(), $block->getMessageAllowedTags()) ?></div>
+                        <?php $attachments = $message->getAttachments(); ?>
+
+                        <?php if (!empty($attachments)): ?>
+                            <?php
+                            $attachmentsCount = count($attachments);
+                            ?>
+                            <div class="message-attachment-files">
+                                <strong><?= __('Files') ?>
+                                    <span><?= $attachmentsCount ?></span>
+                                    <hr class="received-attachment">
+                                </strong>
+
+                                <div class="attachments">
+                                    <?php foreach ($attachments as $attachment): ?>
+                                        <a class="attachment-file-label" href="<?= $block->getAttachmentUrl($attachment) ?>" target="_blank">
+                                            <?php
+                                            $attachmentName = $attachment->getName();
+                                            $attachmentNameWidth = mb_strwidth($attachmentName);
+                                            if ($attachmentNameWidth > 24) {
+                                                $attachmentName = mb_strimwidth($attachmentName, 0, 14, "...") . mb_strimwidth($attachmentName, $attachmentNameWidth - 10, 10);
+                                            }
+                                            ?>
+                                            <div class="attachment_file_text"><?= $attachmentName ?></div>
+                                            <div class="attachment_file_download"></div>
+                                        </a>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($messageKey == 0): ?>
+                            <?php echo $block->getBlockHtml('marketplace.message.form.reply') ?>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+</div>

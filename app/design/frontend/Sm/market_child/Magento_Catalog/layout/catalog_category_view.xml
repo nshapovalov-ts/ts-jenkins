@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+    	<referenceContainer name="page.top">
+			<block class="Magenest\ImageGallery\Block\Gallery\Gallerypage" name="landingsblock" template="Magenest_ImageGallery::gallery/gallerycategory.phtml" after="breadcrumbs"/>
+		</referenceContainer>
+    	  <!-- <referenceContainer name="sidebar.main">
+      	  <block class="Magento\Framework\View\Element\Template" template="Magento_Search::form.mini.list.page.phtml" name="listsearch" before="-"/>
+
+     	  	<block class="Sm\MegaMenu\Block\MegaMenu\View" name="megamenu.topnav.view" as="megamenu_topnav"
+                  after="-" template="Sm_MegaMenu::megamenu_special.phtml"/>
+		</referenceContainer>
+    <move element="catalog.leftnav" destination="sidebar.main" after="listsearch"/> -->
+    </body>
+</page>

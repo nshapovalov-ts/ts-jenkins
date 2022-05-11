@@ -1,0 +1,238 @@
+<?php 
+$min=$block->getMindigits();
+$max=$block->getMaxdigits();
+ ?>
+<style type="text/css">
+    .msg
+{
+
+    left: 42%;
+    top: 370px;
+}
+.create.account .intl-tel-input{
+    width: 100%;
+}
+.smser
+{
+    height: 14px;
+}
+#smserrordiv
+{
+    height: auto;
+}
+
+</style>
+<div class="smser"><div id="smserrordiv" name="smserrordiv" class="message error"></div></div>
+<fieldset class="fieldset create account" data-hasrequired="<?php echo __('* Required Fields') ?>">
+    <legend class="legend"></legend>
+    
+    <div id="smssuccessdiv" name="smssuccessdiv" class="message success"></div>
+    <div class="field">
+        <div class="control">
+            <input type="text" name="mobilenumber" id="mobilenumber" title="<?php echo __('Mobile Number') ?>" class="input-text mobilenumber" placeholder="Mobile Number" maxlength="12" pattern="[0-9]">
+        </div>
+        <div class="comment"><?php echo __('Enter Number With Country code & without any sign. e.g:-(91xxxxxxx09)') ?></div>
+
+        <div id="otpdiv" class="control">
+            <input type="password" name="otp" id="otp" title="<?php echo __('otp') ?>" class="input-text" autocomplete="off" placeholder="OTP" maxlength="10">
+        </div>
+        <div id="waitsmsdiv">
+            <img src='<?php echo $this->getViewFileUrl('images/loader-1.gif'); ?>' alt="Please Wait..." width="30px" height="30px">
+        </div>
+        <div id="otpbtndiv">
+            <button id="getotpbtn" name="getotpbtn" type="button" class="<?php echo $block->getButtonclass();?>" title="Get OTP">
+                <span><?php echo __('Get OTP') ?></span>
+            </button>
+            <button id="resendotpbtn" name="resendotpbtn" type="button" class="<?php echo $block->getButtonclass();?>" title="Resend OTP">
+                <span><?php echo __('Resend OTP') ?></span>
+            </button>
+        </div>
+
+        <div style="clear: both;"></div>
+        <div id="confirmationdiv">
+            <button id="confirmotpbtn" name="confirmotpbtn" type="button" class="<?php echo $block->getButtonclass();?>" title="Verify Mobile Number">
+                <span><?php echo __('Verify Mobile Number') ?></span>
+            </button>
+        </div>
+        
+        <?php if($block->getCustomerMobile() != '') : ?>
+        <div id="existingnumberdiv">
+            <p class="empty"><?php echo __('Your Existing Verified Mobile Number is : '.$block->getCustomerMobile()) ?></p>
+        </div>
+        <?php endif; ?>
+    </div>
+</fieldset>
+<script>
+    require(['jquery', 'jquery/ui'], function($)
+    {
+        function Smsresetdata()
+        {
+            $('#mobilenumber').removeClass('mage-error');
+            $('#otp').removeClass('mage-error');
+            $('#smserrordiv').hide();
+            $('#smserrordiv').html('');
+        }
+
+        function Smstoggeldata(Elementid)
+        {
+            $(Elementid).toggle();
+        }
+
+        $("#getotpbtn").click(function(e)
+        {
+            //Reset Everything
+            Smsresetdata();
+
+            //Number Validation
+            var mobile = $('#mobilenumber').val();
+            if(mobile == null || mobile == '')
+            {
+                $('#mobilenumber').addClass('mage-error');
+                $('#smserrordiv').show();
+                $('#smserrordiv').html('<?php echo __('Please, First Enter Your Mobile Number.') ?>');
+                return false;
+            }
+            if(mobile.length <= <?php echo $min ?> || mobile.length >=<?php echo $max ?>)
+            {
+                $('#mobilenumber').addClass('mage-error');
+                $('#smserrordiv').show();
+                $('#smserrordiv').html('<?php echo __('Your Mobile Number Should Be Between '.$min.' & '. $max.'.') ?>');
+                return false;
+            }
+            if(!$.isNumeric(mobile) || mobile.substring(0,1)=='+' || mobile.substring(0,1)=='-')
+                {
+                    $('#mobilenumber').addClass('mage-error');
+                     $('#smserrordiv').show();
+                    $('#smserrordiv').html('<?php echo __('Please, Enter Valid Mobile Number.') ?>');
+                    return false;
+                }
+            
+            
+
+            //Send OTP To Number
+            $.ajax({
+                type: "POST",
+                url: '<?php echo $this->getUrl('smspro/customer/updateotp')?>',
+                data:{'mobile':mobile},
+                beforeSend: function()
+                {
+                    Smsresetdata();
+                    Smstoggeldata('#getotpbtn');
+                    Smstoggeldata('#waitsmsdiv');
+                },
+                success: function(data)
+                {
+                    if(data == 'success')
+                    {
+                        Smstoggeldata('#waitsmsdiv');
+                        Smstoggeldata('#otpdiv');
+                        Smstoggeldata('#resendotpbtn');
+                        Smstoggeldata('#confirmationdiv');
+                        $('#mobilenumber').attr('readonly', true);
+                    }
+                    else
+                    {
+                        Smstoggeldata('#waitsmsdiv');
+                        Smstoggeldata('#getotpbtn');
+                        $('#smserrordiv').show();
+                        $('#smserrordiv').html(data);
+                    }
+                },
+                error: function() {
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#getotpbtn');
+                    $('#smserrordiv').show();
+                    $('#smserrordiv').html('<?php echo __('Something Went Wrong, Try Again Later.') ?>');
+                }
+            });
+        });
+
+        $("#resendotpbtn").click(function(e)
+        {
+            //Reset Everything
+            Smsresetdata();
+
+            var mobile = $('#mobilenumber').val();
+            //Re-Send OTP To Number
+            $.ajax({
+                type: "POST",
+                url: '<?php echo $this->getUrl('smspro/customer/updateotp')?>',
+                data:{'mobile':mobile},
+                beforeSend: function()
+                {
+                    Smsresetdata();
+                    Smstoggeldata('#resendotpbtn');
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                },
+                success: function(data)
+                {
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                    if(data != 'success')
+                    {
+                        $('#smserrordiv').show();
+                        $('#smserrordiv').html(data);
+                    }
+                },
+                error: function() {
+                    Smstoggeldata('#waitsmsdiv');
+                    $('#smserrordiv').show();
+                    $('#smserrordiv').html('<?php echo __('Something Went Wrong, Try Again Later.') ?>');
+                }
+            });
+        });
+
+        $("#confirmotpbtn").click(function(e)
+        {
+            //OTP Validation
+            var otpstring = $('#otp').val();
+            if(otpstring == null || otpstring == '')
+            {
+                $('#otp').addClass('mage-error');
+                $('#smserrordiv').show();
+                $('#smserrordiv').html('<?php echo __('Please Enter OTP.') ?>');
+                return false;
+            }
+
+            var mobile = $('#mobilenumber').val();
+          
+            //Verify Mobile & OTP
+            $.ajax({
+                type: "POST",
+                url: '<?php echo $this->getUrl('smspro/customer/updateotpnumber')?>',
+                data:{'mobile':mobile,'otp':otpstring},
+                beforeSend: function()
+                {
+                    Smsresetdata();
+                    Smstoggeldata('#otpbtndiv');
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                },
+                success: function(data)
+                {
+                    Smstoggeldata('#waitsmsdiv');
+                    if(data == 'success')
+                    {
+                        $('#smssuccessdiv').html('<?php echo __('Your Mobile Number is Verified Successfully!') ?>');
+                        $('#smssuccessdiv').show();
+                        $('#otpdiv').hide();
+                        location.reload();
+                    }
+                    else
+                    {
+                        $('#smserrordiv').html(data);
+                        Smstoggeldata('#smserrordiv');
+                        Smstoggeldata('#confirmationdiv');
+                    }
+                },
+                error: function() {
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                    $('#smserrordiv').html('<?php echo __('Something Went Wrong, Try Again Later.') ?>');
+                    Smstoggeldata('#smserrordiv');
+                }
+            });
+        });
+    });
+</script>

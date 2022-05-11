@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Communication/etc/communication.xsd">
+    <topic name="retailplace.product.import" request="Retailplace\MiraklMcm\Api\Data\ProductImportMessageInterface">
+        <handler name="processAddImportProductToQueue" type="Retailplace\MiraklMcm\Model\Queue\Consumer\Product" method="process" />
+    </topic>
+</config>

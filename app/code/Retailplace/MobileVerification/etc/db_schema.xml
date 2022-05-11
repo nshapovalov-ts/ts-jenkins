@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MobileVerification
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sms_verify">
+        <column xsi:type="int" name="sms_verify_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="ID"/>
+        <column xsi:type="varchar" name="mobile_number" nullable="false" length="15" comment="Mobile Number"/>
+        <column xsi:type="varchar" name="otp" nullable="false" length="12" comment="Otp"/>
+        <column xsi:type="smallint" name="isverify" padding="6" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is Verify"/>
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" default="0" comment="Customer Id"/>
+        <column xsi:type="datetime" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Create date"/>
+        <column xsi:type="datetime" name="updated_at" default="CURRENT_TIMESTAMP" on_update="true" nullable="false"
+                comment="Date Updated"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="sms_verify_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="SMS_VERIFY_CUSTOMER_ID">
+            <column name="customer_id"/>
+        </constraint>
+    </table>
+</schema>

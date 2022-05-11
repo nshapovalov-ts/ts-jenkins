@@ -1,0 +1,74 @@
+<div class="payment-method zipmoney" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <!-- zipMoney Logo -->
+            <img style="height:26px" data-bind="attr: {src: getPaymentAcceptanceMarkSrc(), alt: $t('zipMoney Acceptance Mark')}"
+                 class="payment-icon"/>
+            <!-- zipMoney Logo -->
+            <span class="ziptext-bg">Up to $150,000 interest free, <a href="https://zip.co/au/business/trade" target="_blank">learn more</a></span>
+            <!-- <span data-zm-asset="checkouttitle" data-zm-widget="inline">Own it now, pay later</span> -->
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <div class="zip-checkout-description">
+            <!-- <span class="zip-checkout-description-text" data-zm-widget='inline' data-zm-asset='checkoutdescription'></span> -->
+
+            <div class="zip-above-part">
+                <!-- zipMoney Logo -->
+                <img style="height:26px" data-bind="attr: {src: getPaymentAcceptanceMarkSrc(), alt: $t('zipMoney Acceptance Mark')}"
+                     class="payment-icon"/>
+
+                <!-- zipMoney Logo -->
+                <span class="fix-it-now" data-bind="i18n: 'Zip for Businesses, become a NEW ZipBiz customer in less than 30 minutes.'"></span>
+                <span class="pay-us-back"> <span data-bind="i18n: 'Step 1 - Apply for ZipBiz '"></span><a href="https://zip.co/zipbiz" target="_blank">here</a></span>
+                <span class="pay-us-back" data-bind="i18n: 'Step 2 - Wait for ZipBiz confirmation email'"></span>
+                <span class="pay-us-back" data-bind="i18n: 'Step 3 - Shop on TradeSquare and select '"></span>
+                <span class="pay-us-back" data-bind="i18n: 'ZipBiz at the checkout for your payment* '"></span>
+                <span class="pay-us-back small_text" data-bind="i18n: '*ZipBiz is only available after successful application.'"></span>
+
+                <a class="action action-help" data-zm-popup-asset="checkoutdialog" data-zm-widget="popup"  id="zipmoney-learn-more" style="display: inline !important">
+                    <!-- ko i18n: 'More information' --><!-- /ko -->
+                </a>
+            </div>
+
+            <div class="zip-below-part">
+            <span class="once-you" data-bind="i18n: 'Once you select “Pay with Zip”, you will be connected to Zip to securely complete your transaction.'"></span>
+            </div>
+        </div>
+
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: continueToZipMoney,
+                        attr: {title: $t('Pay with Zip')},
+                        css: {disabled: !isPlaceOrderActionAllowed()},
+                        enable: (getCode() == isChecked())
+                        "
+                        disabled>
+                    <!-- <span data-bind="text: getContinueText()"></span> -->
+                    <span data-bind="i18n: 'Pay with Zip'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

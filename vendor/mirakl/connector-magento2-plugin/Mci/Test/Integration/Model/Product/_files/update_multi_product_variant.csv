@@ -1,0 +1,4 @@
+shop_sku;category;brand;name;ean;description;mirakl_image_1;color;size;variant_group_code
+SHOPSKU;3;Lacoste UPDATE;Slim Fit Polo 1 UPDATE;EAN1234;This variant 1 ... UPDATE;https://assets.probikeshop.fr/images/products2/266/127251/127251-370-520-main.jpg;50;91;VARIANT
+SHOPSKU2;3;Lacoste UPDATE 2;Fat Fit Polo 2 UPDATE;EAN1235;This variant 2 ... UPDATE;https://assets.probikeshop.fr/images/products2/266/127251/127251-370-520-main.jpg;53;169;VARIANT
+SHOPSKU3;3;Lacoste NEW 2;Fat Fit Polo 2 NEW;EAN1236;This variant 3 ... NEW;https://assets.probikeshop.fr/images/products2/266/127251/127251-370-520-main.jpg;55;95;VARIANT

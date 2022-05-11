@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\CatalogInventory\Model\StockStateProvider">
+        <plugin name="mirakl_offer_product" type="Mirakl\Connector\Plugin\Model\CatalogInventory\StockStateProviderPlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Indexer\LinkedProductSelectBuilderByIndexPrice">
+        <plugin name="mirakl_connector" type="Mirakl\Connector\Plugin\Model\ResourceModel\Product\LinkedProductSelectBuilderByIndexPricePlugin" sortOrder="100" />
+    </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product\LinkedProductSelectBuilderByBasePrice">
+        <plugin name="mirakl_connector" type="Mirakl\Connector\Plugin\Model\ResourceModel\Product\LinkedProductSelectBuilderByBasePricePlugin" sortOrder="100" />
+    </type>
+    <type name="Magento\CatalogInventory\Observer\CancelOrderItemObserver">
+        <plugin name="mirakl_connector" type="Mirakl\Connector\Plugin\Observer\CatalogInventory\CancelOrderItemObserverPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\CatalogInventory\Model\Quote\Item\QuantityValidator\QuoteItemQtyList">
+        <plugin name="mirakl_connector" type="Mirakl\Connector\Plugin\Model\CatalogInventory\Quote\Item\QuoteItemQtyListPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="mirakl_connector_send_order" type="Mirakl\Connector\Plugin\Model\Order\OrderSavePlugin"/>
+    </type>
+    <type name="Magento\InventorySales\Plugin\Sales\OrderManagement\AppendReservationsAfterOrderPlacementPlugin">
+        <plugin name="mirakl_connector" type="Mirakl\Connector\Plugin\Model\InventorySales\OrderManagement\AppendReservationsAfterOrderPlacementPlugin"/>
+    </type>
+    <type name="Magento\InventoryIndexer\Indexer\IndexStructure">
+        <plugin name="mirakl_connector" type="Mirakl\Connector\Plugin\Indexer\Inventory\IndexStructurePlugin"/>
+    </type>
+    <virtualType name="miraklOfferSubscription" type="Mirakl\Connector\Model\Mview\View\Offer\Subscription">
+        <arguments>
+            <argument name="comparedUpdateColumns" xsi:type="array">
+                <item name="quantity" xsi:type="string">quantity</item>
+                <item name="active" xsi:type="string">active</item>
+                <item name="deleted" xsi:type="string">deleted</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="mirakl_collect_debits" xsi:type="object">Mirakl\Connector\Console\Command\Order\CollectDebitsCommand</item>
+                <item name="mirakl_collect_refunds" xsi:type="object">Mirakl\Connector\Console\Command\Order\CollectRefundsCommand</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\InventorySales\Model\IsProductSalableCondition\IsProductSalableConditionChain">
+        <arguments>
+            <argument name="conditions" xsi:type="array">
+                <item name="is_salable_with_offers" xsi:type="array">
+                    <item name="sort_order" xsi:type="number">40</item>
+                    <item name="object" xsi:type="object">Mirakl\Connector\Model\InventorySales\IsProductSalableCondition\IsSalableWithOfferCondition</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\InventorySales\Model\IsProductSalableForRequestedQtyCondition\IsProductSalableForRequestedQtyConditionChain">
+        <arguments>
+            <argument name="conditions" xsi:type="array">
+                <item name="is_salable_with_offers" xsi:type="array">
+                    <item name="sort_order" xsi:type="number">25</item>
+                    <item name="object" xsi:type="object">Mirakl\Connector\Model\InventorySales\IsProductSalableForRequestedQtyCondition\IsSalableWithOfferCondition</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Product\Type\AbstractType">
+        <plugin name="mirakl_frontend" type="Mirakl\Connector\Plugin\Model\Catalog\Product\Type\AbstractTypePlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="mirakl_frontend" type="Mirakl\Connector\Plugin\Model\Catalog\ProductPlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="mirakl_frontend" type="Mirakl\Connector\Plugin\Model\Checkout\ShippingInformationManagementPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="mirakl_frontend" type="Mirakl\Connector\Plugin\Model\Quote\AddressPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address\Total\Shipping">
+        <plugin name="mirakl_frontend" type="Mirakl\Connector\Plugin\Model\Quote\Address\Total\ShippingPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\OfflineShipping\Model\Carrier\Freeshipping">
+        <plugin name="mirakl_frontend_freeshipping" type="Mirakl\Connector\Plugin\Model\Carrier\FreeshippingPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Shipping\Model\CarrierFactory">
+        <plugin name="mirakl_frontend_freeshipping" type="Mirakl\Connector\Plugin\Model\Carrier\CarrierFactoryPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\CatalogInventory\Model\Quote\Item\QuantityValidator">
+        <plugin name="mirakl_frontend" type="Mirakl\Connector\Plugin\Model\CatalogInventory\Quote\Item\QuantityValidatorPlugin" sortOrder="50" />
+    </type>
+    <type name="Magento\Shipping\Model\Shipping">
+        <plugin name="mirakl_frontend_collect_carrier_rates" type="Mirakl\Connector\Plugin\Model\Shipping\ShippingPlugin" sortOrder="1" />
+    </type>
+</config>

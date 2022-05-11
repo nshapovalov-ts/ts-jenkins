@@ -1,0 +1,17 @@
+<?php
+// @codingStandardsIgnoreFile
+?>
+<?php if ($this->isEnabled()) : ?>
+    <?php $helper = $this->helper('WeltPixel\GoogleTagManager\Helper\Data'); ?>
+    <?php $email = $this->getEmail();
+    ?>
+    <?php if (isset($email)) : ?>
+    <?php
+    $cartData = [];
+    $cartData['email'] = $email;
+    $this->setDataLayerOption('event', 'emailSignup');
+    $this->setDataLayerOption('eventLabel', 'Newsletter');
+    $this->setEcommerceData('emailSignup', $cartData);
+    ?>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_EmailConfirmation
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Controller\Account\Confirm">
+        <plugin name="mpcustomerapproval_account_create_confirm" disabled="true"/>
+        <plugin name="retailplace_emailconfirmation_account_create_confirm"
+                type="Retailplace\EmailConfirmation\Plugin\CustomerConfirm"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\Customer\Model\ResourceModel\Customer">
+        <plugin name="retailplace_email_confirmation_customer_resource"
+                type="Retailplace\EmailConfirmation\Plugin\CustomerResourceModel"
+                sortOrder="100"/>
+    </type>
+    <preference for="Magento\Customer\Model\CustomerRegistry"
+                type="Retailplace\EmailConfirmation\Model\CustomerRegistry" />
+
+    <preference for="Magento\Customer\Controller\Account\LoginPost"
+                type="Retailplace\EmailConfirmation\Controller\Account\LoginPost" />
+
+    <preference for="Magento\Customer\Controller\Account\Confirm"
+                type="Retailplace\EmailConfirmation\Controller\Account\Confirm" />
+</config>

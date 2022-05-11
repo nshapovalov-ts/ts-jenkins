@@ -1,0 +1,114 @@
+<?php
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+$industryExclusionsFactory =  $objectManager->get('\Retailplace\MiraklSellerAdditionalField\Model\IndustryExclusionsFactory');
+
+$industryExclusionsCollection = $industryExclusionsFactory->create()->getCollection();
+$industryExclusionsCollection->addFieldToSelect('code');
+$industryExclusionsCollection->addFieldToSelect('label');
+$select = $industryExclusionsCollection->getSelect();
+$connection = $industryExclusionsCollection->getConnection();
+
+$allOptions = $connection->fetchAssoc((clone $select));
+$retailerOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(1, `visible_for`)'));
+$nonRetailerOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(2, `visible_for`)'));
+$businessOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(3, `visible_for`)'));
+$corporateGitingOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(4, `visible_for`)'));
+
+
+?>
+<script>
+    console.log('da');
+    require(
+        [
+            'jquery',
+            'jquery/ui'
+        ],
+        function(
+            $
+        ) {
+            var allOptions = JSON.parse('<?php echo json_encode($allOptions);?>');
+            var retailerOptions = JSON.parse('<?php echo json_encode($retailerOptions);?>');
+            var nonRetailerOptions = JSON.parse('<?php echo json_encode($nonRetailerOptions);?>');
+            var businessOptions = JSON.parse('<?php echo json_encode($businessOptions);?>');
+            var corporateGitingOptions = JSON.parse('<?php echo json_encode($corporateGitingOptions);?>');
+            var retailQuestion = "<?php echo __('What type of retailer are you ?')?>";
+            var originalQuestion = "<?php echo __('What is your industry ?')?>";
+
+            var waitForEl = function(selector, callback) {
+                if (jQuery(selector).length) {
+                    callback();
+                } else {
+                    setTimeout(function() {
+                        waitForEl(selector, callback);
+                    }, 100);
+                }
+            };
+
+
+            $(document).ready(function(){
+                waitForEl('[data-index="tradesquare"] select', function() {
+                    console.log( $('[data-index="tradesquare"] select option:selected').text());
+                    var selected=[];
+                    var i = 0;
+                    $('[data-index="industry"] select option:selected').each(function(){
+                        selected[i]=$(this).val();
+                        i++;
+                    });
+                    var label = $('[data-index="tradesquare"] select option:selected').text().trim();
+                    if(label == "Retailer - for retailing purposes"){
+                        $('[data-index="industry"] label:first').html(retailQuestion);
+                    }
+                    $('[data-index="tradesquare"] select').on('change',function (e){
+                        var label = $('[data-index="tradesquare"] select option:selected').text().trim();
+                        console.log( $('[data-index="tradesquare"] select option:selected').text());
+                        $('[data-index="industry"] select')
+                            .find('option')
+                            .remove()
+                            .end();
+                        if(label == "Retailer - for retailing purposes"){
+                            $('[data-index="industry"] label:first').html(retailQuestion);
+                            for(var optionCode in retailerOptions) {
+                                var selectedText = "";
+                                if(jQuery.inArray(optionCode, selected) !== -1)
+                                {
+                                    selectedText = "selected";
+                                }
+                                $('[data-index="industry"] select').append('<option '+ selectedText +' value="'+optionCode+'">'+retailerOptions[optionCode].label+'</option>');
+                            }
+                        }else if(label == "Non retailer - for retailing purposes"){
+                            $('[data-index="industry"] label:first').html(originalQuestion);
+                            for(var optionCode in nonRetailerOptions) {
+                                var selectedText = "";
+                                if(jQuery.inArray(optionCode, selected) !== -1)
+                                {
+                                    selectedText = "selected";
+                                }
+                                $('[data-index="industry"] select').append('<option '+ selectedText +' value="'+optionCode+'">'+nonRetailerOptions[optionCode].label+'</option>');
+                            }
+                        }else if(label == "For Business Use"){
+                            $('[data-index="industry"] label:first').html(originalQuestion);
+                            for(var optionCode in businessOptions) {
+                                var selectedText = "";
+                                if(jQuery.inArray(optionCode, selected) !== -1)
+                                {
+                                    selectedText = "selected";
+                                }
+                                $('[data-index="industry"] select').append('<option '+ selectedText +' value="'+optionCode+'">'+businessOptions[optionCode].label+'</option>');
+                            }
+                        }else if(label == "For Corporate Gifting"){
+                            $('[data-index="industry"] label:first').html(originalQuestion);
+                            for(var optionCode in corporateGitingOptions) {
+                                var selectedText = "";
+                                if(jQuery.inArray(optionCode, selected) !== -1)
+                                {
+                                    selectedText = "selected";
+                                }
+                                $('[data-index="industry"] select').append('<option '+ selectedText +' value="'+optionCode+'">'+corporateGitingOptions[optionCode].label+'</option>');
+                            }
+                        }
+                    });
+                });
+            });
+        }
+    );
+</script>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_PdfCustomizer
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <sales_pdf>
+            <invoice>
+                <footer>
+                    <![CDATA[TradeSquare Pty Ltd is raising this invoice on behalf of the sellers listed above. All queries regarding the goods, including any refund requests, must be directed to the relevant seller. Please refer to the seller’s terms and conditions, which governs such matters. Please also refer to TradeSquare’s terms and conditions located
+                    <a href="https://www.tradesquare.com.au/buyerterms" title="Buyerterms">https://www.tradesquare.com.au/buyerterms</a>, which provides (amongst other matters) that TradeSquare’s liability is limited to the extent set out in those terms.]]>
+                </footer>
+            </invoice>
+        </sales_pdf>
+    </default>
+</config>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirakl_Event::event" title="Events" module="Mirakl_Event" sortOrder="110" parent="Mirakl_Connector::system" action="mirakl/event" resource="Mirakl_Event::event"/>
+        <add id="Mirakl_Event::configuration" title="Events" module="Mirakl_Event" sortOrder="60" parent="Mirakl_Core::configuration" resource="Mirakl_Config::event" action="adminhtml/system_config/edit/section/mirakl_event/"/>
+    </menu>
+</config>

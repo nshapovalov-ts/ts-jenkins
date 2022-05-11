@@ -1,0 +1,108 @@
+<?php
+/**
+ * Retailplace_Aghaseller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+/**
+ * AghaSeller Trusted seller Template
+ *
+ * @var $block \Retailplace\Aghaseller\Block\Index\Index
+ */
+?>
+<?php
+$shops = $block->getAghaTrustedShop();
+?>
+<?php if ($shops->count()): ?>
+    <div class="agha-seller-list">
+        <div class="sellerlist trustedseller">
+            <ul id="agha_trusted_sellers_slider" class="seller-grid">
+                <?php /** @var \Mirakl\Core\Model\Shop $_shop */ ?>
+                <?php foreach ($shops as $_shop): ?>
+                    <?php
+                    $minimumOrder = $_shop->getData('min-order-amount');
+                    $shopName = $_shop->getName();
+                    ?>
+                    <li class="seller-item">
+                        <div class="seller-item-info">
+                            <?php
+                            $allImages = $block->getShopImages($_shop);
+                            ?>
+                            <div class="seller-img <?php if (count($allImages) > 1): ?>seller-img-slider owl-carousel owl-theme <?php endif; ?>">
+                                <?php if ($allImages): ?>
+                                    <?php $imageCount = 0; ?>
+                                    <?php foreach ($allImages as $image): ?>
+                                        <a href="<?= $_shop->getUrl(); ?>" title="<?= $shopName; ?>" class="seller-images">
+                                            <?php if ($imageCount === 0): ?>
+                                                <img src="<?= $image; ?>" class="no-lazy" alt="<?= $shopName; ?>"/>
+                                            <?php else: ?>
+                                                <img src="" data-src="<?= $image; ?>" class="owl-lazy" alt="<?= $shopName; ?>"/>
+                                            <?php endif; ?>
+                                        </a>
+                                        <?php $imageCount++; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                            <div class="seller-detail">
+                                <div class="seller-name">
+                                    <span class="shop-name">
+                                        <a href="<?php echo $_shop->getUrl(); ?>" title="<?php echo $shopName; ?>">
+                                            <strong><?php echo $this->escapeHtml($shopName) ?></strong>
+                                        </a>
+                                    </span>
+                                </div>
+                                <div class="seller-content">
+                                    <div class="minimum-order">
+                                        <?php if ($minimumOrder < 1) : ?>
+                                            <p><?php echo __('No Minimum'); ?></p>
+                                        <?php else: ?>
+                                            <p><?php echo $block->getFormatedPrice($minimumOrder) ?> <?php echo __('Minimum'); ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="aghaseller-label">
+                                        <span><?php echo __('AGHA Member'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        require([
+            'jquery',
+            'owlcarousel'
+        ], function ($) {
+            $(".agha-seller-list .seller-img-slider").owlCarousel({
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    480: {
+                        items: 1
+                    },
+                    768: {
+                        items: 1
+                    },
+                    992: {
+                        items: 1
+                    },
+                    1200: {
+                        items: 1
+                    },
+                },
+                autoplay: false,
+                loop: true,
+                nav: true,
+                navRewind: false,
+                dots: true,
+                autoplayHoverPause: true,
+                margin: 10
+            });
+        });
+    </script>
+<?php endif; ?>

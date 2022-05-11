@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklMcm
+ *
+ * @copyright Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job instance="Mirakl\Mcm\Model\Product\Import\Handler\Csv" method="sendReport" name="mirakl_mcm_product_integration_report">
+            <schedule>*/60 * * * *</schedule>
+        </job>
+        <job instance="Mirakl\Mcm\Model\Product\Import\Handler\Csv" method="resendFailedProducts" name="mirakl_mcm_product_resend_failed_products">
+            <schedule>0 3 * * *</schedule>
+        </job>
+    </group>
+</config>
+

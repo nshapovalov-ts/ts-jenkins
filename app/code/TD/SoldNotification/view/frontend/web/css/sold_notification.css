@@ -1,0 +1,109 @@
+#sold_notification {
+    border: 0 none;
+    border-radius: 6px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
+    display: none;
+    font-family: tahoma, sans-serif;
+    z-index: 99999;
+}
+
+#sold_notification img {
+    cursor: pointer;
+    float: left;
+    max-height: 85px;
+    max-width: 85px;
+    width: auto;
+    align-self: center;
+}
+
+#sold_notification.img-right img {
+    cursor: pointer;
+    float: right;
+    max-height: 85px;
+    max-width: 120px;
+    width: auto;
+}
+
+#sold_notification p {
+    float: left;
+    font-size: 13px;
+    line-height: 20px;
+    margin: 0 0 0 13px;
+    padding: 10px 5px 5px 0;
+    width: auto;
+}
+
+#sold_notification p a {
+    color: #000;
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    width: 100%;
+    margin: 0;
+}
+
+#sold_notification p a:hover {
+    color: #000;
+}
+
+#sold_notification p small {
+    display: block;
+    font-size: 10px;
+    margin-bottom: 8px;
+}
+
+#sold_notification {
+    padding-right: 25px;
+}
+
+#sold_notification.img-right {
+    padding: 0;
+}
+
+#sold_notification #notify-close {
+    background: rgba(0, 0, 0, 0) url("../images/close.png") repeat scroll 0 0 / cover;
+    cursor: pointer;
+    height: 16px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 16px;
+}
+
+@media screen and (max-width: 767px) {
+    #sold_notification {
+        box-sizing: border-box;
+        width: auto;
+        padding: 0;
+    }
+
+    #sold_notification img {
+        max-width: 20%;
+    }
+
+    #sold_notification a img {
+        max-width: 100%;
+    }
+
+    #sold_notification p {
+        font-size: 11px;
+        width: 70%;
+    }
+
+    #sold_notification p a {
+        font-size: 13px;
+    }
+
+    #sold_notification p small {
+        margin-bottom: 0;
+    }
+}
+
+#sold_notification {
+    background-color: #ffffff;
+    color: #0f0f0f;
+}
+
+#sold_notification a {
+    color: #0f0f0f;
+}

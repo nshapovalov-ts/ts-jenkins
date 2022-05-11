@@ -1,0 +1,30 @@
+{
+    "name": "amasty/shopby",
+    "description": "Improved Layered Navigation by Amasty",
+    "require": {
+        "php": "^7.1.0",
+        "amasty/base": ">=1.10.5",
+        "magento/module-layered-navigation": ">=100.2.0",
+        "magento/module-swatches": ">=100.2.0",
+        "amasty/module-shop-by-base": ">=2.13.7",
+        "amasty/module-shop-by-brand": ">=2.10.11",
+        "amasty/shopby-seo": ">=2.11.7",
+        "amasty/module-improved-layered-navigation-page": ">=2.7.7"
+    },
+    "suggest": {
+        "amasty/shopby-graphql": "Install shopby-graph-ql module to activate GraphQl and Shopby integration."
+    },
+    "type": "magento2-module",
+    "version": "2.14.4",
+    "license": [
+        "Commercial"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\Shopby\\": ""
+        }
+    }
+}

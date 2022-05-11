@@ -1,0 +1,202 @@
+/* Customer Account Create (START) */
+.countrycode {
+	max-width: 70px;
+	width: 20%;
+	float:left;
+}
+
+.mobilenumber {
+	float: left;
+	margin-left: 5px;
+	max-width: 200px;
+	width: 80%;
+}
+/* Customer Account Create (END) */
+.block.block-new-customer {
+	float: left;
+}
+.otp_input {
+	width: 100%;
+	padding: 5px 0;
+	min-width: 100%;
+}
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 9999999999; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.71); /* Black w/ opacity */
+}
+.modal .error {
+	background-color: #faebe7;
+	border-color: transparent -moz-use-text-color transparent #df280a;
+	border-style: solid;
+	color: black;
+	font-weight: 600;
+	width: 80%;
+	padding: 0 8px;
+}
+.modal .success {
+	background-color: #eff5ea;
+	border-color: transparent -moz-use-text-color transparent #eff5ea;
+	border-style: solid solid solid solid;
+	color: black;
+	font-weight: 600;
+	width: 80%;
+}
+.modal .page-title {
+	color: #2e8ab8;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+}
+.modal .error span {
+	font-size: 12px;
+	margin-left: 11px;
+}
+.modal .button {
+	font-weight: bold !important;
+}
+/* Modal Content/Box */
+.smspro-modal-content {
+	background-color: #ECEFF1;
+	border: 3px solid #e0e0e0;
+	margin: 15% 30%;
+	padding: 20px;
+	position: absolute;
+}
+.submitbtnajax, .progress-indicator {
+	float: right;
+}
+.model-bottom {
+	margin-top: 15px;
+}
+/* The Close Button */
+.close {
+	color: #fff;
+	font-size: 26px;
+	font-weight: bold;
+	position: absolute;
+	right: 2px;
+	top: -9px;
+}
+.closediv {
+	background-color : #000;
+	border: 1px solid #000;
+	border-radius: 50%;
+	float: right;
+	height: 20px;
+	position: relative;
+	right: -27px;
+	text-align: center;
+	top: -34px;
+	vertical-align: middle;
+	width: 20px;
+}
+.smspro-modal-content .action {
+	text-transform: uppercase;
+}
+.close:hover, .close:focus {
+	text-decoration: none;
+	cursor: pointer;
+}
+.ajax-is-otp-require .smspro-modal-content {
+	width: 26%;
+}
+.modal input[type="text"], .modal input[type="password"] {
+	border-radius: 5px;
+	border: 2px solid #d2dae2;
+}
+.updatemobbtn.action.primary {
+	margin: 15px 0;
+}
+.verified span {
+	background-color: green;
+	color: white;
+	float: right;
+	margin-bottom: 5px;
+	padding: 6px;
+	width: auto !important;
+	border-radius: 6px;
+}
+.not-verified span {
+	background-color: red;
+	color: white;
+	float: right;
+	margin-bottom: 5px;
+	padding: 6px;
+	width: auto !important;
+	border-radius: 6px;
+}
+.mobverify-page-title{
+	float:left;
+}
+.update_mob_text, .update_mob_btn {
+    float: left;
+    width: 100%;
+}
+.update_mob_text > span, .update_mob_text > input {
+    clear: both;
+    float: left;
+}
+.resend_otp_mob {
+    float: left;
+    margin-left: 7px;
+}
+.verify_mob {
+    float: left;
+}
+.infosms {
+    font-size: 11px;
+}
+
+
+#countrycode-error {
+    display: none !important;
+}
+/* Version 1.0.3 Start*/
+.otp_label {
+   font-size: 16px;
+}
+.verifyotptomobile {
+    float: right;
+    color: #adadad;
+	cursor: pointer;
+}
+.loadingImgCss
+{
+	display: none;
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	align-self: auto;
+}
+.alignLeft
+{
+	float:left;
+}
+.verify_update_mob_btn
+{
+	float:left;
+}
+/* Verstion 1.0.3 End*/
+@media only screen and (max-width: 768px) {
+	.ajax-is-otp-require .smspro-modal-content {
+    width: 50%;
+	 margin: 14% 10%;
+}
+
+}
+@media only screen and (max-width: 500px) {
+	.ajax-is-otp-require .smspro-modal-content {
+    	width: 70%;
+		margin: 14% 10%;
+	}
+
+}

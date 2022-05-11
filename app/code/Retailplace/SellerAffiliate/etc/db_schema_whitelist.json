@@ -1,0 +1,19 @@
+{
+    "retailplace_shop_affiliate": {
+        "column": {
+            "is_user_affiliated": true,
+            "selleraffiliate_id": true,
+            "customer_id": true,
+            "seller_id": true,
+            "click_datetime": true,
+            "ip_address": true,
+            "affiliate_url": true,
+            "clientside_datetime": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "RETAILPLACE_SHOP_AFFILIATE_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": true,
+            "RETAILPLACE_SHOP_AFFILIATE_SELLER_ID_MIRAKL_SHOP_ID": true
+        }
+    }
+}

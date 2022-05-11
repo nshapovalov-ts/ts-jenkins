@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Shopby
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Kosykh <dmitriykosykh@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\Shopby\Plugin\ShopbySeo\Helper\Url" type="Retailplace\Shopby\Plugin\ShopbySeo\Helper\Url"/>
+    <type name="Amasty\Shopby\Block\Navigation\Top\Navigation">
+        <plugin name="Retailplace_Shopby::hide_filters_by_attributes_showattributes"
+                type="Retailplace\Shopby\Plugin\Navigation\Top\Navigation"
+                sortOrder="10"/>
+    </type>
+    <type name="Amasty\Shopby\Model\ResourceModel\Fulltext\Collection">
+        <plugin name="Retailplace_Shopby::mirakl_add_exclusion_filter_before_get_faceted_data"
+                type="Retailplace\Shopby\Plugin\AddMiraklFilter" />
+    </type>
+</config>

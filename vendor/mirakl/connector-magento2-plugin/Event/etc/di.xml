@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mirakl\Catalog\Helper\Product">
+        <plugin name="mirakl_event" type="Mirakl\Event\Plugin\Helper\Catalog\ProductPlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Catalog\Helper\Category">
+        <plugin name="mirakl_event" type="Mirakl\Event\Plugin\Helper\Catalog\CategoryPlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Mci\Helper\Attribute">
+        <plugin name="mirakl_event" type="Mirakl\Event\Plugin\Helper\Mci\AttributePlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Mci\Helper\Hierarchy">
+        <plugin name="mirakl_event" type="Mirakl\Event\Plugin\Helper\Mci\HierarchyPlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Mci\Helper\ValueList">
+        <plugin name="mirakl_event" type="Mirakl\Event\Plugin\Helper\Mci\ValueListPlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Mcm\Helper\Product\Export\Process">
+        <plugin name="mirakl_event" type="Mirakl\Event\Plugin\Helper\Mcm\Product\Export\ProcessPlugin" sortOrder="100"/>
+    </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="event" xsi:type="object">Mirakl\Event\Console\Command\EventCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

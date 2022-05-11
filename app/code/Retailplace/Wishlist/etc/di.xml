@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_Wishlist
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Wishlist\Controller\Index\Add"
+                type="Retailplace\Wishlist\Controller\Wishlist\Index\Add"/>
+    <type name="Magento\Wishlist\CustomerData\Wishlist">
+        <plugin name="wishlist_customer_data" type="Retailplace\Wishlist\Plugin\CustomerData\WishlistPlugin" />
+    </type>
+    <type name="Magento\Wishlist\Helper\Data">
+        <plugin name="Retailplace_Wishlist::wishlist_customer_data" type="Retailplace\Wishlist\Plugin\Helper\Data" />
+    </type>
+
+    <type name="Magento\Wishlist\Model\Item">
+        <plugin name="Retailplace_Wishlist::wishlist_item" type="Retailplace\Wishlist\Plugin\Model\Item" />
+    </type>
+</config>

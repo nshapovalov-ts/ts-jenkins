@@ -1,0 +1,7 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="TD_SoldNotification::css/sold_notification.css"/>
+        <css src="TD_SoldNotification::css/animate.min.css"/>
+        <link src="TD_SoldNotification::js/sold_notification.js"/>
+    </head>
+</page>

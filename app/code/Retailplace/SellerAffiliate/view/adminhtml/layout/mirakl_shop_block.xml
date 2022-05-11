@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.shop.grid.container">
+            <referenceBlock name="shop.grid" >
+                <referenceBlock  name="shop.grid.columnSet">
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="affiliate_url">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Affiliate Url</argument>
+                            <argument name="filter" xsi:type="string">0</argument>
+                            <argument name="sortable" xsi:type="string">0</argument>
+                            <argument name="index" xsi:type="string">id</argument>
+                            <argument name="column_css_class" xsi:type="string">col-affiliate</argument>
+                            <argument name="header_css_class" xsi:type="string">col-affiliate</argument>
+                            <argument name="renderer" xsi:type="string">Retailplace\SellerAffiliate\Block\Adminhtml\Column\Renderer\AffiliateUrl</argument>
+                        </arguments>
+                    </block>
+                </referenceBlock>
+            </referenceBlock>
+        </referenceBlock>
+    </body>
+</page>

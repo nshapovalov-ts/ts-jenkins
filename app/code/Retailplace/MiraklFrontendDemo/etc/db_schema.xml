@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklFrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table comment="retailplace_messages_stats Table" engine="innodb" name="retailplace_messages_stats"
+           resource="default">
+        <column comment="Entity Id" identity="true" name="id" nullable="false" padding="6" unsigned="true"
+                xsi:type="smallint"/>
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RETAILPLACE_MESSAGES_STATS_THREAD_ID">
+            <column name="thread_id"/>
+        </constraint>
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="true" identity="false"
+                default="0" comment="Customer ID"/>
+        <column name="thread_id" xsi:type="varchar" nullable="false" length="56" comment="Thread Id"/>
+        <column name="entity_id" xsi:type="varchar" nullable="false" length="56" comment="Entity Id"/>
+        <column name="type" xsi:type="varchar" nullable="false" length="56" comment="Thread Type"/>
+        <column name="total_count" xsi:type="smallint" padding="6" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Total Messages Count"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <index referenceId="RETAILPLACE_MESSAGES_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="RETAILPLACE_MESSAGES_CUSTOMER_ID_ENTITY_ID_TYPE" indexType="btree">
+            <column name="customer_id"/>
+            <column name="entity_id"/>
+            <column name="type"/>
+        </index>
+    </table>
+
+    <table comment="retailplace_messages Table" engine="innodb" name="retailplace_messages" resource="default">
+        <column comment="Entity Id" identity="true" name="id" nullable="false" padding="6" unsigned="true"
+                xsi:type="smallint"/>
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RETAILPLACE_MESSAGES_MESSAGE_ID">
+            <column name="message_id"/>
+        </constraint>
+        <column name="message_id" xsi:type="varchar" nullable="false" length="56" comment="Message Id"/>
+        <column name="thread_id" xsi:type="varchar" nullable="false" length="56" comment="Thread Id"/>
+        <column name="is_attachment" xsi:type="smallint" padding="6" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is Attachment"/>
+        <column name="type" xsi:type="varchar" nullable="false" length="56" comment="Message Type"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <index referenceId="RETAILPLACE_MESSAGES_THREAD_ID" indexType="btree">
+            <column name="thread_id"/>
+        </index>
+    </table>
+</schema>

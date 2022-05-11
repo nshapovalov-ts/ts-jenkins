@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * Retailplace_PdfCustomizer
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+use Magento\Framework\View\Element\Template;
+
+/** @var $block Template */
+$refunds = $block->getRefunds();
+$items = $refunds->getItems();
+?>
+
+<table class="seller_items" style="padding-top: 25px; page-break-inside: auto;">
+    <tbody>
+        <tr class="row grey_200" style="margin-top: 15px; width: 988px; page-break-inside: auto;">
+            <th class="radius_l" align="left"><?= __('Description') ?></th>
+            <th style="width: 100px;"><?= __('Date') ?></th>
+            <th style="width: 80px;" align="center"><?= __('Qty') ?></th>
+            <th style="width: 100px;"><?= __('Amount') ?></th>
+            <th style="width: 80px;" class="radius_r"><?= __('GST (included)') ?></th>
+        </tr>
+
+        <?php $rowCount = 0; ?>
+
+        <?php foreach ($items as $key => $item): ?>
+            <?php $rowCount++; ?>
+            <tr class="row  <?= ($key % 2 != 0) ? "grey_100" : "" ?>" style="page-break-inside: auto;">
+                <td class="item_description radius_l" align="left"><span><?= $item->getName() ?></span></td>
+                <td class="item_date" align="right"><span><?= $item->getDate() ?></span></td>
+                <td class="item_qty" align="center"><span><?= $item->getQty() ?></span></td>
+                <td class="item_amount" align="right"><span><?= $item->getAmount() ?></span></td>
+                <td class="item_tax radius_r" align="right"><span><?= $item->getTax() ?></span></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_AuPost
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Sm\MegaMenu\Model\ResourceModel\MenuItems\Collection">
+        <plugin name="megamenu_add_customer_group_condition"
+                type="Retailplace\AuPost\Plugin\MegamenuCollection"
+                sortOrder="10"/>
+    </type>
+    <type name="Sm\MegaMenu\Block\MegaMenu\View">
+        <plugin name="megamenu_add_customer_group_cache_key"
+                type="Retailplace\AuPost\Plugin\MegamenuCache"
+                sortOrder="10"/>
+    </type>
+    <type name="Retailplace\AuPost\Plugin\MegamenuCollection">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Retailplace\AuPost\Plugin\MegamenuCache">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+</config>

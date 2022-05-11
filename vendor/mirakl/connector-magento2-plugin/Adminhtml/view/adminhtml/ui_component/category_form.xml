@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="mirakl">
+        <container name="mirakl_action">
+             <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Mirakl_Adminhtml/js/category-buttons</item>
+                    <item name="template" xsi:type="string">Mirakl_Adminhtml/category/buttons</item>
+                    <item name="actionUrl" xsi:type="url" path="mirakl/category/updateTree" />
+                    <item name="alertEnableMsg" xsi:type="string">Are you sure? This will enable Mirakl Synchronization attribute on this category and all children.</item>
+                    <item name="alertDisableMsg" xsi:type="string">Are you sure? This will disable Mirakl Synchronization attribute on this category and all children.</item>
+                </item>
+            </argument>
+        </container>
+    </fieldset>
+</form>

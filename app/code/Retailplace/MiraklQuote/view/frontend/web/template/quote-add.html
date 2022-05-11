@@ -1,0 +1,105 @@
+<div class="mirakl-quote quote-add">
+    <!-- ko if: miraklShop().name -->
+    <div class="quote-status-progress">
+        <ul class="progress-list">
+            <li>
+                <span data-bind="attr: {class: getStepClass(1)}">1</span>
+                <span data-bind="i18n: 'Request a Quote'"></span>
+            </li>
+            <li>
+                <span data-bind="attr: {class: getStepClass(2)}">2</span>
+                <span data-bind="i18n: 'Get Supplier Quote'"></span>
+            </li>
+            <li>
+                <span data-bind="attr: {class: getStepClass(3)}">3</span>
+                <span data-bind="i18n: 'Accept or Reject'"></span>
+            </li>
+        </ul>
+    </div>
+
+    <section class="quote-request-data">
+        <div class="heading quote-request-heading">
+            <div class="quote-seller-name">
+                <span data-bind="text: miraklShop().name"></span>
+            </div>
+        </div>
+
+        <div class="quote-products-table">
+            <table class="quote-products">
+                <thead>
+                <tr>
+                    <th class="description" data-bind="i18n: 'Item'"></th>
+                    <th class="quantity" data-bind="i18n: 'Quantity'"></th>
+                    <th class="price" data-bind="i18n: 'Price per Unit'"></th>
+                    <th class="cost" data-bind="i18n: 'Cost'"></th>
+                </tr>
+                </thead>
+                <tbody data-bind="foreach: lineCollection()">
+                <tr>
+                    <td>
+                        <div class="image_block">
+                            <a data-bind="attr: {href: product_url}">
+                                <img data-bind="attr: {src: image_url, alt: product_title}" />
+                            </a>
+                        </div>
+                        <div>
+                            <a data-bind="attr: {href: product_url}, text: product_title"></a>
+                        </div>
+                        <!-- ko if: $data.leadtime_to_ship -->
+                        <div class="leadtime-to-ship">
+                            <div class="ship-label">
+                                <span data-bind="i18n: 'Lead time to ship'"></span>
+                                <div class="toolpick">
+                                    <div class="toolpick-ico">
+                                        <i>i</i>
+                                        <div class="toolpick-text">
+                                            <p data-bind="i18n: 'The time a Seller has to process and prepare your order for shipment prior to goods leaving the warehouse'"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="ship-time">
+                                <span class="ship-time" data-bind="text: leadtime_to_ship"></span>
+                                <span class="ship-time" data-bind="text: leadtime_to_ship == 1 ? 'day' : 'days'"></span>
+                            </span>
+                        </div>
+                        <!-- /ko -->
+                        
+                        <!-- ko if: $data.options -->
+                        <div class="additional-options" data-bind="foreach: options">
+                            <div data-bind="text: $data"></div>
+                        </div>
+                        <!-- /ko -->
+                    </td>
+                    <td data-th="Quantity" class="quantity" data-bind="text: quantity"></td>
+                    <td data-th="Price per Unit" class="unit_price" data-bind="text: unit_price_formatted"></td>
+                    <td data-th="Cost" class="row_total" data-bind="text: row_total"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="quote-request-messages">
+        <div class="section-title" data-bind="i18n: 'Latest Messages'"></div>
+        <form method="post" afterRender="formInit">
+            <div class="message">
+                <textarea name="quote_message" required="true" minlength="3"></textarea>
+            </div>
+            <div class="buttons-block">
+                <button type="submit" data-bind="i18n: 'Request Quote'"></button>
+            </div>
+            <div class="form-errors-block" data-bind="foreach: formErrors()">
+                <div data-bind="text: $data"></div>
+            </div>
+        </form>
+    </section>
+    <!-- /ko -->
+
+    <!-- if pageErrors().length -->
+    <div class="page-errors-block" data-bind="foreach: pageErrors()">
+        <div data-bind="text: $data"></div>
+    </div>
+    <!-- /ko -->
+
+
+</div>

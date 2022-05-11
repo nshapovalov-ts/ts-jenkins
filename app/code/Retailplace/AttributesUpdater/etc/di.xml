@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_AttributesUpdater
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Retailplace\AttributesUpdater\Model\Config\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">Retailplace\AttributesUpdater\Model\Config\Reader</argument>
+            <argument name="cacheId" xsi:type="string">retailplace_attributes_updater_list_cache</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="attribute_updaters" xsi:type="object">Retailplace\AttributesUpdater\Console\Command\AttributeUpdaters</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="RetailplaceUpdaterDebug" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">/var/log/attributeUpdater.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="RetailplaceUpdaterLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">RetailplaceUpdaterDebug</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Retailplace\AttributesUpdater\Model\Updater\AbstractUpdater">
+        <arguments>
+            <argument name="logger" xsi:type="object">RetailplaceUpdaterLogger</argument>
+        </arguments>
+    </type>
+</config>

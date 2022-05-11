@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.offer.grid.container">
+            <block class="Mirakl\Connector\Block\Adminhtml\Offer\Grid" name="offer.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">offer_grid</argument>
+                    <argument name="dataSource" xsi:type="object">Mirakl\Connector\Model\ResourceModel\Offer\Collection</argument>
+                    <argument name="default_sort" xsi:type="string">offer_id</argument>
+                    <argument name="default_dir" xsi:type="string">DESC</argument>
+                    <argument name="save_parameters_in_session" xsi:type="string">1</argument>
+                </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" name="offer.grid.columnSet" as="grid.columnSet">
+                    <arguments>
+                        <argument name="rowUrl" xsi:type="array">
+                            <item name="generatorClass" xsi:type="string">Magento\Backend\Model\Widget\Grid\Row\UrlGenerator</item>
+                            <item name="path" xsi:type="string">*/*/view</item>
+                            <item name="extraParamsTemplate" xsi:type="array">
+                                <item name="id" xsi:type="string">getId</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="offer_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Offer ID</argument>
+                            <argument name="index" xsi:type="string">offer_id</argument>
+                            <argument name="width" xsi:type="string">80</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Mirakl\Connector\Block\Adminhtml\Offer\Grid\Column\Product\Sku" as="product_sku">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Product SKU</argument>
+                            <argument name="index" xsi:type="string">product_sku</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="escape" xsi:type="string">1</argument>
+                            <argument name="url" xsi:type="string">1</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="product_name">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Product Name</argument>
+                            <argument name="index" xsi:type="string">product_name</argument>
+                            <argument name="filter_index" xsi:type="string">names.value</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="escape" xsi:type="string">1</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="shop_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Shop ID</argument>
+                            <argument name="index" xsi:type="string">shop_id</argument>
+                            <argument name="width" xsi:type="string">80</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="shop_name">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Shop Name</argument>
+                            <argument name="index" xsi:type="string">shop_name</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="escape" xsi:type="string">1</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="state_code">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Condition</argument>
+                            <argument name="index" xsi:type="string">state_code</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="with_empty" xsi:type="string">0</argument>
+                            <argument name="options" xsi:type="options" model="Mirakl\Connector\Eav\Model\Entity\Attribute\Source\Offer\State"/>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="price">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Price</argument>
+                            <argument name="index" xsi:type="string">price</argument>
+                            <argument name="type" xsi:type="string">default</argument>
+                            <argument name="filter_type" xsi:type="string">number</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="min_shipping_price">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Min Shipping Price</argument>
+                            <argument name="index" xsi:type="string">min_shipping_price</argument>
+                            <argument name="type" xsi:type="string">default</argument>
+                            <argument name="filter_type" xsi:type="string">number</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="total_price">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Total Price</argument>
+                            <argument name="index" xsi:type="string">total_price</argument>
+                            <argument name="type" xsi:type="string">default</argument>
+                            <argument name="filter_type" xsi:type="string">number</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="currency_iso_code">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Currency</argument>
+                            <argument name="index" xsi:type="string">currency_iso_code</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="quantity">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Qty</argument>
+                            <argument name="index" xsi:type="string">quantity</argument>
+                            <argument name="width" xsi:type="string">80</argument>
+                            <argument name="type" xsi:type="string">number</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="active">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Active</argument>
+                            <argument name="index" xsi:type="string">active</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="with_empty" xsi:type="string">1</argument>
+                            <argument name="options" xsi:type="options" model="Mirakl\Core\Model\Config\Source\TrueFalse"/>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Widget\Grid\Column\Renderer\Boolean</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="action">
+                        <arguments>
+                            <argument name="type" xsi:type="string">action</argument>
+                            <argument name="header" xsi:type="string" translate="true">Action</argument>
+                            <argument name="filter" xsi:type="string">0</argument>
+                            <argument name="sortable" xsi:type="string">0</argument>
+                            <argument name="index" xsi:type="string">offer_id</argument>
+                            <argument name="align" xsi:type="string">center</argument>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Widget\Grid\Column\Renderer\Action</argument>
+                            <argument name="actions" xsi:type="array">
+                                <item name="view" xsi:type="array">
+                                    <item name="caption" xsi:type="string" translate="true">View</item>
+                                    <item name="url" xsi:type="array">
+                                        <item name="base" xsi:type="string">*/*/view</item>
+                                    </item>
+                                    <item name="field" xsi:type="string">id</item>
+                                </item>
+                            </argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

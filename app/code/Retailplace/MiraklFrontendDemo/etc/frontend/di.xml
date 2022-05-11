@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mirakl\FrontendDemo\Controller\Order\PostIncident" type="Retailplace\MiraklFrontendDemo\Rewrite\Controller\Order\PostIncident"/>
+    <preference for="Mirakl\FrontendDemo\Controller\Shop\View" type="Retailplace\MiraklFrontendDemo\Rewrite\Controller\Shop\View"/>
+    <preference for="Mirakl\FrontendDemo\Plugin\Block\Product\ListProductPlugin" type="Retailplace\MiraklFrontendDemo\Rewrite\Plugin\Block\Product\ListProductPlugin"/>
+    <preference for="Mirakl\FrontendDemo\Plugin\Block\CartPlugin" type="Retailplace\MiraklFrontendDemo\Rewrite\Plugin\Block\CartPlugin"/>
+    <preference for="Mirakl\FrontendDemo\Block\Message\Index" type="Retailplace\MiraklFrontendDemo\Rewrite\Block\Message\Index"/>
+    <preference for="Mirakl\FrontendDemo\Block\Message\View" type="Retailplace\MiraklFrontendDemo\Rewrite\Block\Message\View"/>
+    <preference for="Mirakl\FrontendDemo\Block\Message\Order" type="Retailplace\MiraklFrontendDemo\Rewrite\Block\Message\Order"/>
+    <preference for="Mirakl\FrontendDemo\Controller\Message\Index" type="Retailplace\MiraklFrontendDemo\Rewrite\Controller\Message\Index"/>
+    <preference for="Mirakl\FrontendDemo\Controller\Message\PostReply" type="Retailplace\MiraklFrontendDemo\Rewrite\Controller\Message\PostReply"/>
+    <preference for="Mirakl\FrontendDemo\Controller\Order\PostThread" type="Retailplace\MiraklFrontendDemo\Rewrite\Controller\Order\PostThread"/>
+
+    <type name="Mirakl\FrontendDemo\Helper\Message">
+        <plugin name="retailplace_messages_get_participants_names" type="Retailplace\MiraklFrontendDemo\Plugin\Helper\Message"/>
+    </type>
+</config>

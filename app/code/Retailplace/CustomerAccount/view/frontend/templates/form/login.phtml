@@ -1,0 +1,90 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Customer\Block\Form\Login $block */
+?>
+<div class="block block-customer-login">
+    <div class="login-image">
+            <img src="<?= $this->getUrl('pub/media/signup/') . 'welcome_back.png'?>" alt="Login In" title="Login In"/>
+        </div>
+    <div class="block-title">
+        <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Welcome back!')) ?></strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading">
+        <form class="form form-login"
+              action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
+              method="post"
+              id="login-form"
+              data-mage-init='{"validation":{}}'>
+            <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+                <div class="field note"><?= $block->escapeHtml(__('If you have an account, sign in with your email address.')) ?></div>
+                <div class="field email required">
+                    <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                    <div class="control">
+                        <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> id="email" type="email" class="input-text" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true, 'validate-email':true}">
+                    </div>
+                </div>
+                <div class="field password required">
+                    <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+                    <div class="control">
+                        <input name="login[password]" type="password" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> class="input-text" id="pass" title="<?= $block->escapeHtmlAttr(__('Password')) ?>" data-validate="{required:true}">
+                    </div>
+                </div>
+                <?= $block->getBlockHtml('redirect.info'); ?>
+                <?= $block->getChildHtml('form_additional_info') ?>
+                <div class="actions-toolbar">
+                    <div class="primary"><button type="submit" class="action login primary" name="send" id="send2"><span><?= $block->escapeHtml(__('Sign In')) ?></span></button></div>
+                    <div class="secondary"><a class="action remind" href="javascript:void(0)" id="forgot-password"><span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span></a></div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="or-social-login"><span><?= $block->escapeHtml(__('Or Sign in with')) ?></span></div>
+    <?= $block->getChildHtml('social-login-popup-authentication-social-login') ?>
+    <div class="dont-you-have-sign-up">
+        <?= $block->escapeHtml(__('Don\'t have an account yet?')) ?>
+        <a class="signup-popup"><?= __('Sign up') ?></a>
+    </div>
+</div>
+
+<div id="forgot-password-popup" style="display: none;">
+   <?= $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Retailplace_CustomerAccount::form/forgotpassword.phtml")->toHtml();?>
+</div>
+
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                modalClass: 'forgot-password',
+                buttons: [],
+            };
+
+            var popup = modal(options, $('#forgot-password-popup'));
+            $("#forgot-password").on('click',function(){
+                $("#forgot-password-popup").modal("openModal");
+            })
+            $("#forgot-password-close").on('click',function(){
+                $("#forgot-password-popup").modal("closeModal");
+            })
+            /*$(document).on("click","#signup-popup",function(){
+                $('#signup-popup-modal').modal('openModal');
+            });*/
+        }
+    );
+</script>
+

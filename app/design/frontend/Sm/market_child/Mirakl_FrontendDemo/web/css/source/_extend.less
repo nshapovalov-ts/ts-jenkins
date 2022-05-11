@@ -1,0 +1,1346 @@
+// Mode: Tablet
+@tablet: ~"(min-width: 320px) and (max-width: 767px)";
+// Mode: Desktop
+@desktop: ~"(min-width: 768px) and (max-width: 991px)";
+
+
+.message-count-box-mixin {
+    display: inline-block;
+    padding: 0;
+    width: 20px;
+    text-align: center;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    color: #ffffff;
+    background: #EE8445;
+    line-height: 20px;
+    border-radius: 30px;
+    position: absolute;
+}
+
+.header-container .container .message-count-box {
+    .message-count-box-mixin;
+    margin: 0 0 0 -40px;
+}
+
+#account-nav ul.nav.items .item-count-box {
+    .message-count-box-mixin;
+    margin: 0 0 0 6px;
+}
+
+#my-customer-messages-table {
+
+    .message-type {
+        &-order, &-product {
+            display: inline-block;
+            margin: 0 0 0 -17px;
+            padding: 0px 8px 0px 7px;
+            text-align: center;
+            font-family: 'Hurme Geometric Sans 3';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 11px;
+            line-height: 20px;
+            border-radius: 30px;
+        }
+
+        &-order {
+            color: #92522e;
+            background: #EE8445;
+        }
+
+        &-product {
+            color: #608526;
+            background: #adee45;
+        }
+    }
+
+    .is-read-message {
+        background: #F8F8F8;
+        border-radius: 10px;
+    }
+
+}
+
+.attachment-file-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: 0px;
+    background: #E5E5E5 url(../images/attachment_file.svg) no-repeat left 8px center;
+    border-radius: 6px;
+}
+
+#marketplace-message-form-reply div.meta.note-attachments {
+    margin-top: 10px;
+}
+
+
+.marketplace-message-index .page-title-wrapper .page-title {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: bold !important;
+    font-size: 36px !important;
+    line-height: 130%;
+    color: #000000;
+    text-transform: none;
+}
+
+.marketplace-message-index .page-title-wrapper .page-title:before {
+    display: none;
+}
+
+.table-wrapper.customer-messages .table-customer-messages {
+    border-collapse: collapse;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr th {
+    background: #873456;
+    border-radius: 0px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    border: none !important;
+    font-size: 14px;
+    line-height: 130%;
+    color: #FFFFFF;
+    padding: 11px 21px;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr th:nth-child(1) {
+    border-radius: 10px 0px 0 10px;
+    width: 200px;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr th:nth-last-child(1) {
+    border-radius: 0px 10px 10px 0px;
+    width: 165px;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr td {
+    padding: 24px 21px;
+    vertical-align: middle;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.message-separator td {
+    border-bottom: 1px solid #ebebeb !important;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr td.participants a {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 130%;
+    color: #000000;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr td.date a {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 130%;
+    color: #999999;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr td.subject a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#my-customer-messages-table .message-type-product {
+    margin: 0px !important;
+    background: rgba(76, 166, 6, 0.15);
+    border-radius: 12px;
+    padding: 0 9px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    height: 23px;
+    float: left;
+    line-height: 23px;
+    text-transform: uppercase;
+    color: #4CA606;
+}
+
+#my-customer-messages-table .message-type-order {
+    margin: 0px !important;
+    background: rgba(238, 132, 69, 0.15);
+    border-radius: 12px;
+    padding: 0 9px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    height: 23px;
+    float: left;
+    line-height: 23px;
+    text-transform: uppercase;
+    color: #EE8445;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr td.subject a .customer-messages-subject:nth-child(1) {
+    width: 77px;
+    margin-right: 10px;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr td.subject a .customer-messages-subject:nth-child(2) {
+    margin-right: 20px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 130%;
+    width: 150px;
+    color: #000000;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr td.subject a .customer-messages-subject:nth-child(3) {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 130%;
+    color: #999999;
+    max-width: 200px;
+}
+
+#my-customer-messages-table .is-read-message {
+    background: none;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.is-read-message td {
+    background: #F8F8F8;
+    border-bottom: 2px solid #ffffff !important;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.is-read-message td:nth-child(1) {
+    border-radius: 10px 0px 0 10px;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.is-read-message td:nth-last-child(1) {
+    border-radius: 0px 10px 10px 0px;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.is-read-message td.participants a {
+    color: #999999;
+}
+
+#my-customer-messages-table tr.is-read-message .message-type-product,
+#my-customer-messages-table tr.is-read-message .message-type-order {
+    opacity: 0.5;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.is-read-message td.subject a .customer-messages-subject:nth-child(2) {
+    color: #999999;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.is-read-message td.subject a .customer-messages-subject:nth-child(3) {
+    opacity: 0.5;
+}
+
+.table-wrapper.customer-messages .table-customer-messages tr.is-read-message td.date a {
+    opacity: 0.5;
+}
+
+.toolbar .pages {
+    width: 100% !important;
+    text-align: center;
+    margin: 20px 0 0 0;
+}
+
+.toolbar .pages .pages-items .item a {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    color: #000000;
+    padding: 17px 22px;
+    border: 1px solid transparent !important;
+    border-radius: 8px;
+}
+
+.toolbar .pages .pages-items .item.current .page {
+    padding: 17px 22px;
+    border: 1px solid #EE8445 !important;
+    background: #FFFFFF !important;
+    border-radius: 8px !important;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    float: left;
+    color: #000000;
+}
+
+.toolbar .pages .pages-items .item {
+    height: auto;
+    border: none;
+    vertical-align: middle;
+    background: none !important;
+}
+
+.toolbar .pages .pages-items .item a:hover {
+    padding: 17px 22px;
+    border: 1px solid #EE8445;
+    background: #FFFFFF;
+    border-radius: 8px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+    color: #000000;
+}
+
+.toolbar .pages .pages-items .item.pages-item-next {
+    float: right;
+
+    & a {
+        border: 1px solid #E3E1E2 !important;
+        background: #FFFFFF !important;
+        border-radius: 8px !important;
+
+        &.next:after {
+            display: inline-block;
+            margin: 0 0 0 8px;
+            padding: 0px;
+            width: 16px;
+            height: 16px;
+            background: url(../images/arrow-right_icon.svg) no-repeat center;
+            vertical-align: middle;
+        }
+    }
+}
+
+.toolbar .pages .pages-items .item.pages-item-previous {
+    float: left;
+
+    &  a {
+        border: 1px solid #E3E1E2 !important;
+        background: #FFFFFF !important;
+        border-radius: 8px !important;
+
+        &.previous:before {
+            display: inline-block;
+            margin: 0 8px 0 0px;
+            padding: 0px;
+            width: 16px;
+            height: 16px;
+            background: url(../images/arrow-left_icon.svg) no-repeat center;
+            vertical-align: middle;
+        }
+    }
+}
+
+.toolbar .pages .pages-items .item.pages-item a {
+    border: 1px solid #E3E1E2;
+    background: #FFFFFF;
+    border-radius: 12px;
+}
+
+
+.toolbar .pages .pages-items .item.pages-item-next a:hover {
+    border: 1px solid #EE8445 !important;
+}
+
+.toolbar .pages .pages-items .item.pages-item-previous a:hover {
+    border: 1px solid #EE8445 !important;
+}
+
+.toolbar .pages .pages-items .item.pages-item a:hover {
+    border: 1px solid #EE8445 !important;
+}
+
+.toolbar .pages .pages-items .item.pages-item-next a span:not(.label) {
+    padding: 0px;
+    vertical-align: middle;
+}
+
+.toolbar .pages .pages-items .item.pages-item-previous a span {
+    vertical-align: middle;
+    padding: 0px;
+}
+
+.toolbar .pages .pages-items .item.pages-item a span {
+    vertical-align: middle;
+    padding: 0px;
+}
+
+.marketplace-message-index .actions-toolbar {
+    display: none;
+}
+
+.account-nav .content {
+    background: #F8F8F8;
+    border-radius: 10px;
+    padding: 24px 20px;
+}
+
+.account-nav #account-nav .item:hover a .item-count-box, .account-nav #account-nav .item.current a strong.item-count-box, .account-nav #account-nav .item.current > strong > .item-count-box, .account-nav #account-nav .item a .item-count-box {
+    float: right;
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 150%;
+    width: 20px;
+    height: 20px;
+    background: #FFFFFF;
+    border-radius: 100%;
+    color: #EE8445;
+    right: 16px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.account-nav #account-nav .item a .item-count-box {
+    background: #EE8445;
+    color: #FFFFFF;
+}
+
+#my-customer-messages-table .mobile_view {
+    display: none;
+}
+
+#table-customer-invoices-table .mobile_view {
+    display: none;
+}
+
+.login-sinup .account_dropdown a:hover {
+    &.my_messages_link span.item-count-box {
+        color: #EE8445;
+        background: #ffffff;
+    }
+}
+
+.login-sinup .account_dropdown a {
+    &.my_messages_link span.item-count-box {
+        .message-count-box-mixin;
+        margin: 6px 0 0 0;
+        right: 20px;
+    }
+}
+
+.invoice-attachment-file-icon {
+    width: 30px;
+    height: 30px;
+    background: #E5E5E5 url(../images/invoice_attachment_file.svg) no-repeat left 0px center;
+    border-radius: 6px;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices {
+    border-collapse: collapse;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr th {
+    background: #873456;
+    border-radius: 0px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    border: none !important;
+    font-size: 14px;
+    line-height: 130%;
+    color: #FFFFFF;
+    padding: 11px 0px 11px 21px;
+    border-bottom: 3px solid #ffffff !important;
+    text-transform: none;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr th:nth-child(1) {
+    border-radius: 10px 0px 0 10px;
+    width: 178px;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr th:nth-last-child(1) {
+    border-radius: 0px 10px 10px 0px;
+    width: 165px;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr td {
+    padding: 16px 5px;
+    vertical-align: middle;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr td:nth-child(1) {
+    padding: 16px 21px;
+    vertical-align: middle;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr.desktop_view.message-separator td {
+    border-bottom: 1px solid #ebebeb !important;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr.mobile_view.message-separator td {
+    border: 1px solid #E5E5E5 !important;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr div.order > div {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 130%;
+    color: #000000;
+    padding-top: 5px;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr div.order > a {
+    margin-right: 12px;
+    float: left;
+}
+
+#table-customer-invoices-table div.status {
+    padding-left: 16px;
+}
+
+#table-customer-invoices-table div.status span {
+    margin: 0px !important;
+    border-radius: 12px;
+    padding: 0 9px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    height: 23px;
+    float: left;
+    line-height: 23px;
+    text-transform: uppercase;
+}
+
+#table-customer-invoices-table div.status span.status_0 {
+    color: #EE8445;
+    background: rgba(238, 132, 69, 0.15);
+}
+
+#table-customer-invoices-table div.status span.status_1 {
+    color: #4CA606;
+    background: rgba(76, 166, 6, 0.15);
+}
+
+#table-customer-invoices-table div.status span.status_2 {
+    color: #E33741;
+    background: rgba(227, 55, 65, 0.15);
+}
+
+#table-customer-invoices-table div.status span.status_3 {
+    color: #EE8445;
+    background: rgba(238, 132, 69, 0.15);
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr div.date {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 130%;
+    color: #999999;
+    padding-left: 16px;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr div.order-amount {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 130%;
+    color: #000000;
+    text-align: left;
+    padding-left: 16px;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr div.amount-due {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 130%;
+    color: #000000;
+    text-align: left;
+    padding-left: 16px;
+}
+
+.table-wrapper.customer-invoices .table-customer-invoices tr div.due-date {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 130%;
+    color: #000000;
+    padding-left: 16px;
+}
+
+@media @desktop, @tablet {
+
+    #table-customer-invoices-table .mobile_view td {
+        padding: 15px;
+        border-radius: 10px;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    #table-customer-invoices-table .mobile_view td > div {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    #table-customer-invoices-table .mobile_view td .invoices-group {
+        float: left;
+        margin: 0px;
+        padding: 0px;
+        width: 50%;
+    }
+
+    #table-customer-invoices-table .mobile_view td {
+
+        & .invoices-group {
+
+            & .order, .order-amount, .amount-due, .status, .due-date, .date {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            & .con-col-1, .con-col-2 {
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 100%;
+                color: #999999;
+            }
+
+            & .con-col-2 {
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 100%;
+                color: #000000;
+                text-align: right;
+            }
+
+            & .order {
+                float: left;
+                margin: 0;
+                padding: 0px;
+                width: 150px;
+            }
+
+            & .order-amount {
+                margin: 0;
+                padding: 14px 0 0 0;
+
+                & .con-col-2 {
+                    font-weight: 600;
+                }
+
+            }
+
+            & .amount-due {
+                margin: 0;
+                padding: 9px 0 0 0;
+            }
+
+            & div.con-row {
+                width: 80%;
+                display: flex;
+                flex-wrap: wrap;
+
+                & .con-col-1 {
+                    width: 70%;
+                }
+
+                & .con-col-2 {
+                    width: 30%;
+                }
+            }
+
+        }
+
+        & .invoices-group + .invoices-group {
+
+            & .status {
+                width: 100%;
+                margin-top: 2px;
+
+                & span {
+                    float: right;
+                }
+            }
+
+            & .due-date {
+                margin: 0;
+                padding: 18px 0 0 0;
+
+                & .con-col-2 {
+                    font-weight: 600;
+                }
+            }
+
+            & .date {
+                margin: 0;
+                padding: 9px 0 0 0;
+            }
+
+
+            & div.con-row {
+                width: 100%;
+
+                & .con-col-1 {
+                    width: 45%;
+                }
+
+                & .con-col-2 {
+                    width: 55%;
+                }
+            }
+        }
+    }
+
+
+}
+
+@media @tablet {
+    #my-customer-messages-table .mobile_view {
+        display: block;
+    }
+
+    #table-customer-invoices-table .mobile_view {
+        display: block;
+    }
+
+    #my-customer-messages-table .mobile_view td {
+        padding: 15px;
+        border-radius: 10px;
+        display: block;
+    }
+
+    #my-customer-messages-table .mobile_view td a {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group {
+        float: left;
+        margin: 0px;
+        padding: 0px;
+        width: 60%;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group + .customer-messages-group {
+        width: 40%;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-order-number {
+        text-align: right;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 130%;
+        color: #000000;
+    }
+
+    #my-customer-messages-table .mobile_view.message-separator td {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .customer-messages-group .customer-messages-date {
+        text-align: right;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 130%;
+        color: #999999;
+        margin: 6px 0 0 0;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-subject-title {
+        float: left;
+        margin: 2px 8px 0 0;
+        padding: 0px;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 130%;
+        color: #000000;
+        max-width: calc(100% - 55px);
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-customer {
+        float: left;
+        margin: 6px 0 0 0;
+        padding: 0px;
+        width: 100%;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 130%;
+        color: #999999;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-type {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    #my-customer-messages-table .message-type-product {
+        padding: 0 6px;
+        line-height: 18px;
+        font-size: 9px;
+        height: 18px;
+    }
+
+    #my-customer-messages-table .message-type-order {
+        padding: 0 6px;
+        line-height: 18px;
+        font-size: 9px;
+        height: 18px;
+    }
+
+    #my-customer-messages-table .desktop_view {
+        display: none;
+    }
+
+    #table-customer-invoices-table .desktop_view {
+        display: none;
+    }
+
+    .marketplace-message-index .page-title-wrapper .page-title {
+        text-align: center;
+        margin-right: 0px;
+    }
+
+    div.customer-messages-participants > span > span:nth-child(2n) {
+        display: flow-root;
+    }
+
+    li.item.message-item .message-item-title-date {
+        top: 25px !important;
+        left: 15px !important;
+        padding-bottom: 10px;
+        position: relative !important;
+    }
+}
+
+@media @desktop {
+    #my-customer-messages-table .mobile_view {
+        display: block;
+    }
+
+    #table-customer-invoices-table .mobile_view {
+        display: block;
+    }
+
+    #my-customer-messages-table .mobile_view td {
+        padding: 15px;
+        border-radius: 10px;
+        display: block;
+    }
+
+    #my-customer-messages-table .mobile_view td a {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group {
+        float: left;
+        margin: 0px;
+        padding: 0px;
+        width: 60%;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group + .customer-messages-group {
+        width: 40%;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-order-number {
+        text-align: right;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 130%;
+        color: #000000;
+    }
+
+    .customer-messages-group .customer-messages-date {
+        text-align: right;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 130%;
+        color: #999999;
+        margin: 6px 0 0 0;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-subject-title {
+        float: left;
+        margin: 2px 8px 0 0;
+        padding: 0px;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 130%;
+        color: #000000;
+        max-width: calc(100% - 55px);
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-customer {
+        float: left;
+        margin: 6px 0 0 0;
+        padding: 0px;
+        width: 100%;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 130%;
+        color: #999999;
+    }
+
+    #my-customer-messages-table .mobile_view td .customer-messages-group .customer-messages-type {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    #my-customer-messages-table .message-type-product {
+        padding: 0 6px;
+        line-height: 18px;
+        font-size: 9px;
+        height: 18px;
+    }
+
+    #my-customer-messages-table .message-type-order {
+        padding: 0 6px;
+        line-height: 18px;
+        font-size: 9px;
+        height: 18px;
+    }
+
+    #my-customer-messages-table .desktop_view {
+        display: none;
+    }
+
+    #table-customer-invoices-table .desktop_view {
+        display: none;
+    }
+
+    .marketplace-message-index .page-title-wrapper .page-title {
+        text-align: center;
+        margin-right: 0px;
+    }
+
+
+}
+
+// View Messaging
+div.customer-messages-participants {
+
+    position: relative;
+    width: 100%;
+    top: 5px;
+    background: #F8F8F8;
+    border-radius: 10px;
+    margin-bottom: 25px;
+
+    & > span {
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 130%;
+        display: flow-root;
+        align-items: center;
+        padding: 15px;
+        color: #000000;
+
+        & a {
+            color: #EE8445;
+        }
+
+        & b {
+            font-weight: 600;
+            font-size: 15px;
+        }
+    }
+
+
+}
+
+div.marketplace-messages div.block-title {
+    height: 47px;
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    display: inline;
+}
+
+.mixin_font_style {
+    font-family: 'Hurme Geometric Sans 3';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100%;
+}
+
+.message-items {
+    & div.message-item-label {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 3px 8px 3px;
+
+        position: static;
+        width: fit-content;
+        height: 23px;
+        left: 0px;
+        top: 0px;
+
+        background: rgba(76, 166, 6, 0.15);
+        border-radius: 12px;
+
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+        margin: 25px 0 18px;
+        color: #4CA606;
+
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: 600;
+
+        font-size: 10px;
+        line-height: 130%;
+        align-items: center;
+        text-transform: uppercase;
+    }
+
+    & .message-field-summary {
+        margin: 10px 0 20px !important;
+
+        @media @tablet {
+            margin: 10px 0 20px !important;
+        }
+
+        & label {
+            & span {
+                .mixin_font_style;
+                color: #000000;
+                top: 5px;
+                left: 20px;
+                position: relative;
+            }
+        }
+
+        & select {
+            .mixin_font_style;
+            width: ~"calc(100% - 30px)";
+            margin: 0 0 0 15px;
+            height: 40px;
+            border: 1px solid #EE8445;
+            border-radius: 12px;
+            color: #000000;
+        }
+
+        & div.mage-error[generated] {
+            margin: 10px 0 0 15px !important;
+        }
+    }
+
+    li.item.message-item {
+        position: relative;
+        width: 100%;
+        background: #FFFFFF;
+        border: 1px solid #E5E5E5;
+        border-radius: 10px;
+        margin-top: 10px;
+
+        &.first-item {
+            border: 1.5px solid #EE8445;
+            box-shadow: 0px 1px 1px 0px rgba(238, 132, 69, 0.25);
+        }
+
+        .mixin_message-item-title {
+            font-family: 'Hurme Geometric Sans 3';
+            font-style: normal;
+            font-weight: normal;
+            align-items: center;
+            line-height: 130%;
+        }
+
+        & .message-item-title {
+            .mixin_message-item-title();
+            font-size: 14px;
+            top: 20px;
+            color: #000000;
+            display: flow-root;
+            left: 15px;
+            position: relative;
+            max-width: calc(100% - 30px);
+
+            & b {
+                font-weight: 600;
+                font-size: 15px;
+            }
+        }
+
+        & .message-item-title-date {
+            .mixin_message-item-title();
+            display: flex;
+            top: 20px;
+            font-weight: normal;
+            text-align: right;
+            color: #999999;
+            position: absolute;
+            right: 15px;
+        }
+
+        & .message-text {
+            .mixin_message-item-title();
+            font-size: 14px;
+            line-height: 150%;
+            color: #000000;
+            padding: 0px 0 0px 0;
+            margin: 30px 9px 26px 15px;
+        }
+
+    }
+
+    .message-container {
+        margin: 20px 0 !important;
+    }
+
+    .message-container .message-container-control {
+        display: flex;
+        flex-direction: row;
+        min-height: 48px;
+        margin: 0 0 0 15px;
+        background: #FFFFFF;
+        border: 1px solid #EE8445;
+        border-radius: 12px;
+        color: rgba(0, 0, 0, 0.6);
+        float: left;
+        width: ~"calc(100% - 30px)";
+        margin-bottom: 65px;
+    }
+
+    .message-container .message-container-control textarea.message-container-control-textarea {
+        display: flex;
+        padding: 10px 10px;
+        height: 40px;
+        border: 0;
+        margin: 4px 4px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    textarea.autosize {
+        resize: none;
+        overflow: hidden;
+    }
+
+    .message-container .message-submit {
+        left: 5px;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 100%;
+        text-transform: none;
+        width: 85px;
+        height: 48px;
+        background: #873456;
+        border-radius: 10px;
+        align-items: center;
+        color: #FFFFFF;
+        flex: none;
+        float: right;
+        margin: -55px 20px;
+    }
+
+    .input-file-container {
+        width: 110px;
+        right: 110px;
+        float: right;
+        display: flex;
+        position: relative;
+        height: 48px;
+        margin-top: -55px;
+    }
+
+    .input-file-trigger {
+        padding: 0px 0px 0px 40px !important;
+        width: 110px;
+        height: 48px;
+        margin-top: 0px;
+        background: rgba(229, 229, 229, 0.5) url(../images/attachment_file.svg) no-repeat left 17px center;
+        color: #000000;
+        transition: all .4s;
+        cursor: pointer;
+        border-radius: 10px;
+        font-family: 'Hurme Geometric Sans 3';
+        font-style: normal;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+        line-height: 100%;
+        display: flex;
+        align-items: center;
+        text-align: center;
+
+        &:hover, &:focus {
+
+        }
+    }
+
+
+    .input-file {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .fieldset {
+        margin: 0 0 0 !important;
+    }
+
+    .message-attachment-files, .message-your-attachment-files {
+
+        width: ~"calc(100% - 30px)";
+        margin: 0 20px 26px 15px;
+
+        & strong {
+
+            font-family: 'Hurme Geometric Sans 3';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 150%;
+            color: #000000;
+
+            & span {
+                display: inline-block;
+                padding: 0;
+                width: 20px;
+                text-align: center;
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 11px;
+                color: #ffffff;
+                background: #EE8445;
+                line-height: 20px;
+                border-radius: 30px;
+                position: absolute;
+                margin: 0 0 0 10px;
+            }
+
+            & hr {
+                position: relative;
+                margin: -10px 10px 10px 10px;
+                height: 0px;
+                border-bottom-color: rgb(229, 229, 229);
+                border-bottom-style: none;
+                border-bottom-width: 1px;
+
+                &.received-attachment {
+                    width: ~"calc(100% - 145px)";
+                    left: 125px;
+                }
+
+                &.your-attachment {
+                    width: ~"calc(100% - 120px)";
+                    left: 100px;
+                }
+            }
+        }
+
+        & .attachments {
+
+            margin: 5px 0 5px 0;
+
+            & .attachment-file-label {
+                padding: 0px 0px 0px 40px !important;
+                //max-width: 250px;
+                height: 46px;
+                margin-top: 5px;
+                margin-right: 5px;
+                background: rgba(229, 229, 229, 0.5) url(../images/attachment_file.svg) no-repeat left 17px center;
+                color: #000000;
+                transition: all .4s;
+                cursor: pointer;
+                border-radius: 10px;
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                line-height: 100%;
+                display: inline-flex;
+                align-items: center;
+
+                @media @tablet {
+                    width: 100%;
+                }
+            }
+
+            & div.attachment_file {
+                .mixin_attachment_file {
+                    width: 20px;
+                    height: 20px;
+                    right: 15px;
+                    padding: 10px 10px;
+                    position: relative;
+                }
+
+                &_remove {
+                    .mixin_attachment_file;
+                    background: url(../images/attachment_file_remove.svg) no-repeat left 0px center;
+                }
+
+                &_download {
+                    .mixin_attachment_file;
+                    background: url(../images/attachment_file_download.svg) no-repeat left 0px center;
+                }
+            }
+
+            & div.attachment_file_text {
+                @media @tablet {
+                    width: 100%;
+                }
+
+                height: 30px;
+                overflow-x: hidden;
+                white-space: nowrap;
+                margin-right: 20px;
+                display: inline-flex;
+                align-items: center;
+            }
+
+        }
+
+    }
+}

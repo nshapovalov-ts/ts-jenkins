@@ -1,0 +1,23 @@
+<?php
+$options = $block->getOptions();
+$attributeCode = $block->getAttribute()->getAttributeCode();
+?>
+<div class="questions <?= $attributeCode ?>">
+    <div class="preferences-wrap control" data-ui-id="<?= $attributeCode?>" data-mage-init='{"selectionImage": {}}'>
+        <h2><?= $block->getStoreLabel(); ?></h2>
+        <div class="items">
+            <?php foreach ($options as $option): ?>
+                <div class="item <?php if ($option['selected']): ?>active<?php endif;?>">
+                    <label for="<?= $attributeCode ?>-<?= $block->escapeHtmlAttr($option['value']); ?>">
+                        <span><?= $block->escapeHtml($option['label'])?></span>
+                    </label>
+                    <input class="visibility-hidden <?= $block->isRequired() ? 'required-entry' : '' ?>" type="radio"
+                           id="<?= $attributeCode ?>-<?= $block->escapeHtmlAttr($option['value']); ?>"
+                            <?php if ($option['selected']): ?> checked="checked" <?php endif;?>
+                           name="<?= $attributeCode ?>"
+                           value="<?= $block->escapeHtmlAttr($option['value']); ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

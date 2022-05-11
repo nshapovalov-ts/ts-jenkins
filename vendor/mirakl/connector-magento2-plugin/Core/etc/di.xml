@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mirakl\Core\Model\ResourceModel\Shipping\Zone\Collection" shared="false" />
+    <type name="Mirakl\Core\Model\ResourceModel\Shop\Collection" shared="false" />
+    <type name="Mirakl\Core\Model\ResourceModel\Shipping\Zone">
+        <arguments>
+            <argument name="eventManager" xsi:type="object">Magento\Framework\Event\Manager\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Mirakl\Core\Model\ResourceModel\Shop">
+        <arguments>
+            <argument name="eventManager" xsi:type="object">Magento\Framework\Event\Manager\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item">
+        <plugin name="mirakl" type="Mirakl\Core\Plugin\Model\Quote\ItemPlugin"/>
+    </type>
+    <preference for="Magento\Tax\Model\Sales\Total\Quote\Tax" type="Mirakl\Core\Model\Sales\Total\Quote\Tax" />
+</config>

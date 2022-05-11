@@ -1,0 +1,41 @@
+node('magento') {
+    env.TERM='xterm-256color'
+    env.BUILD_DIR=pwd()
+    env.BUILD_DATETIME=new Date(currentBuild.startTimeInMillis).format("yyyyMMdd-HHmmss.SSS")
+    env.INSTANCE_NAME="m2-jenkins-${env.BUILD_DATETIME}"
+    env.MAGENTO_ROOT="/var/www/magento/${env.INSTANCE_NAME}"
+    env.OPERATOR_TESTS_DIR="${env.MAGENTO_ROOT}/vendor/mirakl/connector-magento2-plugin"
+
+    try {
+        stage('Install Magento') {
+            sh """
+                cd /var/www/_install_ && \\
+                . ./install.env && \\
+                ./magento2/install.sh -n ${env.INSTANCE_NAME} -b ${env.BRANCH_NAME} -M 2.4.1 -i
+            """
+        }
+        stage('Run Magento commands') {
+            sh """
+                cd ${env.MAGENTO_ROOT} && \\
+                php bin/magento setup:di:compile
+            """
+        }
+        stage('Run tests') {
+            parallel unit: {
+                sh "${env.MAGENTO_ROOT}/vendor/bin/phpunit --bootstrap ${env.MAGENTO_ROOT}/app/bootstrap.php -c ${env.OPERATOR_TESTS_DIR}/phpunit.xml.dist --log-junit 'build/reports/unitreport.xml'"
+            },
+            integration: {
+                sh "${env.MAGENTO_ROOT}/vendor/bin/phpunit -c ${env.MAGENTO_ROOT}/dev/tests/integration/phpunit-integration.xml --testsuite 'Mirakl Tests Mci' --log-junit 'build/reports/mcireport.xml'"
+                sh "${env.MAGENTO_ROOT}/vendor/bin/phpunit -c ${env.MAGENTO_ROOT}/dev/tests/integration/phpunit-integration.xml --testsuite 'Mirakl Tests Mcm' --log-junit 'build/reports/mcmreport.xml'"
+            }
+        }
+    } finally {
+        stage('Remove Magento') {
+            sh """
+                cd /var/www/_install_ && \\
+                . ./install.env && \\
+                ./delete.sh -n ${env.INSTANCE_NAME} -f
+            """
+        }
+    }
+}

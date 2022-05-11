@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Magento\Catalog\Model\Product\Gallery\Processor" type="Kipanga\Webpimg\Model\Magento\Catalog\Product\Gallery\Processor" />
+	
+	<preference for="Mirakl\Mci\Helper\Product\Image" type="Kipanga\Webpimg\Helper\Mirakl\Mci\Product\Image" />
+		
+</config>

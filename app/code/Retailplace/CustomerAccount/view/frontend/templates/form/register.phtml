@@ -1,0 +1,170 @@
+<?php
+
+/**
+ * Retailplace_CustomerAccount
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+/** @var \Magento\Customer\Block\Form\Register $block */
+function base64url_decode($data, $strict = false)
+{
+    // Convert Base64URL to Base64 by replacing “-” with “+” and “_” with “/”
+    $b64 = strtr($data, '-_', '+/');
+
+    // Decode Base64 string and return the original data
+    return base64_decode($b64, $strict);
+}
+$requestData = json_decode(base64url_decode($this->getRequest()->getParam('email')), true);
+$currentEmail = $requestData['email'] ?? "";
+$currentFirstname = $requestData['firstname'] ?? "";
+$currentPhoneNumber = $requestData['phone_number'] ?? "";
+if (empty($currentEmail)) {
+    $currentEmail = $block->getFormData()->getEmail();
+}
+if (empty($currentFirstname)) {
+    $currentFirstname = $block->getFormData()->getFirstname();
+}
+if (empty($currentPhoneNumber)) {
+    $currentPhoneNumber = $block->getFormData()->getPhoneNumber();
+}
+?>
+
+<h2><?php echo __('Let\'s get started with your business contact details'); ?></h2>
+<form class="form create account form-create-account" action="<?= $block->escapeUrl($block->getUrl('sign-up-page/account/createPost')) ?>" method="post" id="form-validate" enctype="multipart/form-data" autocomplete="off">
+    <?= /* @noEscape */ $block->getBlockHtml('formkey'); ?>
+    <div class="name-container">
+        <?php $block->getFormData()->setFirstname($currentFirstname); ?>
+        <?= $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Name::class)->setObject($block->getFormData())->setForceUseCustomerAttributes(true)->toHtml(); ?>
+    </div>
+    <div class="field required">
+        <label for="email_address" class="label"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+        <div class="control">
+            <input type="email" name="email" autocomplete="email" id="email_address" value="<?= $currentEmail ?>" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" class="input-text" data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true, 'validate-email':true}">
+        </div>
+    </div>
+    <div class="field business-name">
+        <label for="phone_number" class="label"><span><?= $block->escapeHtml(__('Phone Number'))?></span></label>
+        <div class="control">
+            <input type="text" name="phone_number" id="phone_number" value="<?= $currentPhoneNumber ?>"
+                   title="Phone Number" placeholder="<?= $block->escapeHtml(__('Phone Number'))?>"
+                   class="input-text required-entry aumobilenumber" autocomplete="off">
+        </div>
+    </div>
+    <?php $_dob = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Dob::class) ?>
+    <?php if ($_dob->isEnabled()) : ?>
+        <?= $_dob->setDate($block->getFormData()->getDob())->toHtml() ?>
+    <?php endif ?>
+    <div class="field password required">
+        <label for="password" class="label"><span><?= $block->escapeHtml(__('Create password')) ?></span></label>
+        <div class="control">
+            <input type="password" name="password" id="password"
+                   title="<?= $block->escapeHtmlAttr(__('Create password')) ?>"
+                   placeholder="<?= $block->escapeHtmlAttr(__('Create password')) ?>"
+                   class="input-text"
+                   data-password-min-length="<?= $block->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
+                   data-password-min-character-sets="<?= $block->escapeHtmlAttr($block->getRequiredCharacterClassesNumber()) ?>"
+                   data-validate="{required:true, 'validate-customer-password':true}"
+                   autocomplete="off">
+            <div id="password-strength-meter-container" data-role="password-strength-meter" aria-live="polite">
+                <div id="password-strength-meter" class="password-strength-meter">
+                    <?= $block->escapeHtml(__('Password Strength')) ?>:
+                    <span id="password-strength-meter-label" data-role="password-strength-meter-label">
+                            <?= $block->escapeHtml(__('No Password')) ?>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field confirmation required">
+        <label for="password-confirmation" class="label"><span><?= $block->escapeHtml(__('Confirm Password')) ?></span></label>
+        <div class="control">
+            <input type="password" name="password_confirmation" title="<?= $block->escapeHtmlAttr(__('Confirm Password')) ?>"
+                  placeholder="<?= $block->escapeHtml(__('Confirm Password')) ?>" id="password-confirmation" class="input-text" data-validate="{required:true, equalTo:'#password'}" autocomplete="off">
+        </div>
+    </div>
+
+    <input type="hidden" name="default_billing" value="1">
+    <input type="hidden" name="default_shipping" value="1">
+    <input type="hidden" name="referer" value="<?= $block->escapeHtml($block->getRequest()->getParam('referer')) ?>">
+
+    <div class="actions">
+        <div class="primary">
+            <button type="submit" class="action submit primary active" title="<?= $block->escapeHtmlAttr(__('Next')) ?>"><span><?= $block->escapeHtml(__('Next')) ?></span></button>
+        </div>
+    </div>
+</form>
+<?= $block->getChildHtml('did.you.know'); ?>
+<script>
+require([
+    'jquery',
+    'mage/mage'
+], function($){
+
+    const dataForm = $('#form-validate');
+    const submitButton = $('#form-validate button');
+    dataForm.on("submit", function (e) {
+        if (dataForm.validation('isValid')) {
+            submitButton.prop("disabled", true);
+            return true;
+        }
+        return false;
+    });
+
+    const ignore = <?= /* @noEscape */ $_dob->isEnabled() ? '\'input[id$="full"]\'' : 'null' ?>;
+
+    dataForm.mage('validation', {
+    <?php if ($_dob->isEnabled()) : ?>
+        errorPlacement: function(error, element) {
+            if (element.prop('id').search('full') !== -1) {
+                var dobElement = $(element).parents('.customer-dob'),
+                    errorClass = error.prop('class');
+                error.insertAfter(element.parent());
+                dobElement.find('.validate-custom').addClass(errorClass)
+                    .after('<div class="' + errorClass + '"></div>');
+            }
+            else {
+                error.insertAfter(element);
+            }
+        },
+        ignore: ':hidden:not(' + ignore + ')'
+    <?php else : ?>
+        ignore: ignore ? ':hidden:not(' + ignore + ')' : ':hidden'
+    <?php endif ?>
+    }).find('input:text').attr('autocomplete', 'off');
+
+});
+</script>
+<?php if ($block->getShowAddressFields()) : ?>
+<script type="text/x-magento-init">
+    {
+        "#country": {
+            "regionUpdater": {
+                "optionalRegionAllowed": <?= /* @noEscape */ $block->getConfig('general/region/display_all') ? 'true' : 'false' ?>,
+                "regionListId": "#region_id",
+                "regionInputId": "#region",
+                "postcodeId": "#zip",
+                "form": "#form-validate",
+                <?php //phpcs:disable?>
+                "regionJson": <?= /* @noEscape */ $this->helper(\Magento\Directory\Helper\Data::class)->getRegionJson() ?>,
+                <?php //phpcs:enable?>
+                "defaultRegion": "<?= (int) $block->getFormData()->getRegionId() ?>",
+                <?php //phpcs:disable?>
+                "countriesWithOptionalZip": <?= /* @noEscape */ $this->helper(\Magento\Directory\Helper\Data::class)->getCountriesWithOptionalZip(true) ?>
+                <?php //phpcs:enable?>
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        ".field.password": {
+            "passwordStrengthIndicator": {
+                "formSelector": "form.form-create-account"
+            }
+        }
+    }
+</script>

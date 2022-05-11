@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+ /**
+ * Magento_Catalog
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="page.main.title" destination="product.info.main" before="-"/>
+
+        <referenceBlock name="catalog.product.related" remove="true"/>
+        <referenceBlock name="product.info.upsell" remove="true"/>
+        <referenceBlock name="product.info.overview" remove="true"/>
+        <!-- <referenceBlock name="product.info.description" remove="true" /> -->
+        <!-- <referenceBlock name="mirakl_offers.tab" remove="true"></referenceBlock> -->
+        <!-- <move element="product.info.description" destination="product.info.main" after="product.info.price"/> -->
+        <referenceBlock name="product.info.details">
+            <referenceBlock name="product.info.description">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Description</argument>
+                </arguments>
+            </referenceBlock>
+
+            <referenceBlock name="product.attributes">
+                <arguments>
+                    <argument name="title" translate="true" xsi:type="string">Features</argument>
+                </arguments>
+            </referenceBlock>
+
+        </referenceBlock>
+
+        <referenceContainer name="div.container">
+            <block class="Magento\Framework\View\Element\Template" name="product.detail.promotions"
+                   template="Retailplace_MiraklPromotion::product_detail_promotions.phtml" before="-">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Retailplace\MiraklPromotion\ViewModel\ProductDetailPromotions
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="sidebar.additional">
+            <!-- <block class="Magento\Cms\Block\Block" name="service-sidebar" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">service-sidebar</argument>
+                </arguments>
+            </block> -->
+
+            <block class="Mirakl\FrontendDemo\Block\Product\View\Tab\Offers" name="service-sidebar" template="Mirakl_FrontendDemo::product/view/servicesidebar.phtml" before="-">
+                <block class="Mirakl\FrontendDemo\Block\Product\View\Tab\Offers" name="product.info.sellerleft"
+                       as="sellerleft" template="Mirakl_FrontendDemo::product/view/sellerleft.phtml" after="service-sidebar"/>
+
+                <block class="Retailplace\ShippingEstimation\Block\Product\View\ShippingEstimation" name="product.info.seller.freeshipping"
+                       as="freeshipping" template="Retailplace_ShippingEstimation::freeshipping.phtml"/>
+            </block>
+
+            <block class="Mirakl\FrontendDemo\Block\Product\View\Tab\Offers" name="product.info.returnpolicy" template="Mirakl_FrontendDemo::product/view/returnpolicy.phtml" after="-"/>
+
+            <!-- <block class="Magento\Cms\Block\Block" name="service-sidebar-second" after="-">
+               <arguments>
+                   <argument name="block_id" xsi:type="string">service-sidebar-second</argument>
+               </arguments>
+           </block>
+            -->
+
+        </referenceContainer>
+
+        <referenceContainer name="sidebar.main">
+            <block class="Magento\Cms\Block\Block" name="product-detail" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">detail-product-sidebar</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="product.info.main">
+            <block class="Magento\Framework\View\Element\Template" name="social.button.detail"
+                   after="product.info.overview" template="Magento_Theme::html/social-button.phtml"
+                   ifconfig="market/product_detail/show_social_button"/>
+
+            <block class="Mirakl\FrontendDemo\Block\Product\View\Tab\Offers" name="product.info.seller" template="Mirakl_FrontendDemo::product/view/seller.phtml"/>
+
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.brand" template="Mirakl_FrontendDemo::product/view/brand.phtml"/>
+
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.label" template="Mirakl_FrontendDemo::product/view/label.phtml"/>
+
+        </referenceContainer>
+
+        <referenceContainer name="page.bottom.container">
+            <container name="div.container.detail" htmlTag="div" htmlClass="container">
+                <block class="Magento\Catalog\Block\Product\ProductList\Related" name="catalog.product.related.theme"
+                       template="Magento_Catalog::product/list/related-upsell.phtml"
+                       ifconfig="market/product_detail/show_related">
+                    <arguments>
+                        <argument name="type" xsi:type="string">related</argument>
+                    </arguments>
+                    <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="related.product.addto"
+                           as="addto">
+                        <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+                               name="related.product.addto.compare" as="compare"
+                               template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                    </block>
+                </block>
+                <block class="Magento\Catalog\Block\Product\ProductList\Upsell" name="product.info.upsell.theme"
+                       template="Magento_Catalog::product/list/related-upsell.phtml"
+                       ifconfig="market/product_detail/show_upsell">
+                    <arguments>
+                        <argument name="type" xsi:type="string">upsell</argument>
+                    </arguments>
+                    <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="upsell.product.addto"
+                           as="addto">
+                        <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+                               name="upsell.product.addto.compare" as="compare"
+                               template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                    </block>
+                </block>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="div.row">
+            <container name="product.info.details.bg" htmlTag="div" htmlClass="col-lg-9 col-md-9 col-left-sidebar"/>
+            <block class="Retailplace\MiraklShop\Block\Product\View\Tab\PdpSeller"
+                   name="product.pdp.seller" template="Mirakl_FrontendDemo::product/view/pdpseller.phtml" after="-"/>
+        </referenceContainer>
+        <move element="product.info.overview" destination="product.info.main" after="product.info.price"/>
+        <move element="product.info.seller" destination="product.info.main" before="page.main.title"/>
+        <move element="product.info.brand" destination="product.info.main" after="product.info.seller"/>
+        <move element="product.info.label" destination="product.info.main" after="product.info.brand"/>
+        <move element="messages" destination="div.container" before="-"/>
+        <move element="product.info.details" destination="product.info.details.bg" after="-"/>
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Catalog\Block\FrontendStorageManager" name="frontend-storage-manager1" before="-"
+                   template="Magento_Catalog::frontend_storage_manager.phtml">
+                <arguments>
+                    <argument name="configuration" xsi:type="array">
+                        <item name="recently_viewed_product" xsi:type="array">
+                            <item name="requestConfig" xsi:type="array">
+                                <item name="syncUrl" xsi:type="url" path="catalog/product/frontend_action_synchronize"/>
+                            </item>
+                        </item>
+                        <item name="recently_compared_product" xsi:type="array">
+                            <item name="requestConfig" xsi:type="array">
+                                <item name="syncUrl" xsi:type="url" path="catalog/product/frontend_action_synchronize"/>
+                            </item>
+                        </item>
+                        <item name="product_data_storage" xsi:type="array">
+                            <item name="updateRequestConfig" xsi:type="array">
+                                <item name="url" xsi:type="serviceUrl" path="/products-render-info"/>
+                            </item>
+                            <item name="requestConfig" xsi:type="array">
+                                <item name="syncUrl" xsi:type="url" path="catalog/product/frontend_action_synchronize"/>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

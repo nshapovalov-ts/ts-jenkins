@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route frontName="sale" id="sale">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+
+        <route frontName="madeinau" id="madeinau">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+
+        <route frontName="clearance" id="clearance">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+
+        <route frontName="au_post" id="au_post">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+
+        <route frontName="boutique" id="boutique">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+
+        <route frontName="seller-specials" id="seller-specials">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+
+        <route frontName="new-suppliers" id="new-suppliers">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+        <route frontName="new-products" id="new-products">
+            <module name="Retailplace_MiraklSeller"/>
+        </route>
+    </router>
+</config>

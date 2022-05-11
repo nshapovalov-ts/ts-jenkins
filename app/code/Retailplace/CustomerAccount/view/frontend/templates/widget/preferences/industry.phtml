@@ -1,0 +1,26 @@
+<?php
+/** @var \Retailplace\CustomerAccount\Block\Widget\Industry $block */
+?>
+<?php
+$attributeCode = $block->getAttribute()->getAttributeCode();
+$options = $block->getOptions();
+?>
+<div class="industry">
+    <div  class="preferences-wrap control" data-ui-id="<?= $attributeCode ?>" data-mage-init='{"multiSelectionImage": {}}'>
+        <h2><?= $block->getStoreLabel(); ?></h2>
+        <div class="items">
+            <?php foreach ($options as $option): ?>
+                <div class="item <?php if ($option['selected']): ?>active<?php endif;?>">
+                    <img src="<?= $option['icon']?>" alt="<?= $block->escapeHtml($option['label'])?>">
+                    <input class="visibility-hidden <?= $block->isRequired() ? 'required-entry' : '' ?>" type="checkbox"
+                            <?php if ($option['selected']): ?> checked="checked" <?php endif;?>
+                           id="industry-<?= $block->escapeHtmlAttr($option['value']); ?>" name="industry"
+                           value="<?= $block->escapeHtmlAttr($option['value']); ?>">
+                    <label for="industry-<?= $block->escapeHtmlAttr($option['value']); ?>">
+                        <span><?= $block->escapeHtml($option['label'])?></span>
+                    </label>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

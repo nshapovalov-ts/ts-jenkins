@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_frontend" translate="label" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Frontend</label>
+            <tab>mirakl</tab>
+            <resource>Mirakl_Config::frontend</resource>
+            <group id="mirakl_api_notice" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Mirakl\Api\Block\Adminhtml\System\Config\Fieldset\Hint</frontend_model>
+            </group>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="shipping_fees_cache_lifetime" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="text">
+                    <label>Shipping Fees Cache Lifetime</label>
+                    <comment><![CDATA[If filled, AJAX requests will use the result's cache of the Mirakl API SH02 call for the specified lifetime in seconds. It is especially useful to avoid multiple Mirakl API calls in the cart and checkout pages. If caching is needed, it is recommended to specify a low value (30s for example) since checkout process might use obsolete data just before placing the order. If value is empty, it means that the cache is disabled.]]></comment>
+                    <validate>validate-greater-than-zero validate-number</validate>
+                </field>
+            </group>
+            <group id="choicebox" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Choice Box</label>
+                <field id="enable" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable Choice Box</label>
+                    <comment><![CDATA[If enabled, the choice box appears on the product details page.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="elements" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label comment" type="text">
+                    <label>Number of Item</label>
+                    <comment><![CDATA[Use this setting to define the number of items the choicebox displays.]]></comment>
+                    <validate>validate-number</validate>
+                </field>
+            </group>
+            <group id="offer" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Offer</label>
+                <field id="new_state" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label comment" type="select">
+                    <label>'New' State</label>
+                    <comment><![CDATA[This setting is important to identify the 'New' state among the others states. For example, it will be used in product list to differentiate prices ranges (new vs. used).]]></comment>
+                    <source_model>Mirakl\Connector\Eav\Model\Entity\Attribute\Source\Offer\State</source_model>
+                </field>
+            </group>
+         </section>
+    </system>
+</config>

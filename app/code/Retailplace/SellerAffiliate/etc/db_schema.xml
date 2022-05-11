@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_SellerAffiliate
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="retailplace_shop_affiliate">
+        <column xsi:type="int" unsigned="true" nullable="false" name="selleraffiliate_id" identity="true" comment="Entity Id"/>
+        <column xsi:type="int" padding="10" unsigned="true" nullable="false" name="customer_id" comment="Customer ID"/>
+        <column xsi:type="int" unsigned="true" nullable="false" default="0" name="seller_id" comment="Customer ID"/>
+        <column xsi:type="datetime" name="click_datetime" default="CURRENT_TIMESTAMP" nullable="false" comment="Click Datetime"/>
+        <column xsi:type="text" nullable="true" name="ip_address" comment="Ip Address"/>
+        <column xsi:type="varchar" length="255" nullable="true" name="affiliate_url" comment="Affiliate Url"/>
+        <column xsi:type="datetime" name="clientside_datetime" nullable="false" comment="Clientside Date Time"/>
+        <column xsi:type="boolean" name="is_user_affiliated" nullable="false" default="0"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="selleraffiliate_id"/>
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="RETAILPLACE_SHOP_AFFILIATE_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID"
+                    table="retailplace_shop_affiliate"
+                    column="customer_id"
+                    referenceTable="customer_entity"
+                    referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint xsi:type="foreign"
+                    referenceId="RETAILPLACE_SHOP_AFFILIATE_SELLER_ID_MIRAKL_SHOP_ID"
+                    table="retailplace_shop_affiliate"
+                    column="seller_id"
+                    referenceTable="mirakl_shop"
+                    referenceColumn="id"
+                    onDelete="CASCADE"/>
+    </table>
+</schema>

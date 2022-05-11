@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ EYEMAGINE - The leading Magento Solution Partner
+ HubSpot Integration with Magento
+ @author EYEMAGINE <magento@eyemaginetech.com>
+ @copyright Copyright (c) 2016 EYEMAGINE Technology, LLC (http://www.eyemaginetech.com) 
+ @license http://www.eyemaginetech.com/license
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/Event/etc/events.xsd">
+
+	<event name="sales_quote_collect_totals_before">
+		<observer name="eyemagine_hubspot_sales_quote_collect_totals_before"
+			instance="Eyemagine\HubSpot\Observer\BeforeQuoteCollectTotalsObserver" />
+	</event>
+
+	<event name="sales_convert_quote_to_order">
+		<observer name="eyemagine_hubspot_sales_convert_quote_to_order"
+			instance="Eyemagine\HubSpot\Observer\ConvertQuoteToOrderObserver" />
+	</event>
+	<event name="newsletter_subscriber_save_before">
+		<observer name="eyemagine_hubspot_snewsletter_subscriber_save_before"
+			instance="Eyemagine\HubSpot\Observer\BeforeSaveNewsletterSubscriberObserver" />
+	</event>
+
+	<event name="checkout_onepage_controller_success_action">
+		<observer name="save_item_order_place" instance="Eyemagine\HubSpot\Observer\Frontend\SaveOrderAfter"/>
+	</event>
+
+	 <event name="customer_register_success_after_logout">
+        <observer instance="Eyemagine\HubSpot\Observer\SendCustomerToHubspot" name="sendCustomerToHubspot"/>
+    </event>
+</config>
+
+

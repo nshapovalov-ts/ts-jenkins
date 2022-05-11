@@ -1,0 +1,184 @@
+<?php /** @var \Mirakl\FrontendDemo\Block\Order\Evaluation $block */ ?>
+<?php $_miraklOrder = $block->getMiraklOrder(); ?>
+<div class="order-details-items marketplace-evaluations">
+    <div class="block-content">
+        <?php if (!$_miraklOrder->getCanEvaluate()): ?>
+            <div class="order-title">
+                <strong><?php /* @escapeNotVerified */ echo __('Order Evaluation') ?></strong>
+            </div>
+            <div class="block-content" id="order-evaluation">
+                <?php $_evaluation = $block->getEvaluation() ?>
+                <?php if ($_evaluation): ?>
+                    <ol class="items evaluation-items">
+                        <li class="item evaluation-item view-rating">
+                            <div class="evaluation-label">
+                                <?php echo $block->escapeHtml(__('Overall evaluation of your order')) ?>
+                            </div>
+                            <div class="evaluation-value rating-summary">
+                                <div class="rating-result">
+                                    <span style="width:<?php echo $block->getEvaluationPercent($_evaluation) ?>%"><span><?php echo $block->getEvaluationPercent($_evaluation) ?>%</span></span>
+                                </div>
+                            </div>
+                        </li>
+                        <?php foreach ($_evaluation->getAssessments() as $_assessment): ?>
+                            <li class="item evaluation-item view-rating">
+                                <div class="evaluation-label">
+                                    <?php echo $block->escapeHtml($_assessment->getLabel()) ?>
+                                </div>
+                                <?php if ($_assessment->getResponse() == 'true'): ?>
+                                    <div class="evaluation-value"><?php echo __('Yes') ?></div>
+                                <?php elseif ($_assessment->getResponse() == 'false'): ?>
+                                    <div class="evaluation-value"><?php echo __('No') ?></div>
+                                <?php else: ?>
+                                    <div class="evaluation-value rating-summary">
+                                        <div class="rating-result">
+                                            <span style="width:<?php echo $block->getAssessmentPercent($_assessment) ?>%"><span><?php echo $block->getAssessmentPercent($_assessment) ?>%</span></span>
+                                        </div>
+                                    </div>
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                    <?php if ($_evaluation->getComment()): ?>
+                        <div>
+                            <h4><?php echo __('Comment') ?></h4>
+                            <p><?php echo nl2br($block->escapeHtml($_evaluation->getComment())) ?></p>
+                        </div>
+                    <?php endif ?>
+                <?php endif ?>
+            </div>
+        <?php else: ?>
+            <?php $postData = $block->getPostEvaluation('evaluation')?>
+            <div class="order-title">
+                <strong><?php /* @escapeNotVerified */ echo __('How would you evaluate your order?') ?></strong>
+            </div>
+            <div class="block-content">
+                <form action="<?php /* @escapeNotVerified */ echo $block->getFormAction() ?>" id="order-evaluation" class="order-evaluation-form" method="post">
+                    <?php echo $block->getBlockHtml('formkey'); ?>
+                    <ol class="items evaluation-items">
+                        <li class="item evaluation-item review-field-rating">
+                            <div class="evaluation-label">
+                                <?php echo $block->escapeHtml(__('Overall evaluation of your order')) ?>
+                            </div>
+                            <div class="evaluation-value">
+                                <div class="radio-box control review-control-vote">
+                                    <?php for ($_i = 0; $_i <= 5; $_i++): ?>
+                                        <input
+                                            type="radio"
+                                            name="evaluation[grade]"
+                                            id="evaluation_grade_<?php echo $_i ?>"
+                                            value="<?php echo $_i ?>"
+                                            class="radio"
+                                            <?php if (isset($postData['grade']) && $postData['grade'] == $_i || $_i === 5 && empty($postData)):?>checked="checked"<?php endif; ?>
+                                            data-validate="{required:true, messages:{required:'<?php echo __('Please answer the question.') ?>'}}"
+                                        />
+                                        <label
+                                            class="rating-<?php echo $_i ?>"
+                                            for="evaluation_grade_<?php echo $_i ?>"
+                                            title="<?php echo __('%1 %2', $_i, $_i > 1 ? 'stars' : 'star') ?>"
+                                            id="evaluation_grade_<?php echo $_i ?>_label">
+                                            <span><?php echo __('%1 %2', $_i, $_i > 1 ? 'stars' : 'star') ?></span>
+                                        </label>
+                                    <?php endfor; ?>
+                                </div>
+                            </div>
+                        </li>
+                        <?php foreach ($block->getAssessments() as $_assessment): ?>
+                            <li class="item evaluation-item review-field-rating">
+                                <div class="evaluation-label">
+                                    <?php echo $block->escapeHtml($_assessment->getLabel()) ?>
+                                </div>
+                                <?php if ($block->isBooleanAssessment($_assessment)): ?>
+                                    <div class="evaluation-value field choice">
+                                        <div class="radio-box">
+                                            <input
+                                                id="evaluation_assessments_<?php echo $_assessment->getCode() ?>_true"
+                                                type="radio"
+                                                name="evaluation[assessments][<?php echo $_assessment->getCode() ?>]"
+                                                value="true"
+                                                class="radio"
+                                                checked="checked"
+                                                <?php if (isset($postData['assessments'][$_assessment->getCode()]) &&
+                                                    $postData['assessments'][$_assessment->getCode()] == 'true'):?>
+                                                    checked="checked"
+                                                <?php endif; ?>
+                                                data-validate="{required:true, messages:{required:'<?php echo __('Please answer the question.') ?>'}}"
+                                            />
+                                            <label 
+                                                class="label" 
+                                                for="evaluation_assessments_<?php echo $_assessment->getCode() ?>_true"
+                                            >
+                                                <span><?php echo $block->escapeHtml(__('Yes')) ?></span>
+                                            </label>
+                                            <input
+                                                id="evaluation_assessments_<?php echo $_assessment->getCode() ?>_false"
+                                                type="radio"
+                                                name="evaluation[assessments][<?php echo $_assessment->getCode() ?>]"
+                                                value="false"
+                                                class="radio"
+                                                <?php if (isset($postData['assessments'][$_assessment->getCode()]) &&
+                                                    $postData['assessments'][$_assessment->getCode()] == 'false'):?>
+                                                    checked="checked"
+                                                <?php endif; ?>
+                                                data-validate="{required:true, messages:{required:'<?php echo __('Please answer the question.') ?>'}}"
+                                            />
+                                            <label
+                                                class="label" 
+                                                for="evaluation_assessments_<?php echo $_assessment->getCode() ?>_false"
+                                            >
+                                                <span><?php echo $block->escapeHtml(__('No')) ?></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="evaluation-value">
+                                        <div class="radio-box control review-control-vote">
+                                            <?php for ($_i = 0; $_i <= 5; $_i++): ?>
+                                                <input
+                                                    type="radio"
+                                                    name="evaluation[assessments][<?php echo $_assessment->getCode() ?>]"
+                                                    id="evaluation_assessments_<?php echo $_assessment->getCode() ?>_<?php echo $_i ?>"
+                                                    value="<?php echo $_i ?>"
+                                                    class="radio"
+                                                    <?php if (isset($postData['assessments'][$_assessment->getCode()]) && $postData['assessments'][$_assessment->getCode()] == $_i || $_i === 5 && empty($postData)):?>checked="checked"<?php endif; ?>
+                                                    data-validate="{required:true, messages:{required:'<?php echo __('Please answer the question.') ?>'}}"
+                                                />
+                                                <label
+                                                    class="rating-<?php echo $_i ?>"
+                                                    for="evaluation_assessments_<?php echo $_assessment->getCode() ?>_<?php echo $_i ?>"
+                                                    title="<?php echo __('%1 %2', $_i, $_i > 1 ? 'stars' : 'star') ?>"
+                                                    id="evaluation_assessments_<?php echo $_assessment->getCode() ?>_<?php echo $_i ?>_label">
+                                                    <span><?php echo __('%1 %2', $_i, $_i > 1 ? 'stars' : 'star') ?></span>
+                                                </label>
+                                            <?php endfor; ?>
+                                        </div>
+                                    </div>
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach ?>
+                        <li class="evaluation-comment-item">
+                            <div class="evaluation-label">
+                                <label for="evaluation-comment"><?php echo __('Comment') ?></label>
+                            </div>
+                            <div class="evaluation-value input-box">
+                                <textarea name="evaluation[comment]" id="evaluation_comment" cols="5" rows="3"><?php if (isset($postData['comment'])):?><?php echo $postData['comment']; ?><?php endif; ?></textarea>
+                            </div>
+                        </li>
+                    </ol>
+                    <div class="primary actions-primary">
+                        <button type="submit" class="action submit primary">
+                            <span><?php echo __('Submit Evaluation') ?></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <script type="text/x-magento-init">
+                {
+                    "#order-evaluation": {
+                       "Mirakl_FrontendDemo/js/order/evaluation-form": {}
+                    }
+                }
+            </script>
+        <?php endif ?>
+    </div>
+</div>

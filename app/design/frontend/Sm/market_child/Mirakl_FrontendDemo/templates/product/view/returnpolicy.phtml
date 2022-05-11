@@ -1,0 +1,62 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Product\View\Tab\Offers $block */
+$product = $block->getProduct();
+$offers = $block->getAllOffers();
+$operatorOffers = $block->getOperatorOffers();
+/** @var \Magento\Catalog\Block\Product\View $productView */
+$productView = $block->getLayout()->getBlock('product.info');
+$requestUrl = explode('/', $block->getRequest()->getRequestUri(), 3);
+$sellerParm = isset($requestUrl[1]) ? $requestUrl[1] : null;
+$return_policy = null;
+?>
+
+<div class="selerleft">
+    <?php if ($product->isSaleable() || $offers): ?>
+        <?php foreach ($offers as $offer): ?>
+            <?php $shop = $block->getOfferHelper()->getOfferShop($offer); ?>
+            <?php $allminid[$offer->getPrice()] = $shop->getId(); ?>
+            <?php /*if ($shop): ?>
+        	  <a href="<?php echo $shop->getUrl() ?>" title="<?php echo $block->escapeHtml($shop->getName()) ?>"><?php echo $block->escapeHtml($shop->getName()) ?></a>
+        <?php endif;*/ ?>
+        <?php endforeach; ?>
+
+        <?php $calminid = min($allminid); ?>
+
+        <?php
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+        $miracaldata = $connection->fetchAll("SELECT * FROM mirakl_shop where id='$calminid'");
+
+        // echo $calminid;?>
+        <?php foreach ($miracaldata as $value): ?>
+            <?php $_info = $value['additional_info']; ?>
+            <?php $data = $this->helper(\Retailplace\Utility\Helper\Data::class)->unserialize($_info); ?>
+            <?php
+            if (isset($data['return_policy'])) {
+                $return_policy = $data['return_policy'];
+            }
+            $name = $value['name'];
+            ?>
+        <?php endforeach; ?>
+
+
+    <?php endif; ?>
+</div>
+
+<?php if (!empty($return_policy)): ?>
+    <a href="javascript:void(0)"
+       onclick="document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
+        <div class="return-policy">
+            <h5><?php echo __('Return Policy'); ?></h5>
+        </div>
+    </a>
+
+    <div id="light" class="white_content">
+        <a class="close_popup_bt" href="javascript:void(0)"
+           onclick="document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">+</a>
+        <h4><?php echo $name; ?> - <?php echo __(' Return policy'); ?></h4>
+        <?php echo $return_policy; ?>
+    </div>
+    <div id="fade" class="black_overlay"></div>
+
+<?php endif; ?>

@@ -1,0 +1,3 @@
+<?php /** @var \Mirakl\FrontendDemo\Block\Order\Info $block */ ?>
+
+<span class="order-status"><?php /* @escapeNotVerified */ echo __(ucfirst(strtolower($block->getMiraklOrder()->getStatus()->getState()))) ?></span>

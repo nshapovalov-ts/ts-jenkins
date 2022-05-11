@@ -1,0 +1,20 @@
+<!--@subject {{trans "%store_name account confirmation code: " store_name=$store.frontend_name}}{{trans "%confirmation_alt" confirmation_alt=$customer.confirmation_alt}} @-->
+<!--@vars {
+"var store.frontend_name":"Store Name",
+"var this.getUrl($store,'customer/account/confirm/',[_query:[id:$customer.id,key:$customer.confirmation,back_url:$back_url],_nosid:1])":"Account Confirmation URL",
+"var this.getUrl($store, 'customer/account/')":"Customer Account URL",
+"var customer.email":"Customer Email",
+"var customer.name":"Customer Name"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">{{trans "%name," name=$customer.name}}</p>
+<p>{{trans "Confirm your email address"}}</p>
+
+<p>{{trans "Your confirmation code is below — enter it in your open browser window:"}}</p>
+<p align="center">
+    <strong>{{trans "%confirmation_alt" confirmation_alt=$customer.confirmation_alt}}</strong>
+</p>
+
+{{template config_path="design/email/footer_template"}}

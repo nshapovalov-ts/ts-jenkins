@@ -1,0 +1,21 @@
+<?php
+
+/** @var \Retailplace\CustomerAccount\Block\Widget\Abn$block */
+?>
+<div class="field abn required">
+    <label for="abn" class="label">
+        <span>
+            <?= $block->escapeHtml(__('ABN')) ?>
+        </span>
+    </label>
+    <div class="control">
+        <input type="text"
+               name="abn"
+               id="abn"
+               placeholder="<?= $block->escapeHtml(__('ABN')) ?>"
+               value="<?= $block->escapeHtmlAttr($block->getAbnValue()) ?>"
+               title="<?= $block->escapeHtmlAttr(__('ABN')) ?>"
+               class="input-text required-entry"
+        >
+    </div>
+</div>

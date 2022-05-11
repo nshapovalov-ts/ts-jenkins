@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.event.grid.container">
+            <block class="Magento\Backend\Block\Widget\Grid" name="event.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">event_grid</argument>
+                    <argument name="dataSource" xsi:type="object">Mirakl\Event\Model\ResourceModel\Event\Collection</argument>
+                    <argument name="default_sort" xsi:type="string">id</argument>
+                    <argument name="default_dir" xsi:type="string">DESC</argument>
+                    <argument name="save_parameters_in_session" xsi:type="string">1</argument>
+                </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\Massaction" name="adminhtml.event.massaction" as="grid.massaction">
+                    <arguments>
+                        <argument name="massaction_id_field" xsi:type="string">id</argument>
+                        <argument name="form_field_name" xsi:type="string">event_ids</argument>
+                        <argument name="use_select_all" xsi:type="string">1</argument>
+                        <argument name="options" xsi:type="array">
+                            <item name="enable" xsi:type="array">
+                                <item name="label" xsi:type="string" translate="true">Delete</item>
+                                <item name="url" xsi:type="string">*/*/massDelete</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" name="event.grid.columnSet" as="grid.columnSet">
+                    <arguments>
+                        <argument name="rowUrl" xsi:type="array">
+                            <item name="generatorClass" xsi:type="string">Magento\Backend\Model\Widget\Grid\Row\UrlGenerator</item>
+                            <item name="path" xsi:type="string">*/*/view</item>
+                            <item name="extraParamsTemplate" xsi:type="array">
+                                <item name="id" xsi:type="string">getId</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">ID</argument>
+                            <argument name="index" xsi:type="string">id</argument>
+                            <argument name="width" xsi:type="string">80</argument>
+                        </arguments>
+                    </block>
+                    <block class="Mirakl\Event\Block\Adminhtml\Event\Grid\Column\Type" as="type">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Type</argument>
+                            <argument name="index" xsi:type="string">type</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="width" xsi:type="string">250</argument>
+                        </arguments>
+                    </block>
+                    <block class="Mirakl\Event\Block\Adminhtml\Event\Grid\Column\Action" as="mode">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Action</argument>
+                            <argument name="index" xsi:type="string">action</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="width" xsi:type="string">60</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="code">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Code</argument>
+                            <argument name="index" xsi:type="string">code</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="updated_at">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Updated At</argument>
+                            <argument name="index" xsi:type="string">updated_at</argument>
+                            <argument name="type" xsi:type="string">datetime</argument>
+                        </arguments>
+                    </block>
+                    <block class="Mirakl\Event\Block\Adminhtml\Event\Grid\Column\Status" as="status">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Status</argument>
+                            <argument name="index" xsi:type="string">status</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="import_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Import Id</argument>
+                            <argument name="width" xsi:type="string">100</argument>
+                            <argument name="index" xsi:type="string">import_id</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="action">
+                        <arguments>
+                            <argument name="type" xsi:type="string">action</argument>
+                            <argument name="header" xsi:type="string" translate="true">Action</argument>
+                            <argument name="filter" xsi:type="string">0</argument>
+                            <argument name="sortable" xsi:type="string">0</argument>
+                            <argument name="index" xsi:type="string">id</argument>
+                            <argument name="align" xsi:type="string">center</argument>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Widget\Grid\Column\Renderer\Action</argument>
+                            <argument name="column_css_class" xsi:type="string">nobr</argument>
+                            <argument name="actions" xsi:type="array">
+                                <item name="view" xsi:type="array">
+                                    <item name="caption" xsi:type="string" translate="true">View</item>
+                                    <item name="url" xsi:type="array">
+                                        <item name="base" xsi:type="string">*/*/view</item>
+                                    </item>
+                                    <item name="field" xsi:type="string">id</item>
+                                </item>
+                                <item name="show_data" xsi:type="array">
+                                    <item name="caption" xsi:type="string" translate="true">Show Data</item>
+                                    <item name="target" xsi:type="string">_blank</item>
+                                    <item name="url" xsi:type="array">
+                                        <item name="base" xsi:type="string">*/*/showData</item>
+                                    </item>
+                                    <item name="field" xsi:type="string">id</item>
+                                </item>
+                                <item name="delete" xsi:type="array">
+                                    <item name="caption" xsi:type="string" translate="true">Delete</item>
+                                    <item name="url" xsi:type="array">
+                                        <item name="base" xsi:type="string">*/*/delete</item>
+                                    </item>
+                                    <item name="field" xsi:type="string">id</item>
+                                    <item name="confirm" xsi:type="string" translate="true">Are you sure?</item>
+                                </item>
+                            </argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

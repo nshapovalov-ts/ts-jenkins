@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="cms_page_save_after">
+        <observer name="magefan_page_save_after" instance="Magefan\CmsDisplayRules\Observer\Page\SaveAfter"></observer>
+    </event>
+    <event name="cms_page_delete_before">
+        <observer name="magefan_page_delete_before" instance="Magefan\CmsDisplayRules\Observer\Page\DeleteBefore"></observer>
+    </event>
+    <event name="cms_block_save_after">
+        <observer name="magefan_block_save_after" instance="Magefan\CmsDisplayRules\Observer\Block\SaveAfter"></observer>
+    </event>
+    <event name="cms_block_delete_before">
+        <observer name="magefan_block_delete_before" instance="Magefan\CmsDisplayRules\Observer\Block\DeleteBefore"></observer>
+    </event>
+    <event name="view_block_abstract_to_html_after">
+        <observer name="magefan_cms_display_block" instance="Magefan\CmsDisplayRules\Observer\Block\DisplayAfter"/>
+    </event>
+    <event name="controller_action_predispatch_cms_page_view">
+        <observer name="magefan_cms_display_page" instance="Magefan\CmsDisplayRules\Observer\Page\DisplayAfter"/>
+    </event>
+</config>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="order_flag" xsi:type="object">Mirakl\Adminhtml\Ui\Component\View\Element\DataProvider\OrderFlagFilter</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\MassDelete">
+        <arguments>
+            <argument name="filter" xsi:type="object">Mirakl\Adminhtml\Ui\Component\MassDelete\Product\Filter</argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Catalog\Block\Adminhtml\Category\Tree" type="Mirakl\Adminhtml\Block\Category\Tree" />
+</config>

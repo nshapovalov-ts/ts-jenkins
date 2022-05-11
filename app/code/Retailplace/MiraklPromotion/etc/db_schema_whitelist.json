@@ -1,0 +1,57 @@
+{
+    "mirakl_promotion": {
+        "column": {
+            "promotion_id": true,
+            "shop_id": true,
+            "internal_id": true,
+            "state": true,
+            "type": true,
+            "date_created": true,
+            "start_date": true,
+            "end_date": true,
+            "internal_description": true,
+            "percentage_off": true,
+            "amount_off": true,
+            "free_items_quantity": true,
+            "public_descriptions": true,
+            "reward_offer_ids": true,
+            "reward_on_purchased_items": true,
+            "trigger_offer_ids": true,
+            "media": true,
+            "date_updated": true,
+            "promotion_unique_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MIRAKL_PROMOTION_SHOP_ID_INTERNAL_ID": true,
+            "MIRAKL_PROMOTION_SHOP_ID_MIRAKL_SHOP_ID": true,
+            "MIRAKL_PROMOTION_PROMOTION_UNIQUE_ID": true
+        }
+    },
+    "mirakl_promotion_link": {
+        "column": {
+            "link_id": true,
+            "promotion_id": true,
+            "offer_id": true,
+            "type": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "MIRAKL_PROMOTION_LINK_PROMOTION_ID_MIRAKL_PROMOTION_PROMOTION_ID": true,
+            "MIRAKL_PROMOTION_LINK_OFFER_ID_MIRAKL_OFFER_OFFER_ID": true,
+            "MIRAKL_PROMOTION_LINK_OFFER_ID_PROMOTION_ID_TYPE": true
+        }
+    },
+    "quote_item": {
+        "column": {
+            "mirakl_promotion_deduced_amount": true,
+            "mirakl_promotion_data": true
+        }
+    },
+    "sales_order_item": {
+        "column": {
+            "mirakl_promotion_deduced_amount": true,
+            "mirakl_promotion_data": true
+        }
+    }
+}

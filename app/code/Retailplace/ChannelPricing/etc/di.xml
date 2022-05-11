@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_ChannelPricing
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="customer_groups_update" xsi:type="object">
+                    Retailplace\ChannelPricing\Console\Command\CustomerGroupsUpdate
+                </item>
+                <item name="cart_rules_update" xsi:type="object">
+                    Retailplace\ChannelPricing\Console\Command\CartPriceRulesUpdate
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Customer\Api\CustomerRepositoryInterface">
+        <plugin name="retailplace_channelpricing_customer_repository"
+                type="Retailplace\ChannelPricing\Plugin\CustomerRepository"
+                sortOrder="10"/>
+    </type>
+    <type name="Mirakl\Connector\Helper\Offer">
+        <plugin name="retailplace_channelpricing_connector_offer_helper"
+                type="Retailplace\ChannelPricing\Plugin\ConnectorOfferHelper"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Catalog\Pricing\Render\FinalPriceBox">
+        <plugin name="retailplace_channelpricing_final_price_box"
+                type="Retailplace\ChannelPricing\Plugin\FinalPriceBox"
+                sortOrder="10"/>
+    </type>
+    <type name="Retailplace\ChannelPricing\Plugin\ConnectorOfferHelper">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Retailplace\ChannelPricing\Plugin\CustomerRepository">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="\Magento\ConfigurableProduct\Model\ResourceModel\Product\Indexer\Price\Configurable">
+        <plugin name="Retailplace_ChannelPricing::indexer_price_configurable"
+                type="Retailplace\ChannelPricing\Plugin\ResourceModel\Product\Indexer\Price\Configurable"/>
+    </type>
+    <type name="Retailplace\ChannelPricing\Model\CustomerGroupMapper">
+        <arguments>
+            <argument name="groupSettersList"  xsi:type="array">
+                <item name="0" xsi:type="object">Retailplace\ChannelPricing\Model\GroupProcessor\Retailers</item>
+                <item name="1" xsi:type="object">Retailplace\ChannelPricing\Model\GroupProcessor\Nlna</item>
+                <item name="2" xsi:type="object">Retailplace\ChannelPricing\Model\GroupProcessor\AuPost</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Layer\FilterList">
+        <plugin name="retailplace_channelpricing_layer_filters_visibility"
+                type="Retailplace\ChannelPricing\Plugin\AttributesVisibility"/>
+    </type>
+    <preference for="Magento\Catalog\Block\Product\ListProduct"
+                type="Retailplace\ChannelPricing\Block\Product\ListProduct" />
+    <preference for="Magento\CatalogSearch\Block\SearchResult\ListProduct"
+                type="Retailplace\ChannelPricing\Block\Product\ListProduct" />
+    <preference for="Magento\Catalog\Block\Product\View"
+                type="Retailplace\ChannelPricing\Block\Product\View" />
+    <preference for="Sm\ListingTabs\Block\ListingTabs"
+                type="Retailplace\ChannelPricing\Block\ListingTabs" />
+    <type name="Retailplace\ChannelPricing\Model\AttributesVisibilityManagement">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+</config>

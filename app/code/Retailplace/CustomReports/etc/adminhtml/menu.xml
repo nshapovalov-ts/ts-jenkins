@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<!--~
+  ~ Retailplace_CustomReports
+  ~
+  ~ @copyright   Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+  ~ @author      Satish Gumudavelly <satish@vdcstore.com>
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Retailplace_CustomReports::retailplace_customreports_salesreports" title="Sales Reports" module="Retailplace_CustomReports" sortOrder="10" resource="Magento_Backend::content" parent="Magento_Reports::report_salesroot" action="retailplace_customreports/salesreports/index"/>
+	</menu>
+</config>

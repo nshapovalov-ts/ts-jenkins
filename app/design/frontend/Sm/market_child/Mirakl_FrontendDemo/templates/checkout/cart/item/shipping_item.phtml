@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/**
+ * @var \Retailplace\CheckoutOverride\Block\Cart\Item\Shipping $block
+ */
+$mediaUrl = $block->getUrl('', ['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]);
+
+$_item = $block->getParentBlock()->getItem();
+/** @var \Retailplace\CheckoutOverride\ViewModel\CartItemRenderer $viewModel */
+$viewModel = $block->getViewModel();
+$viewModel->setQuoteItem($_item);
+$block->setItem($_item);
+$_shippingTypes = $block->getShippingTypes();
+$_selectedShippingType = $block->getSelectedShippingType();
+?>
+<?php if ($_shippingTypes->count()): // Display available shipping types for this item?>
+    <p><?php echo __('Delivery Cost') ?></p>
+    <ul class="sp-methods">
+        <?php /** @var \Mirakl\MMP\Front\Domain\Shipping\ShippingFeeType $_shippingType */ ?>
+        <?php foreach ($_shippingTypes as $_shippingType): ?>
+            <?php
+            $_id = sprintf('shipping-type-%s-%s', $_item->getMiraklOfferId(), $_shippingType->getCode());
+            $shipping_class = sprintf('shipping-type-%s-%s', $_item->getMiraklShopId(), $_shippingType->getCode());
+            $_totalShippingPrice = $_shippingType->getTotalShippingPrice();
+            ?>
+            <li>
+                <input type="radio" class="seller-shipping"
+                       name="cart[offers][<?= $_item->getMiraklOfferId() ?>]"
+                       value="<?php echo $_shippingType->getCode() ?>" id="<?php echo $_id ?>"
+                       <?php if ($_shippingType->getCode() == $_selectedShippingType->getCode()): ?>checked="checked"<?php endif ?>
+                       class="radio"/>
+                <label for="<?php echo $_id ?>" class="<?= $shipping_class ?>">
+                    <?php echo $_shippingType->getLabel() ?>
+                    <?php if ($_totalShippingPrice <= 0): ?>
+                        <span class="price"><?php echo __('Free') ?></span>
+                    <?php else: ?>
+                        <?php
+                        $_shippingPriceInclTax = $viewModel->getShippingPriceInclTax($_totalShippingPrice);
+                        $_shippingPriceExclTax = $viewModel->getShippingPriceExclTax($_totalShippingPrice);
+                        ?>
+                        <?php if ($viewModel->displayShippingBothPrices()): ?>
+                            <span
+                                class="price"><?= $block->formatPrice($_shippingPriceInclTax) ?></span><?php if ($_shippingPriceInclTax != $_shippingPriceExclTax): ?>
+                                <span class="price-excl-tax">(<?= __('Excl. Tax:') ?> <span
+                                    class="price"><?= $block->formatPrice($_shippingPriceExclTax) ?></span>)
+                                </span><?php endif ?>
+                        <?php elseif ($viewModel->displayShippingPriceExcludingTax()): ?>
+                            <span class="price"><?= $block->formatPrice($_shippingPriceExclTax) ?></span>
+                        <?php elseif ($viewModel->displayShippingPriceIncludingTax()): ?>
+                            <span class="price"><?= $block->formatPrice($_shippingPriceInclTax) ?></span>
+                        <?php endif ?>
+                    <?php endif ?>
+                </label>
+            </li>
+        <?php endforeach ?>
+    </ul>
+<?php endif; ?>

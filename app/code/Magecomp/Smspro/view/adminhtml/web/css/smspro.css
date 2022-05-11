@@ -1,0 +1,33 @@
+.admin_bulksms{
+	width:100%;
+}
+.admin_bulksms_mobnumbers, .admin_bulksms_dltid{
+	float:left;
+	width:100%;
+}
+.admin_bulksms_message{
+	float:left;
+	width:100%;
+	margin-top: 15px;
+}
+.admin_bulksms_mobnumbers_lable, .admin_bulksms_message_lable , .admin_bulksms_dltid_lable{
+	float:left;
+	margin-right:15px;
+	width: 14%;
+}
+.admin_bulksms_dltid_lable , .admin_bulksms_dltid_text{
+	margin-top: 15px;
+}
+.admin_bulksms_formsubmit {
+	float: left;
+	text-align: center;
+	width: 50%;
+	margin-top: 11px;
+}
+.bulksms_notice{
+	float: left;
+	border: 2px solid green;
+	padding: 10px;
+	margin-top: 20px;
+	font-weight: bold;
+}

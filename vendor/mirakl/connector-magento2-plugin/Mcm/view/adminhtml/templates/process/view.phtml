@@ -1,0 +1,53 @@
+<?php
+/**
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ * @var \Mirakl\Mcm\Block\Adminhtml\Process\View $block
+ * @var \Mirakl\Core\Helper\Data $helper
+ */
+$process = $block->getProcess();
+$helper = $this->helper('Mirakl\Core\Helper\Data');
+?>
+
+<?php if ($process->getMiraklStatus() === 'error'): ?>
+    <?php $errors = $block->getErrors() ?>
+    <?php if (count($errors)): ?>
+        <div class="admin__page-section-title">
+            <strong class="title"><?php /* @escapeNotVerified */ echo __('MCM Errors') ?></strong>
+        </div>
+        <div class="admin__page-section-content">
+            <table class="admin__table-secondary">
+                <tbody>
+                <tr>
+                    <th><?php /* @escapeNotVerified */ echo __('Mirakl Identifier') ?></th>
+                    <td><?php /* @escapeNotVerified */ echo __('Mirakl Type Error') ?></td>
+                    <td><?php /* @escapeNotVerified */ echo __('Mirakl Error Code') ?></td>
+                    <td><?php /* @escapeNotVerified */ echo __('Mirakl Error Message') ?></td>
+                </tr>
+                <?php if (isset($errors['products'])): ?>
+                    <?php foreach ($errors['products'] as $identifier => $errorsProduct): ?>
+                        <?php foreach ($errorsProduct as $errorProduct): ?>
+                            <tr>
+                                <td><?php /* @escapeNotVerified */ echo $identifier ?></td>
+                                <td><?php /* @escapeNotVerified */ echo $errorProduct[0] ?></td>
+                                <td><?php /* @escapeNotVerified */ echo $errorProduct[1] ?></td>
+                                <td><?php /* @escapeNotVerified */ echo $errorProduct[2] ?></td>
+                            </tr>
+                        <?php endforeach;?>
+                    <?php endforeach;?>
+                <?php endif ?>
+
+                <?php if (isset($errors['global'])): ?>
+                    <?php foreach ($errors['global'] as $errorsGlobal): ?>
+                        <tr>
+                            <td><?php /* @escapeNotVerified */ echo  __('Global')?></td>
+                            <td><?php /* @escapeNotVerified */ echo $errorsGlobal[0] ?></td>
+                            <td><?php /* @escapeNotVerified */ echo $errorsGlobal[1] ?></td>
+                            <td><?php /* @escapeNotVerified */ echo $errorsGlobal[2] ?></td>
+                        </tr>
+                    <?php endforeach;?>
+                <?php endif ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif ?>
+<?php endif ?>

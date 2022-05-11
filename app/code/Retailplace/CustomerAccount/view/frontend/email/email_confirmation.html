@@ -1,0 +1,28 @@
+<!--@subject {{trans "Email Confirmation from %store_name" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var message_1":"Custom Message 1",
+"var message_2":"Custom Message 2"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-info">
+        <td>
+        	<h1>Hi,</h1>
+            <h1>{{trans "Thanks for verifying your email"}}</h1>
+            <a href="{{var email_verify}}" style="display: block;
+			    width: 200px;
+			    height: 25px;
+			    background: #4E9CAF;
+			    padding: 10px;
+			    text-align: center;
+			    border-radius: 5px;
+			    color: white;
+			    font-weight: bold;
+			    line-height: 25px;"> Start Exploring.... </a>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

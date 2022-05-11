@@ -1,0 +1,139 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Magento_LayeredNavigation
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+?>
+<?php
+/**
+ * Category layered navigation
+ *
+ * @var $block \Magento\LayeredNavigation\Block\Navigation
+ */
+?>
+<?php
+$moduleName = $this->getRequest()->getModuleName();
+$categoryHtml = "";
+$categoryRenderHtml = $block->getChildHtml('category_renderer');
+$filterSetting = $this->helper(Amasty\Shopby\Helper\FilterSetting::class);
+?>
+<?php if ($block->canShowBlock()) : ?>
+    <div class="block filter">
+        <a href="javascript:void(0)" class="filter_block_close">+</a>
+        <div class="block-title filter-title">
+            <strong><?= $block->escapeHtml(__('Shop By')) ?></strong>
+        </div>
+        <div class="block-content filter-content">
+            <?php $wrapOptions = false; ?>
+            <?php foreach ($block->getFilters() as $filter) : ?>
+        <?php
+        $attributeCode = $filter->hasAttributeModel() ? $filter->getAttributeModel()->getAttributeCode() : "";
+        $amastyFiltersetting = $filterSetting->getSettingByLayerFilter($filter);
+        $isShowDivider = $amastyFiltersetting->getData('is_show_after_seperator');
+        $filterName = str_replace(" ", "_", strtolower($filter->getName()));
+        $attributeCodeClass = $attributeCode ? $attributeCode : $filterName;;
+        ?>
+        <?php if ($filter->getItemsCount()) : ?>
+        <?php if (!$wrapOptions && $filter->getName() != "Category") : ?>
+            <strong role="heading" aria-level="2" class="block-subtitle filter-subtitle"><?= $block->escapeHtml(__('Shopping Options')) ?></strong>
+            <div class="mob_filter_title top_filters"><?= $block->escapeHtml(__('Top filters')) ?></div>
+            <dl class="filter-options" id="narrow-by-list">
+                <?php $wrapOptions = true; ?>
+                <?php endif; ?>
+                <?php if ($filter->getData('attribute_model') && $filter->getAttributeModel()->getSourceModel() == "Magento\Eav\Model\Entity\Attribute\Source\Boolean" && ($filter->getItemsCount() == 1)
+                ): ?>
+
+                    <?php
+                    $filterItems = $filter->getItems();
+                    foreach ($filterItems as $filterItem) {
+                        if ($filterItem->getCount() > 0) {
+                            if ($filterItem->getLabel() == "Yes") {
+                                ?>
+                                <div class="<?= $attributeCodeClass ?> boolean-checkbox-filter  filter-list-item">
+                                    <dd class="filter-options-content"><?= /* @noEscape */
+                                        $block->getChildBlock('renderer')->render($filter) ?></dd>
+                                    <?php if ($isShowDivider): ?>
+                                        <span class="filter_divider">divider</span>
+                                    <?php endif; ?>
+                                </div>
+                                <?php
+                            }
+                        }
+                    }
+                    ?>
+                <?php elseif (in_array($filter->getName(), ['On Sale', 'New Products'])): ?>
+                    <div class="<?= $attributeCodeClass ?>  boolean-checkbox-filter filter-list-item">
+                        <dd class="filter-options-content"><?= /* @noEscape */
+                            $block->getChildBlock('renderer')->render($filter) ?></dd>
+                        <?php if ($isShowDivider): ?>
+                            <span class="filter_divider">divider</span>
+                        <?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <?php if ($this->getRequest()->getFullActionName() != 'catalog_category_view' && in_array($filter->getName(), ['Category'])): ?>
+                        <?php
+                        $categoryHtml = "<div class='$attributeCodeClass filter-list-item'>";
+                        $categoryHtml .= "<dt role='heading' aria-level='3' class='filter-options-title'>" . $block->escapeHtml(__($filter->getName())) . "</dt>";
+                        $categoryHtml .= "<dd class='filter-options-content'>";
+                        $categoryHtml .= $block->getChildBlock('renderer')->render($filter);
+                        $categoryHtml .= "</dd>";
+                        $categoryHtml .= "</div>";
+                        continue;
+                        ?>
+                    <?php endif; ?>
+                    <div class="<?= $attributeCodeClass ?>  filter-list-item">
+                        <dt role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filter->getName())) ?></dt>
+                        <dd class="filter-options-content"><?= /* @noEscape */
+                            $block->getChildBlock('renderer')->render($filter) ?></dd>
+                        <?php if ($isShowDivider): ?>
+                            <span class="filter_divider">divider</span>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <?php endif; ?>
+                <?php endforeach; ?>
+                <?php if ($wrapOptions) : ?>
+            </dl>
+        <?php endif; ?>
+            <?php if ($this->getRequest()->getFullActionName() != 'catalog_category_view' && $categoryHtml): ?>
+                <div class="mob_filter_title category_title"><?= $block->escapeHtml(__('Categories')) ?></div>
+                <dl class="category filter-options" id="narrow-by-list-category">
+                    <?= $categoryHtml ?>
+                </dl>
+            <?php endif; ?>
+            <?php if ($this->getRequest()->getFullActionName() == 'catalog_category_view'): ?>
+                <div class="mob_filter_title category_title"><?= $block->escapeHtml(__('Categories')) ?></div>
+                <?= $categoryRenderHtml ?>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php else: ?>
+    <div class="block filter">
+        <a href="javascript:void(0)" class="filter_block_close">+</a>
+        <div class="block-title filter-title">
+            <strong><?= $block->escapeHtml(__('Shop By')) ?></strong>
+        </div>
+        <div class="block-content filter-content">
+            <div class="mob_filter_title category_title"><?= $block->escapeHtml(__('Categories')) ?></div>
+            <?= $categoryRenderHtml ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+{
+    ".sidebar.sidebar-main" :
+    {
+        "sideMenuFilter" : { }
+    }
+}
+</script>

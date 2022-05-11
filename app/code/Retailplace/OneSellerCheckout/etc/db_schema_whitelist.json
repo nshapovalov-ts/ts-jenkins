@@ -1,0 +1,8 @@
+{
+    "quote": {
+        "column": {
+            "parent_quote_id": true,
+            "seller_id": true
+        }
+    }
+}

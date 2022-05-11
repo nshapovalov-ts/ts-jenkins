@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Plpseller
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Retailplace_Wholesalepartnerssec::imagegallery" title="PLP Seller">
+                    <resource id="Retailplace_Plpseller::items"
+                              title="PLP Seller"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

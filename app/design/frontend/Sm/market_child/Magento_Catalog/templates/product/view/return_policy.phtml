@@ -1,0 +1,15 @@
+<a href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">
+	<div class="return-policy">
+	     <h5><?php echo __('Return Policy');?></h5>
+	</div>
+</a>
+
+<div id="light" class="white_content">
+<a class="close_popup_bt" href = "javascript:void(0)" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">+</a>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$page = $objectManager->get('\Magento\Cms\Model\Page')->load('return-policy');
+echo $objectManager->get('\Magento\Cms\Model\Template\FilterProvider')->getBlockFilter()->filter($page->getContent());
+?>
+</div>
+<div id="fade" class="black_overlay"></div>

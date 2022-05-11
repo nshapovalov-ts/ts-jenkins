@@ -1,0 +1,205 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Message\Index $block */
+
+use Mirakl\FrontendDemo\Helper\Message;
+use Mirakl\MMP\Common\Domain\Message\Thread\ThreadEntity;
+
+$threads = $block->getThreads();
+/** @var Message $helper */
+$helper = $this->helper('Mirakl\FrontendDemo\Helper\Message');
+$miraklOrder = $block->getMiraklOrder();
+$threadInfo = $block->getThreadInfo();
+$messageSeparator = "message-separator";
+
+$collection = [];
+foreach ($threads->getCollection() as $thread) {
+    $collection[$thread->getId()] = $thread;
+}
+?>
+<?php if ($threads && $threads->getCollection()->count()) : ?>
+    <div class="table-wrapper customer-messages">
+        <table class="data table table-customer-messages" id="my-customer-messages-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Messages')) ?></caption>
+            <thead class="desktop_view">
+            <tr>
+                <th scope="col" class="col participants"><?= $block->escapeHtml(__('Participants')) ?></th>
+                <th scope="col" class="col subject"><?= $block->escapeHtml(__('Topic')) ?></th>
+                <th scope="col" class="col date"><?= $block->escapeHtml(__('Date')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \Mirakl\MMP\Common\Domain\Message\Thread\Thread $thread */ ?>
+
+            <?php foreach ($collection as $threadId => $thread): ?>
+                <?php
+                $info = [];
+                $isAttachment = false;
+                $isUnreadMessage = false;
+                $isSeparator = false;
+
+                if (!empty(array_key_exists($threadId, $threadInfo))) {
+                    $info = $threadInfo[$threadId];
+                    $isUnreadMessage = !empty($info['unread_messages']);
+                    $isAttachment = !empty($info['is_attachment']);
+
+                    //check next element
+                    if ($isUnreadMessage) {
+                        $nextElement = current(array_slice($collection, array_search($threadId, array_keys($collection)) + 1, 1));
+                        if (!empty($nextElement) && !empty(array_key_exists($nextElement->getId(), $threadInfo))) {
+                            $info = $threadInfo[$nextElement->getId()];
+                            $isNextUnreadMessage = !empty($info['unread_messages']);
+                            if ($isNextUnreadMessage) {
+                                $isSeparator = true;
+                            }
+                        }
+                    }
+                }
+                ?>
+                <?php $messageUrl = $block->escapeUrl($block->getMessageUrl($thread)); ?>
+
+                <?php /** mobile version */ ?>
+                <tr class="mobile_view <?= !$isUnreadMessage ? 'is-read-message' : '' ?> <?= $isSeparator ? 'message-separator' : '' ?>">
+                    <td class="col participants mobile">
+                        <a href="<?= $messageUrl ?>">
+                            <?php /** @var ThreadEntity $entity */ ?>
+                            <?php foreach ($thread->getEntities() as $entity): ?>
+                            <?php $type = $helper->getEntityName($entity); ?>
+                                <div class="customer-messages-group">
+                                    <?php /** message type */ ?>
+                                    <?php if ($type): ?>
+                                        <?php
+                                        $messageTypeClass = $type == 'Order' ? 'message-type-product' : 'message-type-order';
+                                        ?>
+
+                                        <div class="customer-messages-type">
+                                            <?= '<span class="' . $messageTypeClass . '">' . $block->escapeHtmlAttr(__($type)) . '</span>' ?>
+                                        </div>
+
+                                    <?php endif; ?>
+
+                                    <?php /** title */ ?>
+                                    <?php if ($topic = $helper->getTopic($thread)): ?>
+                                        <div class="customer-messages-subject-title">
+                                            <?= $block->escapeHtmlAttr(__($topic)) ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <div class="customer-messages-customer">
+                                        <?= implode(', ', $helper->getCurrentParticipantsNames($thread, ['CUSTOMER'])) ?>
+                                    </div>
+
+                                </div>
+
+                                <div class="customer-messages-group">
+                                    <?php /** order number */ ?>
+                                    <?php if ($label = $entity->getLabel()): ?>
+                                        <div class="customer-messages-order-number">
+                                            <?= $block->escapeHtmlAttr(__(($type == 'Order' ? "#" : "") . __($label))) ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <div class="customer-messages-date">
+                                        <?= $block->formatDateLong($thread->getMetadata()->getLastMessageDate()) ?>
+                                    </div>
+                                </div>
+
+                            <?php endforeach; ?>
+                        </a>
+                    </td>
+                </tr>
+
+                <?php /** desktop version */ ?>
+                <tr class="desktop_view <?= !$isUnreadMessage ? 'is-read-message' : '' ?> <?= $isSeparator ? 'message-separator' : '' ?>">
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Participants')) ?>" class="col participants">
+                        <a href="<?= $messageUrl ?>">
+                            <?= implode(', ', $helper->getCurrentParticipantsNames($thread, ['CUSTOMER'])) ?>
+                        </a>
+                    </td>
+
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Topic')) ?>" class="col subject">
+                        <a href="<?= $messageUrl ?>">
+                            <?php /** @var ThreadEntity $entity */ ?>
+                            <?php foreach ($thread->getEntities() as $entity): ?>
+                                <?php $type = $helper->getEntityName($entity); ?>
+
+                                <?php /** message type */ ?>
+                                <?php if ($type): ?>
+                                    <?php
+                                    $messageTypeClass = $type == 'Order' ? 'message-type-product' : 'message-type-order';
+                                    ?>
+
+                                    <div class="customer-messages-subject">
+                                        <?= '<span class="' . $messageTypeClass . '">' . $block->escapeHtmlAttr(__($type)) . '</span>' ?>
+                                    </div>
+
+                                <?php endif; ?>
+
+                                <?php /** order number */ ?>
+                                <?php if ($label = $entity->getLabel()): ?>
+                                    <div class="customer-messages-subject">
+                                        <?= $block->escapeHtmlAttr(__(($type == 'Order' ? "#" : "") . __($label))) ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php /** title */ ?>
+                                <?php if ($topic = $helper->getTopic($thread)): ?>
+                                    <div class="customer-messages-subject">
+                                        <?= $block->escapeHtmlAttr(__($topic)) ?>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php /** title */ ?>
+                                <?php if ($isAttachment): ?>
+                                    <div class="attachment-file-icon"></div>
+                                <?php endif; ?>
+
+                            <?php endforeach; ?>
+                        </a>
+                    </td>
+
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Date')) ?>" class="col date">
+                        <a href="<?= $messageUrl ?>">
+                            <?= $block->formatDateLong($thread->getMetadata()->getLastMessageDate()) ?>
+                        </a>
+                    </td>
+
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($threads->getNextPageToken() || $threads->getPreviousPageToken()): ?>
+        <div class="toolbar bottom">
+            <div class="pager">
+                <div class="pages">
+                    <strong class="label pages-label" id="paging-label"><?= $block->escapeHtml(__('Page')) ?></strong>
+                    <ul class="items pages-items" aria-labelledby="paging-label">
+                        <?php if ($threads->getPreviousPageToken()): ?>
+                            <li class="item pages-item-previous">
+                                <a class="action previous"
+                                   href="<?= $block->escapeUrl($block->getSeekPageUrl($threads->getPreviousPageToken())) ?>"
+                                   title="<?= $block->escapeHtml(__('Previous')) ?>">
+                                    <span class="label"><?= $block->escapeHtml(__('Page')) ?></span>
+                                    <span><?= $block->escapeHtml(__('Prev')) ?></span>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                        <?php if ($threads->getNextPageToken()): ?>
+                            <li class="item pages-item-next">
+                                <a class="action next"
+                                   href="<?= $block->escapeUrl($block->getSeekPageUrl($threads->getNextPageToken())) ?>"
+                                   title="<?= $block->escapeHtmlAttr(__('Next')) ?>">
+                                    <span class="label"><?= $block->escapeHtml(__('Page')) ?></span>
+                                    <span><?= $block->escapeHtml(__('Next')) ?></span>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    <?php endif ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have no messages.')) ?></span></div>
+<?php endif ?>

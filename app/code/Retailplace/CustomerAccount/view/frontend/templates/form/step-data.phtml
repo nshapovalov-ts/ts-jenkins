@@ -1,0 +1,8 @@
+<?php
+/** @var \Retailplace\CustomerAccount\Block\StepData $block */
+?>
+<input type="hidden" id="registration_step" name="registration_step" value="<?= $block->getCurrentStep(); ?>">
+<script>
+    window.isChangePassword = <?= $block->isChangePassword(); ?>;
+    window.registrationStep = "<?= $block->getCurrentStep(); ?>";
+</script>

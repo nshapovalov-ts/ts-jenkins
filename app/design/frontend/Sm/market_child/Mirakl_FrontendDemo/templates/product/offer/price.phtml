@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Dmitriy Kosykh <dmitriykosykh@tradesquare.com.au>
+ */
+
+/** @var \Mirakl\FrontendDemo\Block\Product\Offer\Price $block */
+/** @var \Magento\Tax\Helper\Data $taxHelper */
+
+use Retailplace\CheckoutOverride\ViewModel\CartItemRenderer;
+
+$productObj = $block->getProduct();
+$taxHelper = $this->helper('Magento\Tax\Helper\Data');
+$offer = $block->getOffer();
+$originPrice = $offer->getOriginPrice();
+$finalPrice = $offer->getPrice();
+
+$unit_type =  $productObj->getAttributeText('unit_type');
+$numberOfUnitPerPack = $productObj->getData('number_of_unit_per_pack');
+$priceRanges = $offer->getPriceRanges();
+?>
+
+<?php if ($unit_type == CartItemRenderer::UNIT_TYPE_PACKAGE && $numberOfUnitPerPack): ?>
+    <span class="packof">
+        <?php echo __('Pack of ') . $numberOfUnitPerPack; ?>
+    </span>
+<?php endif; ?>
+<div class="offer-price price-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <?php if ($taxHelper->displayPriceIncludingTax() || $taxHelper->displayBothPrices()): ?>
+        <span class="price-wrapper price-including-tax" data-label="<?php echo $block->escapeHtml(__('Incl. Tax')); ?>">
+            <?php echo $block->formatCurrency($block->getOfferPriceInclTax()) ?>
+            <meta itemprop="price" content="<?= $block->getOfferPriceInclTax() ?>" />
+            <?php if($unit_type == CartItemRenderer::UNIT_TYPE_PACKAGE && $numberOfUnitPerPack):?>
+                <span class="item">
+                    <?php echo __('/item');?>
+                </span>
+            <?php endif;?>
+            <?php if ($originPrice != $finalPrice): ?>
+                <span class="offer-old-price"><?php echo $block->formatCurrency($block->getOfferOriginPriceInclTax()) ?></span>
+            <?php endif; ?>
+        </span>
+    <?php endif; ?>
+    <?php if ($taxHelper->displayPriceExcludingTax() || $taxHelper->displayBothPrices()): ?>
+        <span class="price-wrapper price-excluding-tax" data-label="<?php echo $block->escapeHtml(__('Excl. Tax')); ?>">
+            <?php echo $block->formatCurrency($block->getOfferPriceExclTax()) ?>
+            <meta itemprop="price" content="<?= $block->getOfferPriceInclTax() ?>" />
+            <?php if($unit_type == CartItemRenderer::UNIT_TYPE_PACKAGE && $numberOfUnitPerPack):?>
+                <span class="item">
+                    <?php echo __('/item');?>
+                </span>
+            <?php endif;?>
+            <?php if ($originPrice != $finalPrice): ?>
+                <span class="offer-old-price"><?php echo $block->formatCurrency($block->getOfferOriginPriceExclTax()) ?></span>
+            <?php endif; ?>
+            <?php if($priceRanges->count() >= 2):?>
+                <span class="tire-price-item1"><?php echo ('for 1 item');?></span>
+            <?php endif; ?>
+        </span>
+    <?php endif; ?>
+</div>
+
+<?php if ($block->getZone() != \Magento\Framework\Pricing\Render::ZONE_ITEM_LIST): ?>
+    <?= $block->getPriceRangesHtml() ?>
+<?php endif; ?>
+
+<?php if ($block->getDisplayShippingPrice()): ?>
+    <?php if ($offer->getMinShippingPrice() > 0): ?>
+        <div class="offer-shipping">
+            <?php if ($taxHelper->displayShippingBothPrices()): ?>
+                <?php echo __('+ %1 shipping (Excl. Tax: %2)', $block->formatCurrency($block->getOfferMinShippingPriceInclTax()), $block->formatCurrency($block->getOfferMinShippingPriceExclTax())) ?>
+            <?php else: ?>
+                <?php echo __('+ %1 shipping', $block->formatCurrency($taxHelper->displayShippingPriceIncludingTax() ? $block->getOfferMinShippingPriceInclTax() : $block->getOfferMinShippingPriceExclTax())) ?>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="offer-shipping"><?php echo __('Free delivery') ?></div>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($offer->getPriceAdditionalInfo()): ?>
+    <div class="offer-price-description"><?php echo $block->escapeHtml($offer->getPriceAdditionalInfo()) ?></div>
+<?php endif; ?>

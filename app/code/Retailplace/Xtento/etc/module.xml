@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--~
+  ~ Retailplace_Xtento
+  ~
+  ~ @copyright   Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+  ~ @author      Satish Gumudavelly <satish@vdcstore.com>
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Retailplace_Xtento"/>
+</config>

@@ -1,0 +1,70 @@
+<?php
+/**
+ * @var $block \Retailplace\ShippingEstimation\Block\Product\View\ShippingEstimation
+ */
+?>
+<?php
+$product = $block->getProduct();
+$offer = $product->getData('main_offer');
+?>
+<?php if ($offer): ?>
+    <?php
+    $shopId = $offer->getShopId();
+    $shop = $block->getOfferHelper()->getOfferShop($offer);
+    $shopName = $shop->getName();
+    ?>
+    <?php if ($shop->getFreeShipping()): ?>
+        <div class="service-content-shipping">
+            <div class="service-icon toolpick-ico" style="font-size: 30px;">
+                <div class="delivery_icon_new_icon"></div>
+            </div>
+            <div class="service-info">
+                <h4>
+                    <?= __("Free Shipping"); ?>
+                    <div class="toolpick">
+                        <div class="toolpick-ico">
+                            <i>i</i>
+                            <div class="toolpick-text">
+                                <p><?= __("Free shipping for all the products of %1", $shopName); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </h4>
+            </div>
+        </div>
+    <?php else: ?>
+        <?php if ($block->isCustomerLoggedIn()): ?>
+            <?php $freeShippingData = $block->getFreeShippingData($shop); ?>
+            <?php if ($freeShippingData): ?>
+                <?php
+                $amount = $freeShippingData->getAmount();
+                $label = $freeShippingData->getLabel();
+                ?>
+                <div class="service-content-shipping"></div>
+                <script type="text/javascript">
+                    require(["jquery", "domReady!"], function ($) {
+                        $(document).ready(function () {
+                            var url = "<?= $block->getUrl('shiptotal/index/index'); ?>";
+                            $.ajax({
+                                url: url,
+                                type: "POST",
+                                data: {
+                                    shopid: <?= $shopId;?>,
+                                    freeshipamount: <?= $amount; ?>,
+                                    shopname: '<?= $block->escapeJs($shopName); ?>',
+                                    shippingcode: '<?= $block->escapeJs($label); ?>'
+                                },
+                                showLoader: true,
+                                cache: false,
+                                success: function (response) {
+                                    $('.service-content-shipping').html(response);
+                                }
+                            });
+                            return false;
+                        });
+                    });
+                </script>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

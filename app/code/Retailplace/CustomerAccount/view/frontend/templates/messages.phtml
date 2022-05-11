@@ -1,0 +1,20 @@
+<div class="customer-edit-messages" data-bind="scope: 'editMessages'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+{
+  "*": {
+    "Magento_Ui/js/core/app": {
+      "components": {
+        "editMessages": {
+          "component": "Magento_Ui/js/view/messages",
+          "config": {
+                "template": "Retailplace_CustomerAccount/messages",
+                "selector": "[data-role=customer-edit-messages]"
+            }
+          }
+        }
+      }
+    }
+}
+</script>

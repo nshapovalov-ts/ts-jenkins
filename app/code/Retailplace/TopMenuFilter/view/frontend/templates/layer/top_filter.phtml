@@ -1,0 +1,97 @@
+<?php
+
+/**
+ * Retailplace_TopMenuFilter
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+/** @var $block \Amasty\Shopby\Block\Navigation\Top\Navigation */
+
+$moduleName = $this->getRequest()->getModuleName();
+$isSeller = $this->getRequest()->getParam('seller_view');
+$showFilters = $block->canShowBlock();
+?>
+    <?php $isEnableOwnCarrousel = false;?>
+    <div class="menu-top <?php if ($isSeller) : ?> is_seller <?php endif; ?>">
+        <div class="menu-filters">
+            <div class="top-menu-filter">
+                <div class="filter-section mobile">
+                    <?php if ($showFilters) : ?>
+                        <div class="filter-label">
+                            <span><?= __('Filter') ?></span>
+                        </div>
+                        <div id="narrow-by-list"></div>
+                        <?php foreach ($block->getFilters() as $filter) : ?>
+                            <?php if ($filter->getItemsCount()) : ?>
+                                <?php
+                                $filterLabel = $block->escapeHtml(__($filter->getName()));
+                                $attributeCode = $filter->getAttributeModel()->getAttributeCode();
+                                $isEnableOwnCarrousel = true;
+                                ?>
+                                <div class="<?= $attributeCode ?>-filter filter_block">
+                                    <div class="<?= $attributeCode ?>-button filter_block_title" id="<?= $attributeCode ?>-button">
+                                        <a href="javascript:void(0);" data-attribute-code="<?= $attributeCode ?>" title="<?= $filterLabel ?>"><?= $filterLabel ?></a>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php echo $block->getChildHtml('top_filter_sorting'); ?>
+                </div>
+
+                <div class="filter-section desktop">
+                    <?php if ($showFilters) : ?>
+                        <div class="filter-label">
+                            <span><?= __('Filter') ?></span>
+                        </div>
+                        <?php foreach ($block->getFilters() as $filter) : ?>
+                            <?php if ($filter->getItemsCount()) : ?>
+                                <?php
+                                $filterLabel = $block->escapeHtml(__($filter->getName()));
+                                $attributeCode = $filter->getAttributeModel()->getAttributeCode();
+                                ?>
+                                <div class="<?= $attributeCode ?>-filter filter_block">
+                                    <div class="<?= $attributeCode ?>-button filter_block_title" id="<?= $attributeCode ?>-button">
+                                        <a href="javascript:void(0);" data-attribute-code="<?= $attributeCode ?>" title="<?= $filterLabel ?>"><?= $filterLabel ?></a>
+                                    </div>
+                                    <div class="<?= $attributeCode ?>  filteroption filter_block_info" id="<?= $attributeCode ?>filteroption" style="display:none;">
+                                        <div class="topfilter">
+                                            <div class="filter-title"><span><?= $filterLabel ?></span></div>
+                                            <div class="clear-all disabled">
+                                                <a href="javascript:void(0);" title="Clear All">Clear All</a>
+                                            </div>
+                                        </div>
+                                        <?= /* @noEscape */
+                                        $block->getChildBlock('renderer')->render($filter) ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php echo $block->getChildHtml('top_filter_sorting'); ?>
+                </div>
+            </div>
+            <div class="applied-filter">
+                <?= $block->getChildHtml('state') ?>
+
+                <?php if ($block->getLayer()->getState()->getFilters()) : ?>
+                    <div class="block-actions filter-actions">
+                        <a href="<?= $block->escapeUrl($block->getClearUrl()) ?>" class="action clear filter-clear"><span><?= $block->escapeHtml(__('Clear All')) ?></span></a>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <script type="text/x-magento-init">
+    {
+        ".menu-top .menu-filters .top-menu-filter" :
+        {
+            "topFilter" :
+            {
+                "isEnableOwnCarrousel":"<?= $isEnableOwnCarrousel ?>"
+            }
+        }
+    }
+    </script>

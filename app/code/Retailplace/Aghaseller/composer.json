@@ -1,0 +1,22 @@
+{
+    "name": "retailplace/module-aghaseller",
+    "description": "",
+    "type": "magento2-module",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "email": "magento-dev1@kipanga.com.au",
+            "name": "Retailplace"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Retailplace\\Aghaseller\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

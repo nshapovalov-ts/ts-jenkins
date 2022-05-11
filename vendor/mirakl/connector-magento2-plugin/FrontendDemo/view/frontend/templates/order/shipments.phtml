@@ -1,0 +1,79 @@
+<?php /** @var \Mirakl\FrontendDemo\Block\Order\Shipments $block */ ?>
+<div class="order-details-items marketplace-shipments">
+    <div class="block-content">
+        <?php if (!$block->isEnableMultiShipments()): ?>
+            <?= $block->escapeHtml(__('Multiple shipments are disabled.')) ?>
+        <?php else: ?>
+            <?php $_shipments = $block->getShipments(); ?>
+            <?php if (!$_shipments || !$_shipments->getCollection()->count()): ?>
+                <?= $block->escapeHtml(__('No shipments for this order.')) ?>
+            <?php else: ?>
+                <?php foreach ($_shipments->getCollection() as $_i => $_shipment): ?>
+                    <?php /** @var \Mirakl\MMP\Common\Domain\Shipment\Shipment $_shipment */ ?>
+                    <div class="order-title shipment-title">
+                        <strong><?= $block->escapeHtml(__('Shipment #%1', $_i + 1)) ?></strong>
+                        <span class="order-status"><?= $block->escapeHtml(__($block->getStatusLabel($_shipment->getStatus()))) ?></span>
+                    </div>
+                    <div class="shipment-content">
+                        <?php if ($_carrierName = $_shipment->getTracking()->getCarrierName()): ?>
+                            <p><strong><?= __('Carrier: ') ?></strong><?= $block->escapeHtml($_carrierName) ?><p>
+                        <?php endif; ?>
+                        <?php if ($_trackingNumber = $_shipment->getTracking()->getTrackingNumber()): ?>
+                            <p><strong><?= __('Tracking Number: ') ?></strong><?= $block->escapeHtml($_trackingNumber) ?><p>
+                        <?php endif; ?>
+                        <?php if ($_trackingUrl = $_shipment->getTracking()->getTrackingUrl()): ?>
+                            <p>
+                                <strong><?= __('Tracking URL: ') ?></strong>
+                                <a href="<?= $block->escapeUrl($_trackingUrl) ?>"
+                                   class="action track"
+                                   title="<?= $block->escapeHtmlAttr(__('Track your order')) ?>"
+                                   target="_blank"><span><?= $block->escapeHtml($_trackingUrl) ?></span></a>
+                            <p>
+                        <?php endif; ?>
+                    </div>
+                    <?php if ($block->canReceiveShipment($_shipment)): ?>
+                        <div class="shipment-actions-toolbar">
+                            <div class="primary">
+                                <button type="button"
+                                        class="action primary"
+                                        data-post='{"action": "<?= $block->escapeUrl($block->getUrl('marketplace/order/receiveShipments')) ?>",
+                                                    "data": {
+                                                        "confirmation": true,
+                                                        "confirmationMessage": "<?= $block->escapeHtml(__('Are you sure?')); ?>",
+                                                        "order_id": "<?= $block->escapeHtml($block->getOrder()->getId()); ?>",
+                                                        "remote_id": "<?= $block->escapeHtml($block->getMiraklOrder()->getId()); ?>",
+                                                        "shipment_id": "<?= $block->escapeHtml($_shipment->getId()) ?>"}}'
+                                        title="<?= $block->escapeHtmlAttr(__('Confirm Receipt')); ?>">
+                                    <span><?= $block->escapeHtml(__('Confirm Receipt')); ?></span>
+                                </button>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="shipment-items">
+                        <div class="shipment-items-title"><?= __('Shipment Items') ?></div>
+                        <table class="data table table-order-items">
+                            <caption class="table-caption"><?= $block->escapeHtml(__('Shipment Items')) ?></caption>
+                            <tbody>
+                            <?php /** @var \Mirakl\MMP\Common\Domain\Shipment\ShipmentLine $_shipmentLine */ ?>
+                            <?php foreach ($_shipment->getShipmentLines() as $_shipmentLine): ?>
+                                <?php $_orderItem = $block->getOrderItemById($_shipmentLine->getOrderLineId()) ?>
+                                <tr>
+                                    <td>
+                                        <?php if ($_orderItem): ?>
+                                            <strong><?= $block->escapeHtml($_orderItem->getName()) ?></strong><br>
+                                            <?= $block->escapeHtml(__('Product SKU: ')) ?><span class="sku"><?= $_orderItem->getSku() ?></span>
+                                            &nbsp;|&nbsp;
+                                        <?php endif; ?>
+                                        <?= $block->escapeHtml(__('Offer SKU: ')) ?><span class="sku"><?= $_shipmentLine->getOfferSku() ?></span>
+                                    </td>
+                                    <td>x&nbsp;<?= $_shipmentLine->getQuantity() ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+</div>

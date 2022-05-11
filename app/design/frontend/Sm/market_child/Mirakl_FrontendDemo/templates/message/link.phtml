@@ -1,0 +1,54 @@
+<?php
+/** @var SortLink $block */
+
+use Retailplace\MiraklFrontendDemo\Block\Account\SortLink;
+
+?>
+<?php
+
+$isCountBox = $block->isCountBox();
+$countMewMessage = 0;
+if ($isCountBox) {
+    $countMewMessage = $block->getCountNewMessages();
+}
+
+$cssClass = "";
+if ($block->getCssClass()) {
+    $cssClass = $block->getCssClass();
+}
+?>
+
+<?php if ($block->isCurrent()): ?>
+    <li class="nav item current">
+        <strong class="<?= $cssClass ?>">
+
+            <?= $block->escapeHtml(__($block->getLabel())) ?>
+            <?php if ($isCountBox): ?>
+                <?php if ($countMewMessage > 0): ?>
+                    <span class="item-count-box"><?= $block->escapeHtml(__($countMewMessage)) ?></span>
+                <?php else: ?>
+                    <span style="display: none" class="item-count-box"></span>
+                <?php endif; ?>
+            <?php endif; ?>
+        </strong>
+    </li>
+<?php else: ?>
+    <li class="nav item <?= $block->getIsHighlighted() ? " current" : "" ?> <?= $cssClass ?>">
+        <a class="<?= $cssClass ?>" href="<?= $block->escapeHtml($block->getHref()) ?>"
+           title="<?= $block->escapeHtml(__($block->getTitle())) ?>" <?= $block->getAttributesHtml() ?>>
+
+            <?= $block->getIsHighlighted() ? "<strong>" : "" ?>
+            <?= $block->escapeHtml(__($block->getLabel())) ?>
+
+            <?php if ($isCountBox): ?>
+                <?php if ($countMewMessage > 0): ?>
+                    <span class="item-count-box"><?= $block->escapeHtml(__($countMewMessage)) ?></span>
+                <?php else: ?>
+                    <span style="display: none" class="item-count-box"></span>
+                <?php endif; ?>
+            <?php endif; ?>
+
+            <?= $block->getIsHighlighted() ? "</strong>" : "" ?>
+        </a>
+    </li>
+<?php endif; ?>

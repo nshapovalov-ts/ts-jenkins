@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_sync>
+            <values_lists>
+                <enable_values_lists>1</enable_values_lists>
+            </values_lists>
+            <hierarchies>
+                <enable_hierarchies>1</enable_hierarchies>
+            </hierarchies>
+            <attributes>
+                <enable_attributes>1</enable_attributes>
+            </attributes>
+        </mirakl_sync>
+        <mirakl_mci>
+            <hierarchy>
+                <root_category/>
+            </hierarchy>
+            <attributes>
+                <export_all_attributes>1</export_all_attributes>
+            </attributes>
+            <import_shop_product>
+                <enable_product_import>1</enable_product_import>
+                <import_path>var/mirakl/products/incoming/</import_path>
+                <deduplication_attributes>ean,isbn</deduplication_attributes>
+                <enable_deduplication_multivalues>0</enable_deduplication_multivalues>
+                <deduplication_delimiter>,</deduplication_delimiter>
+                <auto_create_configurable_products>1</auto_create_configurable_products>
+                <update_existing_products>0</update_existing_products>
+                <auto_enable_product>1</auto_enable_product>
+                <auto_flag_product_sync>1</auto_flag_product_sync>
+                <auto_assign_category>1</auto_assign_category>
+                <default_visibility>4</default_visibility> <!-- Catalog, Search -->
+                <default_tax_class>0</default_tax_class>
+                <check_data_hash>1</check_data_hash>
+                <send_import_report>1</send_import_report>
+            </import_shop_product>
+            <product_import_indexing>
+                <enable_indexing_import>0</enable_indexing_import>
+                <enable_indexing_import_after>1</enable_indexing_import_after>
+            </product_import_indexing>
+        </mirakl_mci>
+        <mirakl_images_import>
+            <general>
+                <image_max_size>5000</image_max_size>
+                <limit>100</limit>
+                <headers><![CDATA[Accept: *
+Accept-Language: *
+Accept-Encoding: *]]></headers>
+                <protocol_version>1.1</protocol_version>
+                <timeout>10</timeout>
+            </general>
+        </mirakl_images_import>
+    </default>
+</config>

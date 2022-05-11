@@ -1,0 +1,33 @@
+<?php
+/**
+ * Seller Listing Template
+ *
+ * @var $block SellerTab
+ */
+
+use Retailplace\MiraklSeller\Block\SellerTab;
+
+?>
+<?php if ($block->isEnabled()): ?>
+    <?php
+    $productCount = $block->getProductCount();
+    $sellerView = $this->getRequest()->getParam('seller_view');
+    ?>
+    <div class="seller-tab-container">
+        <div class="seller-tab-view">
+            <div class="<?= $sellerView ? "" : "active"; ?> product">
+                <a href="<?= preg_replace('/&?seller_view=[^&]*/', '', $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true])); ?>" class="seller_view_icon"><?= __('SHOP BY PRODUCT') ?> </a>
+            </div>
+            <div class="<?= $sellerView ? "active" : ""; ?> seller">
+                <a href="<?= $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true, '_query' => ['seller_view' => 1]]) ?>" class="product_view_icon"><?= __('SHOP BY Supplier') ?></a>
+            </div>
+        </div>
+    </div>
+    <?php if ($sellerView) : ?>
+        <?php //$sellerCount = $block->getSellerCount(); ?>
+        <!--<div class="seller-product-count"> <?php /*echo (int) $sellerCount; */?> <?/*= $sellerCount > 1 ? " items" : "item" */?> </div>-->
+    <?php else : ?>
+        <div class="seller-product-count"> <?php echo (int) $productCount; ?> <?= $productCount > 1 ? " items" : "item" ?> </div>
+    <?php endif; ?>
+<?php endif; ?>
+

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_CustomerAccount
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" remove="true"/>
+        <referenceBlock name="attribute_customer_edit" remove="true"/>
+        <referenceBlock name="sidebar.main" remove="true"/>
+        <referenceBlock name="customer_edit">
+            <block class="Magento\Framework\View\Element\Template" name="messages" as="messages" template="Retailplace_CustomerAccount::messages.phtml"/>
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Retailplace_CustomerAccount::form/edit.phtml</argument>
+            </action>
+            <action method="setViewModel">
+                <argument name="view_model" xsi:type="object">Retailplace\CustomerAccount\ViewModel\FinishPage</argument>
+            </action>
+            <block class="Retailplace\CustomerAccount\Block\Address" name="customer_account_dashboard_address" as="address" template="Retailplace_CustomerAccount::form/address.phtml" cacheable="false">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Retailplace\CustomerAccount\ViewModel\Country</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Template"
+                   name="customer_account_edit_congratulation"
+                   template="Retailplace_CustomerAccount::congratulation.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Retailplace\CustomerAccount\ViewModel\FinishPage</argument>
+                </arguments>
+            </block>
+            <container name="preferences_question" >
+                <block class="Retailplace\CustomerAccount\Block\Widget\BusinessType" name="business.type" as="business.type"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\Industry" name="industry" as="industry"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\LpoCode" name="lpo_code" as="lpo_code"
+                       template="Retailplace_CustomerAccount::widget/lpo_code.phtml"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\Tradesquare" name="tradesquare" as="tradesquare"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\CategoriesBuy" name="categories.buy" as="categories.buy"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\SellGoods" name="sell.goods" as="sell.goods"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\SellGoodsOffline" name="sell.goods.offline" as="sell.goods.offline"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\CurrentlyGoodsOnline" name="currently.goods.online" as="currently.goods.online"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\MyNetwork" name="my.network" as="my.network"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\AnnualPurchasingSpend" name="annual.purchasing.spend" as="annual.purchasing.spend"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\FrequentlyOrder" name="frequently.order" as="frequently.order"/>
+                <block class="Retailplace\CustomerAccount\Block\Widget\PurchasePriorities" name="purchase.priorities" as="purchase.priorities"/>
+            </container>
+            <block class="Magento\Framework\View\Element\Template" name="did.you.know" as="did.you.know" template="Retailplace_CustomerAccount::form/edit/did-you-know.phtml"/>
+            <container name="additional.info" as="additional_info">
+                <block class="Retailplace\CustomerAccount\Block\StepData" name="step.data"  as="step.data"
+                       template="Retailplace_CustomerAccount::form/step-data.phtml" />
+                <block class="Retailplace\CustomerAccount\Block\AttributesRelation" name="attributes.relation"
+                       as="attributes.relation" template="Retailplace_CustomerAccount::form/relationinfo.phtml" />
+            </container>
+        </referenceBlock>
+        <referenceContainer name="before.body.end">
+            <block class="Retailplace\CustomerAccount\Block\GoogleApi" name="google.api.key" ifconfig="shipping/shipper_autocomplete/active"
+                   template="Retailplace_CustomerAccount::address-auto/google-api.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

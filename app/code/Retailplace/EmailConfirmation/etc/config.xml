@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_EmailConfirmation
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <customer>
+            <create_account>
+                <email_validation_lockout_failures>5</email_validation_lockout_failures>
+                <email_validation_lockout_threshold>10</email_validation_lockout_threshold>
+            </create_account>
+        </customer>
+    </default>
+</config>

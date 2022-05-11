@@ -1,0 +1,10 @@
+{
+    "mirakl_shop": {
+        "column": {
+            "open_during_xmas": true,
+            "holiday_closed_from": true,
+            "holiday_closed_to": true,
+            "has_new_products": true
+        }
+    }
+}

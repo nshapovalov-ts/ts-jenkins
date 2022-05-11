@@ -1,0 +1,239 @@
+<?php
+/**
+ * AghaSeller Filter Template
+ *
+ * @var $block \Retailplace\Aghaseller\Block\Index\Filter
+ */
+?>
+<?php
+$shops = $block->getShopsForNameFilter();
+$sellerMinimum = $block->getMinimumOrderValues();
+$minimumFilterUrl = $block->getMinimumFilterUrl();
+$nameFilterUrl = $block->getNameFilterUrl();
+$shopIdArray = $block->getNameRequest();
+$minimumRequest = $block->getMinimumRequest();
+?>
+<div class="agha-seller-filter">
+    <div class="filter-label">
+        <span><?= __('Filter'); ?></span>
+    </div>
+    <div class="filter-section">
+        <div class="name-filter">
+            <div class="name-button" id="name-button">
+                <a href="javascript:void(0);" title="<?= __('Name'); ?>"><?= __('Name'); ?></a>
+            </div>
+            <div class="namefilteroption" id="namefilteroption" style="display:none;">
+                <div class="topfilter">
+                    <div class="filter-title"><span><?= __('Supplier Name'); ?></span></div>
+
+                    <div class="clear-all <?php if (!$shopIdArray): ?>disabled<?php endif; ?>">
+                        <a href="<?= $block->getNameClearUrl(); ?>" title="<?= __('Clear All'); ?>"><?= __('Clear All'); ?></a>
+                    </div>
+                </div>
+                <div class="filter-options-content">
+                    <div class="sellername-search-box">
+                        <input type="text" id="name-search" class="name-search" placeholder="<?= __('Search for Supplier Name'); ?>">
+                    </div>
+                    <div class="name-filter-options">
+                        <ul class="items">
+                            <?php /** @var \Mirakl\Core\Model\Shop $shop */ ?>
+                            <?php foreach ($shops as $shop): ?>
+                                <li class="item" data-label="<?= $shop->getName(); ?>">
+                                    <input class="name-filter-check" name="shopname" id="name-<?= $shop->getId(); ?>" value="<?= $shop->getId(); ?>" type="checkbox" style=""
+                                        <?= ($shopIdArray && in_array($shop->getId(), $shopIdArray)) ? ' checked' : '' ?>>
+                                    <a class="am-filter-item am_shopby_link_selected" for="name-<?= $shop->getId(); ?>" data-am-js="filter-item-default" href="javascript:void(0);" rel="nofollow">
+                                        <label for="name-<?= $shop->getId(); ?>"><?= $shop->getName(); ?></label>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div class="applyfilter">
+                        <button type="button" id="applyname"><span><?= __('Apply'); ?></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="minimum-filter">
+            <div class="minimum-button" id="minimum-button">
+                <a href="javascript:void(0);" title="<?= __('Minimum'); ?>"><?= __('Minimum'); ?></a>
+            </div>
+            <div class="minimumfilteroption" id="minimumfilteroption" style="display:none;">
+                <div class="topfilter">
+                    <div class="filter-title"><span><?= __('Minimum Order Amount'); ?></span></div>
+                    <div class="clear-all <?php if (!$minimumRequest): ?>disabled<?php endif; ?>">
+                        <a href="javascript:void(0);" title="<?= __('Clear All'); ?>"><?= __('Clear All'); ?></a>
+                    </div>
+                </div>
+                <div class="minimum-filterdata">
+                    <ul>
+                        <?php
+                        $nominimum = $sellerMinimum['nominimum'];
+                        $belowhundred = $sellerMinimum['belowhundred'];
+                        $belowtwo = $sellerMinimum['belowtwo'];
+                        $belowthree = $sellerMinimum['belowthree'];
+                        $morethree = $sellerMinimum['morethree'];
+                        ?>
+                        <li<?= empty($nominimum) ? ' disabled class="disabled"' : '' ?>>
+                            <input type="checkbox" class="filter-radio" id="nominimum" name="minimum" value="nominimum" <?php if ($minimumRequest == "nominimum"): ?>checked<?php endif; ?>>
+                            <a href="<?= $minimumFilterUrl ?>minimum=nominimum" title="<?= __('No Minimum'); ?>">
+                                <label for="nominimum"><?= __('No Minimum'); ?></label>
+                            </a>
+                        </li>
+                        <li <?= empty($belowhundred) ? ' disabled class="disabled"' : '' ?>>
+                            <input type="checkbox" class="filter-radio" id="hundred" name="minimum" value="100" <?php if ($minimumRequest == 100): ?>checked<?php endif; ?>>
+                            <a href="<?= $minimumFilterUrl ?>minimum=100" title="<?= __('$100 or less'); ?>">
+                                <label for="hundred"> <?= __('$100 or less'); ?></label>
+                            </a>
+                        </li>
+                        <li <?= empty($belowtwo) ? ' disabled class="disabled"' : '' ?>>
+                            <input type="checkbox" class="filter-radio" id="twohundred" name="minimum" value="200" <?php if ($minimumRequest == 200): ?>checked<?php endif; ?>>
+                            <a href="<?= $minimumFilterUrl ?>minimum=200" title="<?= __('$200 or less'); ?>">
+                                <label for="twohundred"> <?= __('$200 or less'); ?></label>
+                            </a>
+                        </li>
+                        <li <?= empty($belowthree) ? ' disabled class="disabled"' : '' ?>>
+                            <input type="checkbox" class="filter-radio" id="threehundred" name="minimum" value="300" <?php if ($minimumRequest == 300): ?>checked<?php endif; ?>>
+                            <a href="<?= $minimumFilterUrl ?>minimum=300" title="<?= __('$300 or less'); ?>">
+                                <label for="threehundred"> <?= __('$300 or less'); ?></label>
+                            </a>
+                        </li>
+                        <li <?= empty($morethree) ? ' disabled class="disabled"' : '' ?>>
+                            <input type="checkbox" class="filter-radio" id="morehundred" name="minimum" value="301" <?php if ($minimumRequest == 301): ?>checked<?php endif; ?>>
+                            <a href="<?= $minimumFilterUrl ?>minimum=301" title="<?= __('More than $300'); ?>">
+                                <label for="morehundred"> <?= __('More than $300'); ?></label>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="applyfilter">
+                        <button type="button" id="applyminimim"><span><?= __('Apply'); ?></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        jQuery(document).ready(function (e) {
+
+            $("#name-button a").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $("#minimumfilteroption").hide();
+                $("#namefilteroption").toggle();
+            });
+            $("#minimum-button a").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $("#namefilteroption").hide();
+                $("#minimumfilteroption").toggle();
+            });
+
+            $('#minimumfilteroption').click(function (e) {
+                e.stopPropagation();
+            });
+
+            $('#namefilteroption').click(function (e) {
+                e.stopPropagation();
+            });
+
+            $('body').click(function () {
+                $('#minimumfilteroption').hide();
+                $('#namefilteroption').hide();
+            });
+
+            $(".namefilteroption #name-search").keyup(function () {
+                var filter = $(this).val();
+                $(".namefilteroption ul li").each(function () {
+                    if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                        $(this).hide();
+                    } else {
+                        $(this).show()
+                    }
+                });
+            });
+
+            $('.namefilteroption ul.items').each(function () {
+                var LiN = $(this).find('li').length;
+                if (LiN > 6) {
+                    $('li', this).eq(5).nextAll().hide().addClass('toggleable');
+                    $(this).append('<li class="more"><?= __("See More..."); ?></li>');
+                }
+            });
+
+            $('.namefilteroption ul.items').on('click', '.more', function () {
+                if ($(this).hasClass('less')) {
+                    $(this).text('<?= __("See More..."); ?>').removeClass('less');
+                } else {
+                    $(this).text('<?= __("See Less..."); ?>').addClass('less');
+                }
+                $(this).siblings('li.toggleable').slideToggle();
+            });
+
+            $('#minimumfilteroption input.filter-radio').on('change', function () {
+                $('#minimumfilteroption input.filter-radio').not(this).prop('checked', false);
+                if ($("#minimumfilteroption input.filter-radio:checked").length > 0) {
+                    $("#minimumfilteroption .clear-all").removeClass("disabled");
+                } else {
+                    $("#minimumfilteroption .clear-all").addClass("disabled");
+                }
+            });
+
+            $('#minimumfilteroption .clear-all a').click(function () {
+                $('#minimumfilteroption input.filter-radio').removeAttr('checked');
+                $("#minimumfilteroption .clear-all").addClass("disabled");
+            });
+
+            $('#applyname').click(function () {
+                var selectedVal = $('.name-filter-check:checked').map(function () {
+                    return this.value;
+                }).get().join(',');
+                var filterUrl = "<?= $nameFilterUrl; ?>" + "shopname=" + selectedVal;
+                if (typeof filterUrl == "undefined") {
+                    var currentUrl = window.location.href;
+                    var filterUrl = removeURLParameter(currentUrl, 'shopname');
+                    window.location.href = filterUrl;
+                } else {
+                    window.location.href = filterUrl;
+                }
+            });
+
+            $('#applyminimim').click(function () {
+                var selectedVal = $("#minimumfilteroption input[name=minimum]:checked").next('a');
+                var filterUrl = selectedVal.attr('href');
+                if (typeof filterUrl == "undefined") {
+                    var currentUrl = window.location.href;
+                    var filterUrl = removeURLParameter(currentUrl, 'minimum');
+                    window.location.href = filterUrl;
+                } else {
+                    window.location.href = filterUrl;
+                }
+            });
+
+            function removeURLParameter(url, parameter) {
+                //prefer to use l.search if you have a location/link object
+                var urlparts = url.split('?');
+                if (urlparts.length >= 2) {
+
+                    var prefix = encodeURIComponent(parameter) + '=';
+                    var pars = urlparts[1].split(/[&;]/g);
+
+                    //reverse iteration as may be destructive
+                    for (var i = pars.length; i-- > 0;) {
+                        //idiom for string.startsWith
+                        if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                            pars.splice(i, 1);
+                        }
+                    }
+
+                    url = urlparts[0] + '?' + pars.join('&');
+                    return url;
+                } else {
+                    return url;
+                }
+            }
+
+        });
+    });
+</script>

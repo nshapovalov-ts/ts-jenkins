@@ -1,0 +1,42 @@
+{
+    "name": "magecomp\/magento-2-smspro",
+    "description": "Magecomp Sms Pro Extension",
+    "require": {
+        "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0",
+        "amasty\/base": ">=1.12.14"
+    },
+    "suggest": {
+        "magecomp\/magento-2-base": "MageComp Base Package.",
+        "magecomp\/magento-2-international-telephone-input": "Please Install magecomp\/magento-2-international-telephone-input to get country code accros the website along with phone number",
+        "magecomp\/magento-2-reviewreminder": "Please Install magecomp\/magento-2-reviewreminder to Notification of Review Reminder",
+        "magecomp\/module-smsbulksms": "Please Install magecomp\/module-smsbulksms to Use BulkSMS API",
+        "magecomp\/module-smsglobal": "Please Install magecomp\/module-smsglobal to Use GlobalSMS API",
+        "magecomp\/module-smsgupshup": "Please Install magecomp\/module-smsgupshup to Use SMSGUPSHUP API",
+        "magecomp\/module-smskutility": "Please Install magecomp\/module-smskutility to Use kUTILITY API",
+        "magecomp\/module-smsmsg91": "Please Install magecomp\/module-smsmsg91 to Use MSG91 API",
+        "magecomp\/module-smsmsgclub": "Please Install magecomp\/module-smsmsgclub to Use MSGCLUB API",
+        "magecomp\/module-smsplivo": "Please Install magecomp\/module-smsplivo to Use PLIVOSMS API",
+        "magecomp\/module-smstextlocal": "Please Install magecomp\/module-smstextlocal to Use TEXTLOCAL API",
+        "magecomp\/module-smstwilio": "Please Install magecomp\/module-smstwilio to Use TWILIO API"
+    },
+    "type": "magento2-module",
+    "version": "1.0.7",
+    "license": [
+        "Commercial"
+    ],
+    "authors": [
+        {
+            "name": "Magecomp",
+            "email": "support@magecomp.com",
+            "homepage": "https:\/\/magecomp.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Magecomp\\Smspro\\": ""
+        }
+    }
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_OneSellerCheckout
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Eyemagine\HubSpot\Controller\Sync\GetAbandoned" type="Retailplace\OneSellerCheckout\Controller\Sync\HubSpotAbandoned"/>
+
+    <type name="Magento\Checkout\Controller\Cart\UpdateItemQty">
+        <plugin name="retailplace_onesellercheckout_cart_update_item_qty"
+                type="Retailplace\OneSellerCheckout\Plugin\CheckoutControllers\UpdateItemQty"
+                sortOrder="100"/>
+    </type>
+
+    <type name="Magento\Checkout\Controller\Cart\Delete">
+        <plugin name="retailplace_onesellercheckout_cart_delete"
+                type="Retailplace\OneSellerCheckout\Plugin\CheckoutControllers\DeleteItem"
+                sortOrder="100"/>
+    </type>
+
+    <type name="Magento\Wishlist\Controller\Index\Fromcart">
+        <plugin name="retailplace_onesellercheckout_wishlist_fromcart"
+                type="Retailplace\OneSellerCheckout\Plugin\CheckoutControllers\WishlistFromCart"
+                sortOrder="100"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="retailplace_onesellercheckout_quote_actions"
+                type="Retailplace\OneSellerCheckout\Plugin\QuoteActions"
+                sortOrder="100"/>
+    </type>
+
+    <type name="Magento\Quote\Api\CartManagementInterface">
+        <plugin name="retailplace_onesellercheckout_quote_management"
+                type="Retailplace\OneSellerCheckout\Plugin\QuoteToOrder"
+                sortOrder="100"/>
+    </type>
+
+    <type name="Magento\Quote\Model\CouponManagement">
+        <plugin name="retailplace_onesellercheckout_coupon_management"
+                type="Retailplace\OneSellerCheckout\Plugin\QuotesCouponManagement"
+                sortOrder="100"/>
+    </type>
+
+    <type name="Magento\Customer\Block\SectionConfig">
+        <arguments>
+            <argument name="clientSideSections" xsi:type="array">
+                <item name="checkout-data" xsi:type="string">checkout-data</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Retailplace\OneSellerCheckout\Plugin\CheckoutControllers\DeleteItem">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Retailplace\OneSellerCheckout\Plugin\CheckoutControllers\UpdateItemQty">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Retailplace\OneSellerCheckout\Plugin\CheckoutControllers\WishlistFromCart">
+        <arguments>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+</config>

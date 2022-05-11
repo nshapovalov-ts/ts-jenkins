@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$mediaurl =  $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+                    ->getStore()
+                    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$customerSession = $objectManager->get('\Magento\Customer\Model\Session');
+?>
+<?php if($customerSession->getCheckcus()):?>
+<div class="display-popup" style="display:none;">
+    <div id="newsletter-popup">
+        <div class="promotional-popup"> 
+        <a title="Close" class="fancybox-close-new" href="javascript:;"></a>  
+            <div class="welcome-popup-uper">
+                <img src="<?php echo $mediaurl.'wysiwyg/welcome_popup.png';?>" alt="" />
+                <h3><?php echo __('First time? We’re here to help');?></h3>
+                <p><?php echo __('Welcome to TS community, we’re here to assist you to explore new products. Happy to walk you through.');?></p>
+            </div>
+            <div class="welcome-popup-medel">
+                <div class="just-click">
+                    <p><?php echo __('Just click on the');?></p>
+                </div>
+                
+                <div class="live-chat">
+                 <p><a href="#"><?php echo __('live chat');?></a> <?php echo _('or give us a call');?></p>
+                </div>
+                
+                <div class="tel-no">
+                    <p>045588821</p>
+                </div>
+            </div>
+            <div class="welcome-popup-buttom">
+                <p><?php echo __('TradeSquare team');?></p>
+            </div>
+            <div class="subscribe-bottom">
+                <div id="uniform-dont-show-again" class="checker">
+                    <span>
+                        <input id="dont-show-again" type="checkbox">
+                    </span>
+                </div>
+                <label for="dont-show-again"><?php echo __('Don\'t show this popup again') ?></label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/cookies',
+        'jqueryfancyboxpack'
+    ], function ($) {
+        var check_cookie = jQuery.cookie('newsletter_popup');
+        if (check_cookie == null || check_cookie == 'shown') {
+            popupNewsletter();
+        }
+    
+        jQuery('.fancybox-close-new').on('click', function () {
+             jQuery.cookie('newsletter_popup', 'dontshowitagain');
+             jQuery(".fancybox-overlay").remove().hide();
+             jQuery("html").removeClass("fancybox-margin");
+             jQuery("html").removeClass("fancybox-lock");             
+        });
+        //alert(check_cookie);
+
+        jQuery('#newsletter-popup .subscribe-bottom input').on('click', function () {
+                if (jQuery(this).parent().find('input:checked').length) {
+                    var check_cookie = jQuery.cookie('newsletter_popup');
+                    if (check_cookie == null || check_cookie == 'shown') {
+                        jQuery.cookie('newsletter_popup', 'dontshowitagain');
+                    } else {
+                        jQuery.cookie('newsletter_popup', 'shown');
+                        popupNewsletter();
+                    }
+                } else {
+                    jQuery.cookie('newsletter_popup', 'shown');
+                }
+            });
+        });
+
+    function popupNewsletter() {
+        jQuery(document).ready(function ($) {
+            $.fancybox.open('#newsletter-popup');
+        });
+    }
+    ;
+</script>
+<?php endif;?>

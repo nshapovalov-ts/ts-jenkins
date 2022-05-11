@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_AttributesUpdater
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="updaters" type="updatersList"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="updatersList">
+        <xs:sequence>
+            <xs:element minOccurs="1" maxOccurs="unbounded" name="updater" type="updaterType"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="updaterType">
+        <xs:annotation>
+            <xs:documentation>
+                Attribute Updater Class
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="class" type="phpClassName" use="required" />
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="sortOrder" type="xs:int" default="0" />
+    </xs:complexType>
+    <xs:simpleType name="phpClassName">
+        <xs:annotation>
+            <xs:documentation>
+                A string that matches a Fully Qualified Class Name from PHP, especially not starting
+                with a backslash as this is an invalid character to start a class name with but a
+                somewhat common mistake so this simple type can be used to validate against it
+                already
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern
+                value="(\\?[a-zA-Z_&#x7f;-&#xff;][a-zA-Z0-9_&#x7f;-&#xff;]*)(\\[a-zA-Z_&#x7f;-&#xff;][a-zA-Z0-9_&#x7f;-&#xff;]*)*"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

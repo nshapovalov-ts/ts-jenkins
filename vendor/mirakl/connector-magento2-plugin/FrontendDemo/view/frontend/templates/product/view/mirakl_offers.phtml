@@ -1,0 +1,250 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Product\View\Tab\Offers $block */
+$product = $block->getProduct();
+$offers = $block->getAllOffers();
+$operatorOffers = $block->getOperatorOffers();
+/** @var \Magento\Catalog\Block\Product\View $productView */
+$productView = $block->getLayout()->getBlock('product.info');
+?>
+<?php if ($product->isSaleable() || $offers): ?>
+    <?php if ($block->isConfigurableProduct()): ?>
+        <script>
+            require([
+                'jquery'
+            ], function ($) {
+                'use strict';
+
+                $('#tab-label-marketplace_offers').hide();
+            });
+        </script>
+
+        <div class="block" id="product-offers" style="display: none;">
+    <?php else: ?>
+        <div class="block" id="product-offers">
+    <?php endif; ?>
+    <div class="block-content">
+        <div class="table-wrapper product-offers">
+            <?php if (!count($offers)): ?>
+                <p class="review-list-empty"><?php echo __('No offers for this selection') ?></p>
+            <?php else: ?>
+                <table class="data table table-offers" id="product-offers-list">
+                    <caption class="table-caption"><?php echo __('All Offers') ?></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="cell label price"><?php echo __('Price') ?></th>
+                            <th scope="col" class="cell label condition"><?php echo __('Condition') ?></th>
+                            <?php foreach ($block->getConfigurableAttributes() as $_attribute): ?>
+                                <?php /** @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $_attribute */ ?>
+                                <th scope="col" class="cell label <?php echo $_attribute->getAttributeCode() ?>">
+                                    <?php echo $_attribute->getStoreLabel() ?>
+                                </th>
+                            <?php endforeach ?>
+                            <th scope="col" class="cell label seller"><?php echo __('Seller') ?></th>
+                            <th scope="col" class="cell label qty"><?php echo __('Qty') ?></th>
+                            <th scope="col" class="cell label actions"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($operatorOffers as $offerResult): ?>
+                            <?php /** @var \Magento\Catalog\Model\Product $offer */ ?>
+                            <?php $offer = $offerResult['offer']; ?>
+                            <tr class="offer sku-<?php echo $offer->getSku()?>">
+                                <td data-th="<?php echo $block->escapeHtml(__('Price')) ?>" class="cell price">
+                                   <?php echo $block->getProductPriceHtml($offer, \Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE) ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Condition')) ?>" class="cell condition">
+                                    <div class="offer-state"><?php echo __('New') ?></div>
+                                    <?php if ($offerResult['stock']): ?>
+                                        <div class="offer-stock"><span class="number"><?php echo $offerResult['stock']?></span> <?php echo __('in stock') ?></div>
+                                    <?php endif; ?>
+                                </td>
+                                <?php foreach ($block->getConfigurableAttributes() as $_attribute): ?>
+                                    <?php /** @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $_attribute */ ?>
+                                    <td data-th="<?php echo $block->escapeHtml($_attribute->getStoreLabel()) ?>" class="cell <?php echo $_attribute->getAttributeCode() ?>">
+                                        <?php echo $block->getProductAttributeValue($offer->getId(), $_attribute) ?>
+                                    </td>
+                                <?php endforeach ?>
+                                <td data-th="<?php echo $block->escapeHtml(__('Seller')) ?>" class="cell seller">
+                                    <?php echo $block->getStoreName() ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Qty')) ?>" class="cell qty">
+                                    <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+                                    <input class="input-text qty offer-number-qty operator-offer"
+                                           type="number"
+                                           name="qty"
+                                           id="qty-operator-<?php echo $offer->getId() ?>"
+                                           maxlength="12"
+                                           value="<?php echo $productView ? $productView->getProductDefaultQty($offer) * 1 : 1 ?>"
+                                           title="<?php /* @escapeNotVerified */ echo __('Qty') ?>"
+                                           data-validate='<?php echo $productView ? json_encode($productView->getQuantityValidators($offer)) : '{"required-number":true,"validate-item-quantity":{"minAllowed":1}}' ?>' />
+
+                                    <?php if ($increment = $block->getProductQtyIncrements($offer)) : ?>
+                                        <div class="product pricing increment">
+                                            <?= /* @escapeNotVerified */ __('Available to buy in increments of %1', $increment) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Action')) ?>" class="cell actions">
+                                    <button type="submit" title="<?php echo $block->escapeHtml(__('Add to Cart')) ?>" class="action primary tocart add-offer-to-cart" data-product="<?php echo $offer->getId() ?>">
+                                        <span><?php echo __('Add to Cart') ?></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+
+                        <?php foreach ($offers as $offer): ?>
+                            <?php /** @var \Mirakl\Connector\Model\Offer $offer */ ?>
+                            <tr class="offer sku-<?php echo $offer->getProductSku()?>">
+                                <td data-th="<?php echo $block->escapeHtml(__('Price')) ?>" class="cell price">
+                                    <?php echo $block->getOfferPriceHtml($offer) ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Condition')) ?>" class="cell condition">
+                                   <div class="offer-state"><?php echo $block->getOfferHelper()->getOfferCondition($offer) ?></div>
+                                   <?php if ($offer->getDescription()): ?>
+                                       <div class="offer-description"><p><?php echo $block->escapeHtml($offer->getDescription()) ?></p></div>
+                                   <?php endif; ?>
+                                   <?php if ($offer->getQuantity()): ?>
+                                       <div class="offer-stock"><span class="number"><?php echo $offer->getQuantity() + 0?></span> <?php echo __('in stock') ?></div>
+                                   <?php endif; ?>
+                                </td>
+                                <?php foreach ($block->getConfigurableAttributes() as $_attribute): ?>
+                                    <?php /** @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $_attribute */ ?>
+                                    <td data-th="<?php echo $block->escapeHtml($_attribute->getStoreLabel()) ?>" class="cell <?php echo $_attribute->getAttributeCode() ?>">
+                                        <?php echo $block->getProductAttributeValue($offer->getProductId(), $_attribute) ?>
+                                    </td>
+                                <?php endforeach ?>
+                                <td data-th="<?php echo $block->escapeHtml(__('Seller')) ?>" class="cell seller">
+                                    <?php /** @var \Mirakl\Core\Model\Shop $shop */ ?>
+                                    <?php $shop = $block->getOfferHelper()->getOfferShop($offer) ?>
+                                    <?php if ($shop): ?>
+                                        <?php $evaluation = $shop->getFormattedGrade() ?>
+                                        <div class="rating-summary">
+                                            <span class="offer-seller-name">
+                                                 <a href="<?php echo $shop->getUrl() ?>"><?php echo $this->escapeHtml($shop->getName()) ?></a>
+                                            </span>
+                                            <?php if ($shop->getEvaluationsCount() > 0): ?>
+                                                <div class="rating-result" title="<?php echo $evaluation ?>%">
+                                                    <span style="width:<?php echo $evaluation ?>%"><span><span itemprop="ratingValue"><?php echo $evaluation ?></span>% <?php echo __('of') ?> <span itemprop="bestRating">100</span></span></span>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <?php if ($shop->getEvaluationsCount() > 0): ?>
+                                            <div class="offer-seller-rating"><span class="number"><?php echo $evaluation ?></span>% <?php echo __('positive evaluations') ?></div>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Qty')) ?>" class="cell qty">
+                                    <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+                                    <input class="input-text qty offer-number-qty marketplace-offer"
+                                           type="number"
+                                           name="qty"
+                                           id="qty-<?php echo $offer->getId() ?>"
+                                           maxlength="12"
+                                           value="<?php /* @escapeNotVerified */ echo $block->getOfferDefaultQty($offer) * 1 ?>"
+                                           title="<?php /* @escapeNotVerified */ echo __('Qty') ?>"
+                                           data-validate='<?php echo $block->escapeHtml(json_encode($block->getOfferQuantityValidators($offer))) ?>' />
+
+                                    <?php if ($offer->getPackageQuantity()) : ?>
+                                        <div class="product pricing increment">
+                                            <?= /* @escapeNotVerified */ __('Available to buy in increments of %1', $offer->getPackageQuantity()) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </td>
+                                <td data-th="<?php echo $block->escapeHtml(__('Action')) ?>" class="cell actions">
+                                    <button type="submit" title="<?php echo $block->escapeHtml(__('Add to Cart')) ?>" class="action primary tocart add-offer-to-cart" data-offer="<?php echo $offer->getId() ?>">
+                                        <span><?php echo __('Add to Cart') ?></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        'use strict';
+
+        $('.add-offer-to-cart').on('click', function() {
+            // Remove error on input
+            var removeError = function(element) {
+                element.removeClass('mage-error')
+                    .removeAttr('aria-describedby')
+                    .removeAttr('aria-invalid');
+            };
+            $('.offer .mage-error').each(function() { removeError($(this)); });
+
+            var $form = $('#product_addtocart_form');
+
+            // Add offer input in buybox if it does not exist
+            var $offerInput = $form.find('#offer-id');
+            if ($offerInput.size() === 0) {
+                $offerInput = $('<input type="hidden" name="offer_id" id="offer-id" />');
+                $form.append($offerInput);
+            }
+
+            var $offerId = $(this).data('offer');
+            $offerInput.val($offerId);
+
+            var $qtyInput = null;
+            var $offerQty = null;
+            if ($(this).parents('.offer').size()) {
+                var $qty = 1;
+                $qtyInput = $('#qty');
+
+                var $offerClass = null;
+                if ($(this).hasClass('choicebox')) {
+                    $offerClass = '#qty-choicebox-' + $offerId;
+                } else if ($(this).data('product')) {
+                    $offerClass = '#qty-operator-' + $(this).data('product');
+                } else {
+                    $offerClass = '#qty-' + $offerId;
+                }
+
+                $offerQty = $(this).parents('.offer:first').find($offerClass);
+                if ($offerQty && $offerQty.val()) {
+                    $qty = $offerQty.val();
+                }
+
+                $qtyInput.data('old-qty', $qtyInput.val());
+                $qtyInput.data('old-validate', $qtyInput.data('validate'));
+                $qtyInput.val($qty);
+
+                var $offerRules = $offerQty.data('validate');
+
+                // Set offer rule for marketplace only
+                if ($offerQty.hasClass('marketplace-offer')) {
+                    $qtyInput.data('validate', $offerRules);
+                    $qtyInput.rules('add', $offerRules);
+                }
+            }
+
+            $form.submit();
+
+            if ($qtyInput) {
+                $qtyInput.val($qtyInput.data('old-qty'));
+
+                if ($offerQty.hasClass('marketplace-offer')) {
+                    $qtyInput.data('validate', $qtyInput.data('old-validate'));
+                    $qtyInput.rules('add', $qtyInput.data('old-validate'));
+                }
+
+                if ($qtyInput.is('.mage-error')) {
+                    $offerQty.addClass('mage-error')
+                        .attr('aria-describedby', $qtyInput.attr('aria-describedby'))
+                        .attr('aria-invalid', $qtyInput.attr('aria-invalid'));
+                    removeError($qtyInput);
+                }
+
+                $offerQty.focus();
+            }
+
+            return false;
+        });
+    });
+</script>
+<?php endif; ?>

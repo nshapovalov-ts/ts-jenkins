@@ -1,0 +1,10 @@
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+?>
+
+<?php if($customerSession->isLoggedIn()):?>
+<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('agha-homepage-id-1-block-1-login')->toHtml();?>
+<?php else: ?>
+<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('agha-homepage-id-1-block-1-logout')->toHtml();?>
+<?php endif; ?>

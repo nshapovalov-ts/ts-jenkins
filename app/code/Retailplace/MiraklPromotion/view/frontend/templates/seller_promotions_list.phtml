@@ -1,0 +1,36 @@
+<?php
+/**
+ * Retailplace_MiraklPromotion
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/** @var \Retailplace\MiraklPromotion\Block\PromotionsList $block */
+?>
+<?php if (count($block->getPromotionsList())): ?>
+    <div class="container">
+        <div class="product-promotions seller_view_promotions">
+            <div class="block-title"><?= __('Supplier Specials') ?></div>
+            <div class="promotions-list">
+                <?php
+                /** @var \Retailplace\MiraklPromotion\Api\Data\PromotionInterface $promotion */
+                foreach ($block->getPromotionsList() as $promotion):
+                    ?>
+                    <div class="promotion">
+                        <?php if ($promotion->getEndDate()): ?>
+                            <div class="promotion-date"><?= $block->getDateFormatted($promotion->getEndDate()) ?></div>
+                        <?php endif; ?>
+                        <div class="promotion-description"><?= $block->escapeHtml($promotion->getLocalizedPublicDescription()) ?></div>
+                        <div class="promotion promotion_for_hover">
+                            <?php if ($promotion->getEndDate()): ?>
+                                <div class="promotion-date"><?= $block->getDateFormatted($promotion->getEndDate()) ?></div>
+                            <?php endif; ?>
+                            <div class="promotion-description"><?= $block->escapeHtml($promotion->getLocalizedPublicDescription()) ?></div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_creditmemo" resource="sales">
+        <column xsi:type="varchar" length="200" name="mirakl_refund_ids" comment="Mirakl refund IDs" nullable="true"/>
+    </table>
+    <table name="mirakl_shop">
+        <column xsi:type="float" name="ts_first_order_discount" unsigned="true" comment="TS connect first order discount amount" nullable="true"/>
+        <column xsi:type="varchar" length="200" name="video_id" comment="Mirakl seller video youtube id" nullable="true"/>
+    </table>
+</schema>

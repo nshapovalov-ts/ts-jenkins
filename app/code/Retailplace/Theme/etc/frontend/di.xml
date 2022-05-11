@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Theme\Block\Html\Header" type="Retailplace\Theme\Block\Html\Header"/>
+    <preference for="Mirakl\FrontendDemo\Block\Product\View\Tab\Offers" type="Retailplace\Theme\Block\Product\View\Tab\Offers"/>
+
+    <type name="Magento\Framework\Controller\ResultInterface">
+        <plugin name="result-messages" disabled="true" />
+        <plugin name="retailplace-result-messages" type="Retailplace\Theme\Plugin\Controller\Result\MessagePlugin" sortOrder="1"/>
+    </type>
+</config>

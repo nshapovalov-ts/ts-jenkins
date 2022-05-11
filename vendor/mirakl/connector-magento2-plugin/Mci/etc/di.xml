@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="mci_product_import_from_path" xsi:type="object">Mirakl\Mci\Console\Command\Product\Import\PathCommand</item>
+                <item name="mci_product_import_images" xsi:type="object">Mirakl\Mci\Console\Command\Product\Import\ImagesCommand</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Mirakl\Mci\Model\Product\Import\Adapter\AdapterInterface" type="Mirakl\Mci\Model\Product\Import\Adapter\Standard"/>
+    <type name="Mirakl\Mci\Model\Product\Import\Handler\Csv">
+        <arguments>
+            <argument name="successReport" xsi:type="object" shared="false">Mirakl\Mci\Model\Product\Import\Report\Csv</argument>
+            <argument name="errorReport" xsi:type="object" shared="false">Mirakl\Mci\Model\Product\Import\Report\Csv</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Indexer\Model\Indexer">
+        <plugin name="mirakl_mci_import_indexer" type="Mirakl\Mci\Plugin\Model\IndexerPlugin" sortOrder="10"/>
+    </type>
+</config>

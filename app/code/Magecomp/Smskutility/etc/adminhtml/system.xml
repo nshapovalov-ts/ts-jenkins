@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+		<section id="smspro">
+				<group id="smsgatways">
+					<field id="kutilitysenderid" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Kutility Sender ID</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">kutility</field>
+						</depends>
+						<validate>required-entry</validate>
+					</field>
+					<field id="kutilityauthkey" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Kutility API  Key</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">kutility</field>
+						</depends>
+						<validate>required-entry</validate>
+					</field>
+					<field id="kutilityrouteid" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Kutility Route Id</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">kutility</field>
+						</depends>
+						<validate>required-entry</validate>
+						<comment><![CDATA[Promo DND : 416 </br> Transactional : 415]]></comment>
+					</field>
+					<field id="kutilityapiurl" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>API URL</label>
+						<comment><![CDATA[http://kutility.in/app/smsapi/index.php]]></comment>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">kutility</field>
+						</depends>
+						<validate>required-entry validate-url</validate>
+					</field>
+				</group>
+		</section>
+    </system>
+</config>

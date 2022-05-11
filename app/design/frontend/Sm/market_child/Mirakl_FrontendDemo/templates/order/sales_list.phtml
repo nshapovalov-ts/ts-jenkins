@@ -1,0 +1,117 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+
+/** @var \Mirakl\FrontendDemo\Block\Order\SalesList $block */
+/** @var \Magento\Sales\Block\Order\History $_parentBlock */
+/** @var \Mirakl\Connector\Helper\Order $_orderHelper */
+/** @var \Retailplace\Stripe\ViewModel\OrderHistory $viewModel */
+$_orders = $block->getOrders();
+$_storeName = $block->getStoreName();
+$_parentBlock = $block->getParentBlock();
+$_orderHelper = $this->helper('Mirakl\Connector\Helper\Order');
+$viewModel = $block->getViewModel();
+?>
+<?php if ($_orders && count($_orders)): ?>
+    <div class="table-wrapper orders-<?php echo $block->getHtmlClassName()?>">
+        <table class="data table table-order-items <?php echo $block->getHtmlClassName()?>" id="my-orders-table">
+            <caption class="table-caption"><?= __('Orders') ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col date"><?= __('Order Date') ?></th>
+                <th scope="col" class="col id"><?= __('Order #') ?></th>
+                <th scope="col" class="col payment_date"><?= __('Payment Date') ?></th>
+                <th scope="col" class="col total"><?= __('Order Total') ?></th>
+                <th scope="col" class="col shop"><?= __('Shop') ?></th>
+                <th scope="col" class="col status"><?= __('Status') ?></th>
+                <th scope="col" class="col actions"><?= __('Action') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $block->addMiraklOrdersToCollection(); ?>
+            <?php /** @var \Magento\Sales\Model\Order $_order */ ?>
+            <?php foreach ($_orders as $_order): ?>
+                <?php $_isFullMiraklOrder = $_orderHelper->isFullMiraklOrder($_order); ?>
+                <tr class="main">
+                    <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>" class="col date"><?= $block->formatDate($_order->getCreatedAt()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Payment Date')) ?>" class="col payment_date"></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Order Total')) ?>" class="col total"><?= $_order->formatPrice($_order->getGrandTotal()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Shop')) ?>" class="col shop"></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status"></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions"></td>
+                </tr>
+                <?php if (!$_isFullMiraklOrder || !$_order->getData('mirakl_sent')): ?>
+                    <tr class="magento">
+                        <td data-th="<?php echo $block->escapeHtml(__('Type')) ?>" class="col date">
+                            <span class="flag magento"><?php echo __('Magento') ?></span>
+                        </td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?= $_order->getRealOrderId() ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Payment Date')) ?>" class="col payment_date">
+                            <?= $_order->getPaymentDate() ?
+                                $block->formatDate($_order->getPaymentDate()) :
+                                $block->formatDate($_order->getCreatedAt()) ?>
+                        </td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Order Total')) ?>" class="col total">
+                            <?php
+                            // Remove Mirakl orders amounts from the order only if order has been sent to Mirakl
+                            if ($_order->getData('mirakl_sent')) {
+                                $this->helper('Mirakl\FrontendDemo\Helper\Order')->filterOrderTotals($_order);
+                            }
+                            ?>
+                            <?= $_order->formatPrice($_order->getGrandTotal()) ?>
+                        </td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Shop')) ?>" class="col shop"><?php echo $block->escapeHtml($_storeName) ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status">
+                            <?= $_order->getStatusLabel() ?>
+                        </td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                            <a href="<?= $_parentBlock->getViewUrl($_order) ?>" class="action view">
+                                <span><?= __('View Order') ?></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endif ?>
+
+                <?php if (is_array($_order->getMiraklOrders()) && count($_order->getMiraklOrders())): ?>
+                    <?php /** @var \Mirakl\MMP\FrontOperator\Domain\Order $_miraklOrder */ ?>
+                    <?php foreach ($_order->getMiraklOrders() as $_miraklOrder): ?>
+                        <tr class="marketplace">
+                            <td data-th="<?php echo $block->escapeHtml(__('Type')) ?>" class="col date">
+                                <span class="flag marketplace"><?php echo __('Marketplace') ?></span>
+                            </td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Order #')) ?>" class="col id"><?= $_miraklOrder->getId() ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Payment Date')) ?>" class="col payment_date">
+                                <?= $_order->getPaymentDate() ?
+                                    $block->formatDate($_order->getPaymentDate()) :
+                                    $block->formatDate($_order->getCreatedAt()) ?>
+                            </td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Order Total')) ?>" class="col total">
+                                <?= $_order->formatPrice($_orderHelper->getMiraklTotalPrice($_order, $_miraklOrder)) ?>
+                            </td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Shop')) ?>" class="col shop"><?php echo $this->escapeHtml($_miraklOrder->getShopName()) ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>" class="col status">
+                                <?php
+                                    $state = $viewModel->getState($_order, $_miraklOrder);
+                                ?>
+                                <?= __($state) ?>
+                            </td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                                <a href="<?= $block->getMiraklOrderViewUrl($_order, $_miraklOrder) ?>" class="action view">
+                                    <span><?= __('View Order') ?></span>
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                <?php endif ?>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif ?>

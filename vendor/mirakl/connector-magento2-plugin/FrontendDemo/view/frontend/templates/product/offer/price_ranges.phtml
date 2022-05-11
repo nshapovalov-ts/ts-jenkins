@@ -1,0 +1,63 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Product\Offer\PriceRanges $block */
+/** @var \Magento\Tax\Helper\Data $taxHelper */
+$taxHelper = $this->helper('Magento\Tax\Helper\Data');
+$offer = $block->getOffer();
+$priceRanges = $offer->getPriceRanges();
+$discountRanges = $offer->isDiscountPriceValid() ? $offer->getDiscount()->getRanges() : [];
+?>
+<?php if ($priceRanges->count() >= 2): // ignore qty = 1 so count must be >= 2 ?>
+    <div class="offer-price-ranges">
+        <ul class="prices-tier items">
+            <?php foreach ($priceRanges as $priceRange): ?>
+                <?php
+                    /** @var \Mirakl\MMP\Common\Domain\DiscountRange $priceRange */
+                    /** @var \Mirakl\MMP\Common\Domain\DiscountRange $discountRange */
+                    if ($priceRange->getQuantityThreshold() <= 1) {
+                        continue;
+                    }
+                    $discountPrice = 0;
+                    foreach ($discountRanges as $discountRange) {
+                        if ($discountRange->getQuantityThreshold() == $priceRange->getQuantityThreshold()) {
+                            $discountPrice = $discountRange->getPrice();
+                        }
+                    }
+                ?>
+                <?php if ($discountPrice > 0): ?>
+                    <li class="item">
+                        <?php if ($taxHelper->displayBothPrices()): ?>
+                            <?php echo __('<strong>%1</strong> <span class="offer-old-price">%2</span> <span class="excl-tax">(Excl. Tax: <strong>%3</strong> <span class="offer-old-price">%4</span>)</span><br>from %5 items',
+                                $block->formatCurrency($block->getPriceInclTax($discountPrice)),
+                                $block->formatCurrency($block->getPriceInclTax($priceRange->getPrice())),
+                                $block->formatCurrency($block->getPriceExclTax($discountPrice)),
+                                $block->formatCurrency($block->getPriceExclTax($priceRange->getPrice())),
+                                $priceRange->getQuantityThreshold()
+                            ) ?>
+                        <?php else: ?>
+                            <?php echo __('<strong>%1</strong> <span class="offer-old-price">%2</span> from %3 items',
+                                $block->formatCurrency($taxHelper->displayPriceIncludingTax() ? $block->getPriceInclTax($discountPrice) : $block->getPriceExclTax($discountPrice)),
+                                $block->formatCurrency($block->getPriceInclTax($priceRange->getPrice())),
+                                $priceRange->getQuantityThreshold()
+                            ) ?>
+                        <?php endif; ?>
+                    </li>
+                <?php else: ?>
+                    <li class="item">
+                        <?php if ($taxHelper->displayBothPrices()): ?>
+                            <?php echo __('<strong>%1</strong> <span class="excl-tax">(Excl. Tax: <strong>%2</strong>)</span><br>from %3 items',
+                                $block->formatCurrency($block->getPriceInclTax($priceRange->getPrice())),
+                                $block->formatCurrency($block->getPriceExclTax($priceRange->getPrice())),
+                                $priceRange->getQuantityThreshold()
+                            ) ?>
+                        <?php else: ?>
+                            <?php echo __('<strong>%1</strong> from %2 items',
+                                $block->formatCurrency($taxHelper->displayPriceIncludingTax() ? $block->getPriceInclTax($priceRange->getPrice()) : $block->getPriceExclTax($priceRange->getPrice())),
+                                $priceRange->getQuantityThreshold()
+                            ) ?>
+                        <?php endif; ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklFrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Mirakl_FrontendDemo::css/marketplace.css"/>
+    </head>
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="page.main.title" remove="true" />
+        <referenceContainer name="content">
+            <block class="Retailplace\MiraklFrontendDemo\Block\Invoice\View" name="retailplace.invoice.view" template="Retailplace_MiraklFrontendDemo::index.phtml" cacheable="false" />
+        </referenceContainer>
+    </body>
+</page>

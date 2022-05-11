@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_CssPreProcessor
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <virtualType name="AlternativeSourceProcessors" type="Magento\Framework\View\Asset\PreProcessor\AlternativeSource">
+        <arguments>
+            <argument name="alternatives" xsi:type="array">
+                <item name="less" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\CssPreProcessor\Model\Adapter\Less\Processor</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

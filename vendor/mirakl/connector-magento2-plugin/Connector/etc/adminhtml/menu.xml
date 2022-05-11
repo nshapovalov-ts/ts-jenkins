@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirakl_Connector::synchronization" title="Synchronization" module="Mirakl_Connector" sortOrder="15" parent="Mirakl_Core::configuration" resource="Mirakl_Config::sync" action="adminhtml/system_config/edit/section/mirakl_sync/"/>
+        <add id="Mirakl_Connector::configuration" title="Connector" module="Mirakl_Connector" sortOrder="20" parent="Mirakl_Core::configuration" resource="Mirakl_Config::connector" action="adminhtml/system_config/edit/section/mirakl_connector/"/>
+        <add id="Mirakl_Connector::offers" title="Offers" module="Mirakl_Connector" sortOrder="15" parent="Mirakl_Core::reference" action="mirakl/offer" resource="Mirakl_Connector::offers"/>
+        <add id="Mirakl_Connector::system" title="System" module="Mirakl_Connector" sortOrder="100" parent="Mirakl_Core::head" resource="Mirakl_Connector::system"/>
+    </menu>
+</config>

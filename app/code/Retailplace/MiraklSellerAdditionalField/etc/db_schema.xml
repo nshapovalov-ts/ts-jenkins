@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklSellerAdditionalField
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table comment="mirakl_additionalfield_industryexclusions Table" engine="innodb" name="mirakl_additionalfield_industryexclusions" resource="default">
+		<column comment="Entity Id" identity="true" name="industryexclusions_id" nullable="false" padding="6" unsigned="true" xsi:type="smallint"/>
+		<constraint referenceId="PRIMARY" xsi:type="primary">
+			<column name="industryexclusions_id"/>
+		</constraint>
+		<column name="code" nullable="true" xsi:type="text"/>
+		<column name="label" nullable="true" xsi:type="text"/>
+		<column name="visible_for" nullable="true" xsi:type="text"/>
+		<column name="sort" nullable="true" xsi:type="text"/>
+		<column name="status" nullable="true" xsi:type="text"/>
+	</table>
+	<table comment="mirakl_additionalfield_channelexclusions Table" engine="innodb" name="mirakl_additionalfield_channelexclusions" resource="default">
+		<column comment="Entity Id" identity="true" name="channelexclusions_id" nullable="false" padding="6" unsigned="true" xsi:type="smallint"/>
+		<constraint referenceId="PRIMARY" xsi:type="primary">
+			<column name="channelexclusions_id"/>
+		</constraint>
+		<column name="code" nullable="true" xsi:type="text"/>
+		<column name="label" nullable="true" xsi:type="text"/>
+		<column name="sort" nullable="true" xsi:type="text"/>
+		<column name="status" nullable="true" xsi:type="text"/>
+		<column name="option_id" nullable="true" xsi:type="text"/>
+	</table>
+	<table comment="mirakl_additionalfield_exclusionslogic Table" engine="innodb" name="mirakl_additionalfield_exclusionslogic" resource="default">
+		<column comment="Entity Id" identity="true" name="exclusionslogic_id" nullable="false" padding="6" unsigned="true" xsi:type="smallint"/>
+		<constraint referenceId="PRIMARY" xsi:type="primary">
+			<column name="exclusionslogic_id"/>
+		</constraint>
+		<column name="code" nullable="true" xsi:type="text"/>
+		<column name="label" nullable="true" xsi:type="text"/>
+	</table>
+
+
+	<table engine="innodb" name="mirakl_shop" resource="default">
+        <column xsi:type="int" unsigned="true" nullable="false" name="id" identity="true" comment="Shop Id"/>
+        <column name="industry-exclusions" nullable="true" xsi:type="text"/>
+		<column name="channel-exclusions" nullable="true" xsi:type="text"/>
+		<column name="exclusions-logic" nullable="true" xsi:type="text"/>
+		<column xsi:type="int" name="leadtime_to_ship" nullable="true" unsigned="true" comment="Max Lead Time To Ship"/>
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="id"/>
+        </constraint>
+	</table>
+</schema>

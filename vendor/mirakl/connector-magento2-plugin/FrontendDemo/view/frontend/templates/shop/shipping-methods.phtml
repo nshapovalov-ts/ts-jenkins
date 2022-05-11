@@ -1,0 +1,23 @@
+<?php
+/** @var Mirakl\FrontendDemo\Block\Shop\Shipping $this */
+$_shippingMethods = $this->getShippingMethods();
+?>
+<div class="seller-shop">
+    <table class="data table additional-attributes">
+        <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Shipping Methods') ?></caption>
+        <tbody>
+            <?php if ($_shippingMethods): ?>
+                <?php foreach ($_shippingMethods as $_zone => $_shippingMethod): ?>
+                <tr>
+                    <td><strong><?php echo $_zone ?></strong></td>
+                    <td><?php echo implode(', ', $_shippingMethod) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2"><?php echo __('Seller has no shipping method') ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>

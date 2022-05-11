@@ -1,0 +1,56 @@
+<!-- ko if: getMinQuoteRequestAmountData().isQuoteRequestBlockVisible -->
+<div class="service-content quote-request-block" data-bind="with: getMinQuoteRequestAmountData()">
+    <!-- ko if: isReached -->
+    <!-- ko if: $parent.isCurrentProductAdded() -->
+    <div class="quote-request-link">
+        <a data-bind="attr: {href: quoteRequestLink}, i18n: 'Request a Quote'"></a>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko ifnot: $parent.isCurrentProductAdded() -->
+    <div class="quote-request-link">
+        <div class="quote-request-link-tp">
+            <span data-bind="i18n: 'Request a Quote'"></span>
+            <div class="toolpick">
+                <div class="toolpick-ico">
+                    <i>i</i>
+                    <div class="toolpick-text">
+                        <p data-bind="i18n: 'Add Product to Cart for Quote Requesting'"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+    <!-- /ko -->
+
+    <!-- ko ifnot: isReached -->
+    <div class="service-icon minimumorder" style="font-size: 30px;">
+        <div data-bind="attr: {class: percentClass}">
+            <span></span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+    <div class="service-info">
+        <h4>
+            <span class="h4_text">
+                <span data-bind="text: description"></span>
+            </span>
+            <div class="toolpick">
+                <div class="toolpick-ico">
+                    <i>i</i>
+                    <div class="toolpick-text">
+                        <h3 data-bind="i18n: 'Min Quote Request amount'"></h3>
+                        <p data-bind="i18n: 'Minimum Quote Request amounts are set for each Supplier Showroom. You must reach this amount before your Quote Request can be processed.'"></p>
+                    </div>
+                </div>
+            </div>
+        </h4>
+        <p class="min_below_comment" data-bind="text: comment"></p>
+    </div>
+    <!-- /ko -->
+</div>
+<!-- /ko -->

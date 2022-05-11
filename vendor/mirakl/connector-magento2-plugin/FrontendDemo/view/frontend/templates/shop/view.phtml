@@ -1,0 +1,65 @@
+<?php
+/** @var Mirakl\FrontendDemo\Block\Shop\View $this */
+/** @var Mirakl\Core\Model\Shop $_shop */
+$_shop = $this->getShop();
+$_info = $_shop->getAdditionalInfo();
+?>
+<?php if ($_shop->getId()): ?>
+    <div class="seller-shop">
+        <div class="block-content">
+            <?php if ($_shop->getLogo()): ?>
+                <img src="<?php echo $_shop->getLogo() ?>" alt="<?php echo $this->escapeHtml($_shop->getName()) ?>" title="<?php echo $this->escapeHtml($_shop->getName()) ?>"/>
+            <?php endif ?>
+        </div>
+        <div class="block-content seller-info">
+            <ul>
+                <?php if ($_shop->getDateCreated()): ?>
+                    <li>
+                        <strong><?php echo __('Seller Since:') ?></strong>
+                        <?php echo $this->formatDate($_shop->getDateCreated(), \IntlDateFormatter::MEDIUM) ?>
+                    </li>
+                <?php endif ?>
+                <li>
+                    <?php $evaluation = $_shop->getFormattedGrade() ?>
+                    <strong><?php echo __('Rating:') ?></strong>
+                    <div class="rating-summary shop-review-rate">
+                        <div class="rating-result" title="<?php echo round($evaluation * 5 / 100) ?>/5">
+                            <span style="width:<?php echo $evaluation ?>%">
+                                <span>
+                                    <span><?php echo $evaluation ?></span>
+                                </span>
+                            </span>
+                        </div>
+                        <span class="count">(<?php echo __('%1 reviews', $_shop->getEvaluationsCount()) ?>)</span>
+                    </div>
+                </li>
+                <li>
+                    <strong><?php echo __('Sales Count:') ?></strong>
+                    <?php echo $_info->getOrdersCount() ?>
+                </li>
+                <li>
+                    <strong><?php echo __('Professional Seller:') ?></strong>
+                    <?php echo __($_shop->getProfessional() ? 'Yes' : 'No') ?>
+                </li>
+                <?php $_approvalDelay = $_info->getApprovalDelay() ?>
+                <li>
+                    <strong><?php echo __('Approval Period:') ?></strong>
+                    <?php echo $this->formatDuration($_approvalDelay) ?>
+                </li>
+                <?php $_approvalRate = $_info->getApprovalRate() ?>
+                <li>
+                    <strong><?php echo __('Approval Rate:') ?></strong>
+                    <?php echo round($_approvalRate * 100) ?>%
+                </li>
+            </ul>
+        </div>
+        <div class="block-content banner">
+            <?php if (!empty($_info['banner'])): ?>
+                <img src="<?php echo $_info['banner'] ?>" alt="<?php echo $this->escapeHtml(__('Your banner goes here')) ?>"/>
+            <?php endif ?>
+        </div>
+        <div class="block-title">
+            <strong><?php /* @escapeNotVerified */ echo __('Shop Information') ?></strong>
+        </div>
+    </div>
+<?php endif ?>

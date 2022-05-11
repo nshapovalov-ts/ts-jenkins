@@ -1,0 +1,19 @@
+<?php
+
+/** @var \Retailplace\CustomerAccount\Block\Widget\UploadFile $block */
+$attributeCode = $block->getAttribute()->getAttributeCode();
+?>
+<div  class="upload_file" data-ui-id="upload_file">
+    <p><?php echo __('Alternatively, you can upload one of the following documents:') ?></p>
+    <ol>
+        <li><?php echo __('A copy of your company invoice') ?></li>
+        <li><?php echo __('Your business registration certificate') ?></li>
+        <li><?php echo __('Your business card') ?></li>
+    </ol>
+    <div class="control">
+        <input id="upload_file" name="customer[<?= $attributeCode ?>]" class="input-file" type="file">
+    </div>
+    <div class="action">
+        <button type="button" id="btn-upload-file"><span><?= __('Upload File') ?></span></button>
+    </div>
+</div>

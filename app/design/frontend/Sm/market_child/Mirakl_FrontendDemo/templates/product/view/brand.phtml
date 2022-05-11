@@ -1,0 +1,17 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View $block */
+/** @var \Mirakl\Connector\Model\Offer $offer */
+$_product = $block->getProduct();
+
+?>
+
+
+<?php 
+$brand = $_product->getResource()->getAttribute('brand')->getFrontend()->getValue($_product);
+?>
+<?php if($brand):?>
+	<ul class="seller" itemprop="brand" itemscope itemtype="http://schema.org/Brand">
+	<?php echo __('Brand: ');?>	
+		<li itemprop="name"><?php echo $brand;?></li>
+	</ul>
+<?php endif;?>

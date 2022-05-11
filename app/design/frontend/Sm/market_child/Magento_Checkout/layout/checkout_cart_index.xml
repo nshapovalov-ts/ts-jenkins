@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento_Checkout
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+
+        <referenceContainer name="content">
+            <block class="Magento\GiftMessage\Block\Cart\GiftOptions" name="checkout.cart.order.actions.gift_options" template="Magento_GiftMessage::cart/gift_options.phtml" cacheable="false">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="types" xsi:type="array"/>
+                        <item name="components" xsi:type="array">
+                            <item name="giftOptionsCart" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_GiftMessage/js/view/gift-message</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Magento_GiftMessage/gift-message</item>
+                                    <item name="formTemplate" xsi:type="string">Magento_GiftMessage/gift-message-form</item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Template"
+                   name="checkout.cart.product.actions"
+                   template="Magento_Checkout::cart/cart_actions.phtml"
+                   cacheable="false"
+            />
+        </referenceContainer>
+
+        <referenceBlock name="checkout.cart.summary.title">
+            <arguments>
+                <argument translate="true" name="text" xsi:type="string">Order summary</argument>
+                <argument name="tag" xsi:type="string">strong</argument>
+                <argument name="css_class" xsi:type="string">summary title</argument>
+            </arguments>
+        </referenceBlock>
+
+        <referenceBlock name="checkout.cart.totals">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="block-totals" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="discount" xsi:type="array">
+                                    <item name="component" xsi:type="string">Magento_SalesRule/js/view/cart/totals/discount</item>
+                                    <item name="config" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">55</item>
+                                        <item name="title" xsi:type="string" translate="true">Discount</item>
+                                    </item>
+                                </item>
+                                <item name="before_grandtotal" xsi:type="array">
+                                    <item name="sortOrder" xsi:type="string">90</item>
+                                </item>
+                                <item name="grand-total" xsi:type="array">
+                                    <item name="config" xsi:type="array">
+                                        <item name="template" xsi:type="string">Magento_Checkout/cart/totals/grand-total</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.form">
+            <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                   name="checkout.cart.form.seller.checkout"
+                   template="Mirakl_FrontendDemo::checkout/cart/item/seller_checkout.phtml"/>
+            <arguments>
+                <argument name="view_model" xsi:type="object">
+                    Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.methods.onepage.bottom">
+            <arguments>
+                <argument name="view_model" xsi:type="object">
+                    Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                </argument>
+            </arguments>
+        </referenceBlock>
+
+        <move element="checkout.cart.totals" destination="checkout.cart.methods.onepage.bottom" before="-"/>
+    </body>
+</page>

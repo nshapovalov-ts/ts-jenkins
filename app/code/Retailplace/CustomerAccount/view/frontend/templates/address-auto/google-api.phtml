@@ -1,0 +1,15 @@
+<?php
+/** @var \Retailplace\CustomerAccount\Block\GoogleApi $block */
+?>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<?= $block->getConfig('shipping/shipper_autocomplete/google_api_key') ?>&libraries=places"></script>
+
+<script type="text/x-magento-init">
+    {
+        "#street": {
+            "addressAutocomplete": {
+                "specificCountry": "<?= $block->getConfig('shipping/shipper_autocomplete/specific_country'); ?>"
+            }
+        }
+    }
+</script>

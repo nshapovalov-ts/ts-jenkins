@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_seller_core" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>General</label>
+            <tab>mirakl_seller</tab>
+            <resource>MiraklSeller_Core::config</resource>
+            <group id="sidemenu_configuration" translate="label" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label><![CDATA[Side Menu Configuration]]></label>
+                <field id="disable_category_sidemenu" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Disable Category Side menu</label>
+                    <comment><![CDATA[If enabled, category side menu will be disabled]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="disable_price_sidemenu" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Disable price side menu</label>
+                    <comment><![CDATA[If enabled, price side menu will be disabled]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="disable_decimal_sidemenu" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Disable decimal side menu</label>
+                    <comment><![CDATA[If enabled, decimal side menu will be disabled]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="disable_attribute_sidemenu" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Disable attribute side menu</label>
+                    <comment><![CDATA[If enabled, attribute side menu will be disabled]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="seller_plp" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+                <label>Seller View Configuration</label>
+                <field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="per_page_values" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+                    <label>Sellers per Page Allowed Values</label>
+                </field>
+                <field id="limit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+                    <label>Sellers per Page Default Value</label>
+                </field>
+            </group>
+            <group id="seller_notify_form" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label">
+                <label>Seller Notify Form Configuration</label>
+                <field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="region" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+                    <label>Region id</label>
+                </field>
+                <field id="portal_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+                    <label>Portal Id</label>
+                </field>
+                <field id="form_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+                    <label>Form Id</label>
+                </field>
+            </group>
+        </section>
+        <section id="amshopby">
+            <group id="general">
+                <field id="is_checking_options_reduce" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="select">
+                    <label>Hide options that don't reduce results</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

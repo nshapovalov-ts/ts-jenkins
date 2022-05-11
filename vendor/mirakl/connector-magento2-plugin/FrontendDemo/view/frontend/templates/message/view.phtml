@@ -1,0 +1,54 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Message\View $block */
+$helper = $block->getMessageHelper();
+$thread = $block->getThread();
+?>
+<div class="marketplace-messages">
+    <div class="block-content">
+        <div class="block-title">
+            <?php /** @var \Mirakl\MMP\Common\Domain\Message\Thread\ThreadEntity $entity */ ?>
+            <?php foreach ($thread->getEntities() as $entity): ?>
+                <?php
+                    $link = $block->getEntityUrl($entity);
+                    if ($link) {
+                        $entityRef = sprintf('<a href="%s">%s</a>', $link, $block->escapeHtmlAttr($entity->getLabel()));
+                    } else {
+                        $entityRef = $block->escapeHtmlAttr($entity->getLabel());
+                    }
+                    echo __('%1: %2',
+                        '<span class="customer-messages-type">' .
+                        $block->escapeHtmlAttr(__($helper->getEntityName($entity))) .
+                        '</span>',
+                        $entityRef
+                    );
+                ?>
+            <?php endforeach; ?>
+        </div>
+        <ol class="items message-items">
+            <?php /** @var \Mirakl\MMP\Common\Domain\Message\Thread\ThreadMessage $message */ ?>
+            <?php foreach ($thread->getMessages() as $message): ?>
+                <li class="item message-item <?php echo $block->isCustomerMessage($message) ? 'message-left' : 'message-right' ?> <?php echo strtolower($message->getFrom()->getType()) ?>">
+                    <div class="meta">
+                        <?php echo __(
+                                'By %1 to %2 - %3',
+                                $block->getSenderName($message),
+                                implode(', ', $block->getRecipientNames($message)),
+                                $this->helper('Mirakl\Core\Helper\Data')->formatDateTime($helper->getMiraklDate($message->getDateCreated()->format(\DateTime::ISO8601)))
+                            ) ?>
+                    </div>
+                    <div class="body"><?php echo $block->escapeHtml($message->getBody(), $block->getMessageAllowedTags()) ?></div>
+                    <?php if (!empty($message->getAttachments())): ?>
+                        <p><?= __('Attachments:') ?>
+                            <?php /** @var \Mirakl\MMP\Common\Domain\Message\Thread\ThreadAttachment $attachment */ ?>
+                            <?php foreach ($message->getAttachments() as $attachment): ?>
+                                <a href="<?= $block->getAttachmentUrl($attachment)?>" target="_blank">
+                                    <?= $attachment->getName() ?>
+                                </a>
+                            <?php endforeach; ?>
+                        </p>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+</div>

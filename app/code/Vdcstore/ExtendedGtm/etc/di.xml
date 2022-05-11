@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="WeltPixel\GoogleTagManager\Block\Cart" type="Vdcstore\ExtendedGtm\Rewrite\WeltPixel\GoogleTagManager\Block\Cart"/>
+	<preference for="WeltPixel\GoogleTagManager\Block\Checkout" type="Vdcstore\ExtendedGtm\Rewrite\WeltPixel\GoogleTagManager\Block\Checkout"/>
+	<preference for="WeltPixel\GoogleTagManager\Helper\Data" type="Vdcstore\ExtendedGtm\Rewrite\WeltPixel\GoogleTagManager\Helper\Data"/>
+	<preference for="WeltPixel\GoogleTagManager\Model\Api" type="Vdcstore\ExtendedGtm\Rewrite\WeltPixel\GoogleTagManager\Model\Api"/>
+</config>

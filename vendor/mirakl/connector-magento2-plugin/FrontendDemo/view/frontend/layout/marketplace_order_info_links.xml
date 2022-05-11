@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Html\Links" as="links" name="sales.order.info.links" before="-">
+                <arguments>
+                    <argument name="css_class" xsi:type="string">items order-links</argument>
+                </arguments>
+                <block class="Mirakl\FrontendDemo\Block\Order\Link" name="sales.order.info.links.information">
+                    <arguments>
+                        <argument name="path" xsi:type="string">marketplace/order/view</argument>
+                        <argument name="label" xsi:type="string" translate="true">Items Ordered</argument>
+                    </arguments>
+                </block>
+                <block class="Mirakl\FrontendDemo\Block\Order\Link\Shipments" name="sales.order.info.links.shipments">
+                    <arguments>
+                        <argument name="path" xsi:type="string">marketplace/order/shipments</argument>
+                        <argument name="label" xsi:type="string" translate="true">Shipments</argument>
+                    </arguments>
+                </block>
+                <block class="Mirakl\FrontendDemo\Block\Order\Link" name="sales.order.info.links.message">
+                    <arguments>
+                        <argument name="key" xsi:type="string">Messages</argument>
+                        <argument name="path" xsi:type="string">marketplace/order/message</argument>
+                        <argument name="label" xsi:type="string" translate="true">Messages</argument>
+                    </arguments>
+                </block>
+                <block class="Mirakl\FrontendDemo\Block\Order\Link" name="sales.order.info.links.evaluation">
+                    <arguments>
+                        <argument name="key" xsi:type="string">Evaluation</argument>
+                        <argument name="path" xsi:type="string">marketplace/order/evaluation</argument>
+                        <argument name="label" xsi:type="string" translate="true">Evaluation</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_Shopby
+ */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="urn:magento:mftf:Test/etc/testSchema.xsd">
+
+    <test name="CTDAddFilterTitleDescriptionAllAttributesAfterBrandPageTest"
+          extends="CTDAddFilterTitleDescriptionAfterBrandPageTest">
+
+        <annotations>
+            <features value="Category Title and Description"/>
+            <stories value="Category Title and Description checking"/>
+            <title value="Check Category Title and Description"/>
+            <description
+                    value="Check of Category Title and Description replacing after filtering on Brand Page in case of After Category Name/Description and selected All Attributes Option"/>
+            <severity value="MINOR"/>
+            <testCaseId value="CTD-22"/>
+            <group value="Amasty"/>
+            <group value="ILN"/>
+            <group value="ILNregression"/>
+            <group value="cattitledesc"/>
+        </annotations>
+
+        <before>
+            <actionGroup stepKey="SetTitleAndDescription1"
+                         ref="ConfigureCategoryTitleAndDescriptionActionGroup">
+                <argument name="CatTitleAndDescriptILNSettings"
+                          value="CategoryTitleAndDescriptionAllAttributesOption"/>
+            </actionGroup>
+        </before>
+
+        <!-- Check Category Title and Description: filter Brand Page by attribute, check that Category Title and Description consists of Attribute Option Name and Description/-->
+
+        <see selector="{{StorefrontPageElementsSection.PageTitle}}"
+             userInput="Polyester Test Page Title - All-Weather Test Page Title"
+             stepKey="checkPageTitle1"/>
+        <dontSee selector="{{StorefrontPageElementsSection.PageTitle}}"
+                 userInput="Polyester Test Page Title - Polyester Test Page Title"
+                 stepKey="checkPageTitle2"
+                 after="navigateToAllProducts1"/>
+        <dontSee selector="{{StorefrontPageElementsSection.PageTitle}}"
+                 userInput="Polyester Test Page Title-Polyester Test Page Title"
+                 stepKey="checkPageTitle3"
+                 after="checkPageTitle2"/>
+
+    </test>
+</tests>
+
+

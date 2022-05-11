@@ -1,0 +1,44 @@
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+?>
+
+<?php if($customerSession->isLoggedIn()):?>
+<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('hompage_banner_login')->toHtml();?>
+<script type="text/javascript">
+      require(['jquery','owlcarousel'],function($){
+            $(".home-page-1 .sm-imageslider-content").owlCarousel({
+            items: 1,
+            autoplay: true,
+            loop: true,
+            nav: true,
+            dots: false,
+            autoplaySpeed: 500,
+            navSpeed: 500,
+            animateOut: 'fadeOut',
+            dotsSpeed: 500,
+            autoplayHoverPause: true,
+            margin: 1,
+        });
+      });
+</script>
+<?php else: ?>
+<?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('hompage_banner_new_login')->toHtml();?>
+<script type="text/javascript">
+	require(['jquery','owlcarousel'],function($){
+		$(".home-page-1 .sm-imageslider-content").owlCarousel({
+            items: 1,
+            autoplay: true,
+            loop: true,
+            nav: true,
+            dots: false,
+            autoplaySpeed: 500,
+            navSpeed: 500,
+            animateOut: 'fadeOut',
+            dotsSpeed: 500,
+            autoplayHoverPause: true,
+            margin: 1,
+        });
+	});
+</script>
+<?php endif; ?>

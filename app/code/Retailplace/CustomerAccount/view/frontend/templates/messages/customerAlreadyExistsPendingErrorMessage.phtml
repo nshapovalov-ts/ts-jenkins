@@ -1,0 +1,5 @@
+<?php
+
+/** @var \Magento\Framework\View\Element\Template $block */
+?>
+<?= $block->escapeHtml(__('Your email already exists, to complete the application please login and go to <a href="%1">account information</a>', $block->getData('url')), ['a']);

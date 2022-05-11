@@ -1,0 +1,24 @@
+{
+    "retailplace_product_import": {
+        "column": {
+            "id": true,
+            "mirakl_product_id": true,
+            "sku": true,
+            "created_at": true,
+            "updated_at": true,
+            "mirakl_created_at": true,
+            "mirakl_updated_at": true,
+            "data": true,
+            "status": true,
+            "send_status": true,
+            "error": true
+        },
+        "index": {
+            "RETAILPLACE_PRODUCT_IMPORT_STATUS_SEND_STATUS": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "RETAILPLACE_PRODUCT_IMPORT_MIRAKL_PRODUCT_ID": true
+        }
+    }
+}

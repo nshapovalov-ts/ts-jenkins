@@ -1,0 +1,159 @@
+@baseDir: "../";
+& when (@media-common = true) {
+
+    /* image shimmer preloader */
+    @-webkit-keyframes placeHolderShimmer {
+        0% {
+            background-position: -468px 0
+        }
+
+        100% {
+            background-position: 468px 0
+        }
+    }
+
+    @keyframes placeHolderShimmer {
+        0% {
+            background-position: -468px 0
+        }
+
+        100% {
+            background-position: 468px 0
+        }
+    }
+
+    .shimmer-bg {
+        -webkit-animation-duration: 1s;
+        animation-duration: 1s;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-name: placeHolderShimmer;
+        animation-name: placeHolderShimmer;
+        -webkit-animation-timing-function: linear;
+        animation-timing-function: linear;
+        background: #f6f7f9;
+        background-image: -webkit-gradient(linear, left top, right top, color-stop(20%, #f6f7f9), color-stop(40%, #e9ebee), color-stop(60%, #f6f7f9), to(#f6f7f9));
+        background-image: linear-gradient(to right, #f6f7f9 20%, #e9ebee 40%, #f6f7f9 60%, #f6f7f9 100%);
+        background-repeat: no-repeat;
+        background-size: 800px 100%;
+    }
+
+    img:is([data-amsrc]) {
+        .shimmer-bg
+    }
+
+    .about_us_top_banner_img,
+    .home_slider_main_img.desktop_view {
+        max-height: 641px;
+    }
+
+    .products-grid img.product-image-photo:is([data-amsrc]) {
+        width: 100%;
+    }
+
+    .seller-shop .block-content.banner .main-banner-img > img:is([data-amsrc]) {
+        width: 100%;
+    }
+
+    /*home page*/
+
+    .callback_icon {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        height: 80px;
+        width: 80px;
+        z-index: 11;
+        background: url(../images/callback_icon_new.png) no-repeat center;
+        background-size: contain;
+
+    }
+
+    .top-promotion-line-icon {
+        margin-right: 8px;
+        height: 18px;
+        width: 18px;
+        background: url(../images/c_info_1.png) no-repeat center;
+        background-size: contain;
+        float: left;
+        margin-top: -2px;
+    }
+
+    .free_shipping_icon {
+        width: 16px;
+        height: 16px;
+        background: url(../images/free_shipping.png) no-repeat left center;
+        float: left;
+        margin-right: 5px;
+        margin-top: 2px;
+        background-size: contain;
+    }
+
+    .delivery_icon_new_icon {
+        width: 42px;
+        height: 42px;
+        background: url(../images/delivery_icon_new.png) no-repeat left center;
+        float: left;
+    }
+
+    .price_guarantee_icon {
+        width: 16px;
+        height: 16px;
+        background: url(../images/price_guarantee_icon_1.png) no-repeat center;
+        float: left;
+        margin-right: 8px;
+    }
+
+    .zip_logo_icon {
+        width: 105px;
+        height: 15px;
+        background: url(../images/zip_logo_img.png) no-repeat center;
+        background-size: contain;
+        float: left;
+    }
+
+    div {
+        &.shipping_cost_icon, &.cart-not-raady-icon {
+            width: 14px;
+            height: 14px;
+            background-size: contain;
+        }
+
+        &.shipping_cost_icon {
+            background: url(../images/shipping_cost.png) no-repeat center;
+            margin-bottom: -2px;
+        }
+
+        &.cart-not-raady-icon {
+            background: url(../images/cart-not-raady-icon.png) no-repeat center;
+            margin-bottom: -4px;
+        }
+    }
+}
+
+//
+//  Desktop
+//  --------------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    /*about page*/
+    .about_us_top_banner_img > img,
+    .home_slider_main_img.desktop_view > img {
+        min-height: 363px;
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .callback_icon {
+        display: none;
+    }
+
+    .about_us_top_banner_img > img,
+    .home_slider_main_img.desktop_view > img {
+        min-height: 138px;
+    }
+}

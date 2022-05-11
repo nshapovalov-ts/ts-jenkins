@@ -1,0 +1,27 @@
+<?php
+/**
+ * Retailplace_Wishlist
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+/**
+ * @var Wishlist $block
+ */
+
+use Retailplace\Wishlist\Block\Wishlist;
+
+?>
+<?php if ($block->isAllow()) : ?>
+    <script type="text/x-magento-init">
+    {
+            "*": {
+                "Retailplace_Wishlist/js/view/activeItemsWishlist": {
+                    "itemElement": "a.action.towishlist.wishlist"
+                }
+            }
+    }
+
+    </script>
+<?php endif; ?>

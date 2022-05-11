@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_EmailConfirmation
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="customer">
+            <group id="create_account">
+                <field id="email_validation_lockout_failures" translate="label comment" sortOrder="91" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Maximum Validation Failures to Lockout Email Approve</label>
+                    <comment>Use 0 to disable approve locking.</comment>
+                    <frontend_class>required-entry validate-digits</frontend_class>
+                </field>
+                <field id="email_validation_lockout_threshold" translate="label comment" sortOrder="92" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Lockout Time (minutes)</label>
+                    <comment>Validation will be unlocked after provided time.</comment>
+                    <frontend_class>required-entry validate-digits</frontend_class>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

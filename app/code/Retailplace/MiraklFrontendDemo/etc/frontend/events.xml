@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklFrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_block_product_list_collection">
+        <observer name="append_custom_fields" instance="Retailplace\MiraklFrontendDemo\Observer\CatalogProductListCollectionAppendCustomFieldsObserver" shared="false"/>
+        <observer name="review" disabled="true"/>
+    </event>
+</config>

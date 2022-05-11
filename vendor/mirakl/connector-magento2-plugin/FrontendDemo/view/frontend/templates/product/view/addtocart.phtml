@@ -1,0 +1,81 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View $block */
+/** @var \Mirakl\Connector\Model\Offer $offer */
+$_product = $block->getProduct();
+$offer = $_product->getData('main_offer');
+$buttonTitle = __('Add to Cart');
+?>
+
+<?php if ($_product->isSaleable() || $offer): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       maxlength="12"
+                       value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+                       title="<?php /* @escapeNotVerified */ echo __('Qty') ?>"
+                       class="input-text qty <?php echo $offer ? 'marketplace-offer' : 'operator-offer'?>"
+                       data-validate="<?php echo $block->escapeHtml(json_encode($block->getMixedQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary tocart add-offer-to-cart"
+                    id="product-addtocart-button"
+                    <?php if($offer): ?>
+                        data-offer="<?php echo $offer->getId() ?>"
+                    <?php endif;?>
+                >
+                <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+
+        <?php $shop = $offer ? $offer->getShop() : null; ?>
+        <div class="offer-data"<?php if (!$offer):?> style="display: none;"<?php endif;?>>
+            <?php $evaluation = $shop ? $shop->getFormattedGrade() : '' ?>
+            <div class="rating-summary">
+                <span class="offer-seller-name">
+                    <?php echo __('sold by')?> <a href="<?php echo $shop ? $shop->getUrl() : '' ?>"><span class="offer-shop-name"><?php echo $shop ? $this->escapeHtml($shop->getName()) : '' ?></span></a>
+                </span>
+                <div class="rating-result" title="<?php echo $evaluation ?>%"<?php if (!$shop || !$shop->getEvaluationsCount()):?> style="display: none;"<?php endif;?>>
+                    <span style="width:<?php echo $evaluation ?>%"><span><span itemprop="ratingValue"><?php echo $evaluation ?></span>% <?php echo __('of') ?> <span itemprop="bestRating">100</span></span></span>
+                </div>
+            </div>
+            <div class="offer-seller-rating"<?php if (!$shop || !$shop->getEvaluationsCount()):?> style="display: none;"<?php endif;?>>
+                <span class="number"><?php echo $evaluation ?></span>% <?php echo __('positive evaluations') ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+
+<?php if (!$block->isRedirectToCartEnabled()): ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "catalogAddToCart": {
+                "bindSubmit": false
+            }
+        }
+    }
+</script>
+<?php endif; ?>

@@ -1,0 +1,281 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Order\View $block */
+/** @var \Mirakl\Connector\Helper\Order $_orderHelper */
+/** @var \Mirakl\Connector\Helper\Tax $_taxHelper */
+$_miraklOrder = $block->getMiraklOrder();
+$_order = $block->getOrder();
+$_locale = $this->helper('Mirakl\Core\Helper\Config')->getLocale();
+$_openReasons = $this->helper('Mirakl\Api\Helper\Reason')->getOpenIncidentReasons($_locale);
+$_closeReasons = $this->helper('Mirakl\Api\Helper\Reason')->getCloseIncidentReasons($_locale);
+$_orderHelper = $this->helper('Mirakl\Connector\Helper\Order');
+$_taxHelper = $this->helper('Mirakl\Connector\Helper\Tax');
+?>
+<div class="order-details-items ordered">
+    <div class="order-title">
+        <strong><?php /* @escapeNotVerified */
+            echo __('Items Ordered') ?></strong>
+    </div>
+
+    <div class="table-wrapper order-items">
+        <table class="data table table-order-items" id="my-orders-table" summary="<?php /* @escapeNotVerified */
+        echo __('Items Ordered') ?>">
+            <caption class="table-caption"><?php /* @escapeNotVerified */
+                echo __('Items Ordered') ?></caption>
+            <thead>
+                <tr>
+                    <th class="col name"><?php /* @escapeNotVerified */
+                        echo __('Product Name') ?></th>
+                    <th class="col incident"><?php /* @escapeNotVerified */
+                        echo __('Incident') ?></th>
+                    <th class="col sku"><?php /* @escapeNotVerified */
+                        echo __('SKU') ?></th>
+                    <th class="col price"><?php /* @escapeNotVerified */
+                        echo __('Price') ?></th>
+                    <th class="col qty"><?php /* @escapeNotVerified */
+                        echo __('Qty') ?></th>
+                    <th class="col tax"><?php /* @escapeNotVerified */
+                        echo __('Tax') ?></th>
+                    <th class="col subtotal"><?php /* @escapeNotVerified */
+                        echo __('Subtotal') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($_miraklOrder->getOrderLines() as $_orderLine): ?>
+                    <?php
+                    /** @var \Mirakl\MMP\FrontOperator\Domain\Order\OrderLine $_orderLine */
+                    $_hasIncident = $_orderHelper->isOrderLineIncident($_orderLine);
+                    $_isRefused = $_orderHelper->isOrderLineRefused($_orderLine);
+                    ?>
+                    <tr id="order-item-row-<?php /* @escapeNotVerified */
+                    echo $_orderLine->getId() ?>" class="<?php if ($_hasIncident): ?>incident <?php endif ?><?php if ($_isRefused): ?>refused <?php endif ?>">
+                        <td class="col name" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+                            <?php
+                            $simpleSku = $_orderLine->getOffer()->getProduct()->getSku();
+                            $productObj = $block->getProduct($simpleSku);
+                            $shopId = $block->getOfferShopIdForOrderLine($_orderLine);
+                            $productUrl = null;
+                            if (!empty($productObj)) {
+                                $productUrl = !empty($shopId) ?
+                                    $this->getUrl('seller/') . $shopId . '/' . $productObj->getUrlKey() . '.html'
+                                    : $productObj->getProductUrl();
+                            }
+                            ?>
+                            <?php if (!empty($productUrl)) : ?>
+                                <a href="<?php echo $productUrl; ?>">
+                                    <strong class="product name product-item-name"><?php echo $block->escapeHtml($_orderLine->getOffer()->getProduct()->getTitle()) ?></strong>
+                                </a>
+                            <?php else: ?>
+                                <strong class="product name product-item-name"><?php echo $block->escapeHtml($_orderLine->getOffer()->getProduct()->getTitle()) ?></strong>
+                            <?php endif; ?>
+                        </td>
+                        <td class="col incident" data-th="<?php echo $block->escapeHtml(__('Incident')); ?>">
+                            <?php if (!$_orderLine->getCanOpenIncident() && !$_hasIncident): ?>
+                                <?php echo __('N/A') ?>
+                            <?php else: ?>
+                                <?php
+                                $_selectLabel = __($_hasIncident ? '-- Close Incident --' : '-- Open Incident --');
+                                $_jsFormObject = 'incidentForm' . $_orderLine->getId();
+                                $_route = '*/*/postIncident';
+                                $_url = $this->getUrl($_route, ['type' => $_hasIncident ? 'close' : 'open', 'order_id' => $_order->getId(), 'remote_id' => $_miraklOrder->getId()]);
+                                $_reasons = $_hasIncident ? $_closeReasons : $_openReasons;
+                                ?>
+                                <form action="<?php /* @escapeNotVerified */
+                                echo $_url ?>" id="incident-<?php echo $_orderLine->getId() ?>" class="incident-form" method="post">
+                                    <?php echo $block->getBlockHtml('formkey'); ?>
+                                    <input type="hidden" name="order_line" value="<?php echo $_orderLine->getId() ?>"/>
+                                    <?php if ($_hasIncident): ?>
+                                        <p><?php echo __($_orderLine->getStatus()->getReason()->getLabel()) ?></p>
+                                    <?php endif ?>
+                                    <div class="top">
+                                        <select name="reason" title="<?php /* @escapeNotVerified */
+                                        echo __('Incident') ?>" data-validate="{'validate-select':true}">
+                                            <option value=""><?php echo $_selectLabel ?></option>
+                                            <?php foreach ($_reasons as $_reason): ?>
+                                                <?php /** @var \Mirakl\MMP\FrontOperator\Domain\Reason $_reason */ ?>
+                                                <option value="<?php echo $_reason->getCode() ?>"><?php echo $this->escapeHtml($_reason->getLabel()) ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                        <?php if (!$_hasIncident) : ?>
+                                            <select style="display:none;" name="subject">
+                                                <option value=""><?php echo $_selectLabel ?></option>
+                                                <?php foreach ($_reasons as $_reason): ?>
+                                                    <?php /** @var \Mirakl\MMP\FrontOperator\Domain\Reason $_reason */ ?>
+                                                    <option data-code="<?php echo $_reason->getCode() ?>" value="<?php echo $this->escapeHtml($_reason->getLabel()) ?>"><?php echo $this->escapeHtml($_reason->getLabel()) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                            <textarea id="comment" name="comment" title="<?php /* @escapeNotVerified */
+                                            echo __('Comment') ?>" data-validate="{'validate-select':true}"></textarea>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <button type="submit" class="action submit primary"><span><?php /* @escapeNotVerified */
+                                            echo __('OK') ?></span></button>
+
+                                </form>
+                                <script type="text/x-magento-init">
+                                    {
+                                        "#incident-<?php echo $_orderLine->getId() ?>": {
+                                           "Mirakl_FrontendDemo/js/order/incident-form": {}
+                                        }
+                                    }
+
+                                </script>
+                            <?php if (!$_hasIncident) : ?>
+                                <script>
+                                    require([
+                                        'jquery',
+                                        'domReady!'// wait for dom ready
+                                    ], function ($) {
+                                        $('[name="reason"]').change(function () {
+                                            $('select[name="subject"] > option[data-code="' + $(this).val() + '"]').attr('selected', 'selected');
+                                        });
+                                    });
+                                </script>
+                            <?php endif; ?>
+                            <?php endif; ?>
+                        </td>
+                        <td class="col sku" data-th="<?php echo $block->escapeHtml(__('SKU')); ?>"><?php echo $this->escapeHtml($simpleSku) ?></td>
+                        <td class="col price" data-th="<?php echo $block->escapeHtml(__('Price')); ?>">
+                            <?php if ($_taxHelper->displaySalesPricesInclTax() || $_taxHelper->displaySalesPricesBoth()): ?>
+                                <span class="price-including-tax" data-label="<?php echo $block->escapeHtml(__('Incl. Tax')); ?>">
+                                    <?php echo $_order->formatPrice($block->getOrderLinePrice($_orderLine)) ?>
+                                </span>
+                            <?php endif ?>
+
+                            <?php if ($_taxHelper->displaySalesPricesExclTax() || $_taxHelper->displaySalesPricesBoth()): ?>
+                                <span class="price-excluding-tax" data-label="<?php echo $block->escapeHtml(__('Excl. Tax')); ?>">
+                                    <?php echo $_order->formatPrice($block->getOrderLinePriceExclTax($_orderLine)) ?>
+                                </span>
+                            <?php endif ?>
+                        </td>
+                        <td class="col qty" data-th="<?php echo $block->escapeHtml(__('Qty')); ?>"><?php echo $_orderLine->getQuantity() ?></td>
+                        <td class="col tax" data-th="<?php echo $block->escapeHtml(__('Tax')); ?>">
+                            <?php if ($_taxHelper->displaySalesPricesInclTax() || $_taxHelper->displaySalesPricesBoth()): ?>
+                                <span class="price-including-tax" data-label="<?php echo $block->escapeHtml(__('Incl. Tax')); ?>">
+                                    <?php echo $_order->formatPrice($block->getOrderLineTaxAmount($_orderLine)) ?>
+                                </span>
+                            <?php endif ?>
+
+                            <?php if ($_taxHelper->displaySalesPricesExclTax() || $_taxHelper->displaySalesPricesBoth()): ?>
+                                <span class="price-excluding-tax" data-label="<?php echo $block->escapeHtml(__('Excl. Tax')); ?>">
+                                    <?php echo $_order->formatPrice($block->getOrderLineTaxAmount($_orderLine)) ?>
+                                </span>
+                            <?php endif ?>
+                        </td>
+                        <td class="col subtotal" data-th="<?php echo $block->escapeHtml(__('Subtotal')); ?>">
+                            <?php if ($_taxHelper->displaySalesPricesInclTax() || $_taxHelper->displaySalesPricesBoth()): ?>
+                                <span class="price-including-tax" data-label="<?php echo $block->escapeHtml(__('Incl. Tax')); ?>">
+                                    <?php echo $_order->formatPrice($block->getOrderLineTotalPrice($_orderLine)) ?>
+                                </span>
+                            <?php endif ?>
+
+                            <?php if ($_taxHelper->displaySalesPricesExclTax() || $_taxHelper->displaySalesPricesBoth()): ?>
+                                <span class="price-excluding-tax" data-label="<?php echo $block->escapeHtml(__('Excl. Tax')); ?>">
+                                    <?php echo $_order->formatPrice($block->getOrderLineTotalPriceExclTax($_orderLine)) ?>
+                                </span>
+                            <?php endif ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+                <?php if ($_taxHelper->displaySalesSubtotalExclTax() || $_taxHelper->displaySalesSubtotalInclTax()): ?>
+                    <tr class="subtotal">
+                        <th colspan="5" class="mark" scope="row"><?php echo __('Subtotal') ?></th>
+                        <td class="amount" data-th="<?php echo __('Subtotal') ?>"><?php echo $_order->formatPrice($_taxHelper->displaySalesSubtotalInclTax() ? $block->getOrderSubtotalPrice() : $block->getOrderSubtotalPriceExclTax()) ?></td>
+                    </tr>
+                <?php else: ?>
+                    <?php if ($_taxHelper->displaySalesSubtotalExclTax() || $_taxHelper->displaySalesSubtotalBoth()): ?>
+                        <tr class="subtotal_excl">
+                            <th colspan="5" class="mark" scope="row"><?php echo __('Subtotal (Excl.Tax)') ?></th>
+                            <td class="amount" data-th="<?php echo __('Subtotal (Excl.Tax)') ?>"><?php echo $_order->formatPrice($block->getOrderSubtotalPriceExclTax()) ?></td>
+                        </tr>
+                    <?php endif ?>
+                    <?php if ($_taxHelper->displaySalesSubtotalInclTax() || $_taxHelper->displaySalesSubtotalBoth()): ?>
+                        <tr class="subtotal_incl">
+                            <th colspan="5" class="mark" scope="row"><?php echo __('Subtotal (Incl.Tax)') ?></th>
+                            <td class="amount" data-th="<?php echo __('Subtotal (Incl.Tax)') ?>"><?php echo $_order->formatPrice($block->getOrderSubtotalPrice()) ?></td>
+                        </tr>
+                    <?php endif ?>
+                <?php endif ?>
+
+                <?php if ($_taxHelper->displaySalesShippingExclTax() || $_taxHelper->displaySalesShippingInclTax()): ?>
+                    <tr class="shipping">
+                        <th colspan="5" class="mark" scope="row"><?php echo __('Shipping & Handling') ?></th>
+                        <td class="amount" data-th="<?php echo __('Shipping & Handling') ?>"><?php echo $_order->formatPrice($_taxHelper->displaySalesShippingInclTax() ? $block->getOrderShippingPriceInclTax() : $block->getOrderShippingPriceExclTax()) ?></td>
+                    </tr>
+                <?php else: ?>
+                    <?php if ($_taxHelper->displaySalesShippingExclTax() || $_taxHelper->displaySalesShippingBoth()): ?>
+                        <tr class="shipping_excl">
+                            <th colspan="5" class="mark" scope="row"><?php echo __('Shipping & Handling (Excl.Tax)') ?></th>
+                            <td class="amount" data-th="<?php echo __('Shipping & Handling (Excl.Tax)') ?>"><?php echo $_order->formatPrice($block->getOrderShippingPriceExclTax()) ?></td>
+                        </tr>
+                    <?php endif ?>
+                    <?php if ($_taxHelper->displaySalesShippingInclTax() || $_taxHelper->displaySalesShippingBoth()): ?>
+                        <tr class="shipping_incl">
+                            <th colspan="5" class="mark" scope="row"><?php echo __('Shipping & Handling (Incl.Tax)') ?></th>
+                            <td class="amount" data-th="<?php echo __('Shipping & Handling (Incl.Tax)') ?>"><?php echo $_order->formatPrice($block->getOrderShippingPriceInclTax()) ?></td>
+                        </tr>
+                    <?php endif ?>
+                <?php endif ?>
+
+                <?php if ($_taxHelper->displaySalesFullSummary($_order->getStore())): ?>
+                    <?php $_taxDetails = $_taxHelper->getMiraklCalculatedTaxes($_order) ?>
+                    <?php if (!empty($_taxDetails)): ?>
+                        <tr class="grand_total">
+                            <th colspan="5" class="mark" scope="row"><strong><?php echo __('Grand Total (Excl. Tax)') ?></strong></th>
+                            <td class="amount" data-th="<?php echo __('Grand Total (Excl. Tax)') ?>"><strong><?php echo $_order->formatPrice($block->getOrderTotalPriceExclTax()) ?></strong></td>
+                        </tr>
+                        <?php foreach ($_taxDetails as $_tax): ?>
+                            <tr class="totals tax details">
+                                <th colspan="5" class="mark" scope="row"><?php echo $block->escapeHtml($_tax['title']) ?></th>
+                                <td class="amount" data-th="<?php echo $block->escapeHtml($_tax['title']) ?>"><?php echo $_order->formatPrice($_tax['tax_amount']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <?php $_miraklOrderTaxDetails = $_taxHelper->getMiraklOrderCalculatedTaxes($_order, $_miraklOrder) ?>
+                        <?php if (!empty($_miraklOrderTaxDetails)): ?>
+                            <tr class="grand_total">
+                                <th colspan="5" class="mark" scope="row"><strong><?php echo __('Grand Total (Excl. Tax)') ?></strong></th>
+                                <td class="amount" data-th="<?php echo __('Grand Total (Excl. Tax)') ?>"><strong><?php echo $_order->formatPrice($block->getOrderTotalPriceExclTax()) ?></strong></td>
+                            </tr>
+                            <?php foreach ($_miraklOrderTaxDetails as $_tax): ?>
+                                <tr class="totals tax details">
+                                    <th colspan="5" class="mark" scope="row"><?php echo __('%1 (%2%)', $block->escapeHtml($_tax['title']), round($_tax['percent'], 2)) ?></th>
+                                    <td class="amount" data-th="<?php echo $block->escapeHtml($_tax['title']) ?>"><?php echo $_order->formatPrice($_tax['tax_amount']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif ?>
+                    <?php endif ?>
+                <?php endif ?>
+
+                <tr class="tax">
+                    <th colspan="5" class="mark" scope="row"><?php echo __('GST') ?></th>
+                    <td class="amount" data-th="<?php echo __('GST') ?>"><?php echo $_order->formatPrice($block->getOrderTotalTax()) ?></td>
+                </tr>
+
+                <tr class="grand_total last">
+                    <th colspan="5" class="mark" scope="row"><strong><?php echo __('Grand Total') ?></strong></th>
+                    <td class="amount" data-th="<?php echo __('Grand Total') ?>"><strong><?php echo $_order->formatPrice($block->getOrderTotalPrice()) ?></strong></td>
+                </tr>
+
+                <?php if ($_order->isCurrencyDifferent()): ?>
+                    <tr class="base_grandtotal">
+                        <th colspan="5" class="mark" scope="row"><?php echo __('Grand Total to be Charged') ?></th>
+                        <td class="amount" data-th="<?php echo __('Grand Total to be Charged') ?>"><?php echo $_order->formatBasePrice($block->getOrderBaseTotalPrice()) ?></td>
+                    </tr>
+                <?php endif ?>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="actions-toolbar">
+        <div class="secondary">
+            <a class="action back" href="<?php /* @escapeNotVerified */
+            echo $block->getBackUrl() ?>">
+                <span><?php /* @escapeNotVerified */
+                    echo $block->getBackTitle() ?></span>
+            </a>
+        </div>
+    </div>
+</div>

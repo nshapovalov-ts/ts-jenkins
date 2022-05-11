@@ -1,0 +1,99 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/** @var \Retailplace\ChannelPricing\Block\Product\View $block */
+
+$_product = $block->getProduct();
+$offer = $_product->getData('main_offer');
+$shop = null;
+?>
+<div class="all-label">
+    <?php if ($offer): ?>
+        <?php
+        $shop = $offer->getShop();
+        $price = null;
+        $origin_price = null;
+        $additional_infoclearance = '';
+        $checkclearance = $offer->getClearance();
+        $price = $offer->getPrice();
+        $origin_price = $offer->getOriginPrice();
+        ?>
+        <?php if (($price < $origin_price) && $checkclearance == 1): ?>
+            <div class="sale-label">
+                <span><?php echo __('Clearance'); ?></span>
+            </div>
+        <?php elseif ($price < $origin_price): ?>
+            <div class="sale-label">
+                <span><?php echo __('Sale'); ?></span>
+            </div>
+        <?php elseif ($checkclearance == 1): ?>
+            <div class="sale-label">
+                <span><?php echo __('Clearance'); ?></span>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <?php
+    $made_in_au = $_product->getData('made_in_au');
+    $designed_in_au = $_product->getData('designed_in_au');
+    ?>
+
+    <?php if ($made_in_au && $designed_in_au): ?>
+        <div class="design-by-label">
+            <span><?php echo __('Made In AU'); ?></span>
+        </div>
+    <?php elseif ($designed_in_au): ?>
+        <div class="made-by-label">
+            <span><?php echo __('Designed In AU'); ?></span>
+        </div>
+    <?php elseif ($made_in_au): ?>
+        <div class="design-by-label">
+            <span><?php echo __('Made In AU'); ?></span>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($block->productIsAuPostExclusive($_product)): ?>
+        <div class="au-post-exclusive-label">
+            <span><?= __($block->getAuPostExclusiveLabel()); ?></span>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($block->productIsNlnaExclusive($_product)): ?>
+        <div class="nlna-exclusive-label">
+            <span><?= __($block->getNlnaExclusiveLabel()); ?></span>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($block->productIsOpenDuringXmas($_product)): ?>
+        <div class="open-during-xmas-label">
+            <span><?= __($block->getOpenDuringXmasLabel()); ?></span>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $now = date("Y-m-d");
+    $newsFrom = substr($_product->getNewsFromDate(), 0, 10);
+    $newsTo = substr($_product->getNewsToDate(), 0, 10);
+
+    if (($newsTo != '' || $newsFrom != '')) {
+        if (($newsTo != '' && $newsFrom != '' && $now >= $newsFrom && $now <= $newsTo) || ($newsTo == '' && $now >= $newsFrom) || ($newsFrom == '' && $now <= $newsTo)) { ?>
+            <div class="new-label">
+                <span><?php echo __('New'); ?></span>
+            </div>
+        <?php }
+    } ?>
+    <?php if ($_product->getResource()->getAttribute('is_businesses')->getUsedInProductListing() && $_product->getData('is_businesses')): ?>
+        <div class="retail-business-label">
+            <div class="is_businesses_label">
+                <span><?php echo __('FOR TRADE'); ?></span>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>

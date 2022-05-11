@@ -1,0 +1,10 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerSession = $objectManager->get('Magento\Customer\Model\Session');
+?>
+
+<?php if($customerSession->isLoggedIn()):?>
+    <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('login_user_homepage')->toHtml();?>
+<?php else: ?>
+    <?php echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('guest_user_home_page')->toHtml();?>
+<?php endif; ?>

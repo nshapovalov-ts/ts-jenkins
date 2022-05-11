@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Framework\View\Element\Template" name="magefan_cms_display_rules_block_get_block_html" template="Magefan_CmsDisplayRules::js.phtml">
+                <arguments>
+                    <argument name="viewModel" xsi:type="object">Magefan\CmsDisplayRules\ViewModel\Js</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

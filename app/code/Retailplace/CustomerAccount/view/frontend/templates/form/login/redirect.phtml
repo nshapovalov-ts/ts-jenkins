@@ -1,0 +1,6 @@
+<?php
+/** @var $block \Retailplace\CustomerAccount\Block\CustomerRedirect */
+?>
+<?php if ($block->needRedirectEdit()): ?>
+<input name="login[redirect]" value="edit" type="hidden" class="input-text" id="redirect_edit" title="<?= $block->escapeHtmlAttr(__('Redirect edit')) ?>"/>
+<?php endif; ?>

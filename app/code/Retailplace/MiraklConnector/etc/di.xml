@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklConnector
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Satish Gumudavelly <satish@kipanga.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Dmitriy Kosykh <dmitriykosykh@tradesquare.com.au>
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mirakl\Connector\Helper\Offer\Catalog" type="Retailplace\MiraklConnector\Rewrite\Helper\Offer\Catalog"/>
+    <preference for="Mirakl\Connector\Helper\Offer" type="Retailplace\MiraklConnector\Rewrite\Helper\Offer"/>
+    <preference for="Mirakl\Connector\Helper\StockQty" type="Retailplace\MiraklConnector\Rewrite\Helper\StockQty"/>
+    <preference for="Mirakl\Connector\Observer\ProductIsSalableAfterObserver" type="Retailplace\MiraklConnector\Rewrite\Observer\ProductIsSalableAfterObserver"/>
+    <preference for="Mirakl\Connector\Observer\TriggerOrderRefundObserver" type="Retailplace\MiraklConnector\Rewrite\Observer\TriggerOrderRefundObserver"/>
+    <preference for="Mirakl\Connector\Helper\Order" type="Retailplace\MiraklConnector\Rewrite\Helper\Order"/>
+    <type name="Mirakl\Connector\Model\Quote\Synchronizer">
+        <plugin name="retailplace_miraklconnector_quote_synchronizer" type="Retailplace\MiraklConnector\Plugin\Model\Quote\Synchronizer" sortOrder="1"/>
+    </type>
+    <type name="Mirakl\Connector\Model\Quote\Updater">
+        <plugin name="retailplace_miraklconnector_quote_updater" type="Retailplace\MiraklConnector\Plugin\Model\Quote\Updater" sortOrder="1"/>
+    </type>
+    <type name="Retailplace\MiraklConnector\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Retailplace\MiraklConnector\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">Refund</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Retailplace\MiraklConnector\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Retailplace\MiraklConnector\Api\Data\OfferSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Retailplace\MiraklConnector\Api\Data\OfferInterface"
+                type="Retailplace\MiraklConnector\Model\Offer"/>
+    <preference for="Retailplace\MiraklConnector\Api\OfferRepositoryInterface"
+                type="Retailplace\MiraklConnector\Model\OfferRepository"/>
+    <preference for="Mirakl\Connector\Model\Offer"
+                type="Retailplace\MiraklConnector\Model\Offer"/>
+    <type name="Magento\CatalogSearch\Model\Indexer\Fulltext\Action\DataProvider">
+        <plugin name="UpdateConfigurableSearchIndexer" type="Retailplace\MiraklConnector\Plugin\SearchIndexerPlugin"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="retailplace_miraklconnector_quote_add_mirakl_data"
+                type="Retailplace\MiraklConnector\Plugin\Model\QuoteAddMiraklData"
+                sortOrder="50"/>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="update_mirakl_attributes" xsi:type="object">
+                    Retailplace\MiraklConnector\Console\Command\UpdateMiraklAttributesCommand
+                </item>
+                <item name="update_attribute_tax_class_id" xsi:type="object">
+                    Retailplace\MiraklConnector\Console\Command\UpdateAttributeTaxClassId
+                </item>
+                <item name="product_synchronisation" xsi:type="object">
+                    Retailplace\MiraklConnector\Console\Command\ProductSynchronizationCommand
+                </item>
+                <item name="update_wrong_tax_for_orders" xsi:type="object">
+                    Retailplace\MiraklConnector\Console\Command\UpdateWrongTaxForOrders
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="miraklHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">var/log/miraklError.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="miraklLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="object">miraklHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Retailplace\MiraklConnector\Plugin\Model\Quote\Updater">
+        <arguments>
+            <argument name="logger" xsi:type="object">miraklLogger</argument>
+        </arguments>
+    </type>
+    <type name="Mirakl\Connector\Helper\Shop">
+        <plugin name="retailplace_miraklconnector_shop_synchronizer" type="Retailplace\MiraklConnector\Plugin\Helper\Shop" sortOrder="10"/>
+    </type>
+</config>

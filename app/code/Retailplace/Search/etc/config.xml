@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Search
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <search>
+            <advanced>
+                <noroute_to_search>0</noroute_to_search>
+                <wildcard_autocomplete>infix</wildcard_autocomplete>
+            </advanced>
+            <slow_log>
+                <slow_log_enable>1</slow_log_enable>
+                <index.search.slowlog.threshold.query.warn>10000</index.search.slowlog.threshold.query.warn>
+                <index.search.slowlog.threshold.query.info>5000</index.search.slowlog.threshold.query.info>
+                <index.search.slowlog.threshold.query.debug>2000</index.search.slowlog.threshold.query.debug>
+                <index.search.slowlog.threshold.query.trace>500</index.search.slowlog.threshold.query.trace>
+                <index.search.slowlog.threshold.fetch.warn>1000</index.search.slowlog.threshold.fetch.warn>
+                <index.search.slowlog.threshold.fetch.info>800</index.search.slowlog.threshold.fetch.info>
+                <index.search.slowlog.threshold.fetch.debug>500</index.search.slowlog.threshold.fetch.debug>
+                <index.search.slowlog.threshold.fetch.trace>200</index.search.slowlog.threshold.fetch.trace>
+                <index.search.slowlog.level>info</index.search.slowlog.level>
+                <index.indexing.slowlog.threshold.index.warn>10000</index.indexing.slowlog.threshold.index.warn>
+                <index.indexing.slowlog.threshold.index.info>5000</index.indexing.slowlog.threshold.index.info>
+                <index.indexing.slowlog.threshold.index.debug>2000</index.indexing.slowlog.threshold.index.debug>
+                <index.indexing.slowlog.threshold.index.trace>500</index.indexing.slowlog.threshold.index.trace>
+                <index.indexing.slowlog.level>info</index.indexing.slowlog.level>
+                <index.indexing.slowlog.source>1000</index.indexing.slowlog.source>
+            </slow_log>
+        </search>
+        <amshopby>
+            <am_is_salable_filter>
+                <enabled>1</enabled>
+            </am_is_salable_filter>
+        </amshopby>
+    </default>
+</config>

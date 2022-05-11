@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_SellerTags
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mirakl_shop">
+        <column xsi:type="boolean" name="open_during_xmas" nullable="true" default="0"/>
+        <column xsi:type="datetime" name="holiday_closed_from" nullable="true"/>
+        <column xsi:type="datetime" name="holiday_closed_to" nullable="true"/>
+        <column xsi:type="boolean" name="has_new_products" nullable="false" default="0"/>
+    </table>
+</schema>

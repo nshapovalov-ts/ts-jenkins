@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+ EYEMAGINE - The leading Magento Solution Partner
+ HubSpot Integration with Magento
+ @author EYEMAGINE <magento@eyemaginetech.com>
+ @copyright Copyright (c) 2020 EYEMAGINE Technology, LLC (http://www.eyemaginetech.com)
+ @license http://www.eyemaginetech.com/license
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <eyehubspot>
+            <settings>
+                <unavailable_msg>The requested product is currently not available.
+                    Here are some other products you might be interested in.
+                </unavailable_msg>
+            </settings>
+        </eyehubspot>
+    </default>
+</config>

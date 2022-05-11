@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Retailplace\Aghaseller\Block\Index\Index" name="aghaseller.listing" template="Retailplace_Aghaseller::aghaseller.phtml">
+                <block class="Retailplace\Aghaseller\Block\Index\Filter" name="aghaseller.filter" template="Retailplace_Aghaseller::seller-filter.phtml"/>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,542 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+declare(strict_types=1);
+
+/** @var \Retailplace\MiraklShop\Block\Product\View\Tab\PdpSeller $block */
+
+$shop = $block->getShop();
+$shopAdditionalInfo = $shop->getAdditionalInfo();
+?>
+<?php if ($shop->getId()): ?>
+    <?php $products = $block->getProductCollection() ?>
+    <?php $productsCount = $products->count() ?>
+    <div class="col-lg-12 col-md-12 col-seler-title">
+        <div class="seller-shop">
+            <?php if ($shop->getLogo()): ?>
+                <div class="seller-shop-logo">
+                    <img src="<?php echo $shop->getLogo() ?>" alt="<?php echo $this->escapeHtml($shop->getName()) ?>"
+                         title="<?php echo $this->escapeHtml($shop->getName()) ?>"/>
+                </div>
+            <?php endif ?>
+            <span class="shop-name">
+    				<p><?php echo __('More from'); ?></p>
+    				<strong><?php echo $this->escapeHtml(strtoupper($shop->getName())) ?></strong>
+    			</span>
+            <div class="contact-info">
+                <?php if ($shopAdditionalInfo->getDataByKey('contact_info')): ?>
+                    <?php echo $shopAdditionalInfo['contact_info']['city'] ?>
+                    <?php echo isset($shopAdditionalInfo['contact_info']['country']) ? ', ' . $shopAdditionalInfo['contact_info']['country'] : '' ?>
+                <?php endif; ?>
+            </div>
+            <div class="show-all">
+                <?php if ($productsCount): ?>
+                    <a href="<?php echo $shop->getUrl() ?>">
+                        <?php if ($productsCount == 1): ?>
+                            <?php echo "Show all " . $productsCount . " Product"; ?>
+                        <?php else: ?>
+                            <?php echo "Show all " . $productsCount . " Products"; ?>
+                        <?php endif; ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="seller-products">
+            <?php if (!$productsCount): ?>
+                <div class="message info empty">
+                    <div><?php /* @escapeNotVerified */
+                        echo __('We can\'t find products matching the selection.') ?></div>
+                </div>
+            <?php else: ?>
+                <div class="category-product products wrapper grid products-grid">
+                    <?php $iterator = 1; ?>
+                    <ol class="products list items product-items row">
+                        <?php /** @var $product \Magento\Catalog\Model\Product */ ?>
+                        <?php foreach ($products as $product): ?>
+                            <?php $offer = $product->getData('main_offer'); ?>
+                            <?php $productUrl = !empty($offer) ?
+                                $this->getUrl('seller/') . $offer->getShopId() . '/' . $product->getUrlKey() . '.html'
+                                : $product->getProductUrl(); ?>
+                            <li class="item product product-item">
+                                <div
+                                    class="product-item-info <?php if (!$block->checkIsCustomerLoggedIn() || !$block->checkIsApproval()): ?>signup_button_bg<?php endif; ?>"
+                                    data-container="product-grid">
+                                    <div class="all-label all-label-top">
+                                        <?= $block->getCalculatedMargin($product); ?>
+                                        <?php if ($product->getData('is_businesses')): ?>
+                                            <div class="retail-business-label">
+                                                <div class="is_businesses_label">
+                                                    <span><?php echo __('FOR TRADE'); ?></span>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <?php
+                                    $productImage = $block->getImage($product, 'category_page_grid');
+                                    $position = '';
+                                    ?>
+                                    <?php // Product Image?>
+
+                                    <div class="image-grid">
+                                        <a href="<?= /* @escapeNotVerified */ $productUrl ?>" class="product photo product-item-photo"
+                                           tabindex="-1">
+                                            <?= $productImage->toHtml() ?>
+                                        </a>
+                                    </div>
+                                    <div class="product-item-inner">
+                                        <div class="product actions product-item-actions">
+                                            <div class="actions-primary">
+                                                <?php if ($product->isSaleable()): ?>
+                                                    <?php if ($block->checkIsCustomerLoggedIn()): ?>
+                                                        <a class="action tocart primary"
+                                                           title="<?= $block->escapeHtml(__('View Details')) ?>"
+                                                           href="<?= /* @escapeNotVerified */ $productUrl ?>">
+                                                    <span><?= /* @escapeNotVerified */
+                                                        __('View Details') ?></span>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                <?php else: ?>
+                                                    <?php if ($product->isAvailable()): ?>
+                                                        <div class="stock available"><span><?= __('In stock') ?></span>
+                                                        </div>
+                                                    <?php else: ?>
+                                                        <div class="stock unavailable">
+                                                            <span><?= __('Out of stock') ?></span></div>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </div>
+
+                                            <div data-role="add-to-links"
+                                                 class="actions-secondary">
+                                                <?php if ($block->getSmAdvancedConfig('show_wishlist_button')): ?>
+                                                    <?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow()): ?>
+                                                        <a href="#"
+                                                           class="action towishlist <?= "wishlist" . $product->getId(); ?>"
+                                                           title="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
+                                                           aria-label="<?= $block->escapeHtml(__('Add to Wish List')); ?>"
+                                                           data-post='<?= $block->getAddToWishlistParams($product); ?>'
+                                                           data-action="add-to-wishlist" role="button">
+                                                            <span><?= __('Add to Wish List') ?></span>
+                                                        </a>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+
+                                                <?php if ($block->getSmAdvancedConfig('show_compare_button')): ?>
+                                                    <?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
+                                                    <a href="#" class="action tocompare"
+                                                       title="<?= $block->escapeHtml(__('Add to Compare')); ?>"
+                                                       aria-label="<?= $block->escapeHtml(__('Add to Compare')); ?>"
+                                                       data-post='<?= $compareHelper->getPostDataParams($product); ?>'
+                                                       role="button">
+                                                        <span><?= __('Add to Compare') ?></span>
+                                                    </a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php if ($product->getData('best_seller')): ?>
+                                        <div class="bestseller-label">
+                                            <span><?= __('Best Seller'); ?></span>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if ($shop && $shop->getData('agha_seller') && !$product->getData('best_seller')): ?>
+                                        <div class="aghaseller-label">
+                                            <span><?= __('AGHA Member'); ?></span>
+                                        </div>
+                                    <?php endif; ?>
+                                    <!--LABEL PRODUCT-->
+                                    <?php
+                                    $orgPrice = (float)$product->getPrice();
+                                    $fnPrice = (float)$product->getFinalPrice();
+                                    ?>
+                                    <?php if ($block->getSmAdvancedConfig('show_salelabel') && $fnPrice < $orgPrice): ?>
+                                        <div class="label-product label-sale">
+                                        <span class="sale-product-icon">
+                                            <?= __('Sale'); ?>
+                                        </span>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (!$product->getIsSalable() && $product->getTypeId() == 'simple'): ?>
+                                        <div class="out-of-stock">
+                                            <div class="out-off-stock-img">
+                                                <img
+                                                    src="<?php echo $block->getSmMediaUrl() . "wysiwyg/out_off_stock.png"; ?>"
+                                                    alt=""/>
+                                            </div>
+                                            <span class="lable"><?php echo __('Coming Soon'); ?></span>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <!--END LABEL PRODUCT-->
+                                    <div class="all-label">
+                                        <?php if ($offer): ?>
+                                            <?php
+                                            $price = null;
+                                            $originPrice = null;
+                                            $additionalInfoclearance = '';
+
+                                            $price = $offer->getPrice();
+                                            $originPrice = $offer->getOriginPrice();
+                                            $checkClearance = $offer->getClearance();
+                                            $minimum = $offer->getMinOrderQuantity();
+                                            ?>
+                                            <?php if (($price < $originPrice) && $checkClearance == 1): ?>
+                                                <div class="sale-label">
+                                                    <span><?= __('Clearance'); ?></span>
+                                                </div>
+                                            <?php elseif ($price < $originPrice): ?>
+                                                <div class="sale-label">
+                                                    <span><?= __('Sale'); ?></span>
+                                                </div>
+                                            <?php elseif ($checkClearance == 1): ?>
+                                                <div class="sale-label">
+                                                    <span><?= __('Clearance'); ?></span>
+                                                </div>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+
+                                        <?php
+                                        $madeInAu = $product->getMadeInAu();
+                                        $designedInAu = $product->getDesignedInAu();
+                                        ?>
+                                        <?php if ($madeInAu): ?>
+                                            <div class="design-by-label">
+                                                <span><?= __('Made In AU'); ?></span>
+                                            </div>
+                                        <?php elseif ($designedInAu): ?>
+                                            <div class="design-by-label">
+                                                <span><?= __('Designed In AU'); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($block->isProductNew($product) && $block->getSmAdvancedConfig('show_newlabel')): ?>
+                                            <div class="new-label">
+                                                <span><?= __('New'); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if ($block->productIsAuPostExclusive($product)): ?>
+                                            <div class="au-post-exclusive-label">
+                                                <span><?= __($block->getAuPostExclusiveLabel()); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($block->productIsNlnaExclusive($product)): ?>
+                                            <div class="nlna-exclusive-label">
+                                                <span><?= __($block->getNlnaExclusiveLabel()); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($block->productIsOpenDuringXmas($product)): ?>
+                                            <div class="open-during-xmas-label">
+                                                <span><?= __($block->getOpenDuringXmasLabel()); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <?php if ($block->productShopIsClosed($product)): ?>
+                                            <div class="closed-to-label">
+                                                <span><?= __($block->getClosedShopLabel($product)); ?></span>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="product-detial-bg">
+                                        <div class="product details product-item-details">
+                                            <?php
+                                            $_productNameStripped = $block->stripTags($product->getName(), null, true);
+                                            ?>
+                                            <strong class="product name product-item-name">
+                                                <a class="product-item-link"
+                                                   href="<?= /* @escapeNotVerified */ $productUrl ?>">
+                                                    <?= /* @escapeNotVerified */
+                                                    $block->productAttribute($product, $product->getName(), 'name') ?>
+                                                </a>
+                                            </strong>
+                                            <?= $block->getReviewsSummaryHtml(
+                                                $product,
+                                                \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW) ?>
+                                            <?php if (!$block->checkIsCustomerLoggedIn()): ?>
+                                                <div class="seller-info"></div>
+                                            <?php endif; ?>
+
+                                            <?php if ($product->getIsSalable()): ?>
+                                                <?= $block->getProductPrice($product) ?>
+                                            <?php endif; ?>
+                                            <?php if ($offer): ?>
+                                                <?= $block->getMinimumQtyHtml($product, $minimum); ?>
+                                            <?php endif; ?>
+                                            <?= $block->getProductDetailsHtml($product) ?>
+                                            <?php if (!$block->checkIsCustomerLoggedIn()): ?>
+                                                <div class="seller-info mobile-view"></div>
+                                            <?php endif; ?>
+                                            <?php
+                                            $visiblePromotions = $block->getVisiblePromotionsByProduct($product);
+                                            $promotionsVisible = $block->isPromotionsBlockVisible($product);
+                                            ?>
+                                            <?php if ($promotionsVisible): ?>
+                                                <div class="seller-promotions">
+                                                    <span
+                                                        class="promotion-block-title"><?= __('Supplier Specials') ?></span>
+                                                    <?php foreach ($visiblePromotions as $sellerPromotion): ?>
+                                                        <span class="seller-promotion">
+                                        <?= $block->escapeHtml($sellerPromotion->getLocalizedPublicDescription()) ?>
+                                    </span>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="product details product-item-details hover">
+                                            <?php
+                                            $_productNameStripped = $block->stripTags($product->getName(), null, true);
+                                            ?>
+                                            <strong class="product name product-item-name">
+                                                <a class="product-item-link"
+                                                   href="<?= /* @escapeNotVerified */ $productUrl ?>">
+                                                    <?= /* @escapeNotVerified */
+                                                    $block->productAttribute($product, $product->getName(), 'name') ?>
+                                                </a>
+                                            </strong>
+                                            <?= $block->getReviewsSummaryHtml($product,
+                                                \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW) ?>
+
+                                            <?php if (!$block->checkIsCustomerLoggedIn()): ?>
+                                                <div class="seller-info"></div>
+                                            <?php endif; ?>
+
+                                            <?php if ($product->getIsSalable()): ?>
+                                                <?= $block->getProductPrice($product) ?>
+                                            <?php endif; ?>
+                                            <?php if ($offer): ?>
+                                                <?= $block->getMinimumQtyHtml($product, $minimum); ?>
+                                            <?php endif; ?>
+
+                                            <?= $block->getProductDetailsHtml($product) ?>
+                                            <?php if ($promotionsVisible): ?>
+                                                <div class="seller-promotions">
+                                                    <span
+                                                        class="promotion-block-title"><?= __('Supplier Specials') ?></span>
+                                                    <?php foreach ($visiblePromotions as $sellerPromotion): ?>
+                                                        <span class="seller-promotion">
+                                        <?= $block->escapeHtml($sellerPromotion->getLocalizedPublicDescription()) ?>
+                                    </span>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <div class="seller-info">
+                                                <a href="<?php echo $this->getUrl('seller/') . $shop->getId() . '/' . $product->getUrlKey() . '.html' ?>"
+                                                   class="action more product-url"></a>
+                                                <?php if ($shop): ?>
+                                                    <?php
+                                                    $additionalInfo = $shop->getAdditionalInfo();
+                                                    $shopName = $shop->getName();
+                                                    ?>
+                                                    <?php if ($product->getIsSalable()): ?>
+                                                        <div class="seller-name">
+                                                            <?= __("By %1", $shopName) ?>
+                                                        </div>
+                                                        <?php $minOrderAmount = $shop->getData('min-order-amount'); ?>
+                                                        <?php if ($minOrderAmount > 0): ?>
+                                                            <div class="mimum-order">
+                                                                <?= __('%1 Minimum',
+                                                                    $block->formatPrice($minOrderAmount)) ?>
+                                                            </div>
+                                                        <?php else: ?>
+                                                            <div class="mimum-order">
+                                                                <?= __('No Minimum'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div id="lightpdpseller" class="white_content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-seler-title" data-bind="scope: 'minimum_amount_popup'">
+                    <div class="seller-shop">
+                        <?php $shopAmounts = $shop->getShopAmounts();?>
+                        <div class="services-sidebar">
+                            <!-- ko template: getTemplate() --><!-- /ko -->
+                        </div>
+                        <?php if ($shop->getLogo()): ?>
+                            <div class="seller-shop-logo">
+                                <img src="<?php echo $shop->getLogo() ?>" alt="<?php echo $this->escapeHtml($shop->getName()) ?>" title="<?php echo $this->escapeHtml($shop->getName()) ?>"/>
+                            </div>
+                        <?php endif ?>
+                        <span class="shop-name">
+							<strong><?php echo $this->escapeHtml(strtoupper($shop->getName())) ?></strong>
+						</span>
+                        <div class="show-all">
+                            <?php if ($productsCount): ?>
+                                <a href="<?php echo $shop->getUrl() ?>">
+                                    <?php if ($productsCount == 1): ?>
+                                        <?php echo "Show all " . $productsCount . " Product"; ?>
+                                    <?php else: ?>
+                                        <?php echo "Show all " . $productsCount . " Products"; ?>
+                                    <?php endif; ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <div class="seller-products">
+                        <p>
+                            <?php echo $shop->getName() . " has a minimum order amount."; ?><br>
+                            Please add
+                            <span data-bind="text: getMinimumOrderAmountRemainingPdp()"></span>
+                            by purchasing more products from
+                            <a href="<?php echo $shop->getUrl() ?>">supplier's showroom</a>
+                        </p>
+                        <?php if ($shop->getId()): ?>
+                            <div class="category-product products wrapper grid products-grid">
+                                <ol class="products list items product-items row pdpseller_pop_pro_slider owl-carousel owl-theme"
+                                    data-bind="afterRender: addCarousel"
+                                >
+                                    <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+                                    <?php foreach ($products as $_product): ?>
+                                        <?php
+                                        $offer = $_product->getData('main_offer');
+                                        ?>
+                                        <li class="item product product-item">
+                                            <div class="product-item-info <?php if (!$block->checkIsCustomerLoggedIn() || !$block->checkIsApproval()): ?>signup_button_bg<?php endif; ?>" data-container="product-grid">
+                                                <?php // Product Image
+                                                $productImage = $block->getImage($_product, 'category_page_grid');
+                                                ?>
+                                                <div class="image-grid">
+                                                    <a href="<?php echo $this->getUrl('seller/') . $shop->getId() . '/' . $_product->getUrlKey() . '.html' ?>" class="product photo product-item-photo" tabindex="-1">
+                                                        <?= $productImage->toHtml() ?>
+                                                    </a>
+                                                </div>
+                                                <div class="product-detial-bg">
+                                                    <div class="product details product-item-details">
+                                                        <?php
+                                                        $_productNameStripped = $block->stripTags($_product->getName(), null, true);
+                                                        ?>
+                                                        <strong class="product name product-item-name">
+                                                            <a class="product-item-link"
+                                                               href="<?php echo $this->getUrl('seller/') . $shop->getId() . '/' . $_product->getUrlKey() . '.html' ?>">
+                                                                <?= /* @escapeNotVerified */
+                                                                $block->productAttribute($_product, $_product->getName(), 'name') ?>
+                                                            </a>
+                                                        </strong>
+                                                        <?php if ($_product->getIsSalable() && $block->checkIsCustomerLoggedIn() && $block->checkIsApproval()): ?>
+                                                            <?= /* @escapeNotVerified */
+                                                            $block->getProductPrice($_product) ?>
+                                                        <?php endif; ?>
+                                                        <?php if ($offer): ?>
+                                                            <?php
+                                                            $minimum = null;
+                                                            $minimum = $offer->getMinOrderQuantity();
+                                                            if ($minimum == 0):
+                                                                $minimum = 1;
+                                                            endif;
+                                                            ?>
+                                                            <?= $block->getMinimumQtyHtml($_product, $minimum); ?>
+                                                        <?php endif; ?>
+
+                                                        <?= $block->getProductDetailsHtml($_product) ?>
+                                                        <?php if (!$block->checkIsCustomerLoggedIn() || !$block->checkIsApproval()): ?>
+                                                            <div class="seller-info mobile-view"></div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="product details product-item-details hover">
+                                                        <?php
+                                                        $_productNameStripped = $block->stripTags($_product->getName(), null, true);
+                                                        ?>
+                                                        <strong class="product name product-item-name">
+                                                            <a class="product-item-link"
+                                                               href="<?php echo $this->getUrl('seller/') . $shop->getId() . '/' . $_product->getUrlKey() . '.html' ?>">
+                                                                <?= /* @escapeNotVerified */
+                                                                $block->productAttribute($_product, $_product->getName(), 'name') ?>
+                                                            </a>
+                                                        </strong>
+
+                                                        <?php if ($_product->getIsSalable() && $block->checkIsCustomerLoggedIn() && $block->checkIsApproval()): ?>
+                                                            <?= /* @escapeNotVerified */
+                                                            $block->getProductPrice($_product) ?>
+                                                        <?php endif; ?>
+                                                        <?php if (!$block->checkIsCustomerLoggedIn()): ?>
+                                                            <div class="seller-info" style="padding-top: 0px;">
+                                                                <a href="javascript:void(0)" id="signup-popup" class="amasty-hide-price-container"><span class="amasty-hide-price-text-other">
+    													<?php echo __('Sign up for wholesale pricing'); ?>
+    													</span></a>
+                                                            </div>
+                                                        <?php endif ?>
+                                                        <?php if ($block->checkIsCustomerLoggedIn() && !$block->checkIsApproval()): ?>
+                                                            <div class="seller-info" style="padding-top: 0px;">
+                                                                <a href="<?= $block->escapeUrl($block->getUrl('customer/account/edit')) ?>" class="amasty-hide-price-container">
+                                                                    <span class="amasty-hide-price-text-other"><?php echo __('Complete the application form'); ?></span>
+                                                                </a>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <?php if ($offer): ?>
+                                                            <?php
+                                                            $minimum = null;
+                                                            $minimum = $offer->getMinOrderQuantity();
+                                                            if ($minimum == 0):
+                                                                $minimum = 1;
+                                                            endif;
+                                                            ?>
+                                                            <?= $block->getMinimumQtyHtml($_product, $minimum); ?>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ol>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <a class="close_popup_bt" href="javascript:void(0)" onclick="document.getElementById('lightpdpseller').classList.remove('pdpseller_open');document.getElementById('fadeseller').classList.remove('pdpseller_open');">+</a>
+            </div>
+        </div>
+    </div>
+    <div id="fadeseller" class="black_overlay"></div>
+    <script type="text/x-magento-init">
+    {
+        ".sm-listing-tabs, .seller-products": {
+            "Retailplace_Wishlist/js/ajax-wishlist" : {}
+        }
+    }
+    </script>
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "minimum_amount_popup": {
+                    "component": "Retailplace_MiraklShop/js/view/minimum_amount",
+                    "template": "Retailplace_MiraklShop/minimum_amount_popup",
+                    "isTooltip": false,
+                    "tooltipAdditionalText": "",
+                    "minOrderAmount": <?= $shop->getData('min-order-amount') ?>,
+                    "minFreeShippingOrderAmount": <?= $shop->getShopAmounts()->getFreeShippingAmount() ?>,
+                    "minQuoteRequestAmount": <?= $shopAmounts->getMinQuoteAmount() ?>,
+                    "quoteRequestLink": "<?= $block->getUrl('quotes/actions/add', ['seller' => $shop->getId()]) ?>",
+                    "isQuoteRequestBlockVisible": 1,
+                    "isFreeShipping": <?= $shop->getFreeShipping() ? 1 : 0 ?>,
+                    "sellerShopId": <?= $shop->getId() ?>,
+                    "sellerShopName": "<?= $shop->getName() ?>"
+                    }
+                }
+            }
+        }
+    }
+    </script>
+<?php endif; ?>

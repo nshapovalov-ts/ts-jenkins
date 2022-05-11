@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Config/etc/system_file.xsd">
+    <system>
+        <section id="smspro">
+            <group id="countryflag" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <depends>
+                    <field id="*/general/enable">1</field>
+                </depends>
+                <label>Country Flag Settings</label>
+                <field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Country Flag</label>
+                    <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+                </field>
+                <field id="detect_by_ip" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Set Country Automatically</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="smspro/countryflag/enable">1</field>
+                    </depends>
+                    <comment><![CDATA[Based On IP Address]]></comment>
+                </field>
+                <field id="defaultcountry" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default SMS Country</label>
+                    <source_model>Magecomp\Countryflag\Model\Config\Source\Country</source_model>
+                    <depends>
+                        <field id="detect_by_ip">0</field>
+                        <field id="smspro/countryflag/enable">1</field>
+                    </depends>
+                </field>
+                 <field id="mindigits" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Min Digits </label>
+                    <depends>
+                        <field id="smspro/countryflag/enable">1</field>
+                    </depends>
+                    <validate>validate-number validate-not-negative-number validate-digits-range digits-range-0-15</validate>
+                    <comment><![CDATA[Mobile Number Validation Max 15 Digits.]]></comment>
+                </field>
+                <field id="maxdigits" translate="label comment" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Digits </label>
+                    <depends>
+                        <field id="smspro/countryflag/enable">1</field>
+                    </depends>
+                   <validate>validate-number validate-not-negative-number validate-digits-range digits-range-0-15</validate>
+                    <comment><![CDATA[Mobile Number Validation Max 15 Digits.]]></comment>
+                </field>
+            </group>
+        </section>
+     </system>
+</config>

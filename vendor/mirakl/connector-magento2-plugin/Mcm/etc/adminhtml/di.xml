@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Page\Config">
+        <plugin name="mirakl_mcm" type="Mirakl\Mcm\Plugin\View\Page\ConfigPlugin" />
+    </type>
+    <type name="Mirakl\Mcm\Plugin\View\Page\ConfigPlugin">
+        <arguments>
+            <argument name="addBodyClassTriggers" xsi:type="array">
+                <item name="catalog-category-add" xsi:type="string">catalog-category-add</item>
+                <item name="catalog-category-edit" xsi:type="string">catalog-category-edit</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

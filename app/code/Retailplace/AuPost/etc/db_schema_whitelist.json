@@ -1,0 +1,15 @@
+{
+    "sm_megamenu_items": {
+        "column": {
+            "customer_group_id": true
+        },
+        "index": {
+            "SM_MEGAMENU_ITEMS_CUSTOMER_GROUP_ID": true
+        }
+    },
+    "mirakl_shop": {
+        "column": {
+            "au_post_seller": true
+        }
+    }
+}

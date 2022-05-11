@@ -1,0 +1,28 @@
+<?php
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+use Retailplace\MiraklSeller\Block\Shop\Search;
+
+/** @var Search $block */
+$sellerId = $this->getRequest()->getParam('id');
+$query = $this->getRequest()->getParam('q');
+$searchResultCount = $block->getSearchResultCount();
+?>
+<form class="sidebar_search">
+    <input type="text" name="q" value="<?php echo $query; ?>" placeholder="<?= __('Search SKU or Name') ?>"/>
+    <input type="submit" value="<?= __('Search') ?>"/>
+</form>
+<?php if (!empty($query)): ?>
+    <div class="message-info-empty">
+        <div><?= $searchResultCount ? __( '"%1" - (%2 results)', $query, $searchResultCount) : __('"%1" - (No Results)', $query) ?>
+            <a href="<?= $this->getUrl('marketplace/shop/view', ['id' => $sellerId]) ?>?">
+                <i><?= __('Clear') ?></i>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

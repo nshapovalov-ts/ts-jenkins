@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="div.container">
+            <container name="seller-product-search-container" htmlTag="div" htmlClass="seller-product" before="-">
+                <container  before="div.row" name="tab-header-search" htmlTag="div" htmlClass="seller-product-tab-header">
+                    <block class="Retailplace\MiraklSeller\Block\SellerTab"
+                           name="category.seller.tab" as="product_list"
+                           template="Retailplace_MiraklSeller::product/seller-tab.phtml"/>
+
+                    <block class="Retailplace\MiraklSeller\Block\SellerTab"
+                           name="searchresult_query_text"
+                           template="Retailplace_MiraklSeller::product/searchresult_query_text.phtml"/>
+
+                </container>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <container name="seller-product-search" htmlTag="div" htmlClass="seller-product" before="-">
+                <container name="product-tab-search" htmlTag="div" htmlClass="product-tab active" />
+            </container>
+        </referenceContainer>
+        <move element="searchindex.result" destination="product-tab-search" />
+        <referenceBlock name="page.main.title" remove="true" />
+    </body>
+</page>

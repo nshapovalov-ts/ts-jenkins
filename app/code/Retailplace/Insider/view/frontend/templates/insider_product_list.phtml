@@ -1,0 +1,35 @@
+<?php
+/**
+ * Retailplace_Insider
+ *
+ * @copyright   Copyright © 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+/** @var \Retailplace\Insider\Block\CmsListBlock $block */
+?>
+<div class="insider_wrapper list-product-home list-product-home-custom">
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Retailplace_Insider/js/insiderList": {
+                "url": "<?= $block->getUrl("insider/productlist/get") ?>"
+            }
+        }
+    }
+</script>
+<?php
+if ($block->isDebugMode()):
+?>
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Retailplace_Insider/js/insiderDebug": {
+                "skus": "<?= $block->getSkus() ?>"
+            }
+        }
+    }
+    </script>
+<?php
+endif;
+?>

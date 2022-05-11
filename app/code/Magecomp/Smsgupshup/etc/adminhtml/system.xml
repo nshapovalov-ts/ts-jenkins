@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+		<section id="smspro">
+				<group id="smsgatways">
+					<field id="gupshupusername" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>GupShup Username</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">gupshup</field>
+						</depends>
+						<validate>required-entry</validate>
+					</field>
+					<field id="gupshuppassword" type="password" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>GupShup Password</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">gupshup</field>
+						</depends>
+						<validate>required-entry</validate>
+					</field>
+					<field id="gupshupapiurl" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>API URL</label>
+						<comment><![CDATA[http://enterprise.smsgupshup.com/GatewayAPI/rest]]></comment>
+						<depends><field id="gateway">gupshup</field></depends>
+						<validate>required-entry validate-url</validate>
+					</field>
+				</group>
+		</section>
+    </system>
+</config>

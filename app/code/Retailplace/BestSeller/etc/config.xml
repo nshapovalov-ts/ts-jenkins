@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_BestSeller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <retailplace_best_sellers>
+            <cron_settings>
+                <best_sellers_update_enabled>1</best_sellers_update_enabled>
+                <best_sellers_update_schedule>0 0 * * *</best_sellers_update_schedule>
+            </cron_settings>
+            <best_sellers_update>
+                <purchase_limit>2</purchase_limit>
+                <purchase_period>6</purchase_period>
+            </best_sellers_update>
+        </retailplace_best_sellers>
+    </default>
+</config>

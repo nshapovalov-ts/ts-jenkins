@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklMcm
+ *
+ * @copyright Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author    Satish Gumudavelly <satish@kipanga.com.au>
+ * @author    Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mirakl\Mcm\Model\Product\Import\Adapter\Mcm">
+        <plugin name="retailplace_miraklmcm" type="Retailplace\MiraklMcm\Plugin\McmAdapter"/>
+    </type>
+
+    <preference for="Mirakl\Mcm\Model\Product\Import\Adapter\Mcm" type="Retailplace\MiraklMcm\Rewrite\Model\Product\Import\Adapter\Mcm"/>
+    <preference for="Mirakl\Mcm\Model\Product\Import\Handler\Csv" type="Retailplace\MiraklMcm\Rewrite\Model\Product\Import\Handler\Csv"/>
+    <preference for="Retailplace\MiraklMcm\Api\Data\ProductImportMessageInterface" type="Retailplace\MiraklMcm\Model\Queue\ProductImportMessage"/>
+    <preference for="Retailplace\MiraklMcm\Api\ProductImportRepositoryInterface" type="Retailplace\MiraklMcm\Model\ProductImportRepository"/>
+    <preference for="Mirakl\Mcm\Helper\Product\Import\Product" type="Retailplace\MiraklMcm\Rewrite\Helper\Product\Import\Product"/>
+
+    <type name="Retailplace\MiraklMcm\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="Retailplace\MiraklMcm\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">ImportProducts</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Retailplace\MiraklMcm\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="MiraklMcmProductIntegrationReports" xsi:type="object">Retailplace\MiraklMcm\Console\ProductIntegrationReport</item>
+                <item name="MiraklMcmProductBestSellerProductAttributeUpdate" xsi:type="object">Retailplace\MiraklMcm\Console\BestSellerProductAttributeUpdate</item>
+                <item name="MiraklMcmProductResendFailedProductsToQueue" xsi:type="object">Retailplace\MiraklMcm\Console\ResendFailedProductsToQueue</item>
+                <item name="MiraklMcmProductFindingAndReimportingFaultyProducts" xsi:type="object">Retailplace\MiraklMcm\Console\FindingAndReimportingFaultyProducts</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

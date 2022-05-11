@@ -1,0 +1,20 @@
+#
+# Retailplace_SellerAffiliate
+#
+# @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+# @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+#
+
+type Mutation {
+    createShopAffiliate(input: createShopAffiliateInput): affiliateResponse @resolver(class: "\\Retailplace\\SellerAffiliate\\Model\\Resolver\\AppendAffiliateData") @cache(cacheable: false)
+}
+
+input createShopAffiliateInput {
+    seller_id: String!,
+    affiliate_url: String!,
+    clientside_datetime: String!
+}
+
+type affiliateResponse {
+    is_logged_in: Boolean
+}

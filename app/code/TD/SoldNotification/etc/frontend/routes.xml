@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Recent Order Notification
+ * @author      Trinh Doan
+ * @copyright   Copyright (c) 2017 Trinh Doan
+ * @package     TD_SoldNotification
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route frontName="soldnotification" id="soldnotification">
+            <module name="TD_SoldNotification"/>
+        </route>
+    </router>
+</config>

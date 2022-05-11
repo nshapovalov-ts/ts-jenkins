@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_api>
+            <general>
+                <enable>1</enable>
+                <api_url/>
+                <api_key/>
+                <connect_timeout>5</connect_timeout>
+            </general>
+        </mirakl_api>
+        <mirakl_api_developer>
+            <log>
+                <log_option>0</log_option>
+                <log_filter/>
+            </log>
+        </mirakl_api_developer>
+    </default>
+</config>

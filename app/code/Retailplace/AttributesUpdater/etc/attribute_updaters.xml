@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_AttributesUpdater
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Retailplace_AttributesUpdater:etc/attribute_updaters.xsd">
+    <updaters>
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\Differentiators" name="differentiators" sortOrder="10" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\AghaMember" name="agha_member" sortOrder="20" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\FreeShipping" name="free_shipping" sortOrder="30" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\Clearance" name="clearance" sortOrder="40" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\SpecialPrice" name="special_price" sortOrder="50" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\MinOrderAmount" name="min_order_amount" sortOrder="60" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\MiraklShopIds" name="mirakl_shop_ids" sortOrder="70" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\Price" name="price" sortOrder="80" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\RetailMargin" name="retail_margin" sortOrder="140" />
+        <updater class="Retailplace\AttributesUpdater\Model\Updater\ProductsWithoutOffers" name="products_without_offers" sortOrder="990" />
+    </updaters>
+</config>

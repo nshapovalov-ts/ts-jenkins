@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="checkout" translate="label" type="text" sortOrder="305" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Checkout</label>
+            <tab>sales</tab>
+            <resource>Magento_Checkout::checkout</resource>
+            <group id="options" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Checkout Options</label>
+                <field id="street_label" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Street label on checkout</label>
+                </field>
+                <field id="street_placeholder" translate="label" type="text" sortOrder="41" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Street placeholder on checkout</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

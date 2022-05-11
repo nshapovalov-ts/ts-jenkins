@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirakl_Core::head" title="Mirakl" module="Mirakl_Core" sortOrder="65" resource="Mirakl_Core::head"/>
+        <add id="Mirakl_Core::reference" title="References" module="Mirakl_Core" sortOrder="10" parent="Mirakl_Core::head" resource="Mirakl_Core::reference"/>
+        <add id="Mirakl_Core::shops" title="Shops" module="Mirakl_Core" sortOrder="10" parent="Mirakl_Core::reference" action="mirakl/shop" resource="Mirakl_Core::shops"/>
+        <add id="Mirakl_Core::offer_states" title="Offer Conditions" module="Mirakl_Core" sortOrder="20" parent="Mirakl_Core::reference" action="mirakl/offer_state" resource="Mirakl_Core::offer_states"/>
+        <add id="Mirakl_Core::shipping_zones" title="Shipping Zones" module="Mirakl_Core" sortOrder="30" parent="Mirakl_Core::reference" action="mirakl/shipping_zone" resource="Mirakl_Core::shipping_zones"/>
+        <add id="Mirakl_Core::document_types" title="Document Types" module="Mirakl_Core" sortOrder="40" parent="Mirakl_Core::reference" action="mirakl/document_type" resource="Mirakl_Core::document_types"/>
+        <add id="Mirakl_Core::configuration" title="Configuration" module="Mirakl_Core" sortOrder="300" parent="Mirakl_Core::head" resource="Mirakl_Core::head"/>
+    </menu>
+</config>

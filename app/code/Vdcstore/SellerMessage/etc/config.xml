@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<seller_message>
+			<general>
+				<enable>1</enable>
+				<receiver_email>product_inquiries@tradesquare.com.au</receiver_email>
+				<email_template>seller_message_general_email_template</email_template>
+			</general>
+		</seller_message>
+	</default>
+</config>

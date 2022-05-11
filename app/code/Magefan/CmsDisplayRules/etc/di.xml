@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Cms\Model\Page\DataProvider">
+        <plugin name="magefan_page_data_provider_plugin" type="Magefan\CmsDisplayRules\Plugin\Page\DataProviderPlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\Cms\Model\Block\DataProvider">
+        <plugin name="magefan_block_data_provider_plugin" type="Magefan\CmsDisplayRules\Plugin\Block\DataProviderPlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\SalesRule\Model\Rule\Condition\Combine">
+        <plugin name="magefan_sales_rule_model_rule_condition_combine_plugin" type="Magefan\CmsDisplayRules\Plugin\SalesRule\Model\Rule\Condition\CombinePlugin" sortOrder="1" />
+    </type>
+</config>

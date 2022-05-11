@@ -1,0 +1,112 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * Magento_Checkout
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/** @var $block \Magento\Checkout\Block\Onepage\Link */
+$mediaUrl = $block->getUrl('', ['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]);
+$checkbrand = 0;
+$hideButton = $block->getData('hide_button');
+/** @var \Retailplace\CheckoutOverride\ViewModel\CartItemRenderer $viewModel */
+$viewModel = $block->getViewModel();
+$items = $viewModel->getQuoteItems();
+$quoteHasError = $viewModel->isQuoteHasError();
+$currencySymbol = $viewModel->getCurrencySymbol();
+$shopsData = $viewModel->getShopsData();
+$sellersCount = count($shopsData);
+?>
+<?php if ($sellersCount): ?>
+    <div class="selle-all">
+        <?php foreach ($shopsData as $shopId => $shopData): ?>
+            <div class="seller-all-data shop-id-<?= $shopId ?>">
+                <div class="seller-name-icon">
+                    <div class="seller-name">
+                        <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $shopId; ?>">
+                            <?php echo $shopData['name'] . " : "; ?>
+                        </a>
+                    </div>
+                    <?php if (!$shopData['valid']): ?>
+                        <?php $checkbrand++; ?>
+                        <div class="toolpick">
+                            <div class="seller-not-ready-icon toolpick-ico">
+                                <div class="cart-not-raady-icon"></div>
+                                <div class="toolpick-text">
+                                    <p><?php echo __('Your order cannot be processed. The minimum order amount has not been met for a '); ?>
+                                        <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $shopId; ?>">
+                                            <?php echo __('Supplier Showroom '); ?>
+                                        </a>
+                                        <?php echo __('Please add additional products to the cart from this Supplier'); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="seller-ready-icon">
+                            <img src="<?php echo $block->getViewFileUrl('images/cart-ready-icon-new.png'); ?>" alt=""/>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="seller-total">
+                    <?php echo $currencySymbol . number_format($shopData['total'], 2); ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<?= $block->getBlockHtml('checkout.cart.totals') ?>
+
+<?php if ($sellersCount == 1): ?>
+    <?php $checkoutbutton = __('Checkout ') . $sellersCount . __(' supplier'); ?>
+<?php elseif ($sellersCount > 1): ?>
+    <?php $checkoutbutton = __('Checkout ') . $sellersCount . __(' suppliers'); ?>
+<?php else: ?>
+    <?php $checkoutbutton = __('Checkout'); ?>
+<?php endif; ?>
+
+
+<?php if ($checkbrand): ?>
+    <?php if ($block->isPossibleOnepageCheckout() && !$hideButton) : ?>
+        <button type="button"
+                data-role="proceed-to-checkout"
+                title="<?= $checkoutbutton ?>"
+                data-mage-init='{
+                    "Magento_Checkout/js/proceed-to-checkout":{
+                        "checkoutUrl":"<?= $block->escapeJs($block->escapeUrl($block->getCheckoutUrl())) ?>"
+                    }
+                }'
+                class="action primary checkout<?= ($block->isDisabled() || $checkbrand || $quoteHasError) ? ' disabled' : '' ?>"
+            <?php if ($block->isDisabled() || $checkbrand || $quoteHasError) : ?>
+                disabled="disabled"
+            <?php endif; ?>>
+            <span><?= $checkoutbutton ?></span>
+        </button>
+    <?php endif ?>
+<?php else: ?>
+
+    <?php if ($block->isPossibleOnepageCheckout() && !$hideButton) : ?>
+        <button type="button"
+                data-role="proceed-to-checkout"
+                title="<?= $checkoutbutton ?>"
+                data-mage-init='{
+                    "Magento_Checkout/js/proceed-to-checkout":{
+                        "checkoutUrl":"<?= $block->escapeJs($block->escapeUrl($block->getCheckoutUrl())) ?>"
+                    }
+                }'
+                class="action primary checkout<?= ($block->isDisabled() || $quoteHasError) ? ' disabled' : '' ?>"
+            <?php if ($block->isDisabled() || $quoteHasError) : ?>
+                disabled="disabled"
+            <?php endif; ?>>
+            <span><?= $checkoutbutton ?></span>
+        </button>
+    <?php endif ?>
+<?php endif; ?>
+
+
+

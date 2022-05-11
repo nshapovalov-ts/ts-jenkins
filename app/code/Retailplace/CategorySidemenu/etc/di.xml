@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Magento\Catalog\Block\Navigation" type="Retailplace\CategorySidemenu\Rewrite\Magento\Catalog\Block\Navigation"/>
+    <type name="Magento\Framework\Search\SearchEngineInterface">
+        <plugin name="Retailplace_CategorySidemenu_Plugin_Magento_Framework_Search_SearchEngineInterface" type="Retailplace\CategorySidemenu\Plugin\Magento\Framework\Search\SearchEngineInterface" sortOrder="10" disabled="false"/>
+    </type>
+    <type name="Amasty\Shopby\Helper\Config">
+        <plugin name="Retailplace_CategorySidemenu_Plugin_Amasty_Shopby_Helper_Config" type="Retailplace\CategorySidemenu\Plugin\Amasty\Shopby\Helper\Config" sortOrder="10" disabled="false"/>
+    </type>
+</config>

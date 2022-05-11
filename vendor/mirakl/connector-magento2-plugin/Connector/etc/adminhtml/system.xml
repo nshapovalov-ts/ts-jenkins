@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="mirakl" translate="label" sortOrder="1000">
+            <label>Mirakl</label>
+        </tab>
+        <section id="mirakl_sync" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Synchronization</label>
+            <tab>mirakl</tab>
+            <resource>Mirakl_Config::sync</resource>
+            <group id="mirakl_api_notice" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Mirakl\Api\Block\Adminhtml\System\Config\Fieldset\Hint</frontend_model>
+            </group>
+            <group id="shops" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shops Synchronization (S20)</label>
+                <comment>Import Mirakl shops into Magento</comment>
+                <field id="last_sync_shops" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Last Synchronization Date</label>
+                    <comment>Last synchronization date of Mirakl shops.</comment>
+                </field>
+                <field id="button_shop" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Mirakl\Connector\Block\Adminhtml\System\Config\Button\Sync\Shop</frontend_model>
+                </field>
+            </group>
+            <group id="offers" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Offers Synchronization (OF51)</label>
+                <comment>Import Mirakl offers into Magento</comment>
+                <field id="use_direct_database_import" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Direct Database Import</label>
+                    <comment><![CDATA[If enabled, offers will be imported using LOAD DATA INFILE function of MySQL that gives very high performances.<br>Disable it if you have some troubles using this method and then offers will be imported with a regular PHP script but might be slower.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="last_sync_offers" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Last Synchronization Date</label>
+                    <comment><![CDATA[Last synchronization date of Mirakl offers.]]></comment>
+                </field>
+                <field id="button_offer" translate="label comment" type="button" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Mirakl\Connector\Block\Adminhtml\System\Config\Button\Sync\Offer</frontend_model>
+                    <comment><![CDATA[Do not forget to save changes before importing offers!]]></comment>
+                </field>
+            </group>
+        </section>
+        <section id="mirakl_connector" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Connector</label>
+            <tab>mirakl</tab>
+            <resource>Mirakl_Config::connector</resource>
+            <group id="mirakl_api_notice" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Mirakl\Api\Block\Adminhtml\System\Config\Fieldset\Hint</frontend_model>
+            </group>
+            <group id="general" translate="label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10">
+                <label>Attributes and Categories Locales Synchronization (VL01, H01, PM01, CA01)</label>
+                <field id="translation_store" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label comment" type="select">
+                    <label>Translation Store</label>
+                    <comment><![CDATA[The language of the specified store will be used to translate data before export. Default store view will be used if nothing is specified.]]></comment>
+                    <source_model>Mirakl\Catalog\Model\System\Config\Source\Store</source_model>
+                </field>
+                <field id="locale_codes_for_labels_translation" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label comment" type="multiselect">
+                    <label>Locale Codes for Label Translation</label>
+                    <comment><![CDATA[To translate category labels in an other language than the one defined in the field 'Translation Store', select stores to export translations from.]]></comment>
+                    <source_model>Mirakl\Connector\Model\System\Config\Source\MultiStore</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+            <group id="shopping_cart" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Shopping Cart</label>
+                <field id="auto_remove_offers" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Automatically Remove Offers</label>
+                    <comment><![CDATA[If enabled, offers that no longer exist in Mirakl platform will be removed while processing shopping cart.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="auto_update_offers" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Automatically Update Offers</label>
+                    <comment><![CDATA[If enabled, offers quantity will be updated (if changed) while processing shopping cart.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="tax" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Tax Settings</label>
+                <field id="offer_prices" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Offer Prices</label>
+                    <comment><![CDATA[Whether offer prices from Mirakl include tax.<br>If set to <em>Excluding Tax</em>, taxes info will be filled in Mirakl order creation (API OR01).]]></comment>
+                    <backend_model>Magento\Tax\Model\Config\Price\IncludePrice</backend_model>
+                    <source_model>Magento\Tax\Model\System\Config\Source\PriceType</source_model>
+                </field>
+                <field id="shipping_prices" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shipping Prices</label>
+                    <comment><![CDATA[Whether shipping prices from Mirakl include tax.<br>If set to <em>Excluding Tax</em>, shipping taxes will be added during checkout and taxes info will be filled in Mirakl order creation (API OR01).]]></comment>
+                    <backend_model>Magento\Tax\Model\Config\Price\IncludePrice</backend_model>
+                    <source_model>Magento\Tax\Model\System\Config\Source\PriceType</source_model>
+                </field>
+                <field id="calculate_us_taxes" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Calculate US Taxes</label>
+                    <comment>If enabled, Mirakl will automatically calculate tax amounts for US shipments.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="order_workflow" translate="label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Order Workflow</label>
+                <field id="auto_create_order" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Create Order Automatically</label>
+                    <comment>If enabled, Mirakl order will be created automatically through API OR01 when a Magento order is placed.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="auto_create_order_statuses" translate="label comment" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Trigger on Statuses</label>
+                    <comment>Specify which order statuses should trigger the order creation on Mirakl platform.</comment>
+                    <source_model>Mirakl\Connector\Model\System\Config\Source\Order\Status</source_model>
+                </field>
+                <field id="auto_score_order" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Score Order Automatically</label>
+                    <comment>If enabled, Mirakl order will be scored automatically during creation and thus will be in WAITING_ACCEPTANCE state (bypassing any scoring process).</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="payment_workflow" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment Workflow</label>
+                    <comment>Specify the payment workflow used when sending orders to Mirakl via API OR01. Default value is PAY_ON_ACCEPTANCE.</comment>
+                    <source_model>Mirakl\Connector\Model\System\Config\Source\Order\Payment</source_model>
+                </field>
+                <field id="enable_multiple_shipments" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Multiple Shipments</label>
+                    <comment>Enabling this feature allows customers to view and manage the shipment list from the sales order details page. Otherwise, only one shipment will be displayed.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="indexes_caches" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
+                <label>Caches</label>
+                <group id="offers_import" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                    <label>Offers Import (OF51)</label>
+                    <field id="clear_cache" showInDefault="1" showInStore="1" showInWebsite="0" sortOrder="10" translate="label comment" type="select">
+                        <label>Clear Cache</label>
+                        <comment>Clear products related cache after offers import. If disabled, "Collections Data", "Blocks HTML output" and "Page Cache" caches are marked as invalidated after offers import.</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

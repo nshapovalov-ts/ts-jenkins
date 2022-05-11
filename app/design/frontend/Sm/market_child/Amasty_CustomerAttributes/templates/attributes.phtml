@@ -1,0 +1,103 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2020 Amasty (https://www.amasty.com)
+ * @package Amasty_CustomerAttributes
+ */
+?>
+<?php
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Amasty\CustomerAttributes\Block\Customer\Form\Attributes */
+?>
+<?php /* @todo replace .form-inline with better class name */?>
+<?php /* ToDo UI: check if we need this wrapper in the process of global forms refactoring */ ?>
+<div class="entry-edit form-inline">
+    <?php echo $block->getFormHtml();?>
+</div>
+<?php echo $block->getChildHtml('form_after');?>
+<?php
+/*$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+$industryExclusionsFactory =  $objectManager->get('\Retailplace\MiraklSellerAdditionalField\Model\IndustryExclusionsFactory');
+
+$industryExclusionsCollection = $industryExclusionsFactory->create()->getCollection();
+$industryExclusionsCollection->addFieldToSelect('code');
+$industryExclusionsCollection->addFieldToSelect('label');
+$select = $industryExclusionsCollection->getSelect();
+$connection = $industryExclusionsCollection->getConnection();
+
+$allOptions = $connection->fetchAssoc((clone $select));
+$retailerOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(1, `visible_for`)'));
+$nonRetailerOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(2, `visible_for`)'));
+$businessOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(3, `visible_for`)'));
+$corporateGitingOptions = $connection->fetchAssoc((clone $select)->where('FIND_IN_SET(4, `visible_for`)'));*/
+
+?>
+<script>
+    require(
+        [
+            'jquery',
+            'jquery/ui',
+            'jquery/validate',
+            'mage/translate'
+        ],
+        function(
+            $
+        ) {
+            'use strict';
+            $.validator.addMethod(
+                "aumobilenumber",
+                function(value, element) {
+                    if(value.startsWith('+61')){
+                        var mobile = value.substring(3);
+                        return /^-?[\d.]+(?:e-?\d+)?$/.test(mobile);
+                    }else{
+                        return /^-?[\d.]+(?:e-?\d+)?$/.test(value);
+                    }
+                },
+                $.mage.__("Please add valid AU. Mobile No.")
+            );
+            $(document).ready(function(){
+                $('[name="sell_goods"]').on('change',function(){
+                    var label = $(this).next('label').find('span').html().trim();
+                    console.log(label+"++");
+                    if(label == "Bricks and mortar" ){
+                        $('.number-8').html('7');
+                    }else{
+                        $('.number-8').html('8');
+                    }
+                });
+                setTimeout(function() {
+                    //$(".field-name-firstname, .field-name-lastname").prependTo(".second-step");
+                    //$(".telephone").prependTo(".field-Mobile");
+
+                    <?php if ($this->getRequest()->getActionName() !='edit') : ?>
+                        $(".field-business_name, .field-abn").appendTo(".confirmation");
+                    <?php endif?>
+                    $(".street, .field-business_unit_number").appendTo(".business-address-field");
+                    $(".city, .region, .zip, .country").appendTo(".business-address-field");
+                    $(".field-business_size").appendTo(".business-size-field");
+                    //$(".field-industry").appendTo(".retailer-type-field");
+
+                    $(".number-3").prependTo(".field-business_size label:first.admin__field-label");
+                    $(".number-4").prependTo(".field-tradesquare label:first.admin__field-label");
+                    $(".number-5").prependTo(".field-industry label:first.admin__field-label");
+                    $(".number-6").prependTo(".field-sell_goods label:first.admin__field-label");
+                    $(".number-7").prependTo(".field-currently_goods_online label:first.admin__field-label");
+                    $(".number-8").prependTo(".field-sell_goods_offline label:first.admin__field-label");
+
+                    $(".field-sell_goods_medium").appendTo(".six-step");
+                    $(".number-6").clone().prependTo(".field-sell_goods_medium label:first.admin__field-label");
+                    $("#Mobile").addClass('aumobilenumber');
+                }, 1000);
+            });
+        }
+    );
+</script>
+<style type="text/css">
+    .retailer-type-field {margin-top: 70px;}
+    /*.field-industries {margin-top: 55px;}
+    .business-size-field {margin-top: 55px;}
+    .retailer-type-field {margin-top: 70px;}*/
+</style>

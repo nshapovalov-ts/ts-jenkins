@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Retailplace_CustomerAccount
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+declare(strict_types=1);
+
+/** @var \Retailplace\CustomerAccount\Block\Widget\LpoCode $block */
+?>
+<div class="lpo-code-block">
+    <div class="preferences-wrap control"
+         data-ui-id="<?= $block->escapeHtml($block->getAttributeCode()) ?>">
+        <h2><?= $block->getStoreLabel(); ?></h2>
+        <p>
+            <input type="text"
+                   placeholder="<?= __('6 digits code') ?>"
+                   class="required required-field <?= $block->escapeHtml($block->getFrontendClass()) ?>"
+                   id="lpo-code"
+                   value="<?= $block->escapeHtml($block->getLpoCode()) ?>"
+                   name="<?= $block->escapeHtml($block->getAttributeCode()) ?>"
+                   />
+        </p>
+    </div>
+</div>

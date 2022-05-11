@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- Update customer Account -->
+    <route url="/V1/customers/me/update" method="POST">
+        <service class="Retailplace\CustomerAccount\Api\AccountManagementInterface" method="update"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+
+    <route url="/V1/customers/me/changeEmailAndPassword" method="POST">
+        <service class="Retailplace\CustomerAccount\Api\AccountManagementInterface" method="changeEmailAndPassword"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+</routes>

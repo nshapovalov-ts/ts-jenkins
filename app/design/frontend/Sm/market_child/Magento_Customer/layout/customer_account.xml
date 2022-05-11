@@ -1,0 +1,98 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<body>
+	<!-- Downloadable product link -->
+	<referenceBlock name="customer-account-navigation-downloadable-products-link" remove="true"/>
+
+	<!--remove newsletter link-->
+	<referenceBlock name="customer-account-navigation-newsletter-subscriptions-link" remove="true"/>
+
+	<!-- Address link -->
+	<referenceBlock name="customer-account-navigation-address-link" remove="true"/>
+
+	<!-- My Subscriptions -->
+	<referenceBlock name="stripe-payments-subscriptions" remove="true"/>
+
+	<!-- My payment method links -->
+    <referenceBlock name="customer-account-navigation-my-credit-cards-link" remove="true"/>
+
+	<!-- My credit card link -->
+    <referenceBlock name="stripe-payments-customer-cards" remove="true"/>
+
+    <referenceBlock name="customer_account_navigation">
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" name="customer-account-navigation-account-link" template="Mirakl_FrontendDemo::message/link.phtml">
+            <arguments>
+                <argument name="label" xsi:type="string" translate="true">My Account</argument>
+                <argument name="path" xsi:type="string">customer/account</argument>
+                <argument name="sortOrder" xsi:type="number">250</argument>
+                <argument name="cssClass" xsi:type="string">nav_my_account_link</argument>
+            </arguments>
+        </block>
+
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" name="customer-account-navigation-orders-link" template="Mirakl_FrontendDemo::message/link.phtml">
+            <arguments>
+                <argument name="path" xsi:type="string">sales/order/history</argument>
+                <argument name="label" xsi:type="string" translate="true">My Orders</argument>
+                <argument name="sortOrder" xsi:type="number">230</argument>
+                <argument name="cssClass" xsi:type="string">nav_order-icon</argument>
+            </arguments>
+        </block>
+
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" name="customer-account-navigation-invoice-link" template="Mirakl_FrontendDemo::message/link.phtml" ifconfig="tradesquare_invoices/invoices/enable">
+            <arguments>
+                <argument name="path" xsi:type="string">invoices</argument>
+                <argument name="label" xsi:type="string" translate="true">Invoices</argument>
+                <argument name="sortOrder" xsi:type="number">228</argument>
+                <argument name="cssClass" xsi:type="string">nav_invoices-icon</argument>
+            </arguments>
+        </block>
+
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" name="marketplace-message-link" template="Mirakl_FrontendDemo::message/link.phtml">
+            <arguments>
+                <argument name="label" xsi:type="string" translate="true">Messages</argument>
+                <argument name="path" xsi:type="string">marketplace/message</argument>
+                <argument name="sortOrder" xsi:type="number">225</argument>
+                <argument name="cssClass" xsi:type="string">nav_messages_link</argument>
+                <argument name="countBox" xsi:type="boolean">true</argument>
+            </arguments>
+        </block>
+
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" ifconfig="wishlist/general/active" name="customer-account-navigation-wish-list-link" template="Mirakl_FrontendDemo::message/link.phtml">
+            <arguments>
+                <argument name="path" xsi:type="string">wishlist</argument>
+                <argument name="label" xsi:type="string" translate="true">My Wish List</argument>
+                <argument name="sortOrder" xsi:type="number">210</argument>
+                <argument name="cssClass" xsi:type="string">nav_wishlist-icon</argument>
+            </arguments>
+        </block>
+
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" name="customer-account-navigation-account-edit-link" template="Mirakl_FrontendDemo::message/link.phtml">
+            <arguments>
+                <argument name="label" xsi:type="string" translate="true">Account Information</argument>
+                <argument name="path" xsi:type="string">customer/account/edit</argument>
+                <argument name="sortOrder" xsi:type="number">180</argument>
+                <argument name="cssClass" xsi:type="string">nav_account_information</argument>
+            </arguments>
+        </block>
+
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" name="customer-account-navigation-product-reviews-link" ifconfig="catalog/review/active" template="Mirakl_FrontendDemo::message/link.phtml">
+            <arguments>
+                <argument name="path" xsi:type="string">review/customer</argument>
+                <argument name="label" xsi:type="string" translate="true">My Product Reviews</argument>
+                <argument name="sortOrder" xsi:type="number">50</argument>
+                <argument name="cssClass" xsi:type="string">nav_reviews-icon</argument>
+            </arguments>
+        </block>
+
+        <block class="Retailplace\MiraklFrontendDemo\Block\Account\SortLink" name="customer-account-navigation-logout-link" template="Mirakl_FrontendDemo::message/link.phtml">
+            <arguments>
+                <argument name="path" xsi:type="string">customer/account/logout</argument>
+                <argument name="label" xsi:type="string">Sign Out</argument>
+                <argument name="sortOrder" xsi:type="number">0</argument>
+                <argument name="cssClass" xsi:type="string">nav_singout-icon</argument>
+            </arguments>
+        </block>
+    </referenceBlock>
+
+
+</body>
+</page>

@@ -1,0 +1,29 @@
+<div class="verify-email-block-bg">
+    <div class="verify-email-block-img"><img data-bind="attr: { src: require.toUrl('images/verify_your_email.png') }" /></div>
+    <div class="block-title" data-bind="i18n: 'Verify your email'"></div>
+    <div class="email-hint">
+        <span data-bind="i18n: 'We sent a verification code to email'"></span>
+        <span data-bind="html: getEmail()"></span>
+    </div>
+    <form method="post" class="email-validation-form" afterRender="initForm">
+        <div class="email-validation-form-input">
+            <div class="verification-code">
+                <input type="number" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}"/>
+                <input type="number" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}"/>
+                <input type="number" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}"/>
+                <input type="number" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}"/>
+                <input type="number" maxlength="1" size="1" min="0" max="9" pattern="[0-9]{1}"/>
+            </div>
+        </div>
+        <div class="server-errors" data-bind="foreach: pageErrors()">
+            <div data-bind="text: $data"></div>
+        </div>
+        <div class="email-validation-form-action">
+            <input type="hidden" name="email" data-bind="attr: {value: getEmail()}"/>
+            <input type="hidden" name="code" class="validation-code" />
+            <a data-bind="attr: {href: getBackUrl()}, i18n: 'Back'"></a>
+            <button type="submit" data-bind="i18n: 'Next'"></button>
+        </div>
+
+    </form>
+</div>

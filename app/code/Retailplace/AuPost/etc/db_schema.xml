@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_AuPost
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sm_megamenu_items">
+        <column xsi:type="int" name="customer_group_id" padding="10" unsigned="true" nullable="true" identity="false"/>
+        <index referenceId="SM_MEGAMENU_ITEMS_CUSTOMER_GROUP_ID" indexType="btree">
+            <column name="customer_group_id"/>
+        </index>
+    </table>
+    <table name="mirakl_shop">
+        <column xsi:type="boolean" name="au_post_seller" nullable="false" default="0"/>
+    </table>
+</schema>

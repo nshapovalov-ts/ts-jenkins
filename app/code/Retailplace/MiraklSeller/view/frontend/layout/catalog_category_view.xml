@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="div.container">
+            <container name="seller-product-container" htmlTag="div" htmlClass="seller-product" before="-">
+                <container before="div.row" name="tab-header" htmlTag="div" htmlClass="seller-product-tab-header">
+                    <block class="Retailplace\MiraklSeller\Block\SellerTab"
+                           name="category.seller.tab" as="product_list"
+                           template="Retailplace_MiraklSeller::product/seller-tab.phtml"/>
+                </container>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <container name="seller-product" htmlTag="div" htmlClass="seller-product" before="-">
+                <container name="product-tab" htmlTag="div" htmlClass="product-tab active">
+                </container>
+                <container name="seller-tab" htmlTag="div" htmlClass="seller-tab">
+                    <!--<block class="Retailplace\MiraklSeller\Block\Seller"
+                           name="category.seller.list" as="product_list"
+                           template="Retailplace_MiraklSeller::product/seller-list.phtml"/>-->
+                </container>
+            </container>
+        </referenceContainer>
+        <move element="category.products" destination="product-tab"/>
+    </body>
+</page>

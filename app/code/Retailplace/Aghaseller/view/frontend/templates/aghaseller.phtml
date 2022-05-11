@@ -1,0 +1,125 @@
+<?php
+/**
+ * Retailplace_Aghaseller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+/**
+ * AghaSeller Listing Template
+ *
+ * @var $block \Retailplace\Aghaseller\Block\Index\Index
+ */
+?>
+<?php if ($block->getAghaSellerEnabled()): ?>
+    <?php
+    $shops = $block->getCollection();
+    $mediaUrl = $block->getMediaUrl();
+    ?>
+    <div class="agha-seller-list">
+        <?php if ($shops->count()): ?>
+            <div class="seller-top">
+                <div class="seller-filters">
+                    <?= $block->getChildHtml('aghaseller.filter', false); ?>
+                </div>
+            </div>
+            <div class="seller-bottom">
+                <div class="sellerlist">
+                    <ul class="seller-grid">
+                        <?php /** @var \Mirakl\Core\Model\Shop $_shop */ ?>
+                        <?php foreach ($shops as $_shop): ?>
+                            <?php
+                            $minimumOrder = $_shop->getData('min-order-amount');
+                            $shopName = $_shop->getName();
+                            ?>
+                            <li class="seller-item">
+                                <div class="seller-item-info">
+                                    <?php
+                                    $allImages = $block->getShopImages($_shop);
+                                    ?>
+                                    <div class="seller-img <?php if (count($allImages) > 1): ?>seller-img-slider owl-carousel owl-theme <?php endif; ?>">
+                                        <?php if ($allImages): ?>
+                                            <?php $imageCount = 0; ?>
+                                            <?php foreach ($allImages as $image): ?>
+                                                <a href="<?= $_shop->getUrl(); ?>" title="<?= $shopName; ?>" class="seller-images">
+                                                    <?php if ($imageCount === 0): ?>
+                                                        <img src="<?= $image; ?>" class="no-lazy" alt="<?= $shopName; ?>"/>
+                                                    <?php else: ?>
+                                                        <img src="" data-src="<?= $image; ?>" class="owl-lazy" alt="<?= $shopName; ?>"/>
+                                                    <?php endif; ?>
+                                                </a>
+                                                <?php $imageCount++; ?>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="seller-detail">
+                                        <div class="seller-name">
+                                            <span class="shop-name">
+                                                <a href="<?= $_shop->getUrl(); ?>" title="<?= $shopName; ?>">
+                                                    <strong><?= $this->escapeHtml($shopName) ?></strong>
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <div class="seller-content">
+                                            <div class="minimum-order">
+                                                <?php if ($minimumOrder < 1) : ?>
+                                                    <p><?= __('No Minimum'); ?></p>
+                                                <?php else: ?>
+                                                    <p><?= $block->getFormatedPrice($minimumOrder) ?> <?= __('Minimum'); ?></p>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="aghaseller-label">
+                                                <span><?= __('AGHA Member'); ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        <?php if ($block->getPagerHtml()): ?>
+            <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml(); ?></div>
+        <?php endif; ?>
+            <script type="text/javascript">
+                require([
+                    'jquery',
+                    'owlcarousel'
+                ], function ($) {
+                    $(".agha-seller-list .seller-img-slider").owlCarousel({
+                        responsive: {
+                            0: {
+                                items: 1
+                            },
+                            480: {
+                                items: 1
+                            },
+                            768: {
+                                items: 1
+                            },
+                            992: {
+                                items: 1
+                            },
+                            1200: {
+                                items: 1
+                            },
+                        },
+                        autoplay: false,
+                        loop: true,
+                        nav: true,
+                        navRewind: false,
+                        dots: true,
+                        autoplayHoverPause: true,
+                        margin: 10
+                    });
+                });
+            </script>
+        <?php else: ?>
+            <div class="message info empty">
+                <div><?= __('We can\'t find sellers matching the selection.') ?></div>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

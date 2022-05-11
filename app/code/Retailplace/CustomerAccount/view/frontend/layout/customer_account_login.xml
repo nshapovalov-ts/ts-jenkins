@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+            <argument translate="true" name="title" xsi:type="string">Business Login</argument>
+            </action>
+        </referenceBlock>
+         <referenceContainer name="content">
+            <!-- customer.form.login.extra -->
+            <container name="customer.login.container" label="Customer Login Container" htmlTag="div" htmlClass="login-container">
+            	<block cacheable="false" class="Magento\Customer\Block\Form\Login" name="customer_form_login" template="Retailplace_CustomerAccount::form/login.phtml">
+                    <container name="form.additional.info" as="form_additional_info"/>
+                    <block class="Retailplace\CustomerAccount\Block\CustomerRedirect" name="redirect.info" as="redirect.info"
+                           template="Retailplace_CustomerAccount::form/login/redirect.phtml" />
+                    <block class="Mageplaza\SocialLogin\Block\Popup\Social" ifconfig="sociallogin/general/enabled" name="social-login-popup-authentication-social-login" template="Mageplaza_SocialLogin::form/social.phtml">
+                        <block class="Mageplaza\SocialLogin\Block\Popup" name="social-login-request-info" before="-" as="request.info" template="Mageplaza_SocialLogin::popup/form/email.phtml"/>
+                    </block>
+                </block>
+                <!--<block class="Magento\Customer\Block\Form\Login\Info" name="customer.new" template="Retailplace_CustomerAccount::newcustomer.phtml"/>-->
+            </container>
+        </referenceContainer>
+    </body>
+</page>

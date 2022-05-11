@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklQuote
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template"
+                   template="Retailplace_MiraklQuote::quote/listing.phtml"
+                   name="quotes-listing"
+                   cacheable="false">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,20 @@
+<?php
+/** @var \Mirakl\Adminhtml\Block\Sales\Order\Operator\Shipping\Price $block */
+/** @var \Mirakl\Connector\Helper\Tax $_taxHelper */
+/** @var \Mirakl\Connector\Helper\Order $_orderHelper */
+/** @var \Magento\Sales\Helper\Admin $_adminHelper */
+$_taxHelper = $this->helper('Mirakl\Connector\Helper\Tax');
+$_orderHelper = $this->helper('Mirakl\Connector\Helper\Order');
+$_adminHelper = $this->helper('Magento\Sales\Helper\Admin');
+?>
+<?php if ($_order = $block->getOrder()): ?>
+    <?php if ($_taxHelper->displaySalesShippingBoth() || $_taxHelper->displaySalesShippingExclTax()): ?>
+        <?php echo $_adminHelper->displayPrices($_order, $_orderHelper->getOperatorBaseShippingExclTax($_order), $_orderHelper->getOperatorShippingExclTax($_order)) ?>
+    <?php endif ?>
+    <?php if ($_taxHelper->displaySalesShippingBoth() || $_taxHelper->displaySalesShippingInclTax()): ?>
+        <?php if ($_taxHelper->displaySalesShippingBoth()): ?>
+            <span class="label"><?php /* @escapeNotVerified */ echo __('Incl. Tax'); ?>:</span>
+        <?php endif; ?>
+        <?php echo $_adminHelper->displayPrices($_order, $_orderHelper->getOperatorBaseShippingInclTax($_order), $_orderHelper->getOperatorShippingInclTax($_order)) ?>
+    <?php endif ?>
+<?php endif ?>

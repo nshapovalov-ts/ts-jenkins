@@ -1,0 +1,43 @@
+<?php
+/**
+ * @var $block \Amasty\Shopby\Block\Navigation\FilterRenderer
+ */
+$filter = $block->getFilter();
+$attributeCode = $filter->getAttributeModel()->getAttributeCode();
+$filterLabel = $block->escapeHtml(__($filter->getName()));
+$filterValue = $filter->getValue();
+$filteredValue = $this->getRequest()->getParam($filter->getRequestVar());
+$filteredValues = $filteredValue ? explode(",", $filteredValue) : [];
+/**
+ * @var $filterItems \Amasty\Shopby\Model\Layer\Filter\Item
+ */
+?>
+<div class="filter-options-content">
+    <div class="search-box">
+        <input type="text" id="<?= $attributeCode ?>-search" class="filter-search" placeholder="Search for <?= $filterLabel ?>">
+    </div>
+    <div class="filter-options">
+        <ul>
+            <?php foreach ($filterItems as $filterItem) : ?>
+                <?php if ($filterItem->getCount() > 0) : ?>
+                    <?php
+                    $filterLabel = $filterItem->getLabel();
+                    $filterId = $filterItem->getValue();
+                    $filterHtmlId = $attributeCode . '_' . $filterId;
+                    ?>
+                    <li class="item" data-label="$filterLabel">
+                        <input data-url="<?= $block->escapeUrl($filterItem->getUrl()) ?>" <?php if (in_array($filterId, $filteredValues)) : ?> checked <?php endif; ?> class="filter-check" name="<?= $filterHtmlId ?>" id="<?= $filterHtmlId ?>" value="<?= $filterId ?>" type="checkbox" style=""
+                        >
+                        <a class="am-filter-item am_shopby_link_selected" for="<?= $filterHtmlId ?>" data-am-js="filter-item-default" href="javascript:void(0);" rel="nofollow">
+                            <label for="<?= $filterHtmlId ?>"><?= $filterLabel ?></label>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div class="applyfilter">
+        <button data-request-var="<?= $filter->getRequestVar() ?>" type="button" class="apply" id="apply<?= $attributeCode ?>"><span>Apply</span></button>
+    </div>
+</div>
+

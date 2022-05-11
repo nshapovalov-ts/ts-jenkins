@@ -1,0 +1,273 @@
+/*
+ * Retailplace_MobileVerification
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+
+& when (@media-common = true) {
+    .background-image-spaced(@width, @height, @margin-right, @image) {
+        @sum: @width + @margin-right;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="@{sum}" height="@{height}"><image width="@{width}" height="@{height}" xlink:href="data:image/png;base64,@{image}" /></svg>');
+    }
+
+    .verification_phone_number_popup .modal-inner-wrap {
+        background: #FFFFFF;
+        box-shadow: 0px 16px 64px rgba(0, 0, 0, 0.08);
+        border-radius: 24px;
+        width: 90%;
+        height: auto;
+        margin: 0 auto;
+        top: 20%;
+
+        .modal-content {
+            padding: 0;
+            width: 100%;
+            height: auto;
+            text-align: center;
+
+            div.modal_close_icon {
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                top: 20px;
+                right: 20px;
+                background: url('@{baseDir}Retailplace_MobileVerification/images/modal_close_button.svg') no-repeat center;
+                background-size: contain;
+            }
+
+            .modal_image {
+                margin: 41px auto 0;
+                width: 160px;
+                height: 160px;
+            }
+
+            .modal_title {
+                margin: 6px auto 0;
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 32px;
+                line-height: 130%;
+                align-items: center;
+                text-align: center;
+                color: #000000;
+            }
+
+            .modal_text {
+                max-width: 648px;
+                margin: 8px auto 0;
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 180%;
+                text-align: center;
+                color: #000000;
+            }
+
+            .modal_number_container {
+                input {
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 130%;
+                    font-size: 32px;
+                    height: 64px;
+                    width: 48px;
+                    border: none;
+                    background-color: #d3d3d3;
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.40) !important;
+                    border-radius: 12px;
+                    text-align: center;
+                    margin: 0 2px;
+                }
+            }
+
+            .modal_inner_content_step_1 {
+                min-height: 518px;
+
+                .modal_image {
+                    background: url('@{baseDir}Retailplace_MobileVerification/images/verification_phone_image.png') no-repeat center;
+                    background-size: contain;
+                }
+
+                .modal_icon_text {
+                    margin: 42px auto 8px;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 130%;
+                    align-items: center;
+                    text-align: center;
+                    color: #000000;
+                }
+
+                .modal_icon {
+                    background: url('@{baseDir}Retailplace_MobileVerification/images/verification_phone_icon.svg') no-repeat center;
+                    background-position: left;
+                    display: inline-block;
+                    height: 16px;
+                    width: 12px;
+                    margin-right: 5px;
+                    position: relative;
+                    top: 1px;
+                }
+
+                .modal_number_container {
+                    margin: 17px auto 0;
+                }
+
+                .send_button {
+                    margin: 10px auto;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 150%;
+                    background: #873456;
+                    border-radius: 10px;
+                    width: 134px;
+                    height: 40px;
+                }
+            }
+
+            .modal_inner_content_step_2 {
+                min-height: 434px;
+
+                .modal_image {
+                    background: url('@{baseDir}Retailplace_MobileVerification/images/verification_phone_sms.png') no-repeat center;
+                    background-size: contain;
+                }
+
+                .modal-title {
+                    margin-top: 24px;
+                }
+
+                .modal_number_container {
+                    margin: 28px auto 0;
+                }
+
+                .change_phone_number {
+                    text-decoration: underline;
+                }
+
+                .resend_verify_code {
+                    display: inline-block;
+                    margin: 10px auto;
+                    text-decoration: underline;
+                }
+            }
+
+            .modal_inner_content_step_3 {
+                height: 294px;
+
+                .modal_image {
+                    background: url('@{baseDir}Retailplace_MobileVerification/images/verification_phone_done.png') no-repeat center;
+                    background-size: contain;
+                }
+
+                .modal-title {
+                    margin-top: 24px;
+                }
+            }
+        }
+    }
+
+    .checkout-index-index {
+        .modal-popup.verification_phone_number_popup {
+            .modal-inner-wrap {
+                top: 50%;
+                transform: translate(-50%, -50%);
+                margin: 0;
+                width: 90%;
+                max-width: 776px;
+                height: auto;
+                overflow: auto;
+                left: 50%;
+                max-height: 90%;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+    .verification_phone_number_popup {
+        .modal-inner-wrap {
+            .modal-content {
+                div.modal_close_icon{
+                    top: 10px;
+                    right: 10px;
+                }
+                .modal_image {
+                    width: 80px;
+                    height: 80px;
+                }
+                
+                .modal_inner_content_step_1 {
+                    min-height: 268px;
+                    .modal_title {
+                        margin-top: 20px;
+                    }
+                    .modal_image{
+                        display: none;
+                    }
+                    .modal_icon_text {
+                        margin-top: 10px;
+                    }
+
+                    .modal_number_container {
+                        input {
+                            font-size: 18px;
+                            height: 32px;
+                            width: 20px;
+                            border-radius: 6px;
+                            margin: 0;
+                            padding: 0 2px;;
+                        }
+                    }
+                }
+
+                .modal_inner_content_step_2 {
+                    min-height: 269px;
+                    .modal_image{
+                        display: none;
+                    }
+                    .modal_number_container {
+                        top: 91px;
+                    }
+
+                    .resend_verify_code {
+                        top: 110px;
+                    }
+                    .modal_title {
+                        margin-top: 20px;
+                    }
+                }
+
+                .modal_title {
+                    font-size: 30px;
+                }
+
+                .modal_text {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+}
+
+//
+//  Desktop
+//  --------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

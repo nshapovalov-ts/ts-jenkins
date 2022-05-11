@@ -1,0 +1,15 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Product\View\Tab\Offers $block */
+$product = $block->getProduct();
+$bestOffer = $block->getOfferHelper()->getBestOffer($product);
+$productView = $block->getLayout()->getBlock('product.info');
+?>
+
+<div class="seler-title">
+    <?php if ($bestOffer): ?>
+        <?php $shop = $block->getOfferHelper()->getOfferShop($bestOffer); ?>
+        <h4><?php echo __('Supplier: '); ?></h4>
+        <span><a href="<?php echo $shop->getUrl() ?>" title="<?php echo $block->escapeHtml($shop->getName()) ?>"><?php echo $block->escapeHtml($shop->getName()) ?></a></span>
+    <?php endif; ?>
+    <meta itemprop="mpn" content="<?= $product->getSku() ?>"/>
+</div>

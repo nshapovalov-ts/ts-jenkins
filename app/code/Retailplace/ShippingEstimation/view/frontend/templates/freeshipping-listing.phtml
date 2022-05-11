@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Retailplace_ShippingEstimation
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+/**
+ * @var $block \Retailplace\ShippingEstimation\Block\Product\ProductList\Item\ShippingEstimation
+ */
+?>
+<div class="free-shipping-label">
+    <?php
+    /** @var $_product \Magento\Catalog\Model\Product */
+    $_product = $block->getProduct();
+    $shop = $_product->getShop();
+    $shopName = $shop->getName();
+    ?>
+    <?php if ($shop->getFreeShipping()): ?>
+        <div class="freeshipallorder">
+            <div class="toolpick">
+                <div class="service-icon toolpick-ico">
+                    <p>
+                        <div class="free_shipping_icon"></div>
+                        <span><?= __("Free Shipping"); ?></span>
+                    </p>
+                    <div class="toolpick-text">
+                        <h3><?= __("Free Shipping"); ?></h3>
+                        <p><?= __("Free shipping for all the products of %1", $shopName); ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>

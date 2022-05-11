@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_Performance
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="Imageresize" xsi:type="object">Retailplace\Performance\Console\Command\Imageresize</item>
+                <item name="FlushImageresize" xsi:type="object">Retailplace\Performance\Console\Command\FlushImageresize</item>
+                <item name="FixSmallImages" xsi:type="object">Retailplace\Performance\Console\Command\FixSmallImages</item>
+                <item name="CachingTopmenu" xsi:type="object">Retailplace\Performance\Console\Command\CachingTopmenu</item>
+                <item name="RemoveUnusedMedia" xsi:type="object">
+                    Retailplace\Performance\Console\Command\RemoveUnusedMedia
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Url">
+        <plugin name="cache_base_url" type="Retailplace\Performance\Plugin\Url"/>
+    </type>
+    <type name="Magento\Catalog\Model\Product\Image\ParamsBuilder">
+        <plugin name="image_cache_version" type="Retailplace\Performance\Plugin\ImageParamsBuilder"/>
+    </type>
+    <type name="Magento\Framework\View\Result\Page">
+        <plugin name="remove_product_specific_layout_handles" type="Retailplace\Performance\Plugin\ResultPage"/>
+    </type>
+    <type name="Retailplace\Performance\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Retailplace\Performance\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">resizeErrorLog</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Retailplace\Performance\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Kipanga\Webpimg\Helper\Mirakl\Mci\Product\Image"
+                type="Retailplace\Performance\Helper\ProductImage"/>
+</config>

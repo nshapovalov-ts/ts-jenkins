@@ -1,0 +1,10 @@
+{
+    "customer_entity": {
+        "column": {
+            "confirmation_alt": true,
+            "email_validate_failures_num": true,
+            "email_validate_first_failure": true,
+            "email_validate_lock_expires": true
+        }
+    }
+}

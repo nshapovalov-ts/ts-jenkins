@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Retailplace::top_level" module="Retailplace_SellerAffiliate" resource="Magento_Backend::content" sortOrder="9999" title="Retailplace"/>
+        <add action="retailplace_selleraffiliate/selleraffiliate/index" id="Retailplace_SellerAffiliate::retailplace_selleraffiliate_selleraffiliate" module="Retailplace_SellerAffiliate" parent="Retailplace::top_level" resource="Magento_Backend::content" sortOrder="9999" title="SellerAffiliate"/>
+    </menu>
+</config>

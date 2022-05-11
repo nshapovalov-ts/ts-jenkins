@@ -1,0 +1,3 @@
+mirakl-product-id;mirakl-product-sku;mirakl-acceptance-status;mirakl-rejection-reason;mirakl-rejection-message;mirakl-validation-status;mirakl-sources;category;brand;name;description;ean;mirakl_image_1;color;size;variant_group_code
+abc5-4cf1-acdb-56152a77bc56;mirakl_product_sku;ACCEPTED;;;OK;2001|sku-01;3;Lacoste;Slim Fit Polo;This ...;3570670000091;https://assets.probikeshop.fr/images/products2/266/127251/127251-370-520-main.jpg;50;91;variant_code
+abc4-5cf1-acdb-56152a77bc56;mirakl_product_sku2;ACCEPTED;;;OK;2001|sku-02;3;Lacoste;Slim Fit Polo;This ...;3570670000091;https://assets.probikeshop.fr/images/products2/266/127251/127251-370-520-main.jpg;53;169;variant_code

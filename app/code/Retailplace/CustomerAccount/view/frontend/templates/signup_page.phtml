@@ -1,0 +1,146 @@
+<?php
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+$currentUrl = $this->getBaseUrl();
+if ($this->getRequest()->getParam('referer')) {
+    $currentUrl = base64_decode($this->getRequest()->getParam('referer'));
+}
+if (strpos($currentUrl, "sign-up-page") !== false || strpos($currentUrl, "customer/account") !== false) {
+    $currentUrl = $this->getBaseUrl();
+}
+$signUpInfo = <<<EOD
+<p class="exploring">
+    To join our <strong class="wholesale-higlight">wholesale</strong> buying community, enter your details and start exploring 100,000 products
+</p>
+<ul class="explore-points">
+    <li>Sign up is FREE</li>
+    <li>Accessible to Australian ABN/ACN holders</li>
+    <li>Australian stock and available now</li>
+    <li>All of your business supplies on one website</li>
+    <li>One cart. Multiple Suppliers</li>
+</ul>
+EOD;
+?>
+<div id="signup-popup-modal1" class="signup-popup-modal1">
+    <div class="signup-popup-modal-main">
+        <div class="part-1 desktop">
+            <div class="sign-up-image">
+                <img
+                    src="<?= $this->helper('Magento\Cms\Helper\Wysiwyg\Images')->getBaseUrl() . 'wysiwyg/sign_up_img.png'; ?>"
+                    alt="sign up" title="Sign Up"/>
+            </div>
+            <div class="sign-up-text-info">
+                <?= $signUpInfo ?>
+            </div>
+        </div>
+        <div class="part-2">
+            <form class="form create account form-create-account email-confirmation-signup" method="post"
+                  id="email-confirmation-signup" enctype="multipart/form-data" autocomplete="off"
+                  novalidate="novalidate">
+                <div class="sign-up-title">
+                    <span>Welcome to smart <strong class="wholesale-higlight">wholesale</strong> buying at your fingertips</span>
+                </div>
+                <input class="current_url" name="current_url" type="hidden" value="<?= $currentUrl ?>"/>
+                <p class="access100">Join Australia’s fastest growing <span class="wholesale-higlight">wholesale</span>
+                    network and get access to <span class="wholesale-higlight">wholesale</span> pricing for your
+                    business. </p>
+                <fieldset class="fieldset">
+                    <div class="field required">
+                        <label style="display:none;" for="firstname" class="label"><span>First Name</span></label>
+                        <div class="control">
+                            <input type="firstname" placeholder="First name*" name="firstname" id="firstname" value=""
+                                   title="Firstname" class="input-text" data-validate="{required:true, }"
+                                   aria-required="true">
+                        </div>
+                    </div>
+
+                    <div class="field required">
+                        <label style="display:none;" for="email_address" class="label"><span>Email</span></label>
+                        <div class="control">
+                            <input type="email" placeholder="Business Email*" name="email" id="email_address" value=""
+                                   title="Business Email" class="input-text validate-email"
+                                   data-validate="{required:true, 'validate-email':true}" aria-required="true">
+                            <span id="email-error"></span>
+                        </div>
+                    </div>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button type="submit" class="action submit primary" title="<?php echo __('Get Started') ?>">
+                                <span><?php echo __('Get Started') ?></span></button>
+                        </div>
+                        <div class="sign-up-button">
+                            Already on TradeSquare? <a
+                                href="<?php echo $this->getUrl('customer/account/login') ?>"><?php echo __('Sign In') ?></a>
+                        </div>
+                        <div class="sign-up-note">
+                            By signing up TradeSquare, you're agreeing to our <a
+                                href="<?php echo $this->getUrl('buyerterms') ?>"><?php echo __('Terms of Service') ?></a>
+                            and <a href="<?php echo $this->getUrl('privacypolicy') ?>">Privacy Policy.</a>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <input type="checkbox" name="offers_checkbox" id="offers_checkbox" title="Offets Checkbox"
+                                   class="input-text" checked="checked">
+                            <label for="offers_checkbox"
+                                   class="label confirm-checkbox"><span><?php echo __('Join the TS Buying community - Be inspired by exclusive offers and updates.') ?></span></label>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "#email-confirmation-signup": {
+            "validation": {}
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    require([
+        "jquery",
+        "mage/mage",
+        'jquery/ui'
+    ], function ($) {
+        $(document).ready(function () {
+            $('.email-confirmation-signup').mage(
+                'validation',
+                {
+                    submitHandler: function (form) {
+                        var url = "<?php echo $block->getUrl('customeraccount/index/emailconfirmation') ?>";
+                        $.ajax({
+                            url: url,
+                            data: $('.email-confirmation-signup').serialize(),
+                            type: 'POST',
+                            dataType: 'json',
+                            showLoader: true,
+                            cache: false,
+                            beforeSend: function () {
+                                $("#email-error").html("");
+                            },
+                            success: function (response, status, xhr) {
+                                console.log(response);
+                                if (response.status === 'ok') {
+                                    if (response.email_link) {
+                                        window.location.href = response.email_link;
+                                    } else {
+                                        $("#email-error").html(response.message);
+                                    }
+                                }
+                            },
+                            error: function (xhr, status, errorThrown) {
+                                console.log('Error happens. Try again.');
+                                console.log(errorThrown);
+                            }
+                        });
+                    }
+                }
+            );
+
+        });
+    });
+</script>

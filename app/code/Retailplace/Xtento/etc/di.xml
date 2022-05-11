@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--~
+  ~ Retailplace_Xtento
+  ~
+  ~ @copyright   Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+  ~ @author      Satish Gumudavelly <satish@vdcstore.com>
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Xtento\XtCore\Block\System\Config\Form\Xtento\Module" type="Retailplace\Xtento\Block\System\Config\Form\Xtento\Module"/>
+    <type name="Xtento\XtCore\Helper\Server">
+        <plugin name="after_server_name"
+                type="Retailplace\Xtento\Plugin\AfterServerName"
+                sortOrder="0"/>
+    </type>
+    <type name="Xtento\XtCore\Model\System\Config\Backend\Configuration">
+        <plugin name="around_update"
+                type="Retailplace\Xtento\Plugin\Configuration"
+                sortOrder="0"/>
+    </type>
+</config>

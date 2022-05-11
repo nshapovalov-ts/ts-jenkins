@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+
+/** @var \Mirakl\FrontendDemo\Block\Order\Info $block */
+/** @var \Retailplace\Stripe\ViewModel\OrderHistory $viewModel */
+
+$viewModel = $block->getViewModel();
+$_miraklOrder = $block->getMiraklOrder();
+$_order = $block->getOrder();
+?>
+
+<?php
+$state = $viewModel->getState($_order, $_miraklOrder);
+?>
+<span class="order-status"><?= __($state) ?></span>

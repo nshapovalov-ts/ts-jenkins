@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_sync">
+            <group id="mcm_products_import" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label">
+                <label>MCM Products Import (CM51)</label>
+                <comment>Import all MCM products in Magento</comment>
+                <field id="last_sync_mcm_products_import" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="text">
+                    <label>Last Synchronization Date</label>
+                    <comment><![CDATA[Last synchronization date of MCM products.]]></comment>
+                </field>
+                <field id="button_mcm_products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="button_label">
+                    <frontend_model>Mirakl\Mcm\Block\Adminhtml\System\Config\Button\Import\Products</frontend_model>
+                </field>
+            </group>
+            <group id="mcm_products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label">
+                <label>MCM Products Export (CM21)</label>
+                <comment>Export all MCM products to Mirakl</comment>
+                <field id="enable_mcm_products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable</label>
+                    <comment><![CDATA[This flag also depends on flag "Mirakl (Config) > Catalog Management (MCM) > Enable".]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="button_mcm_products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="button_label">
+                    <frontend_model>Mirakl\Mcm\Block\Adminhtml\System\Config\Button\Sync\ExportProducts</frontend_model>
+                </field>
+            </group>
+        </section>
+        <section id="mirakl_mcm" translate="label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="26">
+            <label>Catalog Management (MCM)</label>
+            <tab>mirakl</tab>
+            <resource>Mirakl_Config::import</resource>
+            <group id="import_product" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label">
+                <label>MCM Products Import (CM51)</label>
+                <field id="enable_mcm" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable MCM</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_product_import" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="select">
+                    <label>Enable Product Import on Store</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Do you allow product data import on that store? If yes, any product data coming from Mirakl will be imported in that store if the product language is the same as the one associated to the store view.]]></comment>
+                    <depends>
+                        <field id="mirakl_mcm/import_product/enable_mcm">1</field>
+                    </depends>
+                </field>
+                <field id="file" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label comment" type="file">
+                    <label>File</label>
+                    <comment>File in CSV format.</comment>
+                    <backend_model>Mirakl\Mcm\Model\System\Config\Backend\Import\Product</backend_model>
+                    <depends>
+                        <field id="mirakl_mcm/import_product/enable_mcm">1</field>
+                    </depends>
+                </field>
+                <field id="button_products" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="button_label">
+                    <frontend_model>Mirakl\Mcm\Block\Adminhtml\System\Config\Button\Import\ProductsFile</frontend_model>
+                    <depends>
+                        <field id="mirakl_mcm/import_product/enable_mcm">1</field>
+                    </depends>
+                </field>
+                <field id="default_visibility" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="70" translate="label comment" type="select">
+                    <label>Default Visibility</label>
+                    <comment><![CDATA[Automatically sets the selected visibility to newly added products.]]></comment>
+                    <source_model>Mirakl\Mci\Model\System\Config\Source\Visibility</source_model>
+                    <depends>
+                        <field id="mirakl_mcm/import_product/enable_mcm">1</field>
+                    </depends>
+                </field>
+                <field id="default_tax_class" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="80" translate="label comment" type="select">
+                    <label>Default Tax Class</label>
+                    <comment><![CDATA[This parameter allows you to define a default tax class to apply on created products.]]></comment>
+                    <source_model>Mirakl\Mci\Model\System\Config\Source\Attribute\Product\Tax</source_model>
+                    <depends>
+                        <field id="mirakl_mcm/import_product/enable_mcm">1</field>
+                    </depends>
+                </field>
+                <field id="auto_enable_product" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="90" translate="label comment" type="select">
+                    <label>Automatically Enable Product</label>
+                    <comment><![CDATA[If enabled, imported products will be automatically active.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="mirakl_mcm/import_product/enable_mcm">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="product_import_indexing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
+                <depends>
+                    <field id="mirakl_mcm/import_product/enable_mcm">1</field>
+                </depends>
+                <label>Product Import Indexing</label>
+                <field id="enable_indexing_import" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Indexing During Product Import</label>
+                    <comment><![CDATA[If disabled, all indexers for imported products will be turned off.<br>Disable this option when importing a large number of products.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_indexing_import_after" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Indexing at the End of the Import Process</label>
+                    <comment><![CDATA[If enabled, all products imported will be sent to indexers at the end of the import and not for each product if indexer mode is 'Update On Save'.<br>You will have to reindex manually if you disable this option.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_indexing_import">0</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

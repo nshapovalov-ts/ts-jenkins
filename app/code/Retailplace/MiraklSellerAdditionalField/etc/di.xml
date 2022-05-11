@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="Sync_Mirakl_Additional_Field" xsi:type="object">Retailplace\MiraklSellerAdditionalField\Console\Command\SyncMiraklAdditionalField</item>
+                <item name="updateNewsFields" xsi:type="object">Retailplace\MiraklSellerAdditionalField\Console\Command\UpdateNewsFields</item>
+                <item name="updateLeadtimeToShip" xsi:type="object">Retailplace\MiraklSellerAdditionalField\Console\Command\UpdateLeadtimeToShip</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\IndustryExclusionsRepositoryInterface" type="Retailplace\MiraklSellerAdditionalField\Model\IndustryExclusionsRepository"/>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\Data\IndustryExclusionsInterface" type="Retailplace\MiraklSellerAdditionalField\Model\Data\IndustryExclusions"/>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\Data\IndustryExclusionsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\IndustryExclusions\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">mirakl_additionalfield_industryexclusions</argument>
+            <argument name="resourceModel" xsi:type="string">Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\IndustryExclusions\Collection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="retailplace_miraklselleradditionalfield_industryexclusions_listing_data_source" xsi:type="string">Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\IndustryExclusions\Grid\Collection</item>
+                <item name="retailplace_miraklselleradditionalfield_channelexclusions_listing_data_source" xsi:type="string">Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\ChannelExclusions\Grid\Collection</item>
+                <item name="retailplace_miraklselleradditionalfield_exclusionslogic_listing_data_source" xsi:type="string">Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\ExclusionsLogic\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\ChannelExclusionsRepositoryInterface" type="Retailplace\MiraklSellerAdditionalField\Model\ChannelExclusionsRepository"/>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\Data\ChannelExclusionsInterface" type="Retailplace\MiraklSellerAdditionalField\Model\Data\ChannelExclusions"/>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\Data\ChannelExclusionsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\ChannelExclusions\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">mirakl_additionalfield_channelexclusions</argument>
+            <argument name="resourceModel" xsi:type="string">Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\ChannelExclusions\Collection</argument>
+        </arguments>
+    </virtualType>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\ExclusionsLogicRepositoryInterface" type="Retailplace\MiraklSellerAdditionalField\Model\ExclusionsLogicRepository"/>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\Data\ExclusionsLogicInterface" type="Retailplace\MiraklSellerAdditionalField\Model\Data\ExclusionsLogic"/>
+    <preference for="Retailplace\MiraklSellerAdditionalField\Api\Data\ExclusionsLogicSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <virtualType name="Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\ExclusionsLogic\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">mirakl_additionalfield_exclusionslogic</argument>
+            <argument name="resourceModel" xsi:type="string">Retailplace\MiraklSellerAdditionalField\Model\ResourceModel\ExclusionsLogic\Collection</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Eav\Model\Entity\Attribute\Source\Table">
+        <plugin disabled="false" name="Retailplace_MiraklSellerAdditionalField_Plugin_Magento_Eav_Model_Entity_Attribute_Source_Table" sortOrder="10" type="Retailplace\MiraklSellerAdditionalField\Plugin\Magento\Eav\Model\Entity\Attribute\Source\Table"/>
+    </type>
+</config>

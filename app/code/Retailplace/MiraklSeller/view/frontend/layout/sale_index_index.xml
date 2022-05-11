@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Amasty_ShopbyBase::css/chosen/chosen.css"/>
+        <link rel="canonical" src="{{baseUrl}}sale" src_type="url"/>
+    </head>
+    <body>
+        <attribute name="class" value="page-products"/>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Home</item>
+                    <item name="label" xsi:type="string">Home</item>
+                    <item name="link" xsi:type="string">{{baseUrl}}</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Sales</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Sales</item>
+                    <item name="label" xsi:type="string">Sales</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Sales</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Product\ListProduct" name="category.products.sale_list" as="sale_product_list" template="Magento_Catalog::product/list.phtml">
+                <container name="category.product.list.additional" as="additional" />
+                <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+                    <block class="Magento\Framework\View\Element\Template" name="category.product.type.details.renderers.default" as="default"/>
+                </block>
+                <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="category.product.addto" as="addto">
+                    <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+                        name="category.product.addto.compare" as="compare"
+                        template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                </block>
+                <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                    <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                </block>
+                <action method="setToolbarBlockName">
+                    <argument name="name" xsi:type="string">product_list_toolbar</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="sidebar.main">
+            <block class="Amasty\Shopby\Block\Navigation\Cms" name="catalog.leftnav" before="-" template="Magento_LayeredNavigation::layer/view.phtml">
+                <action method="setData">
+                    <argument name="data" xsi:type="array">
+                        <item name="hideAttributes" xsi:type="string">am_on_sale</item>
+                    </argument>
+                </action>
+                <block class="Amasty\Shopby\Block\Navigation\State"
+                       name="catalogsearch.navigation.state" as="state" />
+                <block class="Amasty\Shopby\Block\Navigation\FilterRenderer"
+                       name="catalogsearch.navigation.renderer" as="renderer"
+                       template="Magento_LayeredNavigation::layer/filter.phtml"/>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="seller-product-container" htmlTag="div" htmlClass="seller-product">
+            <container before="div.row" name="tab-header" htmlTag="div" htmlClass="seller-product-tab-header">
+                <block class="Retailplace\MiraklSeller\Block\SellerTab"
+                       name="category.seller.tab" as="product_list"
+                       template="Retailplace_MiraklSeller::product/seller-tab.phtml"/>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

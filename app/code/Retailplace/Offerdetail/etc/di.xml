@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_Offerdetail
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mirakl\Connector\Model\Offer">
+        <plugin name="mirakl_set_default_value_lead_time_to_ship" type="Retailplace\Offerdetail\Plugin\LeadTimeToShip"
+                sortOrder="20"/>
+    </type>
+</config>

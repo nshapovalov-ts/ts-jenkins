@@ -1,0 +1,209 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Magento_Checkout
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// phpcs:disable Magento2.Files.LineLength.MaxExceeded
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer */
+
+/** @var \Magento\Quote\Model\Quote\Item $_item */
+$_item = $block->getItem();
+
+/** @var \Retailplace\CheckoutOverride\ViewModel\CartItemRenderer $viewModel */
+$viewModel = $block->getViewModel();
+$viewModel->setQuoteItem($_item);
+
+/** @var \Magento\Catalog\Api\Data\ProductInterface $product */
+$product = $viewModel->getProduct();
+$sellerId = $_item->getMiraklShopId();
+?>
+
+<?=$block->getChildHtml('miracle.checkout.cart.item.' . $_item->getProductType() . '.shipping', false)?>
+
+<tbody class="cart item item-<?= $_item->getId() ?>" item-id="<?= $_item->getId() ?>" style="border-right: none;">
+        <tr class="item-info">
+            <td data-th="<?= $block->escapeHtmlAttr(__('Item')) ?>" class="col item">
+            <?php if ($block->hasProductUrl()) :?>
+                <a href="<?= /* @escapeNotVerified */
+                $this->getUrl('seller/') . $sellerId . '/' . $product->getUrlKey() . '.html' ?>"
+                   title="<?= $block->escapeHtmlAttr($block->getProductName()) ?>"
+                   tabindex="-1"
+                   class="product-item-photo">
+            <?php else :?>
+                <span class="product-item-photo">
+            <?php endif;?>
+            <?= $block->getImage($block->getProductForThumbnail(), 'cart_page_product_thumbnail')->toHtml() ?>
+            <?php if ($block->hasProductUrl()) :?>
+                </a>
+            <?php else :?>
+                </span>
+            <?php endif; ?>
+            <div class="product-item-details">
+                <strong class="product-item-name">
+                    <?php if ($block->hasProductUrl()) :?>
+                        <a href="<?= /* @escapeNotVerified */
+                        $this->getUrl('seller/') . $sellerId . '/' . $product->getUrlKey() . '.html' ?>"><?= $block->escapeHtml($block->getProductName()) ?></a>
+                    <?php else :?>
+                        <?= $block->escapeHtml($block->getProductName()) ?>
+                    <?php endif; ?>
+                </strong>
+                <?php if ($_item->getMiraklLeadtimeToShip()) :
+                    $days = ($_item->getMiraklLeadtimeToShip() == '1') ? ' day' : ' days';
+                ?>
+                    <div class="leadtime-to-ship">
+                        <span class="ship-label">
+                            Lead time to ship <div class="toolpick">
+                                <div class="toolpick-ico">
+                                        <i>i</i>
+                                        <div class="toolpick-text">
+                                            <p><?php echo __('The time a Supplier has to process and prepare your order for shipment prior to goods leaving the warehouse');?>
+                                            </p>
+                                        </div>
+                                </div>
+                            </div> :
+
+                        </span>
+                        <span class="ship-time"><?= $_item->getMiraklLeadtimeToShip().$days;?> </span>
+                    </div>
+                    <script type="text/javascript">
+                      require(['jquery'], function($){
+                        $(".cart.table-wrapper .product-item-details .toolpick .toolpick-ico").click(function(){
+                          $(this).toggleClass("active");
+                        });
+                      });
+                    </script>
+                <?php endif; ?>
+                <?php if ($_options = $block->getOptionList()) :?>
+                    <dl class="item-options">
+                        <?php foreach ($_options as $_option) :?>
+                            <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                            <?php if(!($block->escapeHtml($_option['label'])=='Shop' || $block->escapeHtml($_option['label'])=='Condition')):?>
+                              <dt>
+                                <?= $block->escapeHtml($_option['label']) ?></dt>
+                              <dd>
+                                  <?php if (isset($_formatedOptionValue['full_view'])) :?>
+                                      <?= $block->escapeHtml($_formatedOptionValue['full_view']) ?>
+                                  <?php else :?>
+                                      <?= $block->escapeHtml($_formatedOptionValue['value'], ['span', 'a']) ?>
+                                  <?php endif; ?>
+                              </dd>
+                          <?php endif;?>
+                        <?php endforeach; ?>
+                    </dl>
+                <?php endif;?>
+
+
+                <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+                <?php if ($addInfoBlock) :?>
+                    <?= $addInfoBlock->setItem($_item)->toHtml() ?>
+                <?php endif;?>
+            </div>
+        </td>
+        <td class="col qty" data-th="<?= $block->escapeHtmlAttr(__('Quantity')) ?>">
+            <div class="field qty qty-block">
+                        <div class="packproduct packproduct-<?php echo $_item->getId();?>" style="display: none;" >
+                            <?= $viewModel->getNumberOfUnitPerPack() ?>
+                        </div>
+                        <div class="minimum minimum-<?php echo $_item->getId();?>" style="display: none;" >
+                           <?= $viewModel->getMinimumQty() ?>
+                        </div>
+                     <div class="control qty">
+                      <label for="cart-<?= $block->escapeHtmlAttr($_item->getId()) ?>-qty">
+                          <span class="label"><?= $block->escapeHtml(__('Qty')) ?></span>
+                          <input id="cart-<?= $block->escapeHtmlAttr($_item->getId()) ?>-qty"
+                                 name="cart[<?= $block->escapeHtmlAttr($_item->getId()) ?>][qty]"
+                                 data-cart-item-id="<?= $block->escapeHtmlAttr($_item->getSku()) ?>"
+                                 value="<?= $block->escapeHtmlAttr($block->getQty()) ?>"
+                                 type="number"
+                                 size="4"
+                                 step="any"
+                                 title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                                 class="input-text qty qty-input"
+                                 data-unit-per-pack="<?= $viewModel->getNumberOfUnitPerPack() ?>"
+                                 data-minimum-qty="<?= $viewModel->getMinimumQty() ?>"
+                                 data-initial-qty="<?= $block->escapeHtmlAttr($block->getQty()) ?>"
+                                 data-role="cart-item-qty"/>
+                      </label>
+                      <div class="cart-defult-qty-<?php echo $_item->getId();?>" style="display: none;">
+                        <?= $block->escapeHtmlAttr($block->getQty()) ?>
+                      </div>
+                       <div class="error-message-pack-cart error-message-pack-cart-<?php echo $_item->getSku();?>" style="display: none;">
+                     <p style="color: red"><?php echo __('Please add valid Quantity');?></p>
+                    </div>
+
+                      <div class="qty_control">
+                          <button type="button"  id="<?= /* @escapeNotVerified */ $_item->getId() ?>-upt" class="increaseQty"></button>
+                          <button type="button"   id="<?= /* @escapeNotVerified */ $_item->getId() ?>-dec"  class="decreaseQty"></button>
+                      </div>
+                    </div>
+
+            </div>
+        </td>
+        <?php if ($viewModel->canApplyMsrp()) :?>
+            <td class="col msrp" data-th="<?= $block->escapeHtmlAttr(__('Price Per Unit')) ?>">
+                <span class="pricing msrp">
+                    <span class="msrp notice"><?= $block->escapeHtml(__('See price before order confirmation.')) ?></span>
+                    <?php $helpLinkId = 'cart-msrp-help-' . $_item->getId(); ?>
+                    <a href="#" class="action help map"
+                       id="<?= ($block->escapeHtmlAttr($helpLinkId)) ?>"
+                       data-mage-init='{"addToCart":{
+                                            "helpLinkId": "#<?= $block->escapeJs($block->escapeHtml($helpLinkId)) ?>",
+                                            "productName": "<?= $block->escapeJs($block->escapeHtml($product->getName())) ?>",
+                                            "showAddToCart": false
+                                            }
+                                        }'
+                    >
+                        <span><?= $block->escapeHtml(__("What's this?")) ?></span>
+                    </a>
+                </span>
+            </td>
+        <?php else :?>
+            <td class="col price" data-th="<?= $block->escapeHtmlAttr(__('Price Per Unit')) ?>">
+                <?= $block->getUnitPriceHtml($_item) ?>
+            </td>
+        <?php endif; ?>
+
+
+        <td class="col subtotal" data-th="<?= $block->escapeHtmlAttr(__('Cost')) ?>">
+            <?php if ($viewModel->canApplyMsrp()) :?>
+                <span class="cart msrp subtotal">--</span>
+            <?php else :?>
+                <?= $block->getRowTotalHtml($_item) ?>
+            <?php endif; ?>
+            <div class="actions-toolbar">
+                <?= /* @noEscape */ $block->getActions($_item) ?>
+            </div>
+        </td>        
+    </tr>
+    <?php if ($messages = $block->getMessages()) :?>
+    <tr class="item-messages">
+      <td colspan="5" style="border-top: 0px; border-right: 1px solid #ECEFF0;">
+
+            <?php foreach ($messages as $message) :?>
+                <div style="width: 100%;overflow-wrap:anywhere;" class= "cart item message <?= $block->escapeHtmlAttr($message['type']) ?>">
+                    <div><?= $block->escapeHtml($message['text']) ?></div>
+                </div>
+            <?php endforeach; ?>
+        </td>
+    </tr>
+    <?php endif;  ?>
+    <!-- <tr class="item-actions">
+        <td colspan="4">
+            <div class="actions-toolbar">
+            <?//= /* @noEscape */ $block->getActions($_item) ?>
+            </div>
+        </td>
+    </tr> -->
+</tbody>
+

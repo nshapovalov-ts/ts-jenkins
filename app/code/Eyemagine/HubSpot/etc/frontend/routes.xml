@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+ EYEMAGINE - The leading Magento Solution Partner
+ HubSpot Integration with Magento
+ @author EYEMAGINE <magento@eyemaginetech.com>
+ @copyright Copyright (c) 2016 EYEMAGINE Technology, LLC (http://www.eyemaginetech.com) 
+ @license http://www.eyemaginetech.com/license
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/App/etc/routes.xsd">
+	<router id="standard">
+		<route id="eyehubspot" frontName="eyehubspot">
+			<module name="Eyemagine_HubSpot" />
+		</route>
+
+	</router>
+</config>

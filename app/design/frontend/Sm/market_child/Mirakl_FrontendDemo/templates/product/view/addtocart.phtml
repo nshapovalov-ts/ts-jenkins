@@ -1,0 +1,427 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/** @var \Magento\Catalog\Block\Product\View $block */
+/** @var \Mirakl\Connector\Model\Offer $offer */
+$_product = $block->getProduct();
+$offer = $_product->getData('main_offer');
+$buttonTitle = __('to Cart');
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$currencysymbol = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currency = $currencysymbol->getStore()->getCurrentCurrencyCode();
+$currency = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($currency);
+$currencySymbol = $currency->getCurrencySymbol();
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+    ->getStore()
+    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+
+$unit_type = $_product->getResource()->getAttribute('unit_type')->getFrontend()->getValue($_product);
+$number_of_unit_per_pack = $_product->getResource()->getAttribute('number_of_unit_per_pack')->getFrontend()->getValue($_product);
+$quantity = $block->getProductDefaultQty();
+
+if ($unit_type == 'Package' && !$number_of_unit_per_pack) {
+    $unit_type = 'Single';
+}
+?>
+<?php if (!$_product->getIsSalable() && $_product->getTypeId() == 'simple'): ?>
+    <div class="out-of-stock-view">
+        <div class="out-off-stock-img">
+            <img src="<?php echo $mediaUrl . "wysiwyg/out_off_stock.png"; ?>" alt=""/>
+        </div>
+        <span class="lable"><?php echo __('This product is Coming Soon'); ?></span>
+    </div>
+<?php endif; ?>
+<?php if ($_product->isSaleable() || $offer): ?>
+    <div class="box-tocart">
+        <div class="fieldset">
+            <?php if ($block->shouldRenderQuantity()): ?>
+                <div class="field qty">
+                    <label class="label" for="qty">
+                        <span>
+                            <?php /* @escapeNotVerified */
+                            echo __('Quantity') ?>
+                        </span>
+                    </label>
+
+                    <?php if ($unit_type == 'Package'): ?>
+                        <select name="qty" id="qty" maxlength="12" title="<?php /* @escapeNotVerified */
+                        echo __('Item Quantity') ?>"
+                                class="showdroupdownqty input-text qty <?php echo $offer ? 'marketplace-offer' : 'operator-offer' ?>">
+                            <!-- data-validate="<?php //echo $block->escapeHtml(json_encode($block->getMixedQuantityValidators()))?>" -->
+                            <?php if ($number_of_unit_per_pack): ?>
+                                <?php for ($i = 1; $i < 11; $i++): ?>
+                                    <?php if (($number_of_unit_per_pack * $i) >= $quantity): ?>
+                                        <option value="<?php echo $number_of_unit_per_pack * $i; ?>">
+                                            <?php echo $number_of_unit_per_pack * $i; ?>
+                                        </option>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                                <option value="selecttext">
+                                    <?php echo $number_of_unit_per_pack * $i . ' + '; ?>
+                                </option>
+                            <?php else: ?>
+                                <option value="<?php echo $quantity; ?>">
+                                    <?php echo $quantity; ?>
+                                </option>
+                                <?php for ($i = 1; $i < 11; $i++): ?>
+                                    <option value="<?php echo $quantity + $i; ?>">
+                                        <?php echo $quantity + $i; ?>
+                                    </option>
+                                <?php endfor; ?>
+                                <option value="selecttext">
+                                    <?php echo $quantity + $i . ' + '; ?>
+                                </option>
+                            <?php endif ?>
+                        </select>
+
+                    <input type="number"
+                           style="display: none;"
+                           name=""
+                           id="qty"
+                           min="0"
+                           oninput="validity.valid||(value='');"
+                           maxlength="12"
+                           value="<?php /* @escapeNotVerified */ //echo $block->getProductDefaultQty() * 1?>"
+                           title="<?php /* @escapeNotVerified */
+                           echo __('Item Quantity') ?>"
+                           class="input-text qty <?php echo $offer ? 'marketplace-offer' : 'operator-offer' ?> showtextqty"
+
+                    />
+                        <!-- data-validate="<?php //echo $block->escapeHtml(json_encode($block->getMixedQuantityValidators()))?>" -->
+
+                        <div class="min-items">
+                            <?php if ($number_of_unit_per_pack) : ?>
+                                <?php
+                                $minimumPack = 1;
+                                if ($number_of_unit_per_pack < $quantity) {
+                                    $minimumPack = ceil($quantity / $number_of_unit_per_pack);
+                                    $minimumQuantity = $minimumPack * $number_of_unit_per_pack;
+                                } else {
+                                    $minimumQuantity = $number_of_unit_per_pack;
+                                }
+                                ?>
+                                <?= __('Min %1 pack (%2 %3)', $minimumPack, $minimumQuantity, $minimumQuantity == '1' ? __('item') : __('items')); ?>
+                            <?php else: ?>
+                                <?= __('Minimum : %1 %2', $quantity, $quantity == '1' ? __('item') : __('items')) ?>
+                            <?php endif; ?>
+                        </div>
+                        <script type="text/javascript">
+                            require(["jquery", "domReady!"], function ($) {
+                                $(document).ready(function () {
+                                    $('.showtextqty').on('keyup blur change focus', function () {
+                                        let qtytextcheck = parseInt($(this).val());
+                                        if (isNaN(qtytextcheck)) {
+                                            qtytextcheck = 0;
+                                        }
+                                        const pack_check = parseInt('<?= $number_of_unit_per_pack;?>');
+                                        const minQuantity = parseInt('<?= $quantity;?>');
+                                        if (!qtytextcheck || qtytextcheck % pack_check != 0 || qtytextcheck < minQuantity) {
+                                            $('#product-addtocart-button').attr("disabled", true);
+                                            $('.error-message-pack').css('display', 'block');
+                                        } else {
+                                            $('#product-addtocart-button').removeAttr("disabled");
+                                            $('.error-message-pack').css('display', 'none');
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                    <?php else: ?>
+                        <select name="qty" id="qty" maxlength="12" title="<?php /* @escapeNotVerified */
+                        echo __('Item Quantity') ?>"
+                                class="showdroupdownqty input-text qty <?php echo $offer ? 'marketplace-offer' : 'operator-offer' ?>">
+                            <option value="<?php echo $quantity; ?>">
+                                <?php echo $quantity; ?>
+                            </option>
+                            <?php for ($i = 1; $i < 11; $i++): ?>
+                                <option value="<?php echo $quantity + $i; ?>">
+                                    <?php echo $quantity + $i; ?>
+                                </option>
+                            <?php endfor; ?>
+                            <option value="selecttext">
+                                <?php echo $quantity + $i . ' + '; ?>
+                            </option>
+                        </select>
+                    <input type="number"
+                           style="display: none;"
+                           name=""
+                           id="input_qty"
+                           min="0"
+                           oninput="validity.valid||(value='');"
+                           maxlength="12"
+                           value="<?php /* @escapeNotVerified */ //echo $block->getProductDefaultQty() * 1?>"
+                           title="<?php /* @escapeNotVerified */
+                           echo __('Item Quantity') ?>"
+                           class="input-text qty <?php echo $offer ? 'marketplace-offer' : 'operator-offer' ?> showtextqty"
+                           data-validate="<?php echo $block->escapeHtml(json_encode($block->getMixedQuantityValidators())) ?>"
+                    />
+                        <div class="min-items">
+                            <?= __('Minimum : %1 %2', $quantity, $quantity == '1' ? __('item') : __('items')) ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+            <div class="actions">
+                <div class="error-message-pack" style="display: none;">
+                    <p style="color: red"><?php echo __('Please add valid Quantity'); ?></p>
+                </div>
+                <button type="submit"
+                        title="<?php /* @escapeNotVerified */
+                        echo $buttonTitle ?>"
+                        class="action primary tocart add-offer-to-cart"
+                        id="product-addtocart-button"
+                        disabled="disabled"
+                    <?php if ($offer): ?>
+                        data-offer="<?php echo $offer->getId() ?>"
+                    <?php endif; ?>
+                >
+                    <div class="priceccal"></div>
+                    <!--  <span><?php /* @escapeNotVerified */ //echo $buttonTitle?></span> -->
+                </button>
+                <?= $this->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product-details-id-1-block-1')->toHtml(); ?>
+                <span class="gst_inclusive">
+             <?php echo __("GST inclusive"); ?>
+            </span>
+                <?php echo $block->getChildHtml('', true) ?>
+            </div>
+
+            <?php $shop = $offer ? $offer->getShop() : null; ?>
+            <div class="offer-data"<?php if (!$offer): ?> style="display: none;"<?php endif; ?>>
+                <?php $evaluation = $shop ? $shop->getFormattedGrade() : '' ?>
+                <div class="rating-summary">
+                <span class="offer-seller-name">
+                    <?php echo __('sold by') ?> <a href="<?php echo $shop ? $shop->getUrl() : '' ?>"><span
+                            class="offer-shop-name"><?php echo $shop ? $this->escapeHtml($shop->getName()) : '' ?></span></a>
+                </span>
+                    <div class="rating-result"
+                         title="<?php echo $evaluation ?>%"<?php if (!$shop || !$shop->getEvaluationsCount()): ?> style="display: none;"<?php endif; ?>>
+                        <span style="width:<?php echo $evaluation ?>%"><span><span
+                                    itemprop="ratingValue"><?php echo $evaluation ?></span>% <?php echo __('of') ?> <span
+                                    itemprop="bestRating">100</span></span></span>
+                    </div>
+                </div>
+                <div
+                    class="offer-seller-rating"<?php if (!$shop || !$shop->getEvaluationsCount()): ?> style="display: none;"<?php endif; ?>>
+                    <span class="number"><?php echo $evaluation ?></span>% <?php echo __('positive evaluations') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+
+<?php if (!$block->isRedirectToCartEnabled()): ?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "catalogAddToCart": {
+                "bindSubmit": true
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+
+<?php if ($offer): ?>
+    <?php
+    $price = (float) $offer->getPrice();
+    $discountPrice = 0;
+    $prices = [];
+    $discountPrices = [];
+
+    if ($offer->isDiscountPriceValid()) {
+        // Check if a discount price is valid for current quantity
+        $discount = $offer->getDiscount();
+        if ($ranges = $discount->getRanges()) {
+            /** @var \Mirakl\MMP\Common\Domain\DiscountRange $range */
+            foreach (array_reverse($ranges->getItems()) as $range) {
+                $discountPrices[] = ['threshold' => $range->getQuantityThreshold(), 'price' => (float) $range->getPrice()];
+            }
+        }
+    }
+
+    $ranges = $offer->getPriceRanges();
+    foreach (array_reverse($ranges->getItems()) as $range) {
+        $prices[] = ['threshold' => $range->getQuantityThreshold(), 'price' => (float) $range->getPrice()];
+    }
+    //return ($discountPrice > 0 && $discountPrice <= $price) ? $discountPrice : $price;
+    // echo "<pre>";
+    // print_r($discountPrices);
+    // print_r($prices);
+    // echo "</pre>";
+    ?>
+    <script type="text/javascript">
+        require(["jquery", 'Magento_Catalog/js/price-utils', "domReady!"], function ($, priceUtils) {
+            $(document).ready(function () {
+                $('#product_addtocart_form').on('keyup keypress', function (e) {
+                    var keyCode = e.keyCode || e.which;
+                    if (keyCode === 13) {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+                var getFormattedPrice = function (price) {
+                    var priceFormat = {
+                        decimalSymbol: '.',
+                        groupLength: 3,
+                        groupSymbol: ",",
+                        integerRequired: false,
+                        pattern: "$%s",
+                        precision: 2,
+                        requiredPrecision: 2
+                    };
+
+                    return priceUtils.formatPrice(price, priceFormat);
+                }
+                var getOfferPrice = function (qty, offer_id = '') {
+                    var boxForm = jQuery('#product_addtocart_form'),
+                        boxButton = boxForm.find('#product-addtocart-button');
+
+                    if (boxForm.size() && boxButton.attr('data-offer') && boxForm.data('mageConfigurable')) {
+                        // Checkbox are used
+                        var prices = boxForm.data('mageConfigurable').options.spConfig.optionPrices,
+                            offerId = boxButton.attr('data-offer'),
+                            prices = _.find(prices, function (price) {
+                                return price.offerData.offerId == offerId;
+                            });
+                        if (prices) {
+                            var offerprice = prices.finalPrice['amount'];
+                            if (prices.offerData && prices.offerData.priceRanges) {
+                                priceRanges = prices.offerData.priceRanges.split(',');
+                                priceRanges.sort(function(a, b) {
+                                    return a.split('|')[0] - b.split('|')[0];
+                                });
+                                priceRanges.forEach(function(value, key) {
+                                    let quantity = value.split('|')[0],
+                                        tierPrice = parseFloat(value.split('|')[1]);
+
+                                    if (qty >= quantity) {
+                                        offerprice = tierPrice;
+                                    }
+                                });
+
+                                if (prices.offerData.discountRanges) {
+                                    discountPrices = prices.offerData.discountRanges.split(',');
+                                    discountPrices.sort(function(a, b) {
+                                        return a.split('|')[0] - b.split('|')[0];
+                                    });
+                                    discountPrices.forEach(function(value, key) {
+                                        let quantity = value.split('|')[0],
+                                            tierPrice = parseFloat(value.split('|')[1]);
+
+                                        if (qty >= quantity && tierPrice < offerprice) {
+                                            offerprice = tierPrice;
+                                        }
+                                    });
+                                }
+                            } else {
+                                if (!$('.range-price-pdp').length) {
+                                    $('.product-info-main').find('.offer-price .price:first').text(getFormattedPrice(offerprice));
+                                }
+                            }
+
+
+                            return offerprice;
+                        }
+                    }
+                    var priceRanges = JSON.parse('<?php echo json_encode($prices); ?>');
+                    var discountPrices = JSON.parse('<?php echo json_encode($discountPrices); ?>');
+                    /*
+                    //don't remove this ajax it will be useful when offer is multiple
+                    var offer_id = $('button#product-addtocart-button').attr('data-offer');
+                    try{
+                        $.ajax({
+                            type: "GET",
+                                            url: '<?php //echo $this->getUrl('offerprice')?>',
+                                data: { offer_id: offer_id, qty: qty },
+                                async:false,
+                                success: function (data) {
+                                   offerprice = parseFloat(data);
+                                },
+                                error: function (error) {
+                                  console.log("Error :", error);
+                                  offerprice = 0;
+                                }
+                            });
+                        }catch(msg){
+
+                        }*/
+
+                    //if(!offerprice){
+                    var discountPrice = 0;
+                    var price = 0;
+                    $.each(discountPrices, function (index, element) {
+                        if (qty >= parseInt(element.threshold)) {
+                            discountPrice = parseFloat(element.price);
+                            return false;
+                        }
+                    });
+                    $.each(priceRanges, function (index, element) {
+                        if (qty >= parseInt(element.threshold)) {
+                            price = parseFloat(element.price);
+                            return false;
+                        }
+                    });
+                    offerprice = (discountPrice > 0 && discountPrice <= price) ? discountPrice : price;
+                    if (!$('.range-price-pdp').length) {
+                        $('.product-info-main').find('.offer-price .price:first').text(getFormattedPrice(offerprice));
+                    }
+
+                    return offerprice;
+                    //}
+                }
+                $('.showtextqty').on('keyup blur change focus', function () {
+                    var qty = parseInt($(this).val());
+                    var modQty = qty < 1 ? 1 : qty;
+                    if (isNaN(qty)) {
+                        modQty = 1;
+                        qty = 0;
+                    }
+                    console.log(modQty);
+                    var offerprice = getOfferPrice(modQty);
+                    var calculate = qty * offerprice;
+                    var calfinal = calculate.toFixed(2);
+                    $(".priceccal").text('<?php echo "Add " . $currencySymbol;?>' + calfinal + ' ' + '<?php echo $buttonTitle;?>');
+                });
+                $("#qty").change(function () {
+                    var offerprice = 0;
+                    $(this).find("option:selected").each(function () {
+                        var qty = parseInt($(this).attr("value"));
+                        var offerprice = getOfferPrice(qty);
+                        var optionValue = $(this).attr("value");
+                        var calculate = optionValue * offerprice;
+                        var calfinal = calculate.toFixed(2);
+                        if (optionValue == "selecttext") {
+                            $(".showdroupdownqty").hide();
+                            $(".showdroupdownqty").attr('name', '');
+                            $(".showtextqty").show().focus();
+                            $(".showtextqty").attr('name', 'qty');
+                        } else {
+                            $(".priceccal").text('<?php echo "Add " . $currencySymbol;?>' + calfinal + ' ' + '<?php echo $buttonTitle;?>');
+                            $(".showtextqty").hide();
+                            $(".showtextqty").attr('name', '');
+                        }
+                    });
+
+                }).change();
+            });
+        });
+    </script>
+<?php endif; ?>

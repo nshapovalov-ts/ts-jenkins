@@ -1,0 +1,115 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_SellerAffiliate
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">retailplace_shop_affiliate_listing.retailplace_shop_affiliate_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>retailplace_shop_affiliate_columns</spinner>
+        <deps>
+            <dep>retailplace_shop_affiliate_listing.retailplace_shop_affiliate_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource component="Magento_Ui/js/grid/provider" name="retailplace_shop_affiliate_listing_data_source">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Retailplace_SellerAffiliate::SellerAffiliate</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="retailplace_shop_affiliate_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>selleraffiliate_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="retailplace_shop_affiliate_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>selleraffiliate_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="selleraffiliate_id">
+            <settings>
+                <filter>text</filter>
+                <sorting>asc</sorting>
+                <label translate="true">ID</label>
+            </settings>
+        </column>
+        <column name="click_datetime" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Click While Customer Login Date Time</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="clientside_datetime" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Frontend Click Date Time</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="customer_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Customer ID</label>
+            </settings>
+        </column>
+        <column name="customer_name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Customer Name</label>
+            </settings>
+        </column>
+        <column name="seller_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shop ID</label>
+            </settings>
+        </column>
+        <column name="shop_name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shop Name</label>
+            </settings>
+        </column>
+        <column name="ip_address">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">IP Address</label>
+            </settings>
+        </column>
+        <column name="affiliate_url">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Affiliate Url</label>
+            </settings>
+        </column>
+        <column name="is_user_affiliated">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Is customer affiliated</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

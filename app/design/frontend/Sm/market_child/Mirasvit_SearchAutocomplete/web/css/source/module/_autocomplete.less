@@ -1,0 +1,510 @@
+//
+//    Common
+//--------------------------------------
+@spinner-color-from: #D8D8D8;
+@spinner-color-to: #D8D8D8;
+
+& when (@media-common = true) {
+    @header-bg: #EFEFEF;
+    @hr-color: #F6F6F6;
+    @hover-bg: #f8f8f8;
+    @mute-color: #999;
+    @text-color: #333;
+
+    .mst-searchautocomplete__autocomplete {
+        display: none !important;
+        position: absolute;
+        top: 3.1rem;
+        left: 0;
+        box-sizing: border-box;
+        background: #fff;
+        min-height: 3.5rem;
+        text-align: left;
+        z-index: 1111;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 6px 17px -8px rgba(0, 0, 0, 0.8);
+
+        &._active {
+            display: block !important;
+        }
+
+        .mst-searchautocomplete__spinner {
+            display: none;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            margin-left: -90px;
+        }
+
+        &._loading {
+            .mst-searchautocomplete__spinner {
+                display: block;
+            }
+        }
+
+        .mst-searchautocomplete__empty-result {
+            background: @header-bg;
+            text-align: center;
+            padding: 8px 10px;
+            color: @mute-color;
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        .mst-searchautocomplete__show-all {
+            text-align: center;
+            background: @color-ts-grey;
+            border-radius: 5px;
+
+            a {
+                padding: 8px 10px;
+                color: @color-black;
+                font-size: 1.2rem;
+                display: block;
+            }
+        }
+
+        .mst-searchautocomplete__index-title {
+            background: @color-ts-grey;
+            padding: 8px 10px;
+            text-align: left;
+            font-size: 1.5rem;
+            line-height: 2.1rem;
+            color: @color-black;
+            text-transform: uppercase;
+            border-radius: 5px;
+            letter-spacing: 0.1rem;
+            font-family: 'Hurme Geometric Sans 3';
+            font-weight: 600;
+        }
+
+        .mst-searchautocomplete__close {
+            display: none;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                .lib-clearfix();
+                margin: 0 1rem;
+                padding: 1rem 0;
+                cursor: pointer;
+
+                a.title {
+                    font-weight: 600;
+                    margin-bottom: 0;
+                    color: @color-black;
+                    text-decoration: none;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-size: 15px;
+                }
+
+                &._active {
+                    a.title {
+                        text-decoration: underline;
+                    }
+                }
+
+                span.inStock {
+                    color: #76bd76;
+                }
+
+                span.outOfStock {
+                    color: #a96565;
+                }
+
+                img {
+                    width: 48px;
+                    height: auto;
+                    border-radius: 100%;
+                    display: inline-block;
+                    float: left;
+                }
+
+                .seller_circle_logo {
+                    width: 48px;
+                    height: auto;
+                    border-radius: 100%;
+                    display: inline-block;
+                    float: left;
+                    background: @color-ts-orange;
+                    color: @color-white;
+                    text-align: center;
+                    line-height: 48px;
+                    font-size: 20px;
+                }
+
+                .seller_sec {
+                    display: inline-block;
+                    margin: 0;
+                    padding: 0 0 0 15px;
+                    width: calc(100% - 52px);
+                    vertical-align: middle;
+
+                    > a {
+                        float: left;
+                        margin: 0;
+                        padding: 0;
+                        width: 100%;
+                        font-family: 'Montserrat', sans-serif;
+                        font-weight: 500;
+                        text-align: left;
+                        color: rgb(51, 51, 51);
+                        line-height: 24px;
+                        font-size: 14px;
+                        letter-spacing: 0.125px;
+                    }
+                }
+            }
+        }
+    }
+
+    .mst-searchautocomplete__index {
+        &.popular {
+            .index-title {
+                background: none;
+                text-align: left;
+                color: #999;
+            }
+
+            ul {
+                li {
+                    float: left;
+                    padding: .7rem 0 .7rem 1rem;
+                    margin: 0;
+
+                    a {
+                        font-size: 1.3rem;
+                        color: #575757;
+                    }
+
+                    &:hover {
+                        background: none;
+                        cursor: pointer;
+
+                        a {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .mst-searchautocomplete__item {
+        &.magento_catalog_product {
+            display: flex;
+            border-bottom: 1px solid @hr-color;
+            align-items: center;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .mst-product-image-wrapper {
+                height: 8rem;
+                width: 8rem;
+                margin-right: 1rem;
+
+                img {
+                    height: 8rem;
+                    max-width: 8rem;
+                    display: block;
+                    margin: auto;
+                    object-fit: contain;
+                }
+            }
+
+
+            .title {
+                display: block;
+                margin-bottom: 0.5rem;
+
+                a {
+                    color: @color-black;
+                    font-size: 15px;
+                    font-weight: 600;
+                    font-family: 'Hurme Geometric Sans 3';
+                }
+
+                .sku {
+                    color: @mute-color;
+                }
+            }
+
+            .meta {
+                flex-grow: 1;
+                overflow: hidden;
+            }
+
+            .description {
+                font-size: 1.3rem;
+                color: @color-black;
+                height: 3.7rem;
+                line-height: 1.4;
+                overflow: hidden;
+                margin-bottom: 0.5rem;
+            }
+
+            .price {
+                display: block;
+                font-weight: 600;
+                margin-left: 1rem;
+                white-space: nowrap;
+                font-size: 1.3rem;
+
+                .price-label {
+                    margin-right: 1rem;
+                }
+            }
+
+            .product-reviews-summary {
+                margin: 0;
+
+                .reviews-actions {
+                    display: none;
+                }
+            }
+
+            .to-cart {
+                float: right;;
+                margin-top: .5rem;
+                margin-bottom: .5rem;
+            }
+
+            &._active {
+                background: #fff !important;
+
+                .title {
+                    a {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+        }
+
+        &.magento_search_query {
+            a {
+                float: left;
+            }
+
+            .num_results {
+                float: right;
+                color: @color-black;
+                font-family: 'Hurme Geometric Sans 3';
+                font-size: 15px;
+            }
+        }
+
+        a.title {
+            word-break: break-word;
+
+            i {
+                color: @mute-color;
+                display: inline-block;
+                margin: 0 .5rem;
+                font-style: normal;
+
+            }
+
+        }
+    }
+
+    .mst-searchautocomplete__highlight {
+        font-weight: @font-weight__semibold;
+        color: #873456;
+    }
+
+    .mst-searchautocomplete__spinner {
+        position: relative;
+        width: 186px;
+        height: 20px;
+        margin: auto;
+
+        .spinner-item {
+            position: absolute;
+            top: 0;
+            background-color: @spinner-color-from;
+            width: 20px;
+            height: 20px;
+            animation-name: bounce_fountainG;
+            animation-duration: 0.645s;
+            animation-iteration-count: infinite;
+            animation-direction: normal;
+            transform: scale(.3);
+            border-radius: 15px;
+
+            &.spinner-item-1 {
+                left: 0;
+                animation-delay: 0.256s;
+            }
+
+            &.spinner-item-2 {
+                left: 20px;
+                animation-delay: 0.3225s;
+            }
+
+            &.spinner-item-3 {
+                left: 40px;
+                animation-delay: 0.389s;
+            }
+
+            &.spinner-item-4 {
+                left: 60px;
+                animation-delay: 0.4555s;
+            }
+
+            &.spinner-item-5 {
+                left: 80px;
+                animation-delay: 0.522s;
+            }
+
+            &.spinner-item-6 {
+                left: 100px;
+                animation-delay: 0.5885s;
+            }
+
+            &.spinner-item-7 {
+                left: 120px;
+                animation-delay: 0.645s;
+            }
+
+            &.spinner-item-8 {
+                left: 140px;
+                animation-delay: 0.7115s;
+            }
+        }
+    }
+
+    @keyframes bounce_fountainG {
+        0% {
+            transform: scale(1);
+            background-color: @spinner-color-from;
+        }
+
+        100% {
+            transform: scale(.3);
+            background-color: @spinner-color-to;
+        }
+    }
+
+    @-o-keyframes bounce_fountainG {
+        0% {
+            -o-transform: scale(1);
+            background-color: @spinner-color-from;
+        }
+
+        100% {
+            -o-transform: scale(.3);
+            background-color: @spinner-color-to;
+        }
+    }
+
+    @-ms-keyframes bounce_fountainG {
+        0% {
+            -ms-transform: scale(1);
+            background-color: @spinner-color-from;
+        }
+
+        100% {
+            -ms-transform: scale(.3);
+            background-color: @spinner-color-to;
+        }
+    }
+
+    @-webkit-keyframes bounce_fountainG {
+        0% {
+            -webkit-transform: scale(1);
+            background-color: @spinner-color-from;
+        }
+
+        100% {
+            -webkit-transform: scale(.3);
+            background-color: @spinner-color-to;
+        }
+    }
+
+    @-moz-keyframes bounce_fountainG {
+        0% {
+            -moz-transform: scale(1);
+            background-color: @spinner-color-from;
+        }
+
+        100% {
+            -moz-transform: scale(.3);
+            background-color: @spinner-color-to;
+        }
+    }
+}
+
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .mst-searchautocomplete__autocomplete {
+        width: 100%;
+
+        &._active {
+            display: block !important;
+
+            &.mst-2-cols {
+                width: 720px !important;
+                position: absolute;
+
+                .mst-searchautocomplete__index {
+                    clear: left;
+                    float: left;
+                    display: block;
+                    position: relative;
+                    max-width: 240px;
+                    width: 240px;
+                    padding-bottom: 10px;
+                    box-sizing: border-box;
+                    border-right: 1px solid #efefef;
+                    margin-right: -1px;
+                }
+
+                div.magento_catalog_product {
+                    width: 480px !important;
+                    max-width: 480px !important;
+                    clear: right;
+                    float: right;
+                    border-left: 1px solid #efefef;
+                    border-right: unset;
+                    margin-left: -1px;
+                }
+
+                .mst-searchautocomplete__show-all {
+                    clear: both;
+                }
+            }
+        }
+    }
+}
+
+
+//
+//    Mobile
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    .mst-searchautocomplete__autocomplete {
+        .mst-searchautocomplete__close {
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-weight: bold;
+            color: #999;
+            font-size: 1.6rem;
+            padding: 1rem;
+            line-height: 1rem;
+            cursor: pointer;
+        }
+    }
+}

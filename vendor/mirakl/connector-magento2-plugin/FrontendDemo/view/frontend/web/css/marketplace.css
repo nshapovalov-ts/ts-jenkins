@@ -1,0 +1,406 @@
+#product-offers-list .offer-final-price .price {
+    font-weight: bold;
+}
+
+#product-offers-list .offer-old-price {
+    color: #7d7d7d;
+}
+
+#product-offers-list .cell.price,
+#product-offers-list .cell.seller,
+#product-offers-list .cell.actions {
+    white-space: nowrap;
+}
+
+.offer-price-ranges {
+    margin-top: 10px;
+}
+
+.offer-price-ranges .prices-tier {
+    margin-bottom: 10px;
+}
+
+.offer-price-ranges li.item {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.offer-price-ranges li.item .offer-old-price .price {
+    font-size: 1.1rem;
+}
+
+.table-offers .price-container .price {
+    font-size: 1.8rem;
+}
+
+.box-tocart .rating-summary {
+    margin: 4px 0;
+}
+
+#product-offers-choicebox .increment {
+    margin-top: 10px;
+}
+
+#product-offers-list .offer-price-description {
+    color: #ff0000;
+}
+
+#checkout-shipping-method-load-marketplace tr.shop-title td {
+    padding-bottom: 0;
+    border-top: 0;
+}
+
+.opc-wrapper .step-title.marketplace {
+    border-bottom: 0;
+}
+
+#shopping-cart-table .sp-methods {
+    margin: 0;
+    padding: 0;
+}
+
+#shopping-cart-table .sp-methods li {
+    list-style: none;
+}
+
+#shopping-cart-table .shipping-types .price {
+    font-weight: 700;
+}
+
+#shopping-cart-table .shipping-types .price-excl-tax {
+    font-size: 1.1rem;
+}
+
+@media all and (min-width: 768px), print {
+    /* override column */
+    .page-layout-1column .product.media {
+        width: 47% !important;
+    }
+
+    .page-layout-1column .product-info-main {
+        width: 50% !important;
+    }
+
+    h1.page-title {
+        font-weight: 600 !important;
+        font-size: 48px !important;
+    }
+
+    .product-options-bottom .price-box .price-container .price, .product-info-price .price-box .price-container .price .price-including-tax, .product-info-price .price-box .price-container .price .price-final_price {
+        font-size: 45px !important;
+    }
+
+    .product-info-main .product-info-price .old-price .price-wrapper .price {
+        font-size: 2rem !important;
+        font-weight: 300 !important;
+    }
+
+    .modal-popup .marketplace-messages .fieldset {
+        margin-bottom: 40px;
+    }
+}
+
+.product-info-price .price-box {
+    white-space: nowrap;
+}
+
+.offer-price-description {
+    color: red;
+}
+
+#product-options-wrapper, .box-tocart {
+    float: left;
+    width: 50%;
+}
+
+#product-offers-choicebox {
+    clear: left;
+}
+
+.product-info-main .product-info-price .price-box {
+    width: 0;
+}
+
+.offer-final-price .price {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.offer-old-price {
+    color: #7d7d7d;
+    text-decoration: line-through;
+}
+
+.offer-old-price .price-label, .offer-old-price .price {
+    color: #7d7d7d;
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+
+.offer-shipping, .table-offers .offer-min-shipping-price {
+    font-size: 1.1rem;
+    color: #7d7d7d;
+}
+
+.offer-min-shipping-price-amount-excl-tax {
+    font-size: 1.1rem;
+}
+
+.offer-number-qty {
+    min-width: 36px;
+    width: 22% !important;
+}
+
+.offer-summary {
+    font-size: 1.2rem !important;
+}
+
+.offer-summary-best-price {
+    font-weight: bold;
+}
+
+#my-orders-table tr.main {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.marketplace-order-view .order-details-items.ordered .order-title {
+    display: block;
+}
+
+.account .column.main .block-order-details-view:not(.widget) .second-title {
+    margin-top: 10px;
+}
+
+.account .column.main .order-details-items .table-wrapper #my-orders-table > tbody > tr:nth-child(even) > td {
+    background: #fff;
+}
+
+#my-orders-table .incident-form {
+    white-space: nowrap;
+}
+
+#my-orders-table .incident-form select {
+    width: 200px;
+}
+
+#my-orders-table tr.incident td {
+    color: #df280a;;
+}
+
+#my-orders-table tr.refused td {
+    text-decoration: line-through;;
+}
+
+.marketplace-messages .block-title, .seller-shop .block-title {
+    margin-bottom: 2rem;
+}
+
+.marketplace-messages .block-title strong, .seller-shop .block-title strong {
+    font-weight: 300;
+    line-height: 1.1;
+    font-size: 2.6rem;
+}
+
+.marketplace-messages .message-items {
+    margin-bottom: 20px;
+}
+
+.marketplace-messages .message-left > div.meta,
+.marketplace-messages .message-left > div.body {
+    margin-right: 40%;
+}
+
+.marketplace-messages .message-right > div.meta,
+.marketplace-messages .message-right > div.body {
+    margin-left: 40%;
+}
+
+.marketplace-messages .meta {
+    color: #999;
+    font-style: italic;
+    margin-bottom: 4px;
+}
+
+.marketplace-messages .subject {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.marketplace-messages .body {
+    background-color: #f9f9f9;
+    margin-bottom: 30px;
+    border: 1px solid #c6c6c6;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+#order-evaluation ol.items {
+    display: table;
+}
+
+#order-evaluation ol.items li {
+    display: table-row;
+}
+
+#order-evaluation ol.items li .evaluation-label {
+    display: table-cell;
+    line-height: 48px;
+    padding: 0 20px 10px 0;
+    vertical-align: middle;
+}
+
+#order-evaluation ol.items li .evaluation-value label span {
+    padding-right: 30px;
+}
+
+#order-evaluation ol.items li .evaluation-value {
+    display: table-cell;
+    min-width: 200px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#order-evaluation ol.items .evaluation-comment-item .evaluation-label {
+    vertical-align: baseline;
+}
+
+#order-evaluation #evaluation_comment {
+    width: 400px;
+}
+
+#order-evaluation ol.items li.view-rating .evaluation-value {
+    padding-bottom: 10px;
+}
+
+.list-choice-box {
+    padding-bottom: 10px;
+}
+
+#marketplace_offers .rating-summary .rating-result {
+    display: block;
+}
+
+.flag {
+    display: inline;
+    font-family: sans-serif;
+    font-weight: normal;
+    text-transform: none;
+    text-shadow: 0 1px 0 #bc3918;
+    background: linear-gradient(to bottom, #ee5a27 0, #ca3a0f 100%) repeat-x;
+    border-color: #1b5381;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 4px;
+    line-height: 1.4em;
+    border-radius: 4px;
+    vertical-align: middle;
+}
+
+.flag.marketplace {
+    text-shadow: 0 1px 0 #1b5381;
+    background: linear-gradient(to bottom, #4495d8 0, #2867c1 100%) repeat-x;
+}
+
+.product-items .offer-min-shipping-price {
+    font-size: 1.1rem;
+}
+
+.seller-shop .seller-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.seller-shop .seller-info ul li {
+    display: inline-block;
+    width: 25%;
+    border-right: 1px solid lightgrey;
+    margin-left: 0;
+    margin-right: 8%;
+}
+
+.seller-shop .seller-info ul li:nth-child(3), .seller-shop .seller-info ul li:last-child {
+    border-right: none;
+}
+
+.seller-shop .banner {
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.seller-shop .banner-sample {
+    width: 500px;
+    height: 100px;
+    line-height: 100px;
+    border: 1px dashed #333;
+    text-align: center;
+    vertical-align: middle;
+    background-color: lightgrey;
+    font-size: 1.8rem;
+}
+
+.seller-shop .shop-review-rate {
+    display: inline-block;
+    margin-bottom: -3px;
+}
+
+.seller-shop .shop-review-rate .count {
+    font-size: 1.2rem;
+}
+
+.seller-shop .review-ratings {
+    margin-right: 25px;
+}
+
+#reviews .rating-summary .rating-result {
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+}
+
+.seller-shop .rating-summary .rating-result {
+    margin-bottom: 3px;
+}
+
+.seller-shop .block-content {
+    margin-bottom: 10px;
+}
+
+.seller-shop .box-reviews .limiter {
+    float: right;
+}
+
+.order-details-items .shipment-title {
+    margin-bottom: 10px;
+}
+
+.order-details-items .shipment-title .order-status {
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+.order-details-items .shipment-items {
+    margin-bottom: 50px;
+}
+
+.order-details-items .shipment-items-title {
+    font-weight: 300;
+}
+
+.order-details-items .shipment-items tbody td {
+    width: 20%;
+    vertical-align: middle;
+    padding: 8px 0;
+    font-size: 1.2rem;
+}
+
+.order-details-items .shipment-items tbody td .sku {
+    font-weight: 700;
+}
+
+.order-details-items .shipment-actions-toolbar {
+    margin-bottom: 10px;
+}
+
+.marketplace-message-form-new-button {
+    text-align: right;
+}

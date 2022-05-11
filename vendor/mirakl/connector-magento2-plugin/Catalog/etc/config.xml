@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_sync>
+            <products>
+                <enable_products>1</enable_products>
+            </products>
+            <categories>
+                <enable_categories>1</enable_categories>
+            </categories>
+        </mirakl_sync>
+        <mirakl_connector>
+            <product_attributes>
+                <products_heading>
+                    <store>1</store>
+                </products_heading>
+            </product_attributes>
+        </mirakl_connector>
+    </default>
+</config>

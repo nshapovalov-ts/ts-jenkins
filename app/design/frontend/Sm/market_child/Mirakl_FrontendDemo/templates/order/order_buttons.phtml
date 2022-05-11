@@ -1,0 +1,30 @@
+<?php /** @var \Mirakl\FrontendDemo\Block\Order\Info $block */ ?>
+<?php $miraklOrders = $block->getMiraklOrder(); ?>
+<?php if($miraklOrders->getData('has_invoice')): ?>
+    <?php $remoteId =  $miraklOrders->getData('id'); ?>
+    <a class="invoice_btn" id="invoice_btn" href="<?= $this->getUrl('mirakl_order/index/index',['remote_id' => $remoteId ])?>" ><?= __('Download Invoice') ?> </a>
+<?php else: ?>
+    <p>
+        <?php echo  __('Please note should the invoice be unavailable in this section, it may arrive with the items delivery and should it not please raise a ticket.'); ?>
+    </p>
+<?php endif; ?>
+<div class="actions-toolbar order-actions-toolbar">
+    <div class="actions">
+        <?php if (!empty($miraklOrders->getShipping()->getTrackingUrl())): ?>
+            <a href="<?php /* @escapeNotVerified */ echo $miraklOrders->getShipping()->getTrackingUrl() ?>"
+               class="action track"
+               title="<?php echo __('Track your order') ?>"
+               data-mage-init='{"popupWindow": {"windowURL":"<?php /* @escapeNotVerified */ echo $miraklOrders->getShipping()->getTrackingUrl() ?>","windowName":"trackorder","width":800,"height":600,"left":0,"top":0,"resizable":1,"scrollbars":1}}'>
+                <span><?php /* @escapeNotVerified */ echo __('Track your order')?></span>
+            </a>
+        <?php endif; ?>
+        <?php if ($this->canReceiveOrder()): ?>
+            <a class="action mark-as-received"
+               href="<?php echo $this->getMarkAsReceivedUrl() ?>"
+               onclick="return confirm('<?php echo $this->escapeJsQuote(__('Are you sure?')) ?>')">
+                <span><?php echo $this->escapeHtml(__('Mark Order As Received')) ?></span>
+            </a>
+        <?php endif;?>
+    </div>
+</div>
+

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+   <event name="mirakl_customer_debit_list">
+       <observer name="kipanga_miraklrefund_observer_mirakldebitsobserver" instance="Kipanga\Miraklrefund\Observer\Mirakldebitsobserver" />
+   </event>
+
+   <event name="mirakl_customer_refund_list">
+       <observer name="kipanga_miraklrefund_observer_miraklrefundsobserver" instance="Kipanga\Miraklrefund\Observer\Miraklrefundsobserver" />
+   </event>
+
+
+</config>

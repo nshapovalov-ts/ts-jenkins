@@ -1,0 +1,4 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<!--    <preference for="Magento\CatalogSearch\Model\Autocomplete\DataProvider" type="Retailplace\Search\Model\Autocomplete\SearchDataProvider" />-->
+<!--    <preference for="Magento\Search\Controller\Ajax\Suggest" type="Retailplace\Search\Controller\Search\Ajax\Suggest" />-->
+</config>

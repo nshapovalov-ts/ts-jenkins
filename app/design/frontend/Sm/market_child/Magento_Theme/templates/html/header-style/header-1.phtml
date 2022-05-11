@@ -1,0 +1,310 @@
+<?php
+
+/**
+ * Magento_Theme
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+/** @var \Retailplace\Theme\Block\Html\Header $block */
+?>
+<link  rel="stylesheet" type="text/css"  media="screen and (min-width: 320px)" href="<?php echo $this->getViewFileUrl('css/custom_new.css'); ?>" />
+<script type="text/javascript">
+require(['jquery', 'jquery/ui'], function($){
+     $(document).ready(function(){
+        $(".mibile_filter_button").click(function(){
+            $(".block.filter").slideToggle();
+        });
+        $(".filter_block_close").click(function(){
+            $(".block.filter").slideToggle();
+        });
+         function dynamicNav() {
+            var lastScrollTop = 0,
+                b_enable_scroll = false,
+                navbar = $(".header-container.header-style-1"),
+                searchTextField = navbar.find(".js-autocomplete-input"),
+                navbarHeight = navbar.outerHeight();
+            $(window).on("scroll", function() {
+                searchTextField.blur();
+                var scrollTop = $(this).scrollTop();
+                if (scrollTop > navbarHeight) {
+                    navbar.addClass("scroll_fixed");
+                    $("body").css("margin-top", navbarHeight);
+                    setTimeout(function() {
+                        navbar.addClass("transition")
+                    }, 300);
+                    b_enable_scroll = true
+                } else {
+                    navbar.removeClass("scroll_fixed transition");
+                    $("body").css("margin-top", 0)
+                }
+                if (b_enable_scroll && scrollTop > lastScrollTop) {
+                    navbar.removeClass("scroll_animate")
+                } else {
+                    navbar.addClass("scroll_animate")
+                }
+                lastScrollTop = scrollTop
+            })
+        }
+       dynamicNav();
+
+       $(window).on("resize", function (e) {
+            checkScreenSize();
+        });
+
+        checkScreenSize();
+
+        function checkScreenSize(){
+            var newWindowWidth = $(window).width();
+            var mobileHeader = $(".header-container.header-style-1").outerHeight();
+            if (newWindowWidth < 767) {
+                $('.page-wrapper').css("padding-top", mobileHeader);
+            }
+            else
+            {
+                $('.page-wrapper').css("padding-top", 0);
+            }
+        }
+     });
+});
+</script>
+<div class="header-container header-style-1">
+    <?php echo $block->getChildHtml('top-promotion-line'); ?>
+    <div class="header-top">
+        <div class="container">
+            <div class="row row-topheader">
+                <div class="col-lg-5 col-md-5 language-currency-top">
+                    <?php echo $block->getChildHtml('language-header'); ?>
+                    <?php echo $block->getChildHtml('currency-header'); ?>
+                </div>
+
+                <div class="col-lg-7 col-md-7 header-top-links">
+                    <?php echo $block->getChildHtml('toplinks-header'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-middle">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 logo-header">
+                    <?php echo $block->getChildHtml('logo_theme'); ?>
+                </div>
+
+                <div class="col-lg-10 header-middle-right">
+                    <div class="middle-right-content">
+                        <div class="searchbox-header">
+                            <?php echo $block->getChildHtml('search-header-pro'); ?>
+                        </div>
+
+                        <div class="login-sinup" data-bind="scope: 'customer'">
+                            <!-- ko if: isLoggedIn()  -->
+                            <a <?php if(!$block->isCustomerLoggedIn()) : ?> style="display:none" <?php endif;?> href="javascript:void(0)" class="top my_account_link"><i class="fa fa-user-o" aria-hidden="true"></i></a>
+                            <div class="message-count-box" style="display: none;"></div>
+                            <ul <?php if(!$block->isCustomerLoggedIn()) : ?> style="display:none" <?php endif;?> class="account_dropdown">
+
+                                <li>
+                                    <a class="signup_link_bg my_account_link" href="<?php echo $this->getBaseUrl().'customer/account/';?>">
+                                        <?php echo __('My Account');?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="login_link_bg my_order_link" href="<?php echo $this->getBaseUrl().'sales/order/history/';?>">
+                                        <?php echo __('My Orders');?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="login_link_bg my_quotes_link" href="<?=$block->getUrl('quotes')?>">
+                                        <?=__('My Quotes')?>
+                                    </a>
+                                </li>
+                                <?php if ($block->isShowInvoices()) : ?>
+                                    <li>
+                                        <a class="login_link_bg my_invoices_link" href="<?php echo $this->getBaseUrl() . 'invoices'; ?>">
+                                            <?php echo __('Invoices'); ?>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                                <li>
+                                    <a class="login_link_bg my_reorder_link" href="<?php echo $this->getBaseUrl().'reorder/';?>">
+                                        <?php echo __('Reorder');?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="login_link_bg my_messages_link" href="<?php echo $this->getBaseUrl().'marketplace/message/';?>">
+                                        <?php echo __('Messages');?>
+                                        <span class="item-count-box" style="display: none;"></span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="login_link_bg my_wishlist_link" href="<?php echo $this->getBaseUrl().'wishlist/';?>">
+                                        <?php echo __('My Wish List');?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="login_link_bg account_info_link" href="<?php echo $this->getBaseUrl().'customer/account/edit/';?>">
+                                        <?php echo __('Account Information');?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="login_link_bg product_reivew_link" href="<?php echo $this->getBaseUrl().'review/customer/';?>">
+                                        <?php echo __('My Product Reviews');?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="login_link_bg signout_link" href="<?php echo $this->getBaseUrl().'customer/account/logout/';?>">
+                                        <?php echo __('Sign Out');?>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <!-- /ko -->
+
+                            <!-- ko ifnot: isLoggedIn()  -->
+                            <?php
+                                $currentUrl  = $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]);
+                                if(strpos($currentUrl,'customer/account') !== false)   {
+                                    $currentUrl = $this->getBaseUrl();
+                                }
+                                $login_url = $this->getUrl('customer/account/login', array('referer' => base64_encode($currentUrl)));
+                                $signup_url = rtrim($this->getUrl('sign-up-page'),"/")."?referer=".base64_encode($currentUrl);
+                            ?>
+                            <a <?php if($block->isCustomerLoggedIn()) : ?> style="display:none" <?php endif;?> class="login_link_bg loginBtn" href="<?php echo $login_url;?>">
+                                <?php echo __('Login');?>
+                            </a>
+                            <a <?php if($block->isCustomerLoggedIn()) : ?> style="display:none" <?php endif;?> class="signup_link_bg signUpBtn" id="signup-popup" href="<?php echo $signup_url;?>">
+                                <span class="desktop_view_text"><?php echo __('Sign Up to Shop');?></span>
+                                <span class="mobile_view_text"><?php echo __('Sign Up');?></span>
+                            </a>                            
+                            <?php //echo $this->getLayout()->createBlock("Magento\Framework\View\Element\Template")->setTemplate("Retailplace_CustomerAccount::signup-popup.phtml")->toHtml();?>
+                            <!-- /ko -->
+                        </div>
+                        <?php if(!$block->isCustomerLoggedIn()) : ?>
+                        <style>
+                            .login-sinup .account_dropdown{
+                                display:none;
+                            }
+                        </style>
+                        <?php endif; ?>
+                        <script type="text/x-magento-init">
+                        {
+                            "*": {
+                                "Magento_Ui/js/core/app": {
+                                    "components": {
+                                        "customer": {
+                                            "component": "Retailplace_Theme/js/view/customer",
+                                            "isCustomerLogged": "<?php echo $block->isCustomerLoggedIn(); ?>"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        </script>
+                        <script data-template="bundle-option" type="text/javascript">
+                            document.querySelector(".login-sinup > a.my_account_link").addEventListener("click", function() {
+                                var x = document.querySelector(".login-sinup >  .account_dropdown");
+                                if (x.style.display === "none") {
+                                    x.style.display = "block";
+                                } else {
+                                    x.style.display = "none";
+                                }
+                            });
+                            document.querySelector("#signup-popup,.signup-popup").addEventListener("click", function() {
+                                window.location.href = "<?= $signup_url ?>";
+                            });
+
+                            const elements = document.querySelectorAll("#signup-popup,.signup-popup");
+                            elements.forEach( el => {
+                                el.setAttribute("href", "<?= $signup_url ?>");
+
+                            });
+                        </script>
+                        <script>
+                            require(['jquery', 'jquery/ui'], function($){
+                                $(document).ready(function(){
+                                    $('#signup-popup,.signup-popup').each(function(e){
+                                        $(this).attr('href',"<?= $signup_url ?>");
+                                    });
+                                    $(".search_box_icon_mobile").click(function(){
+                                        $(this).toggleClass("active_search");
+                                        $(".searchbox-header").slideToggle();
+                                    });
+                                });
+                            });
+                        </script>
+
+                        <?php if($block->isCustomerLoggedIn()) : ?>
+                            <script>
+                                require(
+                                    ['jquery','Retailplace_MiraklFrontendDemo/js/notificationMessages'],
+                                    function($, notificationMessages){
+                                        notificationMessages.init(<?php echo $block->getMessageNotificationInterval();?>, ['.message-count-box','.item-count-box']);
+                                    }
+                                );
+                            </script>
+                        <?php endif; ?>
+
+                        <div class="minicart-header">
+                            <div class="minicart-content">
+                                <?php echo $block->getChildHtml('cart-header'); ?>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0);" class="search_box_icon_mobile"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 sidebar-megamenu">
+                    <div class="megamenu-content-sidebar">
+                        <div class="btn-megamenu">
+                            <a href="javascript:void(0)"
+                               title="<?php echo __('All Categories') ?>"><?php echo __('All Categories') ?></a>
+                        </div>
+
+                        <div class="menu-ver-content">
+                            <?php
+                            if ($_config->getGeneral('menu_style') == 'megamenu') {
+                                echo $block->getChildHtml('navigation-header-megamenu');
+                            } else {
+                                echo $block->getChildHtml('navigation-header');
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <div class="navigation-mobile-container">
+                        <?php echo $block->getChildHtml('navigation.mobile'); ?>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-9 main-megamenu">
+                    <?php echo $block->getChildHtml('megamenu-horizontal') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require([
+        'jquery'
+    ], function ($) {
+        $(".header-style-1 .header-top .header-top-links .toplinks-wrapper .header.links li").not(".myaccount-link").mouseover(function () {
+            $(".header-style-1 .header-top .header-top-links .toplinks-wrapper .header.links").addClass('toplinks_hover');
+        }).mouseout(function () {
+            $(".header-style-1 .header-top .header-top-links .toplinks-wrapper .header.links").removeClass('toplinks_hover');
+        });
+    });
+</script>

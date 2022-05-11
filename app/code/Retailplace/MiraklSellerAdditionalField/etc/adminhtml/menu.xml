@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add action="retailplace_miraklselleradditionalfield/industryexclusions/index" id="Retailplace_MiraklSellerAdditionalField::retailplace_miraklselleradditionalfield_industryexclusions" module="Retailplace_MiraklSellerAdditionalField" parent="MiraklSeller_Api::head" resource="Magento_Backend::content" sortOrder="9999" title="IndustryExclusions"/>
+		<add action="retailplace_miraklselleradditionalfield/channelexclusions/index" id="Retailplace_MiraklSellerAdditionalField::retailplace_miraklselleradditionalfield_channelexclusions" module="Retailplace_MiraklSellerAdditionalField" parent="MiraklSeller_Api::head" resource="Magento_Backend::content" sortOrder="9999" title="ChannelExclusions"/>
+		<!-- <add action="retailplace_miraklselleradditionalfield/exclusionslogic/index" id="Retailplace_MiraklSellerAdditionalField::retailplace_miraklselleradditionalfield_exclusionslogic" module="Retailplace_MiraklSellerAdditionalField" parent="MiraklSeller_Api::head" resource="Magento_Backend::content" sortOrder="9999" title="ExclusionsLogic"/> -->
+	</menu>
+</config>

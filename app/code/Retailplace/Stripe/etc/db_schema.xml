@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+ -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order" resource="sales">
+        <column xsi:type="date" name="payment_date" nullable="true" comment="Money capturing date"/>
+    </table>
+    <table name="sales_order_grid" resource="sales">
+        <column xsi:type="date" name="payment_date" nullable="true" comment="Money capturing date"/>
+    </table>
+    <table name="sales_invoice">
+        <column xsi:type="text" name="stripe_invoice_id" nullable="true" comment="Stripe invoice ID"/>
+        <column xsi:type="smallint" name="stripe_invoice_paid" nullable="false" default="10" comment="Is Stripe invoice paid"/>
+    </table>
+    <table name="sales_invoice_grid" resource="sales">
+        <column xsi:type="smallint" name="stripe_invoice_paid" nullable="false" default="10" comment="Is Stripe invoice paid"/>
+    </table>
+</schema>

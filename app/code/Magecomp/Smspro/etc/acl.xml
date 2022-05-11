@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Magecomp_Smspro::smsconfigmenu" title="Magecomp SMS Pro" translate="title" sortOrder="50">
+					<resource id="Magecomp_Smspro::magecompbulksms" title="Bulk SMS" translate="title" sortOrder="100" />
+					<resource id="Magecomp_Smspro::magecompphonebook" title="Phonebook" translate="title" sortOrder="110" />
+					<resource id="Magecomp_Smspro::magecompsmsconfig" title="SMS Configuration" translate="title" sortOrder="120" />
+				</resource>
+				<resource id="Magento_Backend::stores">
+					<resource id="Magento_Backend::stores_settings">
+						<resource id="Magento_Config::config">
+							<resource id="Magecomp_Smspro::smsconfig" title="Smspro Notification" />
+						</resource>
+					</resource>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

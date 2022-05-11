@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Insider
+ *
+ * @copyright   Copyright © 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Retailplace\Insider\Block\InsiderObject"
+                   name="retailplace_insider_object"
+                   template="Retailplace_Insider::insiderobject/insiderobject.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,46 @@
+<?php
+/** @var Mirakl\FrontendDemo\Block\Shop\View $this */
+/** @var Mirakl\Core\Model\Shop $_shop */
+$_shop = $this->getShop();
+$_info = $_shop->getAdditionalInfo();
+?>
+<div class="seller-shop">
+    <table class="data table additional-attributes" id="contact-info-table">
+        <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Contact Information') ?></caption>
+        <tbody>
+            <?php if ($_proInfo = $_info->getProfessionalInfo()): ?>
+                <?php $_proInfo = (array) $_proInfo; ?>
+                <?php if (isset($_proInfo['corporate_name'])): ?>
+                    <tr>
+                        <td><strong><?php echo __('Corporate Name') ?></strong></td>
+                        <td><?php echo $_proInfo['corporate_name'] ?></td>
+                    </tr>
+                <?php endif ?>
+                <?php if (isset($_proInfo['identification_number'])): ?>
+                    <tr>
+                        <td><strong><?php echo __('Identification Number') ?></strong></td>
+                        <td><?php echo $_proInfo['identification_number'] ?></td>
+                    </tr>
+                <?php endif ?>
+            <?php endif ?>
+
+            <?php if ($_info->getDataByKey('contact_info')): ?>
+                <tr>
+                    <td><strong><?php echo __('Address'); ?></strong></td>
+                    <td>
+                        <?php echo $_info['contact_info']['street_1'] ?><br>
+                        <?php if (!empty($_info['contact_info']['street_2'])): ?>
+                            <?php echo $_info['contact_info']['street_2'] ?><br>
+                        <?php endif ?>
+                        <?php echo $_info['contact_info']['zip_code'] ?> <?php echo $_info['contact_info']['city'] ?><br>
+                        <?php echo isset($_info['contact_info']['state']) ? $_info['contact_info']['state'] : '' ?>
+                    </td>
+                </tr>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2"><?php echo __('Seller has no contact information') ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>

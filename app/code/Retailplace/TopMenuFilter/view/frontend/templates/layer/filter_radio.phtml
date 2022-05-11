@@ -1,0 +1,36 @@
+<?php
+/**
+ * @var $block \Amasty\Shopby\Block\Navigation\FilterRenderer
+ */
+$filter = $block->getFilter();
+$attributeCode = $filter->getAttributeModel()->getAttributeCode();
+$filterLabel = $block->escapeHtml(__($filter->getName()));
+/**
+ * @var $filterItems \Amasty\Shopby\Model\Layer\Filter\Item
+ */
+?>
+<div class="filter-options-content">
+    <div class="filter-options">
+        <ul>
+            <?php foreach ($filterItems as $filterItem) : ?>
+                <?php if ($filterItem->getCount() > 0) : ?>
+                    <?php
+                    $filterLabel = $filterItem->getLabel();
+                    $filterId = $filterItem->getValue();
+                    $filterHtmlId = $attributeCode . '_' . $filterId;
+                    ?>
+                    <li class="item" data-label="$filterLabel">
+                        <input data-url="<?= $block->escapeUrl($filterItem->getUrl()) ?>" class="filter-check" name="<?= $attributeCode ?>" id="<?= $filterHtmlId ?>" value="<?= $filterId ?>" type="radio" style=""
+                        >
+                        <a class="am-filter-item am_shopby_link_selected" for="<?= $filterHtmlId ?>" data-am-js="filter-item-default" href="javascript:void(0);" rel="nofollow">
+                            <label for="<?= $filterHtmlId ?>"><?= $filterLabel ?></label>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <div class="applyfilter">
+        <button data-request-var="<?= $filter->getRequestVar() ?>" type="button" class="apply" id="apply<?= $attributeCode ?>"><span>Apply</span></button>
+    </div>
+</div>

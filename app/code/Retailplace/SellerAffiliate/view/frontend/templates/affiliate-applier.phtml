@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * Retailplace_SellerAffiliate
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+declare(strict_types=1);
+
+/** @var  Retailplace\SellerAffiliate\Block\AffiliateApplier $block */
+?>
+<script type="text/x-magento-init">
+    {
+            "*": {
+                "sellerAffiliateApplier": {
+                    "affiliatePrefix": "<?= $block->escapeHtml($block->getCodePrefix()) ?>",
+                    "affiliateCookieName": "<?= $block->escapeHtml($block->getCookieName()) ?>",
+                    "affiliateCookieLifetime": "<?= $block->escapeHtml($block->getCookieLifetime()) ?>"
+                }
+            }
+        }
+</script>

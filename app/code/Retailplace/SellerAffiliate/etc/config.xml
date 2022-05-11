@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_SellerAffiliate
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <ts_connect>
+            <ts_first_order_discount>
+                <enable>0</enable>
+                <frontend_label>TS connect first order</frontend_label>
+                <default_amount>100</default_amount>
+            </ts_first_order_discount>
+            <ts_free_shipping_discount>
+                <enable>1</enable>
+                <frontend_label>TS connect free shipping</frontend_label>
+            </ts_free_shipping_discount>
+            <ts_coupon_management>
+                <enable>0</enable>
+                <coupon_codes>coupon_1, coupon_2</coupon_codes>
+                <error_message>You can't apply promo code first order already was applied</error_message>
+            </ts_coupon_management>
+        </ts_connect>
+    </default>
+</config>

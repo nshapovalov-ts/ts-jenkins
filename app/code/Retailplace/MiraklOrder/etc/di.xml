@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklOrder
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Retailplace\MiraklOrder\Api\Data\MiraklOrderInterface"
+                type="Retailplace\MiraklOrder\Model\MiraklOrder"/>
+    <preference for="Retailplace\MiraklOrder\Api\MiraklOrderRepositoryInterface"
+                type="Retailplace\MiraklOrder\Model\MiraklOrderRepository"/>
+    <preference for="Mirakl\Adminhtml\Block\Sales\Order\View\Tab\MiraklOrders"
+                type="Retailplace\MiraklOrder\Block\Adminhtml\Sales\Order\View\Tab\MiraklOrders"/>
+    <preference for="Mirakl\Adminhtml\Controller\Adminhtml\Order\Send"
+                type="Retailplace\MiraklOrder\Controller\Adminhtml\Order\Send"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="retailplace_miraklorder_grid_data_source" xsi:type="string">
+                    Retailplace\MiraklOrder\Model\ResourceModel\MiraklOrder\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

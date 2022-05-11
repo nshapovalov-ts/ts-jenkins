@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Recent Order Notification
+ * @author      Trinh Doan
+ * @copyright   Copyright (c) 2017 Trinh Doan
+ * @package     TD_SoldNotification
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="TD\SoldNotification\Block\Recentorder" name="beforebody"  template="TD_SoldNotification::recentorder.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

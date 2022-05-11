@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+		<section id="smspro">
+				<group id="smsgatways">
+					<field id="msg91senderid" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Msg91 Sender ID</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msg91</field>
+						</depends>
+						<validate>required-entry</validate>
+						<comment><![CDATA[How to Setup <a href="https://help.msg91.com/article/124-how-to-set-default-sender-id" target="__blank">Sender ID</a> ?]]></comment>
+					</field>
+					<field id="msg91authkey" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Msg91 Authentication Key</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msg91</field>
+						</depends>
+						<validate>required-entry</validate>
+						<comment><![CDATA[Where can I find my <a href="https://help.msg91.com/article/177-where-can-i-find-my-authentication-key" target="__blank">Authentication key</a> ?]]></comment>
+					</field>
+					<field id="msg91route" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>Route</label>
+						<source_model>Magecomp\Smsmsg91\Model\Config\Router</source_model>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msg91</field>
+						</depends>
+						<validate>required-entry</validate>
+					</field>
+					<field id="msg91apiurl" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>API URL</label>
+						<comment><![CDATA[https://api.msg91.com/api/sendhttp.php]]></comment>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msg91</field>
+						</depends>
+						<validate>required-entry validate-url</validate>
+					</field>
+				</group>
+		</section>
+    </system>
+</config>

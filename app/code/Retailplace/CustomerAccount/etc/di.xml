@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_CustomerAccount
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Model\AccountManagement" type="Retailplace\CustomerAccount\Rewrite\Model\AccountManagement"/>
+    <preference for="Magento\Customer\Model\Account\Redirect" type="Retailplace\CustomerAccount\Rewrite\Model\Account\Redirect"/>
+    <!-- <preference for="Magento\Customer\Controller\Account\LoginPost" type="Retailplace\CustomerAccount\Controller\Account\LoginPost" />-->
+  	<!-- <preference for="Magento\Customer\Controller\Account\CreatePost" type="Retailplace\CustomerAccount\Controller\Account\CreatePost" /> -->
+	<preference for="Retailplace\CustomerAccount\Api\AccountManagementInterface" type="Retailplace\CustomerAccount\Model\AccountManagement"/>
+	<type name="Amasty\HidePrice\Helper\Data">
+		<plugin name="customer_attribute_hide_price" type="Retailplace\CustomerAccount\Plugin\Amasty\HidePrice\DataPlugin" />
+	</type>
+	<preference for="Retailplace\CustomerAccount\Api\Data\ChangePasswordInfoInterface" type="Retailplace\CustomerAccount\Model\ChangePasswordInfo"/>
+	<preference for="Magento\Customer\Model\AddressRegistry" type="Retailplace\CustomerAccount\Rewrite\Model\CustomerAddressRegistry"/>
+	<preference for="Magento\Checkout\Block\Checkout\AttributeMerger" type="Retailplace\CustomerAccount\Rewrite\Block\CheckoutAttributeMerger"/>
+
+	<type name="Magento\Framework\Console\CommandListInterface">
+		<arguments>
+			<argument name="commands" xsi:type="array">
+				<item name="update_incomplete_app" xsi:type="object">Retailplace\CustomerAccount\Console\Command\UpdateIncompleteAppCustomer</item>
+				<item name="update_address_company" xsi:type="object">
+                    Retailplace\CustomerAccount\Console\Command\QuoteAddressCompanyUpdate
+                </item>
+			</argument>
+		</arguments>
+	</type>
+
+    <type name="Magento\Quote\Model\ResourceModel\Quote\Address">
+        <plugin name="retailplace_address_update_company_attribute"
+                type="Retailplace\CustomerAccount\Plugin\UpdateCompanyAttribute"
+                sortOrder="100"/>
+    </type>
+
+    <type name="Retailplace\CustomerAccount\Controller\Quote\AddressUpdate">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+</config>

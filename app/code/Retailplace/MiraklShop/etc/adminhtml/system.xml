@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklShop
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="retailplace_attribute_updater" translate="label" sortOrder="150" showInDefault="1">
+            <group id="has_new_products" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>"New products added" (has_new_products) attribute</label>
+                <field id="nb_days_to_label_new" translate="label comment" type="text" sortOrder="55" showInDefault="1"
+                       showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Number of Days to Label Supplier as "New"</label>
+                    <comment><![CDATA[Add "New supplier" label for suppliers registered in the last X days]]></comment>
+                    <validate>validate-number</validate>
+                </field>
+                <field id="cron_schedule" translate="label" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cron Schedule for "Has new products" updater</label>
+                    <comment>Cron time format (minute hour day of month month day of week)</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

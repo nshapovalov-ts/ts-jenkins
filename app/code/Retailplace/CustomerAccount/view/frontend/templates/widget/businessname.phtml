@@ -1,0 +1,21 @@
+<?php
+
+/** @var \Retailplace\CustomerAccount\Block\Widget\BusinessName $block */
+?>
+<div class="field business-name required">
+    <label for="business_name" class="label">
+        <span>
+            <?= $block->escapeHtml(__('Business Name')) ?>
+        </span>
+    </label>
+    <div class="control">
+        <input type="text"
+               name="business_name"
+               id="business_name"
+               placeholder="<?= $block->escapeHtml(__('Business Name')) ?>"
+               value="<?= $block->escapeHtmlAttr($block->getBusinessNameValue()) ?>"
+               title="<?= $block->escapeHtmlAttr(__('Business Name')) ?>"
+               class="input-text required-entry"
+        >
+    </div>
+</div>

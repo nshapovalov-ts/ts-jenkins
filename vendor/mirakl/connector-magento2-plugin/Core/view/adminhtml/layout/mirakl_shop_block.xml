@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.shop.grid.container">
+            <block class="Magento\Backend\Block\Widget\Grid" name="shop.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">shop_grid</argument>
+                    <argument name="dataSource" xsi:type="object">Mirakl\Core\Model\ResourceModel\Shop\Collection</argument>
+                    <argument name="default_sort" xsi:type="string">id</argument>
+                    <argument name="default_dir" xsi:type="string">ASC</argument>
+                    <argument name="save_parameters_in_session" xsi:type="string">1</argument>
+                </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" name="shop.grid.columnSet" as="grid.columnSet">
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="logo">
+                         <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Logo</argument>
+                            <argument name="index" xsi:type="string">logo</argument>
+                            <argument name="sortable" xsi:type="string">0</argument>
+                            <argument name="filter" xsi:type="string">0</argument>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Template\Grid\Renderer\Logo</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">ID</argument>
+                            <argument name="index" xsi:type="string">id</argument>
+                            <argument name="width" xsi:type="string">100px</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="name">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Name</argument>
+                            <argument name="index" xsi:type="string">name</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="description">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Description</argument>
+                            <argument name="index" xsi:type="string">description</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Template\Grid\Renderer\Html</argument>
+
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="state">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">State</argument>
+                            <argument name="index" xsi:type="string">state</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="with_empty" xsi:type="string">1</argument>
+                            <argument name="options" xsi:type="options" model="Mirakl\Core\Model\Config\Source\ShopStates"/>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Template\Grid\Renderer\State</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="free_shipping">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Free Shipping</argument>
+                            <argument name="index" xsi:type="string">free_shipping</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="with_empty" xsi:type="string">1</argument>
+                            <argument name="options" xsi:type="options" model="Magento\Config\Model\Config\Source\Yesno"/>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Widget\Grid\Column\Renderer\Boolean</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="professional">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Professional</argument>
+                            <argument name="index" xsi:type="string">professional</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="with_empty" xsi:type="string">1</argument>
+                            <argument name="options" xsi:type="options" model="Magento\Config\Model\Config\Source\Yesno"/>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Widget\Grid\Column\Renderer\Boolean</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="premium">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Premium</argument>
+                            <argument name="index" xsi:type="string">premium</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="with_empty" xsi:type="string">1</argument>
+                            <argument name="options" xsi:type="options" model="Magento\Config\Model\Config\Source\Yesno"/>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Widget\Grid\Column\Renderer\Boolean</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="date_created">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Creation Date</argument>
+                            <argument name="index" xsi:type="string">date_created</argument>
+                            <argument name="type" xsi:type="string">date</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="closed_from">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Closed From</argument>
+                            <argument name="index" xsi:type="string">closed_from</argument>
+                            <argument name="type" xsi:type="string">date</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="closed_to">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Closed To</argument>
+                            <argument name="index" xsi:type="string">closed_to</argument>
+                            <argument name="type" xsi:type="string">date</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+ -->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/carts/mine/stripe/cards" method="GET">
+        <service class="Retailplace\Stripe\Model\PaymentCardsManagement" method="getListCards"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+    </route>
+</routes>

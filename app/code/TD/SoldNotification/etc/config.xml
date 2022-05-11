@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Recent Order Notification
+ * @author      Trinh Doan
+ * @copyright   Copyright (c) 2017 Trinh Doan
+ * @package     TD_SoldNotification
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<sold_notification>
+			<design>
+				<background_color>#ffffff</background_color>
+				<text_color>#020302</text_color>
+				<highligh_color>#e00b2f</highligh_color>
+				<position><![CDATA[from: "bottom", align: "left"]]></position>
+				<effect><![CDATA[enter: "animated fadeInDown", exit: "animated fadeOutUp"]]></effect>
+				<message_template><![CDATA[Someone in [city],[region], [country] purchased a [product_link] About [ordered_time] ]]></message_template>
+                <max_width>768</max_width>
+			</design>
+            <order>
+                <use_fake_order>0</use_fake_order>
+                <limit_last_order>5</limit_last_order>
+                <random_order>1</random_order>
+            </order>
+            <time>
+                <time_display>5</time_display>
+                <time_delay>10</time_delay>
+            </time>
+            <exclude_page>
+                <homepage>0</homepage>
+                <checkout>1</checkout>
+                <shoppingcart>0</shoppingcart>
+            </exclude_page>
+		</sold_notification>
+	</default>
+</config>

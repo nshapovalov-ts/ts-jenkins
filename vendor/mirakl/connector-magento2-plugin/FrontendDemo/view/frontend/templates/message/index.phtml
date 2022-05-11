@@ -1,0 +1,105 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Message\Index $block */
+$threads = $block->getThreads();
+/** @var \Mirakl\FrontendDemo\Helper\Message $helper */
+$helper = $this->helper('Mirakl\FrontendDemo\Helper\Message');
+$miraklOrder = $block->getMiraklOrder();
+?>
+<?php if ($threads && $threads->getCollection()->count()) : ?>
+    <div class="table-wrapper customer-messages">
+        <table class="data table table-customer-messages" id="my-customer-messages-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Messages')) ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col participants"><?= $block->escapeHtml(__('Participants')) ?></th>
+                <th scope="col" class="col subject"><?= $block->escapeHtml(__('Topic')) ?></th>
+                <th scope="col" class="col date"><?= $block->escapeHtml(__('Last Message Date')) ?></th>
+                <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \Mirakl\MMP\Common\Domain\Message\Thread\Thread $thread */ ?>
+            <?php foreach ($threads->getCollection() as $thread): ?>
+            <tr>
+                <td data-th="<?= $block->escapeHtmlAttr(__('Participants')) ?>" class="col participants">
+                    <?= implode(', ', $helper->getCurrentParticipantsNames($thread, ['CUSTOMER'])) ?>
+                </td>
+                <td data-th="<?= $block->escapeHtmlAttr(__('Topic')) ?>" class="col subject">
+                    <?php /** @var \Mirakl\MMP\Common\Domain\Message\Thread\ThreadEntity $entity */ ?>
+                    <?php foreach ($thread->getEntities() as $entity): ?>
+                        <?php if ($topic = $helper->getTopic($thread)): ?>
+                            <div class="customer-messages-subject">
+                                <?= $block->escapeHtmlAttr(__($topic)) ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="customer-messages-entity">
+                            <?= __('%1: %2',
+                                '<span class="customer-messages-type">' .
+                                    $block->escapeHtmlAttr(__($helper->getEntityName($entity))) .
+                                '</span>',
+                                $block->escapeHtmlAttr($entity->getLabel())
+                            ) ?>
+                        </div>
+                    <?php endforeach; ?>
+                </td>
+                <td data-th="<?= $block->escapeHtmlAttr(__('Last Message Date')) ?>" class="col date">
+                    <?= $block->formatDateShort($thread->getMetadata()->getLastMessageDate()) ?>
+                </td>
+                <td data-th="<?= $block->escapeHtmlAttr(__('Action')) ?>" class="col actions">
+                    <a href="<?= $block->escapeUrl($block->getMessageUrl($thread)) ?>" class="action view">
+                        <span><?= $block->escapeHtml(__('View Conversation')) ?></span>
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($threads->getNextPageToken() || $threads->getPreviousPageToken()): ?>
+        <div class="toolbar bottom">
+            <div class="pager">
+                <div class="pages">
+                    <strong class="label pages-label" id="paging-label"><?= $block->escapeHtml(__('Page')) ?></strong>
+                    <ul class="items pages-items" aria-labelledby="paging-label">
+                        <?php if ($threads->getPreviousPageToken()): ?>
+                            <li class="item pages-item-previous">
+                                <a class="action previous"
+                                   href="<?= $block->escapeUrl($block->getSeekPageUrl($threads->getPreviousPageToken())) ?>"
+                                   title="<?= $block->escapeHtml(__('Previous')) ?>">
+                                    <span class="label"><?= $block->escapeHtml(__('Page')) ?></span>
+                                    <span><?= $block->escapeHtml(__('Previous')) ?></span>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                        <?php if ($threads->getNextPageToken()): ?>
+                            <li class="item pages-item-next">
+                                <a class="action next"
+                                   href="<?= $block->escapeUrl($block->getSeekPageUrl($threads->getNextPageToken())) ?>"
+                                   title="<?= $block->escapeHtmlAttr(__('Next')) ?>">
+                                    <span class="label"><?= $block->escapeHtml(__('Page')) ?></span>
+                                    <span><?= $block->escapeHtml(__('Next')) ?></span>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                    </ul>
+                </div>
+                <div class="limiter">
+                    <strong class="limiter-label"><?= $block->escapeHtml(__('Show')) ?></strong>
+                    <select id="limiter" data-mage-init='{"redirectUrl": {"event":"change"}}' class="limiter-options">
+                        <?php foreach ($block->getAvailableLimit() as $key => $limit) : ?>
+                            <option value="<?= $block->escapeHtmlAttr($block->getLimitUrl($key)) ?>"
+                                <?php if ($block->isLimitCurrent($key)) : ?>
+                                    selected="selected"<?php endif ?>>
+                                <?= $block->escapeHtml($limit) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <span class="limiter-text"><?= $block->escapeHtml(__('per page')) ?></span>
+                </div>
+
+            </div>
+        </div>
+    <?php endif ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have no messages.')) ?></span></div>
+<?php endif ?>

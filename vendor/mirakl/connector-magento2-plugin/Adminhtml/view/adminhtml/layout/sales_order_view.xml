@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="sales_order_tabs">
+            <block class="Mirakl\Adminhtml\Block\Sales\Order\View\Tab\Mirakl" name="sales_order_mirakl.grid.container"/>
+            <action method="addTab">
+                <argument name="name" xsi:type="string">mirakl</argument>
+                <argument name="block" xsi:type="string">sales_order_mirakl.grid.container</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="order_items">
+            <arguments>
+                <argument name="columns" xsi:type="array">
+                    <item name="mirakl" xsi:type="string" translate="true">Mirakl Information</item>
+                </argument>
+            </arguments>
+            <referenceBlock name="default_order_items_renderer">
+                <arguments>
+                    <argument name="columns" xsi:type="array">
+                        <item name="mirakl" xsi:type="string" translate="false">col-mirakl</item>
+                    </argument>
+                </arguments>
+            </referenceBlock>
+            <referenceBlock name="order_items_schedule_block2">
+                <arguments>
+                    <argument name="columns" xsi:type="array">
+                        <item name="mirakl" xsi:type="string" translate="false">col-mirakl</item>
+                    </argument>
+                </arguments>
+            </referenceBlock>
+            <referenceBlock name="order_items_schedule_block3">
+                <arguments>
+                    <argument name="columns" xsi:type="array">
+                        <item name="mirakl" xsi:type="string" translate="false">col-mirakl</item>
+                    </argument>
+                </arguments>
+            </referenceBlock>
+            <block class="Mirakl\Adminhtml\Block\Sales\Order\View\Items\Column\Mirakl" name="column_mirakl" template="items/column/mirakl.phtml" group="column"/>
+        </referenceBlock>
+        <referenceBlock name="tax">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Mirakl_Adminhtml::order/totals/tax.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

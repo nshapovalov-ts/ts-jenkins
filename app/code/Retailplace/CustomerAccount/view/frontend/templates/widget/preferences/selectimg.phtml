@@ -1,0 +1,32 @@
+<?php
+/** @var \Retailplace\CustomerAccount\Block\Widget\SellGoods $block */
+/** @var \Retailplace\CustomerAccount\Block\Widget\Tradesquare $block */
+?>
+<?php
+$options = $block->getOptions();
+$attributeCode = $block->getAttribute()->getAttributeCode();
+?>
+<div class="select-img">
+    <div class="preferences-wrap control" data-ui-id="<?= $attributeCode?>" data-mage-init='{"selectionImage": {}}'>
+        <h2><?= $block->getStoreLabel(); ?></h2>
+        <div class="items">
+            <?php foreach ($options as $option): ?>
+                <?php if (!empty($option['icon'])): ?>
+                    <div class="item img <?php if ($option['selected']): ?>active<?php endif;?>">
+                        <img src="<?= $option['icon']?>" alt="<?= $block->escapeHtml($option['label'])?>">
+                <?php else: ?>
+                    <div class="item <?php if ($option['selected']): ?>active<?php endif;?>">
+                <?php endif; ?>
+                    <label for="<?= $attributeCode ?>-<?= $block->escapeHtmlAttr($option['value']); ?>">
+                        <span><?= $block->escapeHtml($option['label'])?></span>
+                    </label>
+                    <input class="visibility-hidden <?= $block->isRequired() ? 'required-entry' : '' ?>" type="radio"
+                        <?php if ($option['selected']): ?> checked="checked" <?php endif;?>
+                           id="<?= $attributeCode ?>-<?= $block->escapeHtmlAttr($option['value']); ?>"
+                           name="<?= $attributeCode ?>"
+                           value="<?= $block->escapeHtmlAttr($option['value']); ?>">
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

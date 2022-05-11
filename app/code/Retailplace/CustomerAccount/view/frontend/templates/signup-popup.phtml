@@ -1,0 +1,154 @@
+<div id="signup-popup-modal" style="display: none;">
+    <form class="form create account form-create-account email-confirmation-signup" method="post" id="email-confirmation-signup" enctype="multipart/form-data" autocomplete="off" novalidate="novalidate">
+
+        <div class="sign-up-image">
+            <img src="<?= $this->helper('Magento\Cms\Helper\Wysiwyg\Images')->getBaseUrl().'signup/sign_up_icon.png';?>" alt="sign up" title="Sign Up"/>
+        </div>
+        <div class="sign-up-title">
+            <span>Welcome to TradeSquare</span>
+        </div>
+        <p class="access100">Access 100k+ Aussie wholesale products and supplies, in one place, at digital speed</p>
+        <fieldset class="fieldset">
+            <input type="hidden" name="current_url" value="<?= $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]) ?>" />
+            <div class="field required">
+                <label for="email_address" class="label"><span>Business email</span></label>
+                <div class="control">
+                    <input type="email" name="email" autocomplete="email" id="email_address" value="" title="Email" class="input-text validate-email" data-validate="{required:true, 'validate-email':true}" aria-required="true">
+                    <span id="email-error"></span>
+                </div>
+            </div>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" class="action submit primary" title="<?php  echo __('Get Started') ?>"><span><?php echo __('Get Started') ?></span></button>
+                </div>
+                <div class="sign-up-button">
+                    Already on TradeSquare? <a href="<?php echo $this->getUrl('customer/account/login')?>"><?php  echo __('Sign In') ?></a>
+                </div>
+                <div class="sign-up-note">
+                    By signing up TradeSquare, you're agreeing to our <a href="<?php echo $this->getUrl('buyerterms') ?>"><?php  echo __('Terms of Service')?></a> and <a href="<?php echo $this->getUrl('privacypolicy') ?>">Privacy Policy.</a>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input type="checkbox" name="offers_checkbox" id="offers_checkbox" title="Offets Checkbox" class="input-text" checked="checked">
+                    <label for="offers_checkbox" class="label confirm-checkbox"><span><?php  echo __('Join the TS Buying community - Be inspired by exclusive offers and updates.') ?></span></label>
+                </div>
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+<script type="text/x-magento-init">
+    {
+        "#email-confirmation": {
+            "validation": {}
+        }
+    }
+</script>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal',
+            'jquery/ui'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                //title: ' ',
+                modalClass: 'email-confirmation',
+                buttons: []
+                /*buttons: [{
+                    text: $.mage.__('Get Started'),
+                    class: '',
+                    click: function (data) {
+                        this.closeModal();
+                    }
+                }]*/
+            };
+
+            var popup = modal(options, $('#signup-popup-modal'));
+            $(document).on("click","#signup-popup",function(){
+                $('#signup-popup-modal').modal('openModal');
+            });
+        }
+    );
+</script>
+<div id="email-confirmation-success" style="display: none;" class="email-confirmation-success">
+    <div class="email-confirmation-image">
+        <img src="<?= $this->helper('Magento\Cms\Helper\Wysiwyg\Images')->getBaseUrl().'signup/check_your_email.png';?>" alt="email" title="Email">
+    </div>
+    <h1> Check your email! </h1>
+    <div class="email-success">
+        <p>
+            We’ve emailed a special link to <b class="customer-email" id="customer-email"></b>. Click the link to confirm your address and get started.
+        </p>
+        <span>Wrong email? Please <a href="javascript:void(0)" id="back-popup-open"> re-enter your address.</a></span>
+        <span>In case of any issue please send an email to  <a href="mailto:support@tradesquare.com.au">support@tradesquare.com.au</a></span>
+    </div>
+</div>
+<script type="text/javascript">
+    require([
+        "jquery",
+        'Magento_Ui/js/modal/modal',
+        "mage/mage",
+        'jquery/ui'
+    ],function($,modal) {
+        $(document).ready(function() {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                title: '',
+                modalClass: 'email-confirmation-success',
+            };
+
+            var popup = modal(options, $('#email-confirmation-success'));
+            $('.email-confirmation-signup').mage(
+                'validation',
+                {
+                    submitHandler: function(form) {
+                        var url = "<?php echo $this->getUrl('customeraccount/index/emailconfirmation') ?>";
+                        $.ajax({
+                            url: url,
+                            data: $('.email-confirmation-signup').serialize(),
+                            type: 'POST',
+                            dataType: 'json',
+                            showLoader: true,
+                            cache: false,
+                            beforeSend: function() {
+       							$("#email-error").html("");
+						    },
+                            success: function(response, status, xhr) {
+                                if (response.status === 'ok'){
+                                	if (response.email_link) {
+                                        window.location.replace(response.email_link);
+                                        /*$('#signup-popup-modal').modal('closeModal');
+                                        $('#customer-email').text(response.email);
+                                        $("#email-confirmation-success").modal('openModal');*/
+                                	}
+                                	else{
+                                		$("#email-error").html(response.message);
+                                	}
+                                }
+
+                            },
+                            error: function (xhr, status, errorThrown) {
+                                console.log('Error happens. Try again.');
+                                console.log(errorThrown);
+                            }
+                        });
+                    }
+                }
+            );
+            $("#back-popup-open").click(function(){
+            	$('#signup-popup-modal').modal('openModal');
+            	$("#email-confirmation-success").modal('closeModal');
+       		});
+        });
+    });
+</script>

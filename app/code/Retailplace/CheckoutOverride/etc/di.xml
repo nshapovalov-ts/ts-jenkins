@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_CheckoutOverride
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+		<plugin name="Retailplace_CheckoutOverride_Plugin_Magento_Checkout_Block_Checkout_LayoutProcessor" type="Retailplace\CheckoutOverride\Plugin\Magento\Checkout\Block\Checkout\LayoutProcessor" sortOrder="10" disabled="false"/>
+	</type>
+    <type name="Magento\SalesRule\Model\Quote\Address\Total\ShippingDiscount">
+		<plugin name="change_discount_title"
+                type="Retailplace\CheckoutOverride\Plugin\ChangeDiscountTitle" sortOrder="50"/>
+	</type>
+    <preference for="Magento\Checkout\Block\Cart\Grid" type="Retailplace\CheckoutOverride\Rewrite\Block\Cart\Grid"/>
+</config>

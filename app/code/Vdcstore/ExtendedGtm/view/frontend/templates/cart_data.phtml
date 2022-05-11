@@ -1,0 +1,16 @@
+<?php
+// @codingStandardsIgnoreFile
+?>
+<?php if($this->isEnabled()) : ?>
+    <?php $products = $this->getProducts(); ?>
+    <?php
+    $cartData = [];
+    $cartData['products'] = $products;
+    $cartData['currencyCode'] = $this->getCurrencyCode();
+    $cartData['orderTotal'] = $this->getCartTotal();
+    $cartData['totalItems'] = $this->getCartSummaryCount();
+    $this->setDataLayerOption('event', 'cart');
+    $this->setDataLayerOption('eventLabel', 'Cart');
+    $this->setEcommerceData('cart', $cartData);
+    ?>
+<?php endif; ?>

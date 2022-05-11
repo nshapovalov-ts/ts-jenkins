@@ -1,0 +1,761 @@
+<?php
+
+/**
+ * Retailplace_PdfCustomizer
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+use Retailplace\PdfCustomizer\Block\Invoice;
+
+/** @var $block Invoice */
+$billingAddress = $block->getBillingAddress();
+$shippingAddress = $block->getShippingAddress();
+$sellers = $block->getSellers();
+$totals = $block->getTotals();
+$order = $block->getOrder();
+$invoiceInfo = $block->getInvoiceInfo();
+$sellerCount = count($sellers);
+$refunds = $block->getRefunds();
+?>
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+
+    <style type="text/css">
+        @font-face {
+            font-family: "Hurme Geometric Sans 3";
+            src: url("<?= $block->getFontUrl('fonts/Hurme_smb.ttf') ?>") format("truetype");
+            font-weight: 600;
+        }
+        @font-face {
+            font-family: "Hurme Geometric Sans 3";
+            src: url("<?= $block->getFontUrl('fonts/Hurme_bold.ttf') ?>") format("truetype");
+            font-weight: 700;
+        }
+        @font-face {
+            font-family: "Hurme Geometric Sans 3";
+            src: url("<?= $block->getFontUrl('fonts/Hurme_rg.ttf') ?>") format("truetype");
+            font-weight: normal;
+        }
+        html, body {
+            font-family: "Hurme Geometric Sans 3";
+            width: 1190px;
+            background: #FFFFFF;
+        }
+        .header_line {
+            height: 6px;
+            margin-left: 0px;
+            margin-right: 580px;
+            background: #873456;
+        }
+
+        .logo {
+            position: absolute;
+            width: 152px;
+            height: 48px;
+            margin-left: 26px;
+            margin-top: 72px;
+        }
+
+        .title_container {
+            padding: 0px;
+            position: relative;
+            width: 274px;
+            height: 54px;
+            margin: 72px 0 0 403px;
+        }
+
+        .title {
+            position: static;
+            width: 300px;
+            height: 31px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 28px;
+            line-height: 110%;
+            color: #873456;
+        }
+
+        .title_abn {
+            position: relative;
+            width: 300px;
+            height: 26px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            color: #000000;
+            font-size: 24px;
+            line-height: 100%;
+            font-weight: normal;
+            margin: -24px 0 0 300px;
+        }
+
+        .title_email {
+            position: static;
+            width: 203px;
+            height: 17px;
+            left: 0px;
+            margin-top: 7px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 110%;
+            color: #000000;
+        }
+
+        .bill_to, .ship_to {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 110%;
+            color: #000000;
+        }
+
+        .top_content_1, .top_content_2 {
+            position: relative;
+            width: 201px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            color: #666666;
+        }
+
+        .top_content_3 {
+            position: relative;
+            width: 282px;
+            height: 59px;
+            left: 0px;
+            top: 0px;
+            float: right;
+        }
+
+        .top_content_1, .top_content_2 {
+            top: 0px;
+        }
+
+        .address_line {
+            width: 201px;
+            padding: 0;
+        }
+
+        .line1 {
+            position: absolute;
+            margin-left: -350px;
+            margin-top: -154px;
+            height: 180px;
+        }
+
+        .line2 {
+            padding-top: 26px;
+            width: 988px;
+        }
+
+        .line3 {
+            width: 988px;
+            margin-top: 34px;
+        }
+
+        .line4 {
+            margin: 40px 0px 0px 0px;
+        }
+
+        .invoice_title {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 40px;
+            line-height: 110%;
+            align-items: center;
+            text-align: right;
+            color: #873456;
+        }
+
+        .invoice_content_item_line_l {
+            width: 141px;
+            height: 17px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 110%;
+            color: #666666;
+        }
+        .invoice_content_item_line_r {
+            width: 141px;
+            height: 17px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 110%;
+            color: #000000;
+            text-align: right;
+        }
+
+        .top_header {
+            position: static;
+            width: 988px;
+            margin-top: 50px;
+        }
+
+        .amount_content {
+            position: relative;
+            left: 13px;
+            margin-top: 15px;
+        }
+
+        .amount_content_row_1 {
+            position: static;
+            height: 44px;
+            left: 0px;
+            right: 313px;
+            margin-top: 0px;
+        }
+
+        .amount_content_row_2 {
+            position: static;
+            height: 17px;
+            margin-top: 18px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 110%;
+            color: #666666;
+        }
+
+        .amount_content_row_2 b {
+            color: #000000;
+        }
+
+        .amount_value {
+            position: relative;
+            height: 44px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 40px;
+            line-height: 110%;
+            color: #873456;
+            width: 125px;
+        }
+
+        .amount_due {
+            position: relative;
+            top: 4px;
+            height: 36px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 28px;
+            line-height: 130%;
+            color: #666666;
+            width: 40px;
+            padding: 0 10px 0 10px;
+        }
+
+        .amount_date {
+            position: relative;
+            top: 4px;
+            height: 36px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 28px;
+            line-height: 130%;
+            color: #000000;
+            width: 260px;
+        }
+
+        .first_container {
+            position: static;
+            width: 988px;
+            margin-top: 0px;
+        }
+
+        .seller {
+            position: static;
+            width: 988px;
+            margin-top: 20px;
+            left: 0px;
+        }
+
+        .seller_title_label {
+            width: 32px;
+            height: 32px;
+            background: #873456;
+            border-radius: 6px 6px 6px 6px;
+        }
+
+        .label_title {
+            position: relative;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 110%;
+            text-align: center;
+            color: #FFFFFF;
+            margin: 6px 0px 6px 0px;
+            padding-top: 2px;
+        }
+
+        .seller_name {
+            position: relative;
+            width: 450px;
+            height: 13px;
+            left: 0px;
+            top: 0px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 110%;
+            color: #000000;
+            padding-left: 16px;
+        }
+
+        .order_totals_title, .order_refunds_title {
+            width: 988px;
+            margin-top: 30px;
+        }
+
+        .order_totals_title > div, .order_refunds_title > div {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 110%;
+            color: #000000;
+            margin-left: 16px;
+        }
+
+        .seller_items {
+            width: 988px;
+            border-spacing: 0;
+        }
+
+        .seller_items td, .seller_items th {
+            padding: 0 10px 0 15px;
+        }
+
+        .seller_items td > span {
+            padding-right: 10px;
+        }
+
+        .seller_items th {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 110%;
+        }
+
+        table {
+            border-spacing: 0;
+        }
+
+        .adjustment_subtotal_final {
+            margin-top: 24px;
+            /*margin-right: 0px;*/
+            margin-left: 606px;
+            width: 383px;
+            /*float: right;*/
+            border-spacing: 0;
+            background: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px 8px 8px 8px;
+        }
+
+        .total_row {
+            height: 48px;
+        }
+
+        .total_row td:first-child {
+            width: 200px;
+        }
+
+        .total_row td:last-child {
+            width: 116px;
+        }
+
+        .adjustment_subtotal_row {
+            padding: 0px 16px 0px 16px;
+        }
+
+        .row {
+            width: 988px;
+            height: 48px;
+        }
+
+        .grey_200 {
+            background-color: #E5E5E5;
+        }
+
+        .grey_100 {
+            background-color: #F8F8F8;
+        }
+
+        .row > td, .row > th, .total_row > td, .total_row > th, {
+            height: 48px;
+            padding: 0px 16px 0px 16px;
+        }
+
+        .totals_item_title {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 110%;
+            color: #000000;
+        }
+
+        .totals_item_amount, .totals_item_amount_total {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 110%;
+            color: #000000;
+        }
+
+        .totals_item_amount_total {
+            font-size: 20px;
+        }
+
+        .radius_l {
+            border-radius: 8px 0px 0px 8px;
+        }
+
+        .radius_r {
+            border-radius: 0px 8px 8px 0px;
+        }
+
+        .item_description {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 110%;
+            color: #000000;
+        }
+
+        .item_qty {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 110%;
+            color: #666666;
+        }
+
+        .item_price, .item_date, .item_tax, .item_discount {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 110%;
+            color: #666666;
+        }
+
+        .item_amount {
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 15px;
+            line-height: 110%;
+            color: #000000;
+        }
+
+        .border_line > td {
+            border-top: 1px solid #E5E5E5;
+        }
+
+        .copyright_container {
+            position: relative;
+            width: 988px;
+
+            margin-top: 20px;
+        }
+
+        .copyright {
+            margin: 10px 20px 20px 20px;
+            font-family: "Hurme Geometric Sans 3";
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 110%;
+            color: #666666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="first_container">
+        <div class="header_line"></div>
+
+        <img class="logo" src="<?= $block->getImageContent('images/logo.png') ?>" alt="Logo"/>
+
+        <div class="title_container">
+            <div class="title">TradeSquare PTY Ltd</div>
+            <div class="title_abn">(ABN 97640578614)</div>
+            <div class="title_email">support@tradesquare.com.au</div>
+        </div>
+
+        <div class="top_header">
+            <table style="width: 988px;">
+                <tr>
+                    <td class="bill_to">Bill to</td>
+                    <td class="ship_to">Ship to</td>
+                    <td class="invoice_title">Tax Invoice</td>
+                </tr>
+
+                <tr>
+                    <td style="vertical-align: initial;">
+                        <div class="top_content_1">
+                            <?php foreach ($billingAddress as $addressItem): ?>
+                                <div>
+                                    <div class="address_line"><?= $addressItem ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </td>
+                    <td style="vertical-align: initial;">
+                        <div class="top_content_2">
+                            <?php foreach ($shippingAddress as $addressItem): ?>
+                                <div>
+                                    <div class="address_line"><?= $addressItem ?></div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="top_content_3">
+                            <table>
+                                <tr>
+                                    <td class="invoice_content_item_line_l">Invoice number</td>
+                                    <td class="invoice_content_item_line_r">#<?= $invoiceInfo['id'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="invoice_content_item_line_l">Date of issue</td>
+                                    <td class="invoice_content_item_line_r"><?= $invoiceInfo['date_invoice'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="invoice_content_item_line_l">Date due</td>
+                                    <td class="invoice_content_item_line_r"><?= $invoiceInfo['date_due'] ?></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <img class="line2" src="<?= $block->getSvgContent("images/line2.svg") ?>" alt=""/>
+            <img class="line1" src="<?= $block->getSvgContent("images/line1.svg") ?>" alt=""/>
+            <div class="amount_content">
+                <div class="amount_content_row_1">
+                    <table>
+                        <tbody>
+                            <?php if ($block->isPaid()): ?>
+                                <tr>
+                                    <td class="amount_value"><?= $totals->getTotalPaid() ?></td>
+                                    <td class="amount_due">paid</td>
+                                </tr>
+                            <?php else: ?>
+                                <tr>
+                                    <td class="amount_value"><?= $totals->getTotalDue() ?></td>
+                                    <td class="amount_due">due</td>
+                                    <td class="amount_date"><?= $invoiceInfo['full_date_due'] ?></td>
+                                </tr>
+                            <?php endif ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="amount_content_row_2">
+                    Order <b>#<?= $order->getIncrementId() ?></b> by <b><?= $block->getCustomerName() ?></b>
+                </div>
+            </div>
+            <img class="line3" src="<?= $block->getSvgContent("images/line2.svg") ?>" alt=""/>
+        </div>
+    </div>
+
+    <?php $inc = 0; ?>
+    <?php foreach ($sellers as $seller): ?>
+        <?php $inc++; ?>
+
+        <table class="seller_title" style="page-break-inside: auto; margin-top: 20px;">
+            <tbody>
+                <tr style="page-break-inside: auto;">
+                    <?php if ($sellerCount > 1): ?>
+                        <td style="padding-bottom: 0px;">
+                            <div class="seller_title_label">
+                                <div class="label_title"><?= $inc ?></div>
+                            </div>
+                        </td>
+                    <?php endif ?>
+                    <td class="seller_name">
+                        <div style="margin: 0 0 3px 0;"><?= $seller['shop_name'] ?></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="seller seller_items" style="margin-top: 24px; page-break-inside: auto;">
+            <tbody>
+                <tr class="row grey_200">
+                    <th class="radius_l" align="left"><?= __('Description') ?></th>
+                    <th style="width: 80px;" align="center"><?= __('Qty') ?></th>
+                    <th style="width: 80px;"><?= __('Unit price') ?></th>
+                    <th style="width: 100px;"><?= __('Amount') ?></th>
+                    <th style="width: 100px;"><?= __('Discount') ?></th>
+                    <th style="width: 80px;" class="radius_r"><?= __('GST (included)') ?></th>
+                </tr>
+
+                <?php $subtotal = $seller['subtotal']; ?>
+
+                <?php foreach ($seller['items'] as $key => $item): ?>
+                    <tr class="row  <?= ($key % 2 != 0) ? "grey_100" : "" ?>" style="page-break-inside: auto;">
+                        <td class="item_description radius_l" align="left"><span><?= $item['name'] ?></span></td>
+                        <td class="item_qty" align="center"><span><?= $item['qty'] ?></span></td>
+                        <td class="item_price" align="right"><span><?= $item['price'] ?></span></td>
+                        <td class="item_amount" align="right"><span><?= $item['item_total_amount'] ?></span></td>
+                        <td class="item_discount" align="right"><span><?= $item['discount'] ?></span></td>
+                        <td class="item_tax radius_r" align="right"><span><?= $item['tax'] ?></span></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <?php if ($sellerCount > 1): ?>
+            <div>
+                <table class="adjustment_subtotal_final" style="margin-top: 15px;">
+                    <tbody>
+                        <tr class="total_row">
+                            <td class="totals_item_title adjustment_subtotal_row"><?= __('Shipping') ?></td>
+                            <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $seller['shipping'] ?></td>
+                        </tr>
+
+                        <tr class="total_row border_line">
+                            <td class="totals_item_title adjustment_subtotal_row"><?= __('GST (included)') ?></td>
+                            <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $seller['tax'] ?></td>
+                        </tr>
+
+                        <tr class="total_row border_line">
+                            <td class="totals_item_title adjustment_subtotal_row"><?= __('Subtotal') ?></td>
+                            <td align="right" class="totals_item_amount_total adjustment_subtotal_row"><?= $seller['subtotal'] ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+
+    <?php endforeach; ?>
+
+    <div>
+        <img class="line4" src="<?= $block->getSvgContent("images/line2.svg") ?>" alt=""/>
+    </div>
+
+    <div style="width: 988px; page-break-inside: auto;">
+        <div class="order_totals_title" style="page-break-inside: auto;">
+            <div><?= __('Order totals') ?></div>
+        </div>
+
+        <table class="adjustment_subtotal_final">
+            <tbody>
+                <tr class="total_row">
+                    <td class="totals_item_title adjustment_subtotal_row"><?= __('Subtotal') ?></td>
+                    <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $totals->getSubtotal() ?></td>
+                </tr>
+
+                <tr class="total_row border_line">
+                    <td class="totals_item_title adjustment_subtotal_row"><?= __('Shipping') ?></td>
+                    <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $totals->getShipping() ?></td>
+                </tr>
+
+                <tr class="total_row border_line">
+                    <td class="totals_item_title adjustment_subtotal_row"><?= __('GST (included)') ?></td>
+                    <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $totals->getTax() ?></td>
+                </tr>
+
+                <?php if ($totals->getDiscount()): ?>
+                    <?php $discountDescription = $totals->getDiscountDescription(); ?>
+                    <tr class="total_row border_line">
+                        <td class="totals_item_title adjustment_subtotal_row"><?= __(!empty($discountDescription) ? $discountDescription : 'Discount') ?></td>
+                        <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $totals->getDiscount() ?></td>
+                    </tr>
+                <?php endif; ?>
+
+                <tr class="total_row border_line">
+                    <td class="totals_item_title adjustment_subtotal_row"><?= __('Total') ?></td>
+                    <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $totals->getTotal() ?></td>
+                </tr>
+
+                <?php if (empty($refunds)): ?>
+                    <tr class="total_row grey_200">
+                        <td class="totals_item_title adjustment_subtotal_row"><?= __('Amount due') ?></td>
+                        <td align="right" class="totals_item_amount_total adjustment_subtotal_row"><?= $totals->getTotalDue() ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <?php if (!empty($refunds)): ?>
+        <div style="margin-top: 15px; width: 988px; page-break-inside: auto;">
+            <div class="order_refunds_title">
+                <div><?= __('Refunds') ?></div>
+            </div>
+
+            <?= $block->getRefundsHtml(); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($refunds)): ?>
+        <div style="margin-top: 15px; width: 988px; page-break-inside: auto;">
+            <table class="adjustment_subtotal_final">
+                <tbody>
+                    <tr class="total_row">
+                        <td class="totals_item_title adjustment_subtotal_row"><?= __('Refund subtotal') ?></td>
+                        <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $refunds->getSubtotal() ?></td>
+                    </tr>
+
+                    <tr class="total_row border_line">
+                        <td class="totals_item_title adjustment_subtotal_row"><?= __('Refund shipping') ?></td>
+                        <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $refunds->getShipping() ?></td>
+                    </tr>
+
+                    <tr class="total_row border_line">
+                        <td class="totals_item_title adjustment_subtotal_row"><?= __('Refund GST (included)') ?></td>
+                        <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $refunds->getTax() ?></td>
+                    </tr>
+
+                    <tr class="total_row border_line">
+                        <td class="totals_item_title adjustment_subtotal_row"><?= __('Refund total') ?></td>
+                        <td align="right" class="totals_item_amount adjustment_subtotal_row"><?= $refunds->getTotal() ?></td>
+                    </tr>
+
+                    <tr class="total_row grey_200">
+                        <td class="totals_item_title adjustment_subtotal_row"><?= __('Amount due') ?></td>
+                        <td align="right" class="totals_item_amount_total adjustment_subtotal_row"><?= $totals->getTotalDue() ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+
+    <div class="copyright_container">
+        <div class="copyright" style="page-break-inside: avoid;">
+            <?= $block->getFooterText() ?>
+        </div>
+    </div>
+</body>
+</html>
+
+

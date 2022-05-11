@@ -1,0 +1,24 @@
+<?php
+/**
+ * @var $block \Vdcstore\SellerMessage\Block\SellerMessage
+ */
+
+$product = $block->getProduct();
+$offer = $product->getData('main_offer');
+?>
+<?php if ($block->isUserLoggedIn() && ($product->isSaleable() || $offer)) : ?>
+<div class="seller-messsage-link">
+	<span><?php echo __("Question about this product?") ?></span>
+	<span id="message_seller_link"><?php echo __('<a href="%1" title="Message this supplier">Message this supplier</a>', $block->getPopupLinkPath()); ?></span>
+</div>
+<div id="seller_message_container" style="display: none;"></div>
+<script>
+	require(
+            ['jquery','Vdcstore_SellerMessage/js/sellerMessage'],
+            function($, sellerMessage){
+                var ajaxurl = '<?= $block->getPopupLinkPath() ?>';
+                sellerMessage.openSellerMessagePopup(ajaxurl);
+            }
+        );
+</script>
+<?php endif; ?>

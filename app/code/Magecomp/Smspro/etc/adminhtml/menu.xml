@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+  <menu>
+    <add id="Magecomp_Smspro::magecompsms" resource="Magecomp_Smspro::smsconfigmenu" module="Magecomp_Smspro" title="SMS Notification" sortOrder="10"/>
+	<add id="Magecomp_Smspro::magecomp_bulksms" title="Bulk SMS"  module="Magecomp_Smspro"  resource="Magecomp_Smspro::magecompbulksms" sortOrder="20" action="magecompsms/bulk/index" parent="Magecomp_Smspro::magecompsms"/>
+    <add id="Magecomp_Smspro::magecomp_phonebook" title="Phonebook" module="Magecomp_Smspro" resource="Magecomp_Smspro::magecompphonebook" sortOrder="30" action="magecompsms/phonebook/index"  parent="Magecomp_Smspro::magecompsms"/>
+    <add id="Magecomp_Smspro::magecompsmsconfig" title="Configuration" module="Magecomp_Smspro" resource="Magecomp_Smspro::magecompsmsconfig" sortOrder="40" action="adminhtml/system_config/edit/section/smspro" parent="Magecomp_Smspro::magecompsms"/>
+  </menu>
+</config>

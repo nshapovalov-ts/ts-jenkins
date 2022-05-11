@@ -1,0 +1,22 @@
+{
+    "name": "retailplace/module-removeviewofmirakloffer",
+    "description": "Remove views mirakl_offer_simple_product and mirakl_offer_configurable_product",
+    "type": "magento2-module",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Retailplace\\RemoveViewOfMiraklOffer\\": ""
+        }
+    }
+}

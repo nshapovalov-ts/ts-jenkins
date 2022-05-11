@@ -1,0 +1,41 @@
+<style type="text/css">
+    label.mage-error {
+    width: 43% !important;
+    margin-left: 143px;
+}
+</style>
+<div class="admin_bulksms">
+    <?php $authUrl = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Backend\Helper\Data')->getUrl("magecompsms/send/ordercustom"); ?>
+    <form action="<?php echo $authUrl ?>" id="custom_form" data-mage-init='{"validation":{}}'>
+        <input type="hidden" value="<?php echo $block->getOrderId()?>" name="current_order_id">
+        <div class="admin_bulksms_mobnumbers">
+            <div class="admin_bulksms_mobnumbers_lable">
+                <?php echo __("Mobile Number")?>
+            </div>
+            <div class="admin_bulksms_mobnumbers_text">
+                <input class="admin__control-text" type="text" value="<?php echo $block->getMobileNumber()?>" id="customsms_mob" name="customsms_mob" placeholder="Mobile Number" data-validate="{required:true,'validate-number':true}" />
+            </div>
+        </div>
+        <div class="admin_bulksms_dltid">
+            <div class="admin_bulksms_dltid_lable">
+                <?php echo __("DLT Template ID")?>
+            </div>
+            <div class="admin_bulksms_dltid_text">
+                <input class="admin__control-text" type="text" id="dltid" name="dltid" placeholder="DLT Template ID" data-validate="{required:true}" />
+            </div>
+        </div>
+        <div class="admin_bulksms_message">
+            <div class="admin_bulksms_message_lable">
+                <?php echo __("SMS Text")?>
+            </div>
+            <div class="admin_bulksms_message_text">
+                <textarea class="admin__control-textarea" rows="4" cols="50" id="customsms_message" name="customsms_message" placeholder="Enter your Message here" data-validate="{required:true}"/></textarea>
+            </div>
+        </div>
+        <div class="admin_bulksms_formsubmit">
+            <button type="submit" id="custom_submit" class="primary">
+                <?php echo __("Send Custom SMS"); ?>
+            </button>
+        </div>
+    </form>
+</div>

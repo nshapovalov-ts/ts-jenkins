@@ -1,0 +1,22 @@
+# Offers are synchronized every 10 minutes
+		*/10 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:sync --run OF51 >> /var/www/magento/var/log/magento.cron.log&
+		# Categories are synchronized every 15 minutes
+		*/15 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:sync --run CA01 >> /var/www/magento/var/log/magento.cron.log&
+		# Products are synchronized every hour
+		0 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:sync --run P21 >> /var/www/magento/var/log/magento.cron.log&
+		# Value list are synchronized every hour
+		0 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:sync --run VL01 >> /var/www/magento/var/log/magento.cron.log&
+		# Products images are synchronized every hour
+		0 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:sync --run H01 >> /var/www/magento/var/log/magento.cron.log&
+		# Products images are synchronized every hour
+		0 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:sync --run PM01 >> /var/www/magento/var/log/magento.cron.log&
+		# Products are imported every 5 minutes
+		0/5 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:mci:product-import-path >> /var/www/magento/var/log/magento.cron.log&
+		# Products are imported every 30 minutes
+		0/30 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:mcm:product:import >> /var/www/magento/var/log/magento.cron.log&
+		# Products images are imported every 30 minutes
+		0/30 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:mci:product-import-images >> /var/www/magento/var/log/magento.cron.log&
+		# Events are executed every 5 minutes
+		0/5 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:event >> /var/www/magento/var/log/magento.cron.log&
+		# Status checks are executed every 15 minutes
+		0/15 * * * * /usr/bin/php /var/www/magento/bin/magento mirakl:process:api >> /var/www/magento/var/log/magento.cron.log&

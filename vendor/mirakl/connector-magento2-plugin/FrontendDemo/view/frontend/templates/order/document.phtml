@@ -1,0 +1,26 @@
+<?php /** @var \Mirakl\FrontendDemo\Block\Order\Document $block */ ?>
+<?php $_docs = $block->getDocuments() ?>
+<?php /** @var \Mirakl\Core\Helper\Data $_coreHelper */ ?>
+<?php $_coreHelper = $this->helper('Mirakl\Core\Helper\Data') ?>
+
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Order Documents') ?></strong>
+    </div>
+    <div class="block-content">
+        <?php if (!$_docs || !$_docs->count()): ?>
+            <p><?php echo __('There is no document attached to this order.') ?></p>
+        <?php else: ?>
+            <ul>
+                <?php foreach ($_docs as $_doc): ?>
+                    <li>
+                        <?php if ($_type = $block->getDocumentTypeLabel($_doc->getTypeCode())): ?>
+                            <strong><?php echo __('%1: ', $_type) ?></strong>
+                        <?php endif ?>
+                        <a href="<?php echo $block->getDownloadUrl($_doc) ?>"><?php echo $_doc->getFileName() ?></a> (<?php echo $_coreHelper->formatDateTime($_doc->getDateUploaded()) ?>)
+                    </li>
+                <?php endforeach ?>
+            </ul>
+        <?php endif ?>
+    </div>
+</div>

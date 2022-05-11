@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <system>
+            <schumacherfm_pace>
+                <backend_pace_color>blue</backend_pace_color>
+                <backend_pace_theme>pace-theme-minimal.css</backend_pace_theme>
+                <frontend_enable>1</frontend_enable>
+                <frontend_pace_theme>pace-theme-minimal.css</frontend_pace_theme>
+            </schumacherfm_pace>
+        </system>
+    </default>
+</config>

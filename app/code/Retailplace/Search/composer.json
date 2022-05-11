@@ -1,0 +1,22 @@
+{
+    "name": "retailplace/module-search",
+    "description": "",
+    "type": "magento2-module",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "email": "satish29g@hotmail.com",
+            "name": "Satish Gumudavelly"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Retailplace\\Search\\": ""
+        }
+    }
+}

@@ -1,0 +1,18 @@
+"* Required Fields","* Required Fields"
+"Contact Information","Contact Information"
+Address,Address
+"Street Address %1","Street Address %1"
+City,City
+"Please select a region, state or province.","Please select a region, state or province."
+"It's a default billing address.","It's a default billing address."
+"Use as my default billing address","Use as my default billing address"
+"It's a default shipping address.","It's a default shipping address."
+"Use as my default shipping address","Use as my default shipping address"
+"Save Address","Save Address"
+"Go back","Go back"
+"Country Flag Settings","Country Flag Settings"
+"Set Country Automatically","Set Country Automatically"
+"Based On IP Address","Based On IP Address"
+"Min Digits","Min Digits"
+"Mobile Number Validation Max 15 Digits.","Mobile Number Validation Max 15 Digits."
+"Max Digits","Max Digits"

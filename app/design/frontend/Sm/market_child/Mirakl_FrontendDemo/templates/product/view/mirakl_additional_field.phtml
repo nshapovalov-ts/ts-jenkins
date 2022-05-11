@@ -1,0 +1,54 @@
+<?php
+	$_product = $block->getProduct();
+	$offer = $_product->getData('main_offer');
+	if(!$offer) return true;
+	
+?>	
+	<div class="mirakl-additional-info">
+		<?php if ($offer->getLeadtimeToShip()) {
+				$days = ($offer->getLeadtimeToShip() == '1') ? ' day' : ' days';
+			?>
+			<div class="leadtime-to-ship">
+				<span class="ship-label"> 
+					Lead time to ship <div class="toolpick">
+						<div class="toolpick-ico">
+								<i>i</i>
+							    <div class="toolpick-text">                   
+	                                <p><?php echo __('The time a Supplier has to process and prepare your order for shipment prior to goods leaving the warehouse');?>
+	                                </p>                
+	                            </div>
+						</div>
+					</div> : 
+					
+				</span>
+				<span class="ship-time"><?= $offer->getLeadtimeToShip().$days;?> </span>
+			</div>
+		<?php }?>
+		<?php if ($offer->getPriceAdditionalInfo()) {?>
+			<div class="price-additional-info">
+				<p class="price-additionalinfo"> <span class="price-additional-info-label"> Pricing information : </span> <?= $offer->getPriceAdditionalInfo();?> </p>
+			</div>
+		<?php }?>
+		<?php if ($offer->getDescription()) {?>
+			<div class="mirakl-description">
+				<?php $offer_desc = $offer->getDescription();?>
+				<?php $offer_desc_count = strlen($offer_desc) > 200 ? substr($offer_desc,0,200)."..." : $offer_desc;?>
+				<p class="mirakl-offer-description"> <span class="description-label"> Offer details : </span> <!-- <?//= $offer->getDescription();?>  -->
+				<?php echo $offer_desc_count;?>
+				</p>
+				<?php if(strlen($offer_desc) > 200):?>
+					<a class = "close_popup_bt_offer" href = "javascript:void(0)" onclick = "document.getElementById('offer-desc-light').style.display='block';document.getElementById('offer-desc-fade').style.display='block'"><?php echo __('Read More');?></a></p>
+					<div id="offer-desc-light" class="white_content">
+						<h4> <?php echo __('Offer details');?></h4>
+						<?php echo $offer_desc;?> 
+					<a class="close_popup_bt" href = "javascript:void(0)" onclick = "document.getElementById('offer-desc-light').style.display='none';document.getElementById('offer-desc-fade').style.display='none'">+</a></div>
+					<div id="offer-desc-fade" class="black_overlay"></div>
+
+                <?php endif;?>    
+			</div>
+		<?php }?>
+	</div>
+
+
+
+

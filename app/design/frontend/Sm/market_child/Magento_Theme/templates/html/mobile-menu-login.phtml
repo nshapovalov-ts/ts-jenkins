@@ -1,0 +1,32 @@
+<?php 
+$loggerIn = $block->isCustomerLoggedIn();
+$currentUrl  = $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]);
+if(strpos($currentUrl,'customer/account') !== false)   {
+    $currentUrl = $this->getBaseUrl();
+}
+$login_url = $this->getUrl('customer/account/login', array('referer' => base64_encode($currentUrl)));
+$signup_url = rtrim($this->getUrl('sign-up-page'),"/")."?referer=".base64_encode($currentUrl);
+                            
+
+?>
+<ul data-bind="scope: 'customer'">
+    <!-- ko if: isLoggedIn()  -->
+    <li class="mobile-logout-btn" <?php if(!$loggerIn) : ?> style="display:none" <?php endif;?> >
+        <a class="mobile-menu-logout" href="<?php echo $this->getUrl('customer/account/logout');?>">
+            <?php echo __('Logout');?>
+        </a>
+    </li>
+    <!-- /ko -->
+    <!-- ko ifnot: isLoggedIn()  -->
+    <li <?php if($loggerIn) : ?> style="display:none" <?php endif;?> class="mobile-login-btn">
+            <a class="mobile-menu-login" href="<?php echo $login_url;?>">
+            <?php echo __('Login');?>
+        </a>   
+    </li>
+    <li <?php if($loggerIn) : ?> style="display:none" <?php endif;?> class="mobile-signup-btn">
+        <a class ="mobile-menu-signup"href="<?php echo $signup_url;?>">
+            <?php echo __('Sign Up to Shop');?>
+        </a>
+    </li>
+    <!-- /ko -->
+</ul>

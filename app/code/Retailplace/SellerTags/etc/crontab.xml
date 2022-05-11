@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_SellerTags
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="retailplace_seller_tags_update_holiday_closed"
+             instance="Retailplace\SellerTags\Model\Cron\UpdateHolidayClosed"
+             method="run">
+            <config_path>retailplace_attribute_updater/closed_until/cron_schedule</config_path>
+        </job>
+    </group>
+</config>

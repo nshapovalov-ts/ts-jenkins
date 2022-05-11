@@ -1,0 +1,155 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Magento_Checkout
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+                    ->getStore()
+                    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+
+$countryFactory = $objectManager->get('Magento\Directory\Model\CountryFactory')->create();
+$cart = $objectManager->get('\Magento\Checkout\Model\Cart');
+$shippingAddress = $cart->getQuote()->getShippingAddress();
+$country = "";
+if ($shippingAddress->getCountryId()) {
+    $country     = $countryFactory->loadByCode($shippingAddress->getCountryId());
+    $countryName = $country->getName();
+}
+
+$postCode    = $shippingAddress->getPostcode();
+?>
+<?php /** @var $block \Magento\Checkout\Block\Cart\Shipping */ ?>
+
+<!-- <div id="block-shipping"
+     class="block shipping"
+     data-mage-init='{"collapsible":{"openedState": "active", "saveState": true}}'
+> -->
+<div id="block-shipping"
+    class="block shipping"
+    data-mage-init='{"collapsible":{"openedState": "active", "active": true}}'>
+
+    <div class="title" data-role="title">
+        <strong id="block-shipping-heading" role="heading" aria-level="2">
+            <?php
+                //= $block->getQuote()->isVirtual()
+                //? /*__($countryName).' , '.*/ //'Shipping postcode : '.$postCode
+                //: /*__($countryName).' , '.*/ //'Shipping postcode : '.$postCode
+            ?>
+
+            <?php if($block->getQuote()->isVirtual()):?>
+                Shipping postcode <div class="toolpick">
+                        <div class="toolpick-ico">
+                                <div class="shipping_cost_icon"></div>
+                                <div class="toolpick-text">
+                                    <p><?php echo __('Shipping costs are calculated based on your delivery postcode');?>
+                                    </p>
+                                </div>
+                        </div>
+                </div> : <span class="postcode"><?php echo $postCode;?></span>
+            <?php else:?>
+                Shipping postcode <div class="toolpick">
+                        <div class="toolpick-ico">
+                                <div class="shipping_cost_icon"></div>
+                                <div class="toolpick-text">
+                                    <p><?php echo __('Shipping costs are calculated based on your delivery postcode');?>
+                                    </p>
+                                </div>
+                        </div>
+                    </div>: <span class="postcode"><?php echo $postCode;?></span>
+            <?php endif;?>
+        </strong>
+    </div>
+    <div id="block-summary"
+         data-bind="scope:'block-summary'"
+         class="content"
+         data-role="content"
+         aria-labelledby="block-shipping-heading"
+    >
+        <form action="<?= $this->getUrl('customeraccount/quote/addressupdate');?>" id="saveZip" name="saveZip" method="post">
+            <input type="hidden" name="addressId" value="<?= $shippingAddress->getAddressId()?>">
+            <input type="text" name="zip-postcode" class="zip-postcode" value="<?= $postCode?>">
+            <input type="submit" id="savepostcode" name="savePostcode" class="save-postcode" value="Change">
+            <div class="zip-error-messa" style="display: none;">
+            	<p style="color: red">
+            		<?php echo __('Please enter postcode in Australia.');?>
+            	</p>
+            </div>
+        </form>
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <script type="text/x-magento-init">
+            {
+                "#block-summary": {
+                    "Magento_Ui/js/core/app": <?= /* @noEscape */ $block->getJsLayout() ?>
+                }
+            }
+        </script>
+        <script>
+            window.checkoutConfig = <?= /* @noEscape */ $block->getSerializedCheckoutConfig() ?>;
+            window.customerData = window.checkoutConfig.customerData;
+            window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+            require([
+                'mage/url',
+                'Magento_Ui/js/block-loader'
+            ], function(url, blockLoader) {
+                blockLoader(
+                    "<?= $block->escapeJs($block->escapeUrl($block->getViewFileUrl('images/loader-1.gif'))) ?>"
+                );
+                return url.setBaseUrl('<?= $block->escapeJs($block->escapeUrl($block->getBaseUrl())) ?>');
+            })
+        </script>
+    </div>
+</div>
+<script type="text/javascript">
+require(["jquery","domReady!"], function ($) {
+  $(document).ready(function(){
+        setTimeout(function(){
+            $('#saveZip').on('keyup keypress', function(e) {
+                  var keyCode = e.keyCode || e.which;
+                  if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                  }
+                });
+            }, 2000);
+
+  	setTimeout(function(){
+  		$('.cart-summary .block.shipping #saveZip .zip-postcode').on('blur keyup keypress', function(event){
+        var aadharval = $('.cart-summary .block.shipping #saveZip .zip-postcode').val();
+        var aadharlength = $('.cart-summary .block.shipping #saveZip .zip-postcode').val().length;
+		//var letters = /^[0-9]+$/;
+        var letters = /^(0[289][0-9]{2})|([1345689][0-9]{3})|(2[0-8][0-9]{2})|(290[0-9])|(291[0-4])|(7[0-4][0-9]{2})|(7[8-9][0-9]{2})+$/;
+
+		var result = letters.test(aadharval);
+		if(result == true){
+			if(aadharlength != 4 ){
+	         	$('.cart-summary .block.shipping #saveZip .save-postcode').attr("disabled", true);
+	         	$('.cart-summary .block.shipping #saveZip #savepostcode').addClass("disabled");
+                $(".zip-error-messa").css("display","block");
+	        }
+	        else{
+		        $(".cart-summary .block.shipping #saveZip .save-postcode").removeAttr("disabled");
+		        $('.cart-summary .block.shipping #saveZip #savepostcode').removeClass("disabled");
+		        $(".zip-error-messa").css("display","none");
+	        }
+		}
+		else{
+				$('.cart-summary .block.shipping #saveZip .save-postcode').attr("disabled", true);
+				$('.cart-summary .block.shipping #saveZip #savepostcode').addClass("disabled");
+				$(".zip-error-messa").css("display","block");
+	     	}
+    });
+
+  	 }, 2000);
+
+      });
+});
+</script>

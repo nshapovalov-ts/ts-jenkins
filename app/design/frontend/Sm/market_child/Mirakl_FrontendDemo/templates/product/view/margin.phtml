@@ -1,0 +1,7 @@
+<?php
+$product = $block->getProduct();
+$mainOffer = $product->getData('main_offer');
+$oneofferPrice = $mainOffer ? $mainOffer->getPrice() : "0.00";
+if(!$oneofferPrice) $oneofferPrice = $product->getFinalPrice();
+?>
+<?php echo $this->helper('Retailplace\MiraklFrontendDemo\Helper\Data')->getCalculatedMargin($product); ?>

@@ -1,0 +1,181 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">retailplace_miraklselleradditionalfield_industryexclusions_listing.retailplace_miraklselleradditionalfield_industryexclusions_listing_data_source</item>
+		</item>
+	</argument>
+	<settings>
+		<spinner>retailplace_miraklselleradditionalfield_industryexclusions_columns</spinner>
+		<deps>
+			<dep>retailplace_miraklselleradditionalfield_industryexclusions_listing.retailplace_miraklselleradditionalfield_industryexclusions_listing_data_source</dep>
+		</deps>
+		<buttons>
+			<button name="add">
+				<url path="*/*/new"/>
+				<class>primary</class>
+				<label translate="true">Add new IndustryExclusions</label>
+			</button>
+		</buttons>
+	</settings>
+	<dataSource component="Magento_Ui/js/grid/provider" name="retailplace_miraklselleradditionalfield_industryexclusions_listing_data_source">
+		<settings>
+			<updateUrl path="mui/index/render"/>
+		</settings>
+		<aclResource>Retailplace_MiraklSellerAdditionalField::IndustryExclusions</aclResource>
+		<dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="retailplace_miraklselleradditionalfield_industryexclusions_listing_data_source">
+			<settings>
+				<requestFieldName>id</requestFieldName>
+				<primaryFieldName>industryexclusions_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<listingToolbar name="listing_top">
+		<settings>
+			<sticky>true</sticky>
+		</settings>
+		<bookmark name="bookmarks"/>
+		<columnsControls name="columns_controls"/>
+		 <filters name="listing_filters">
+           <!--  <filterSelect name="visible_for" provider="${ $.parentName }" component="Magento_Ui/js/form/element/ui-select" template="ui/grid/filters/elements/ui-select">
+                <settings>
+                    <options class="Retailplace\MiraklSellerAdditionalField\Model\Option\VisibleForOptionsProvider"/>
+                    <caption translate="true">Select...</caption>
+                    <label translate="true">Visible For</label>
+                    <dataScope>visible_for</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:status</link>
+                    </imports>
+                </settings>
+            </filterSelect> -->
+        </filters>
+		<paging name="listing_paging"/>
+	</listingToolbar>
+	<columns name="retailplace_miraklselleradditionalfield_industryexclusions_columns">
+		<settings>
+			<editorConfig>
+				<param name="selectProvider" xsi:type="string">retailplace_miraklselleradditionalfield_industryexclusions_listing.retailplace_miraklselleradditionalfield_industryexclusions_listing.retailplace_miraklselleradditionalfield_industryexclusions_columns.ids</param>
+				<param name="enabled" xsi:type="boolean">true</param>
+				<param name="indexField" xsi:type="string">industryexclusions_id</param>
+				<param name="clientConfig" xsi:type="array">
+					<item name="saveUrl" path="retailplace_miraklselleradditionalfield/IndustryExclusions/inlineEdit" xsi:type="url"/>
+					<item name="validateBeforeSave" xsi:type="boolean">false</item>
+				</param>
+				 <param name="templates" xsi:type="array">
+                    <item name="record" xsi:type="array">
+                        <item name="templates" xsi:type="array">
+                            <item name="fields" xsi:type="array">
+                                <!-- add textarea field type -->
+                                <item name="textarea" xsi:type="array">
+                                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/textarea</item>
+                                    <item name="template" xsi:type="string">ui/form/field</item>
+                                </item>
+                                <!-- add multiselect field type -->
+                                <item name="multiselect" xsi:type="array">
+                                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/multiselect</item>
+                                    <item name="template" xsi:type="string">ui/form/element/multiselect</item>
+                                    <item name="options" xsi:type="array">
+                                        <item name="0" xsi:type="array">
+                                            <item name="value" xsi:type="number">1</item>
+                                            <item name="label" xsi:type="string" translate="true">Retailer - for retailing purposes</item>
+                                        </item>
+                                        <item name="1" xsi:type="array">
+                                            <item name="value" xsi:type="number">2</item>
+                                            <item name="label" xsi:type="string" translate="true">Non retailer - for retailing purposes</item>
+                                        </item>
+                                        <item name="2" xsi:type="array">
+                                            <item name="value" xsi:type="number">3</item>
+                                            <item name="label" xsi:type="string" translate="true">For Business Use</item>
+                                        </item>
+                                        <item name="3" xsi:type="array">
+                                            <item name="value" xsi:type="number">4</item>
+                                            <item name="label" xsi:type="string" translate="true">For Corporate Gifting</item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </param>
+                
+			</editorConfig>
+			<childDefaults>
+				<param name="fieldAction" xsi:type="array">
+					<item name="provider" xsi:type="string">retailplace_miraklselleradditionalfield_industryexclusions_listing.retailplace_miraklselleradditionalfield_industryexclusions_listing.retailplace_miraklselleradditionalfield_industryexclusions_columns_editor</item>
+					<item name="target" xsi:type="string">startEdit</item>
+					<item name="params" xsi:type="array">
+						<item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+						<item name="1" xsi:type="boolean">true</item>
+					</item>
+				</param>
+			</childDefaults>
+		</settings>
+		<selectionsColumn name="ids">
+			<settings>
+				<indexField>industryexclusions_id</indexField>
+			</settings>
+		</selectionsColumn>
+		<column name="industryexclusions_id">
+			<settings>
+				<filter>text</filter>
+				<sorting>asc</sorting>
+				<label translate="true">ID</label>
+			</settings>
+		</column>
+		<column name="code">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Code</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="label">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Label</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<!-- <column name="visible_for">
+			<settings>
+                <dataType>select</dataType>
+                <sortable>false</sortable>
+                <label translate="true">Visible For</label>
+                <editor>
+					<editorType>select</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+            </settings>
+		</column> -->
+		<column name="visible_for"  component="Magento_Ui/js/grid/columns/select">
+			<settings>
+                <options class="Retailplace\MiraklSellerAdditionalField\Model\Option\VisibleForOptionsProvider"/>
+                <filter>select</filter>
+                <editor>
+                    <editorType>multiselect</editorType>
+                </editor>
+                <dataType>select</dataType>
+                <label translate="true">Visible For</label>
+            </settings>
+		</column>
+		<actionsColumn class="Retailplace\MiraklSellerAdditionalField\Ui\Component\Listing\Column\IndustryExclusionsActions" name="actions">
+			<settings>
+				<indexField>industryexclusions_id</indexField>
+				<resizeEnabled>false</resizeEnabled>
+				<resizeDefaultWidth>107</resizeDefaultWidth>
+			</settings>
+		</actionsColumn>
+	</columns>
+</listing>

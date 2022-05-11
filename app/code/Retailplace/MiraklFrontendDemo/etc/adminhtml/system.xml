@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_frontend" translate="label" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general">
+                <field id="shipping_fee_percent" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="text">
+                    <label>Shipping Fee Percent</label>
+                    <comment><![CDATA[Shipping fees will be overridden for sellers with property is_fixed_percent_shipping set to 1]]></comment>
+                    <validate>validate-number</validate>
+                </field>
+                <field id="text_for_above_80_margin" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="text">
+                    <label>Text for above 80+ margin</label>
+                    <comment><![CDATA[This text will be used if retail margin exceeds 80% ]]></comment>
+                </field>
+            </group>
+        </section>
+        <section id="tradesquare_invoices" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+            <label>Invoices</label>
+            <tab>vdcstore</tab>
+            <resource>Tradesquare_Invoices::config_tradesquare_invoices</resource>
+            <group id="invoices" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>Invoices Page Configuration</label>
+                <field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Show menu item</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="from_date" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="date">
+                    <label>Show invoices from date</label>
+                    <comment><![CDATA[Show invoices starting from next date]]></comment>
+                    <frontend_model>Retailplace\MiraklFrontendDemo\Block\Adminhtml\System\Config\Date</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

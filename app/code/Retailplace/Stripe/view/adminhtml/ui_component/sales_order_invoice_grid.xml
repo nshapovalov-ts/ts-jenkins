@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+ -->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="sales_order_invoice_columns">
+        <column name="stripe_invoice_paid" component="Magento_Ui/js/grid/columns/select" class="Retailplace\Stripe\Ui\Component\Listing\Column\PaymentDate">
+            <settings>
+                <filter>select</filter>
+                <options class="Retailplace\Stripe\Ui\Component\Listing\Column\Invoice\Status\Options"/>
+                <dataType>select</dataType>
+                <label translate="true">Payment Status</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

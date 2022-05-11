@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.shipping.zone.grid.container">
+            <block class="Magento\Backend\Block\Widget\Grid" name="shipping.zone.grid" as="grid">
+                <arguments>
+                    <argument name="id" xsi:type="string">shipping_zone_grid</argument>
+                    <argument name="dataSource" xsi:type="object">Mirakl\Core\Model\ResourceModel\Shipping\Zone\Grid</argument>
+                    <argument name="default_sort" xsi:type="string">priority</argument>
+                    <argument name="default_dir" xsi:type="string">ASC</argument>
+                    <argument name="save_parameters_in_session" xsi:type="string">1</argument>
+                </arguments>
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" name="shipping.zone.grid.columnSet" as="grid.columnSet">
+                    <arguments>
+                        <argument name="rowUrl" xsi:type="array">
+                            <item name="path" xsi:type="string">mirakl/*/edit</item>
+                            <item name="extraParamsTemplate" xsi:type="array">
+                                <item name="id" xsi:type="string">getId</item>
+                            </item>
+                        </argument>
+                    </arguments>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="code">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Code</argument>
+                            <argument name="index" xsi:type="string">code</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="priority">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Priority</argument>
+                            <argument name="index" xsi:type="string">sort_order</argument>
+                            <argument name="type" xsi:type="string">integer</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="is_active">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Active</argument>
+                            <argument name="index" xsi:type="string">is_active</argument>
+                            <argument name="type" xsi:type="string">options</argument>
+                            <argument name="options" xsi:type="options" model="Magento\Config\Model\Config\Source\Yesno"/>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Widget\Grid\Column\Renderer\Boolean</argument>
+                        </arguments>
+                    </block>
+                     <block class="Magento\Backend\Block\Widget\Grid\Column" as="conditions">
+                         <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Conditions</argument>
+                            <argument name="index" xsi:type="string">conditions_serialized</argument>
+                            <argument name="sortable" xsi:type="string">0</argument>
+                            <argument name="filter" xsi:type="string">0</argument>
+                            <argument name="renderer" xsi:type="string">Mirakl\Core\Block\Adminhtml\Template\Grid\Renderer\Conditions</argument>
+                        </arguments>
+                    </block>
+                     <block class="Magento\Backend\Block\Widget\Grid\Column\Multistore" as="store_ids">
+                         <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Store</argument>
+                            <argument name="index" xsi:type="string">store_ids</argument>
+                            <argument name="type" xsi:type="string">store</argument>
+                            <argument name="store_view" xsi:type="string">1</argument>
+                            <argument name="sortable" xsi:type="string">0</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

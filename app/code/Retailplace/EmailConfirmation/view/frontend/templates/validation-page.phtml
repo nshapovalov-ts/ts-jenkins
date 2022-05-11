@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Retailplace_EmailConfirmation
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+declare(strict_types=1);
+
+/* @var \Retailplace\EmailConfirmation\Block\Validation $block */
+?>
+<section class="verify-email-block" data-bind="scope:'retailplaceEmailValidate'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</section>
+<script type="text/x-magento-init">
+    {
+        ".verify-email-block": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "retailplaceEmailValidate": {
+                        "component": "Retailplace_EmailConfirmation/js/email-validator",
+                        "backUrl": "<?=$block->getBackUrl()?>",
+                        "email": "<?=$block->escapeHtml($block->getEmail())?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Insider
+ *
+ * @copyright   Copyright © 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="insiderLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="error" xsi:type="object">Retailplace\Insider\Logger\Handler\InfoHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Retailplace\Insider\Observer\Massapiproducts">
+        <arguments>
+            <argument name="logger" xsi:type="object">insiderLogger</argument>
+        </arguments>
+    </type>
+    <type name="Retailplace\Insider\Model\InsiderObjectProvider">
+        <arguments>
+            <argument name="insiderProviders" xsi:type="array">
+                <item name="insider_provider_page" xsi:type="object">
+                    Retailplace\Insider\Model\PageObjectProvider
+                </item>
+                <item name="insider_provider_product" xsi:type="object">
+                    Retailplace\Insider\Model\ProductObjectProvider
+                </item>
+                <item name="insider_provider_listing" xsi:type="object">
+                    Retailplace\Insider\Model\ListingObjectProvider
+                </item>
+                <item name="insider_provider_transaction" xsi:type="object">
+                    Retailplace\Insider\Model\TransactionObjectProvider
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\App\Action\AbstractAction">
+        <plugin name="insider-customer-session" type="Retailplace\Insider\Plugin\CustomerSessionContext"
+                sortOrder="15"/>
+    </type>
+    <type name="Magento\Customer\CustomerData\Customer">
+        <plugin name="retailplaceInsiderCustomerDataCustomer" type="Retailplace\Insider\Plugin\CustomerData"
+                sortOrder="15"/>
+    </type>
+    <type name="Magento\Checkout\CustomerData\Cart">
+        <plugin name="retailplaceInsiderCustomerDataCart" type="Retailplace\Insider\Plugin\CartData"
+                sortOrder="15"/>
+    </type>
+</config>

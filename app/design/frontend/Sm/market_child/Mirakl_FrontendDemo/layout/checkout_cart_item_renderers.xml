@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_CheckoutOverride
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.cart.item.renderers.simple">
+            <arguments>
+                <argument name="view_model" xsi:type="object">
+                    Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                </argument>
+            </arguments>
+            <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                   name="miracle.checkout.cart.item.simple.shipping"
+                   template="Mirakl_FrontendDemo::checkout/cart/item/shipping.phtml">
+                <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                       name="miracle.checkout.cart.item.simple.shipping.seller.limitation"
+                       template="Mirakl_FrontendDemo::checkout/cart/item/shipping_seller_limitaition.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">
+                            Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                       name="miracle.checkout.cart.item.simple.shipping.item"
+                       template="Mirakl_FrontendDemo::checkout/cart/item/shipping_item.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">
+                            Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.default">
+            <arguments>
+                <argument name="view_model" xsi:type="object">
+                    Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                </argument>
+            </arguments>
+            <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                   name="miracle.checkout.cart.item.default.shipping"
+                   template="Mirakl_FrontendDemo::checkout/cart/item/shipping.phtml">
+                <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                       name="miracle.checkout.cart.item.default.shipping.seller.limitation"
+                       template="Mirakl_FrontendDemo::checkout/cart/item/shipping_seller_limitaition.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">
+                            Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                       name="miracle.checkout.cart.item.default.shipping.item"
+                       template="Mirakl_FrontendDemo::checkout/cart/item/shipping_item.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">
+                            Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.configurable">
+            <arguments>
+                <argument name="view_model" xsi:type="object">
+                    Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                </argument>
+            </arguments>
+            <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                   name="miracle.checkout.cart.item.configurable.shipping"
+                   template="Mirakl_FrontendDemo::checkout/cart/item/shipping.phtml">
+                <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                       name="miracle.checkout.cart.item.configurable.shipping.seller.limitation"
+                       template="Mirakl_FrontendDemo::checkout/cart/item/shipping_seller_limitaition.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">
+                            Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                        </argument>
+                    </arguments>
+                </block>
+                <block class="Retailplace\CheckoutOverride\Block\Cart\Item\Shipping"
+                       name="miracle.checkout.cart.item.configurable.shipping.item"
+                       template="Mirakl_FrontendDemo::checkout/cart/item/shipping_item.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">
+                            Retailplace\CheckoutOverride\ViewModel\CartItemRenderer
+                        </argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

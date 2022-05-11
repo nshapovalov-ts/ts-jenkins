@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_frontend>
+            <general>
+                <shipping_fee_percent>15</shipping_fee_percent>
+                <text_for_above_80_margin>^80% Margin</text_for_above_80_margin>
+            </general>
+        </mirakl_frontend>
+        <tradesquare_invoices>
+            <invoices>
+                <enable>1</enable>
+            </invoices>
+        </tradesquare_invoices>
+    </default>
+</config>

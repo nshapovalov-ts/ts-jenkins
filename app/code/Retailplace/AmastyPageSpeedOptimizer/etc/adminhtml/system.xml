@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_AmastyPageSpeedOptimizer
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Kosykh <dmitriykosykh@tradesquare.com.au>
+ */
+ -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="amoptimizer" translate="label" type="text" sortOrder="71516" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <group id="images" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <group id="opti" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <field id="webp_additional_parameters" translate="label" type="text" sortOrder="76" showInDefault="1"
+                           showInWebsite="0" showInStore="0">
+                        <label>Webp additional parameters</label>
+                        <depends>
+                            <field id="optimize_images">1</field>
+                            <field id="optimize_automatically">1</field>
+                        </depends>
+                        <config_path>amoptimizer/images/webp_additional_parameters</config_path>
+                        <comment>Example: -near_lossless 60. &lt;a  href="https://developers.google.com/speed/webp/docs/cwebp"&gt; Docs &lt;/a&gt;</comment>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

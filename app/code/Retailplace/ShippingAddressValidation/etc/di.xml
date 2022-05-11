@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_ShippingAddressValidation
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Api\ShipmentEstimationInterface">
+        <plugin name="retailplace_shipping_address_validation"
+                type="Retailplace\ShippingAddressValidation\Plugin\ShippingAddressValidation"
+                sortOrder="10"/>
+    </type>
+</config>

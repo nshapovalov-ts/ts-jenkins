@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_sync>
+            <mcm_products>
+                <enable_mcm_products>1</enable_mcm_products>
+            </mcm_products>
+        </mirakl_sync>
+        <mirakl_mcm>
+            <import_product>
+                <enable_mcm>0</enable_mcm>
+                <import_type>MCI</import_type>
+                <enable_product_import>1</enable_product_import>
+                <default_visibility>4</default_visibility> <!-- Catalog, Search -->
+                <default_tax_class>0</default_tax_class>
+                <auto_enable_product>1</auto_enable_product>
+                <last_sync_date/>
+            </import_product>
+            <product_import_indexing>
+                <enable_indexing_import>0</enable_indexing_import>
+                <enable_indexing_import_after>1</enable_indexing_import_after>
+            </product_import_indexing>
+        </mirakl_mcm>
+    </default>
+</config>

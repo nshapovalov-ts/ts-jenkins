@@ -1,0 +1,57 @@
+<!--@subject {{trans "New Inquiry from %customer_name for %product_sku" customer_name=$customer.name  product_sku=$product.sku}} @-->
+<!--@vars {} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td style="width: 120px;">
+            <span><strong>{{trans "Buyer email"}}:</strong></span>
+        </td>
+        <td>
+            <span>{{var customer.email}}</span>
+        </td>
+    </tr>
+    <tr class="email-intro">
+        <td>
+            <span><strong>{{trans "Buyer name"}}:</strong></span>
+        </td>
+        <td>
+            <span>{{var customer.name}}</span>
+        </td>
+    </tr>
+    <tr class="email-intro">
+        <td>
+            <span><strong>{{trans "Product name"}}:</strong></span>
+        </td>
+        <td>
+            <span>{{var product.name}}</span>
+        </td>
+    </tr>
+    <tr class="email-intro">
+        <td>
+            <span><strong>{{trans "Product link"}}:</strong></span>
+        </td>
+        <td>
+            <span>{{var product.product_url}}</span>
+        </td>
+    </tr>
+    <tr class="email-intro">
+        <td>
+            <span><strong>{{trans "SKU"}}:</strong></span>
+        </td>
+        <td>
+            <span>{{var product_sku}}</span>
+        </td>
+    </tr>
+    <tr class="email-intro">
+        <td>
+            <span><strong>{{trans "Message"}}:</strong></span>
+        </td>
+        <td>
+            <span>{{var message}}</span>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

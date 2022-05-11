@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Variantsfix
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\ConfigurableProduct\Block\Product\View\Type\Configurable">
+        <plugin name="retailplace_variantsfix"
+                type="Retailplace\Variantsfix\Plugin\ConfigurableProduct\Block\Product\View\Type\Configurable"/>
+    </type>
+    <type name="Magento\Checkout\Block\Cart\Item\Renderer">
+        <plugin name="retailplace_variantsfix" type="Retailplace\Variantsfix\Plugin\Checkout\Block\Cart\Item\Renderer"/>
+    </type>
+    <preference for="Magento\Checkout\Model\DefaultConfigProvider"
+                type="Retailplace\Variantsfix\Rewrite\Magento\Checkout\Model\DefaultConfigProvider"/>
+</config>

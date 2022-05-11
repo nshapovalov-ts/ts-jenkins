@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--~
+  ~ Retailplace_MageplazaCategoryImportExport
+  ~
+  ~ @copyright   Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+  ~ @author      Satish Gumudavelly <satish@kipanga.com.au>
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mageplaza\ImportExportCategories\Model\Import\Category" type="Retailplace\MageplazaCategoryImportExport\Model\Import\Category"/>
+    <type name="Magento\Catalog\Model\Category">
+        <plugin name="CategoryAfterSaveMapProducts"
+                type="Retailplace\MageplazaCategoryImportExport\Plugin\CategoryAfterSave"
+                sortOrder="0"/>
+    </type>
+</config>

@@ -1,0 +1,12 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORES;
+$GTM_code = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('gtm_code/gtm_code/gtm_code',$storeScope);
+$checgtmstatus = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('gtm_code/gtm_code/enabled',$storeScope);
+?>
+<?php if($checgtmstatus):?>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo $GTM_code;?>"
+	height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+<?php endif;?>

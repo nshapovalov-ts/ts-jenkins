@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_checkout">
+        <observer name="mirakl_update_shipping_info" instance="Mirakl\FrontendDemo\Observer\UpdateShippingInfoObserver"/>
+    </event>
+    <event name="view_block_abstract_to_html_before">
+        <observer name="mirakl_group_cart_items" instance="Mirakl\FrontendDemo\Observer\GroupCartItemsObserver"/>
+    </event>
+    <event name="checkout_cart_update_items_after">
+        <observer name="mirakl_update_cart_items" instance="Mirakl\FrontendDemo\Observer\UpdateCartItemsObserver"/>
+    </event>
+    <event name="email_order_set_template_vars_before">
+        <observer name="mirakl_update_email_order_shipping" instance="Mirakl\FrontendDemo\Observer\UpdateEmailOrderShippingObserver"/>
+    </event>
+</config>

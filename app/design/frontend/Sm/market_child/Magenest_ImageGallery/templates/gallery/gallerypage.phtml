@@ -1,0 +1,90 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+$connection = $resource->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+$wholesalePartnersSql = $connection->select()
+    ->from(['migi' => $resource->getTableName('magenest_image_gallery_image')])
+    ->joinLeft(["mo" => $resource->getTableName('mirakl_shop')], "mo.id = migi.title")
+    ->where("mo.state = ?", "open")
+    ->where("migi.status = ?", 0)
+    ->limit(8);
+$wholesalePartners = $connection->fetchAll($wholesalePartnersSql);
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+    ->getStore()
+    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$priceHelper = $objectManager->get("\Magento\Directory\Model\PriceCurrency");
+?>
+<?php if ($wholesalePartners): ?>
+    <?php echo $block->getLayout()->createBlock(\Magento\Cms\Block\Block::class)->setBlockId('wholesale_partners_title')->toHtml(); ?>
+    <!-- <h2><?php //echo __('Inspired by our wholesale partners ');?></h2> -->
+<?php endif; ?>
+<?php $_columnCount = 1 ?>
+<ul class="slider-post-seller owl-carousel owl-theme">
+    <?php $i = 0;
+    foreach ($wholesalePartners as $wholesalePartner): ?>
+        <li>
+            <div class="seller_block_bg">
+                <?php $selerid = $wholesalePartner['title']; ?>
+                <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $selerid ?>">
+                    <img src="<?php echo $mediaUrl . $wholesalePartner['image']; ?>" alt="" width="300" height="200"
+                         class="no-lazy"/>
+                </a>
+                <div class="parternt">
+                    <div class="seller-name">
+                        <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $selerid ?>">
+                            <?php echo $wholesalePartner['name']; ?>
+                        </a>
+                    </div>
+                    <?php $minOrderAmount = $wholesalePartner['min-order-amount']; ?>
+                    <?php if ($minOrderAmount > 0): ?>
+                        <?php echo $priceHelper->convertAndFormat($minOrderAmount, true, 0) . ' Minimum'; ?>
+                    <?php else: ?>
+                        <?php echo __('No Minimum'); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+</ul>
+
+<script type="text/javascript">
+    require([
+        'jquery',
+        'owlcarousel'
+    ], function ($) {
+        $(".slider-post-seller").owlCarousel({
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: false,
+                    dots: true,
+                },
+                480: {
+                    items: 2,
+                    slideBy: 2,
+                    nav: false,
+                    dots: true,
+                },
+                768: {
+                    items: 2,
+                    slideBy: 2
+                },
+                992: {
+                    items: 3,
+                    slideBy: 3
+                },
+                1200: {
+                    items: 4
+                },
+            },
+            slideBy: 4,
+            autoplay: false,
+            loop: false,
+            nav: true,
+            navRewind: false,
+            dots: false,
+            autoplayHoverPause: true,
+            margin: 10
+        });
+    });
+</script>

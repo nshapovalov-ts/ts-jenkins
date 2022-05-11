@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Category left navigation
+ *
+ * @var $block \Magento\Catalog\Block\Navigation
+ */
+?>
+<?php if (!$block->getCategory()) {
+    return;
+}
+?>
+<dl class="category filter-options" id="narrow-by-list-category">
+    <dt role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__('Category')) ?></dt>
+    <dd class="filter-options-content category">
+        <?php echo $block->getCategoryTreeHtml(); ?>
+    </dd>
+</dl>

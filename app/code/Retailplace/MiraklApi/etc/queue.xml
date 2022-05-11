@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklApi
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/queue.xsd">
+    <broker topic="retailplace.mirakl.order.create"
+            exchange="retailplace.mirakl.order" type="amqp">
+        <queue name="retailplace.mirakl.order.consumer"
+               consumer="retailplace.mirakl.order.consumer"
+               consumerInstance="Magento\Framework\MessageQueue\Consumer"
+               handler="Retailplace\MiraklApi\Model\Queue\Consumer::process"
+        />
+    </broker>
+</config>

@@ -1,0 +1,27 @@
+<?php
+/** @var \Retailplace\CustomerAccount\Block\Widget\BusinessLink $block */
+?>
+<div class="application-note">
+    <p><?php echo __('To allow us to quickly FINALISE your application, Please share one of the following within the next 7 business days:') ?></p>
+    <ol>
+        <li><?php echo __('A Linkedin URL that shows you work in this business') ?></li>
+        <li><?php echo __('A link to a social media homepage showing  you\'re the admin, or') ?></li>
+        <li><?php echo __('Website page that your name is mentioned.') ?></li>
+    </ol>
+</div>
+<div class="field business-link">
+    <label for="business_link" class="label">
+        <span>
+            <?= $block->escapeHtml(__('Link')) ?>
+        </span>
+    </label>
+    <div class="control">
+        <input type="text"
+               name="business_link"
+               id="business-link"
+               value=""
+               title="<?= $block->escapeHtmlAttr(__('Link')) ?>"
+               placeholder="<?= $block->escapeHtmlAttr(__('Link')) ?>"
+               class="input-text">
+    </div>
+</div>

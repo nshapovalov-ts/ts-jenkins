@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Wishlist
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="Retailplace\Wishlist\Block\Wishlist" name="wishlist.js.components" template="Retailplace_Wishlist::wishlist/js/components.phtml" />
+        </referenceContainer>
+    </body>
+</page>

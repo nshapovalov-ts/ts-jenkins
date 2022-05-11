@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Retailplace_CustomerAccount
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+/** @var $block \Magento\Framework\View\Element\Template */
+
+/** @var \Retailplace\CustomerAccount\ViewModel\FinishPage $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="congratulation">
+    <img src="<?php echo $block->getViewFileUrl('Retailplace_CustomerAccount::images/congratulation.png'); ?>"
+         alt="congratulation" />
+    <h2><?php echo __('Congratulations!'); ?></h2>
+    <p class="text"><?php echo __('Your account has been created');?></p>
+    <p class="text"><?php echo __('This means you can now start buying wholesale products from hundreds
+        of Australia\'s best suppliers on one simple platform'); ?></p>
+    <div class="action">
+        <button onclick="window.location.href='<?= $block->escapeUrl($viewModel->getRefererUrl()) ?>'" type="button" id="btn-done"><span><?= __('Start shopping') ?></span></button>
+    </div>
+    <p><?php echo __('We may contact you for additional information'); ?></p>
+</div>

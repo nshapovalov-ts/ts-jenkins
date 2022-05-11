@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Retailplace_Whitelistemaildomain::parent" title="Blacklist Domain" module="Retailplace_Whitelistemaildomain" sortOrder="100" resource="Retailplace_Whitelistemaildomain::parent"/>
+		<add id="Retailplace_Whitelistemaildomain::whitelistemaildomain" title="Domain List" module="Retailplace_Whitelistemaildomain" sortOrder="20" parent="Retailplace_Whitelistemaildomain::parent" action="whitelistemaildomain/whitelistemaildomain" resource="Retailplace_Whitelistemaildomain::whitelistemaildomain"/>
+
+    </menu>
+</config>

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Retailplace_MiraklSellerAdditionalField::IndustryExclusions" sortOrder="10" title="IndustryExclusions">
+					<resource id="Retailplace_MiraklSellerAdditionalField::IndustryExclusions_save" sortOrder="10" title="Save IndustryExclusions"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::IndustryExclusions_delete" sortOrder="20" title="Delete IndustryExclusions"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::IndustryExclusions_update" sortOrder="30" title="Update IndustryExclusions"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::IndustryExclusions_view" sortOrder="40" title="View IndustryExclusions"/>
+				</resource>
+				<resource id="Retailplace_MiraklSellerAdditionalField::ChannelExclusions" sortOrder="10" title="ChannelExclusions">
+					<resource id="Retailplace_MiraklSellerAdditionalField::ChannelExclusions_save" sortOrder="10" title="Save ChannelExclusions"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::ChannelExclusions_delete" sortOrder="20" title="Delete ChannelExclusions"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::ChannelExclusions_update" sortOrder="30" title="Update ChannelExclusions"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::ChannelExclusions_view" sortOrder="40" title="View ChannelExclusions"/>
+				</resource>
+				<resource id="Retailplace_MiraklSellerAdditionalField::ExclusionsLogic" sortOrder="10" title="ExclusionsLogic">
+					<resource id="Retailplace_MiraklSellerAdditionalField::ExclusionsLogic_save" sortOrder="10" title="Save ExclusionsLogic"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::ExclusionsLogic_delete" sortOrder="20" title="Delete ExclusionsLogic"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::ExclusionsLogic_update" sortOrder="30" title="Update ExclusionsLogic"/>
+					<resource id="Retailplace_MiraklSellerAdditionalField::ExclusionsLogic_view" sortOrder="40" title="View ExclusionsLogic"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

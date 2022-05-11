@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_sales_order_view">
+        <observer name="mirakl_frontend" instance="Mirakl\FrontendDemo\Observer\HandleOrderViewObserver"/>
+    </event>
+    <event name="checkout_cart_save_after">
+        <observer name="mirakl_frontend" instance="Mirakl\FrontendDemo\Observer\CleanQuoteCacheObserver"/>
+    </event>
+    <event name="mirakl_check_quote_offers_after">
+        <observer name="mirakl_frontend" instance="Mirakl\FrontendDemo\Observer\InvalidateCartCookieObserver"/>
+    </event>
+</config>

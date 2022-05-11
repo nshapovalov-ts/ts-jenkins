@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<type name="Magento\SalesRule\Model\Rule\Action\Discount\ByPercent">
+		<plugin name="Retailplace_AmastyRuleOverride_Plugin_Magento_SalesRule_Model_Rule_Action_Discount_ByPercent" type="Retailplace\AmastyRuleOverride\Plugin\Magento\SalesRule\Model\Rule\Action\Discount\ByPercent" sortOrder="10" disabled="false"/>
+	</type>
+</config>

@@ -1,0 +1,21 @@
+<?php /* @var $block \Magento\Catalog\Block\Product\View\AbstractView */?>
+
+<?php $_product = $block->getProduct() ?>
+<?php if ($block->displayProductStockStatus()): ?>
+    <?php $offer = $_product->getData('main_offer'); ?>
+    <div class="stock available offer" title="<?php echo $block->escapeHtml(__('Availability')) ?>"<?php if (!$offer): ?> style="display: none;"<?php endif; ?>>
+        <span class="stock-available-offer"><?php echo $offer ? $offer->getQuantity() : '' ?></span>&nbsp;<span><?php echo __('In Stock') ?></span>
+    </div>
+    <div class="offer-state" title="<?php echo $block->escapeHtml(__('Offer State')) ?>"<?php if (!$offer): ?> style="display: none;"<?php endif; ?>>
+        <span class="offer-state-label"><?php echo $offer ? $offer->getConditionName() : '' ?></span>
+    </div>
+    <?php if ($_product->isAvailable()): ?>
+        <div class="stock available" title="<?php /* @escapeNotVerified */ echo __('Availability') ?>"<?php if ($offer):?> style="display: none;"<?php endif; ?>>
+            <span><?php /* @escapeNotVerified */ echo __('In stock') ?></span>
+        </div>
+    <?php else: ?>
+        <div class="stock unavailable" title="<?php /* @escapeNotVerified */ echo __('Availability') ?>"<?php if ($offer):?> style="display: none;"<?php endif; ?>>
+            <span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

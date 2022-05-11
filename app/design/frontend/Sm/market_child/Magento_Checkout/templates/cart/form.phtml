@@ -1,0 +1,153 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Magento_Checkout
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/**  @var $block \Magento\Checkout\Block\Cart\Grid */
+use Mirakl\MMP\Front\Domain\Shipping\OrderShippingFee;
+
+/** @var \Retailplace\CheckoutOverride\ViewModel\CartItemRenderer $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<?php $mergedCells = ($this->helper(Magento\Tax\Helper\Data::class)->displayCartBothPrices() ? 2 : 1); ?>
+<?= $block->getChildHtml('form_before') ?>
+    <form action="<?= $block->escapeUrl($block->getUrl('checkout/cart/updatePost')) ?>"
+          method="post"
+          id="form-validate"
+          data-mage-init='{"Magento_Checkout/js/action/update-shopping-cart":
+              {"validationURL" : "<?= $block->escapeUrl($block->getUrl('checkout/cart/updateItemQty')) ?>",
+              "updateCartActionContainer": "#update_cart_action_container"}
+          }'
+          class="form form-cart">
+        <?= $block->getBlockHtml('formkey') ?>
+        <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
+            <?php if ($block->getPagerHtml()) :?>
+                <div class="cart-products-toolbar cart-products-toolbar-top toolbar"
+                     data-attribute="cart-products-toolbar-top"><?= $block->getPagerHtml() ?>
+                </div>
+            <?php endif ?>
+            <table id="shopping-cart-table"
+                   class="cart items data table"
+                   data-mage-init='{"shoppingCart":{"emptyCartButton": ".action.clear",
+               "updateCartActionContainer": "#update_cart_action_container"}}'>
+                <caption class="table-caption"><?= $block->escapeHtml(__('Shopping Cart Items')) ?></caption>
+                <?php
+                $seller = [];
+                $sellerItems = [];
+                $sellerItemIds = [];
+                $showShopName = false;
+                $sellerGroupItems = $block->getSellerGroupItems();
+                ?>
+                <?php foreach ($sellerGroupItems as $sellers) : ?>
+                    <tr>
+                        <td>
+                            <div class="cart_page_item_block">
+                                <table class="cart_page_item_table">
+                                    <?php $error = false; ?>
+                                    <?php foreach ($sellers as $key => $_item) : ?>
+                                        <?php
+                                            $viewModel->setQuoteItem($_item);
+                                            $block->setShop($_item->getOffer()->getShop());
+                                        ?>
+                                        <?php if ($block->getQuote()->getHasError()): ?>
+                                            <?php
+                                            if ($_item->getHasError()) {
+                                                $error = true;
+                                                $_item->setErrorMessage($_item->getMessage());
+                                                $_item->setSellerName($_item->getData('mirakl_shop_name'));
+                                                $sellerItems[$_item->getData('mirakl_shop_name')]['error'][] = $_item;
+                                                $sellerItemIds[$_item->getData('mirakl_shop_name')]['error'][] = $_item->getId();
+                                            } else {
+                                                $sellerItems[$_item->getData('mirakl_shop_name')]['noerror'][] = $_item;
+                                                $sellerItemIds[$_item->getData('mirakl_shop_name')]['noerror'][] = $_item->getId();
+                                            }
+                                            ?>
+                                        <?php endif; ?>
+                                        <?php
+                                        if (!$key) {
+                                            $_item->setShowShopname(true);
+                                        }
+                                        ?>
+                                        <?php echo $block->getItemHtml($_item); ?>
+                                    <?php endforeach ?>
+                                    <?php
+                                        $minOrderAmount = $viewModel->getMinimumOrderSum();
+                                        $shopOrderTotal = $viewModel->getCartTotalForShop();
+                                    ?>
+                                
+                                </table>
+                                <table class="cart_page_item_table_bottom">
+                                    <tbody class="supplier-checkout" group-id="<?= $viewModel->getItemGroupId($viewModel->getQuoteItem()) ?>">
+                                        <?php if ($minOrderAmount <= $shopOrderTotal && !$error): ?>
+                                            <?php $block->setItem($viewModel->getQuoteItem()); ?>
+                                            <?= $block->getChildHtml($block->getNameInLayout() . '.seller.checkout', false) ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td>
+                                                    <span class="checkout-one-brand">
+                                                        <a class="quote-request-disabled" href="#">
+                                                            <?= __('Buy from this supplier') ?>
+                                                        </a>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+            </table>
+            <?php if ($block->getPagerHtml()) :?>
+                <div class="cart-products-toolbar cart-products-toolbar-bottom toolbar"
+                     data-attribute="cart-products-toolbar-bottom"><?= $block->getPagerHtml() ?>
+                </div>
+            <?php endif ?>
+        </div>
+        <div class="cart main actions">
+            <?php if ($block->getContinueShoppingUrl()) :?>
+                <a class="action continue"
+                   href="<?= $block->escapeUrl($block->getContinueShoppingUrl()) ?>"
+                   title="<?= $block->escapeHtmlAttr(__('Continue Shopping')) ?>">
+                    <span><?= $block->escapeHtml(__('Continue Shopping')) ?></span>
+                </a>
+            <?php endif; ?>
+            <button type="button"
+                    name="update_cart_action"
+                    data-cart-empty=""
+                    value="empty_cart"
+                    title="<?= $block->escapeHtmlAttr(__('Clear Shopping Cart')) ?>"
+                    class="action clear" id="empty_cart_button">
+                <span><?= $block->escapeHtml(__('Clear Shopping Cart')) ?></span>
+            </button>
+            <button type="submit"
+                    name="update_cart_action"
+                    data-cart-item-update=""
+                    value="update_qty"
+                    title="<?= $block->escapeHtmlAttr(__('Update Shopping Cart')) ?>"
+                    class="action update">
+                <span><?= $block->escapeHtml(__('Update Shopping Cart')) ?></span>
+            </button>
+            <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
+        </div>
+    </form>
+<script type="text/x-magento-init">
+    {
+        "#form-validate": {
+            "Retailplace_AjaxCart/js/ajax-cart" : {}
+        }
+    }
+</script>
+<?= $block->getChildHtml('checkout.cart.order.actions') ?>
+<?= $block->getChildHtml('shopping.cart.table.after') ?>

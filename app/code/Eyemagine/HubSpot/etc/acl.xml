@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+ EYEMAGINE - The leading Magento Solution Partner
+ HubSpot Integration with Magento
+ @author EYEMAGINE <magento@eyemaginetech.com>
+ @copyright Copyright (c) 2016 EYEMAGINE Technology, LLC (http://www.eyemaginetech.com)
+ @license http://www.eyemaginetech.com/license
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/ etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+
+				<resource id="Magento_Backend::stores">
+					<resource id="Magento_Backend::stores_settings">
+						<resource id="Magento_Config::config">
+							<resource id="Eyemagine_HubSpot::eyehubspot" title="Eyemagine HubSpot Integration" />
+						</resource>
+					</resource>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

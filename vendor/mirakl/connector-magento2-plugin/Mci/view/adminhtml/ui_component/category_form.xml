@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="mirakl">
+        <field name="mirakl_attr_set_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Mirakl\Mci\Eav\Model\Entity\Attribute\Source\AttributeSet</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">15</item>
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Attribute Set</item>
+                    <item name="notice" xsi:type="string" translate="true">Associate an attribute set to this category. It will be used to synchronize product attributes with MCI.</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

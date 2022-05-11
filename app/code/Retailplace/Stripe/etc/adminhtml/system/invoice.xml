@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<include xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_include.xsd">
+    <group id="invoice" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+        <label>Invoice via Stripe Billing</label>
+        <comment>Create and manage invoice directly via your Magento Admin to easily add a recurring line of revenue to your business model. &lt;a href="http://stripe.com/invoicing?utm_campaign=comarketing&amp;utm_source=magento&amp;utm_medium=referred" target="_blank" rel="noopener noreferrer"&gt;Learn More&lt;/a&gt; about Stripe Billing.</comment>
+        <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Enabled</label>
+            <comment><![CDATA[If you do not sell invoice, disabling them is recommended.]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/stripe_payments_invoice/active</config_path>
+        </field>
+        <field id="days_due" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Days Due</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/days_due</config_path>
+        </field>
+        <field id="terms_and_conditions" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Terms and Conditions page</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/terms_and_conditions</config_path>
+        </field>
+        <field id="frontend_title" translate="label" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Frontend Title</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/frontend_title</config_path>
+            <comment><![CDATA[Use %days% and %date% as placeholders for days due value and calculated date]]></comment>
+        </field>
+        <field id="frontend_description" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Frontend Description</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/frontend_description</config_path>
+            <comment><![CDATA[Use %days% and %date% as placeholders for days due value and calculated date]]></comment>
+        </field>
+        <field id="default_max_credit_limit" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Default Max Credit Limit</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/default_max_credit_limit</config_path>
+            <comment><![CDATA[If order grand total is less then this amount, we allow invoices, otherwise don't allow.]]></comment>
+        </field>
+        <field id="disable_cc" translate="label" sortOrder="41" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Disable credit card method if net%days% is available</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <frontend_model>Retailplace\Stripe\Block\Adminhtml\System\Config\NetLabel</frontend_model>
+            <config_path>payment/stripe_payments_invoice/disable_cc</config_path>
+            <comment><![CDATA[To update the credit limit for clients, you must run the CLI command (update is performed customer has attribute 'Use Default Max Credit Limit' value is set  = Yes)]]></comment>
+        </field>
+        <field id="frontend_description_disable_net30_v1" translate="label" type="text" sortOrder="42" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Frontend Description for a CC if net%days% is not available (when there are unpaid invoices)</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <frontend_model>Retailplace\Stripe\Block\Adminhtml\System\Config\NetLabel</frontend_model>
+            <config_path>payment/stripe_payments_invoice/frontend_description_disable_net30_v1</config_path>
+            <comment><![CDATA[Use %days%, %limit% as placeholders for view payment credit limit and current pending payment]]></comment>
+        </field>
+        <field id="frontend_description_disable_net30_v2" translate="label" type="text" sortOrder="43" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Frontend Description for a CC if net%days% is not available (unpaid invoices is not exist)</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <frontend_model>Retailplace\Stripe\Block\Adminhtml\System\Config\NetLabel</frontend_model>
+            <config_path>payment/stripe_payments_invoice/frontend_description_disable_net30_v2</config_path>
+            <comment><![CDATA[Use %days%, %limit% and %duty% as placeholders for view payment credit limit and current pending payment]]></comment>
+        </field>
+        <field id="max_credit_limit" translate="label" sortOrder="44" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Max Credit Limit</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <frontend_model>Retailplace\Stripe\Block\Adminhtml\Form\Field\CustomerGroups</frontend_model>
+            <backend_model>Retailplace\Stripe\Config\Backend\CustomerGroups</backend_model>
+            <config_path>payment/stripe_payments_invoice/max_credit_limit</config_path>
+        </field>
+        <field id="payment_card_verification" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Credit authentication upon checkout</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <comment><![CDATA[We should charge $1.00 and refund immediately.]]></comment>
+            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            <config_path>payment/stripe_payments_invoice/payment_card_verification</config_path>
+        </field>
+        <field id="payment_card_verification_description" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Description for payment card verification</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/payment_card_verification_description</config_path>
+        </field>
+        <field id="payment_card_verification_suffix" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Statement descriptor suffix for payment card verification</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/payment_card_verification_suffix</config_path>
+            <comment><![CDATA[Information about a card payment that customers see on their statements. Maximum 22 characters for the concatenated descriptor.]]></comment>
+        </field>
+        <field id="tax_rate_id" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Tax Rate Id</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/tax_rate_id</config_path>
+            <comment><![CDATA[The tax rate should be created in Stripe.]]></comment>
+        </field>
+        <field id="fail_message_for_duplicate_credit_card" translate="label" type="text" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Fail message for duplicate credit card</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/fail_message_for_duplicate_credit_card</config_path>
+        </field>
+        <field id="check_for_n_days" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Check for N days</label>
+            <depends>
+                <field id="active">1</field>
+            </depends>
+            <config_path>payment/stripe_payments_invoice/check_for_n_days</config_path>
+        </field>
+    </group>
+</include>

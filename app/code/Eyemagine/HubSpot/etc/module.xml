@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+ EYEMAGINE - The leading Magento Solution Partner
+ HubSpot Integration with Magento
+ @author EYEMAGINE <magento@eyemaginetech.com>
+ @copyright Copyright (c) 2019 EYEMAGINE Technology, LLC (http://www.eyemaginetech.com)
+ @license http://www.eyemaginetech.com/license
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Module/etc/module.xsd">
+	<module name="Eyemagine_HubSpot" setup_version="2.0.12">
+	</module>
+</config>

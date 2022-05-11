@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_SellerTags
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <retailplace_attribute_updater>
+            <closed_until>
+                <cron_schedule>0 1 * * *</cron_schedule>
+            </closed_until>
+        </retailplace_attribute_updater>
+        <retailplace_attribute_updater>
+            <has_new_products>
+                <has_new_products_label>New products added</has_new_products_label>
+                <cron_schedule>10 1 * * *</cron_schedule>
+            </has_new_products>
+        </retailplace_attribute_updater>
+    </default>
+</config>

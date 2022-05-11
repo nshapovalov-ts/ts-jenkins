@@ -1,0 +1,28 @@
+<div class="service-content" data-bind="with: getMinOrderAmountData()">
+    <div class="service-icon minimumorder" style="font-size: 30px;">
+        <div data-bind="attr:{class: percentClass}">
+            <span></span>
+            <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+            </div>
+        </div>
+    </div>
+    <div class="service-info">
+        <h4>
+            <span class="h4_text">
+                <span data-bind="text: description"></span>
+            </span>
+            <div class="toolpick" data-bind="if: $parent.isShowTooltip() && $parent.hasMinOrderAmount()">
+                <div class="toolpick-ico">
+                    <i>i</i>
+                    <div class="toolpick-text">
+                        <h3 data-bind="i18n: 'Min order amount'"></h3>
+                        <p data-bind="i18n: 'Minimum order amounts are set for each Supplier Showroom. You must reach this amount before your order can be processed.'"></p>
+                    </div>
+                </div>
+            </div>
+        </h4>
+        <p class="min_below_comment" data-bind="text: comment"></p>
+    </div>
+</div>

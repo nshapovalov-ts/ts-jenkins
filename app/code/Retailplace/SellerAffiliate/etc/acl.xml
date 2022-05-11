@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Retailplace_SellerAffiliate::SellerAffiliate" sortOrder="10" title="SellerAffiliate">
+                    <resource id="Retailplace_SellerAffiliate::SellerAffiliate_save" sortOrder="10" title="Save SellerAffiliate"/>
+                    <resource id="Retailplace_SellerAffiliate::SellerAffiliate_delete" sortOrder="20" title="Delete SellerAffiliate"/>
+                    <resource id="Retailplace_SellerAffiliate::SellerAffiliate_update" sortOrder="30" title="Update SellerAffiliate"/>
+                    <resource id="Retailplace_SellerAffiliate::SellerAffiliate_view" sortOrder="40" title="View SellerAffiliate"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

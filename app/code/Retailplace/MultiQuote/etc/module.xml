@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MultiQuote
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Retailplace_MultiQuote">
+        <sequence>
+            <module name="Mirakl_Connector"/>
+        </sequence>
+    </module>
+</config>

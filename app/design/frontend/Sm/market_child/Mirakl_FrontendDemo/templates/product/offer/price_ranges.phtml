@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * Mirakl_FrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/** @var \Mirakl\FrontendDemo\Block\Product\Offer\PriceRanges $block */
+
+/** @var \Magento\Tax\Helper\Data $taxHelper */
+$taxHelper = $this->helper('Magento\Tax\Helper\Data');
+$productsList = $block->getSimpleProductsList($this->getProduct());
+$skuPriceRanges = $block->getSkuPriceRanges($this->getProduct());
+$skuDiscountRanges = $block->getSkuDiscountRanges($this->getProduct());
+$initiallyHide = count($productsList) > 1;
+?>
+<div class="range-price-pdp">
+    <div class="offer-price-ranges">
+        <?php foreach ($productsList as $product): ?>
+            <?php if (isset($skuPriceRanges[$product->getSku()])): ?>
+                <ul class="prices-tier items <?=$initiallyHide ? 'd-none' : ''?> product-<?=$product->getSku()?>">
+                    <?php foreach ($skuPriceRanges[$product->getSku()] as $priceRange): ?>
+                        <?php
+                        /** @var \Mirakl\MMP\Common\Domain\DiscountRange $priceRange */
+                        /** @var \Mirakl\MMP\Common\Domain\DiscountRange $discountRange */
+                        if ($priceRange->getQuantityThreshold() <= 1) {
+                            continue;
+                        }
+                        $discountPrice = 0;
+                        foreach ($skuDiscountRanges[$product->getSku()] as $discountRange) {
+                            if ($discountRange->getQuantityThreshold() == $priceRange->getQuantityThreshold()) {
+                                $discountPrice = $discountRange->getPrice();
+                            }
+                        }
+                        ?>
+                        <?php if ($discountPrice > 0): ?>
+                            <li class="item">
+                                <?php if ($taxHelper->displayBothPrices()): ?>
+                                    <?php echo __('<strong>%1</strong> <span class="offer-old-price">%2</span> <span class="excl-tax">(Excl. Tax: <strong>%3</strong> <span class="offer-old-price">%4</span>)</span><br>for %5 items',
+                                        $block->formatCurrency($block->getPriceInclTax($discountPrice)),
+                                        $block->formatCurrency($block->getPriceInclTax($priceRange->getPrice())),
+                                        $block->formatCurrency($block->getPriceExclTax($discountPrice)),
+                                        $block->formatCurrency($block->getPriceExclTax($priceRange->getPrice())),
+                                        $priceRange->getQuantityThreshold()
+                                    ) ?>
+                                <?php else: ?>
+                                    <?php echo __('<strong>%1</strong> <span class="offer-old-price">%2</span> for %3 items',
+                                        $block->formatCurrency($taxHelper->displayPriceIncludingTax() ? $block->getPriceInclTax($discountPrice) : $block->getPriceExclTax($discountPrice)),
+                                        $block->formatCurrency($block->getPriceInclTax($priceRange->getPrice())),
+                                        $priceRange->getQuantityThreshold()
+                                    ) ?>
+                                <?php endif; ?>
+                            </li>
+                        <?php else: ?>
+                            <li class="item">
+                                <?php if ($taxHelper->displayBothPrices()): ?>
+                                    <?php echo __('<strong>%1</strong> <span class="excl-tax">(Excl. Tax: <strong>%2</strong>)</span><br>for %3 items',
+                                        $block->formatCurrency($block->getPriceInclTax($priceRange->getPrice())),
+                                        $block->formatCurrency($block->getPriceExclTax($priceRange->getPrice())),
+                                        $priceRange->getQuantityThreshold()
+                                    ) ?>
+                                <?php else: ?>
+                                    <?php echo __('<strong>%1</strong> for %2 items',
+                                        $block->formatCurrency($taxHelper->displayPriceIncludingTax() ? $block->getPriceInclTax($priceRange->getPrice()) : $block->getPriceExclTax($priceRange->getPrice())),
+                                        $priceRange->getQuantityThreshold()
+                                    ) ?>
+                                <?php endif; ?>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklShop
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="retailplace_shop_updater_has_new_products"
+             instance="Retailplace\MiraklShop\Model\Cron\CronHasNewProducts"
+             method="run">
+            <config_path>retailplace_attribute_updater/has_new_products/cron_schedule</config_path>
+        </job>
+    </group>
+</config>

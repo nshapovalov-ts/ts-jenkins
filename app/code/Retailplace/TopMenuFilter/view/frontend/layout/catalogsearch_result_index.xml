@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="seller-product-search-container">
+            <block after="tab-header-search" class="Amasty\Shopby\Block\Navigation\CategoryTop" name="amshopby.catalog.topnav" template="Retailplace_TopMenuFilter::layer/top_filter.phtml">
+                <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="topfilter.sorting" as="top_filter_sorting" template="Magento_Catalog::product/list/toolbar/sorter.phtml">
+                    <action method="setDefaultOrder">
+                        <argument name="field" xsi:type="string">relevance</argument>
+                    </action>
+                </block>
+                <block class="Amasty\Shopby\Block\Navigation\State" name="amshopby.catalog.topnav.state" as="state"/>
+                <block class="Retailplace\TopMenuFilter\Block\Navigation\FilterRenderer" name="amshopby.catalog.topnav.renderer" as="renderer" template="Retailplace_TopMenuFilter::layer/filter.phtml"/>
+            </block>
+            <referenceBlock name="amshopby.catalog.topnav" display="true"/>
+        </referenceContainer>
+    </body>
+</page>

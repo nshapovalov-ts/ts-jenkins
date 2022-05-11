@@ -1,0 +1,104 @@
+<style type="text/css">
+    label.mage-error {
+    width: 33% !important;
+    margin-left: 179px;
+}
+</style>
+<div class="admin_bulksms">
+<?php $authUrl = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Backend\Helper\Data')->getUrl("magecompsms/bulk/send"); ?>
+    <div >
+        <span class="getcustomerurl" style="display: none"><?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Backend\Helper\Data')->getUrl("magecompsms/bulk/getnumber"); ?></span>
+        <span class="getphonenumber" style="display: none"><?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Backend\Helper\Data')->getUrl("magecompsms/bulk/getphonebooknumber"); ?></span>
+        <div class="admin_bulksms_mobnumbers_lable">
+            <?php echo __("Import Numbers From")?>
+        </div>
+        <div style="margin: 10px 136px;">
+            <button id="get-customer-telephone" class="primary">
+                <?php echo __("Default Customers");?>
+            </button>
+            <button id="get-phonebook-mobile" class="primary">
+                <?php echo __("Phonebook");?>
+            </button>
+        </div>
+    </div>
+    <form action="<?php echo $authUrl ?>" id="bulksms_form" data-mage-init='{"validation":{}}'>
+    <div class="admin_bulksms_mobnumbers">
+        <div class="admin_bulksms_mobnumbers_lable">
+            <?php echo __("Mobile Numbers")?>
+        </div>
+        <div class="admin_bulksms_mobnumbers_text">
+            <textarea class="admin__control-textarea" rows="4" cols="50" id="bulksms_numbers" name="bulksms_numbers" placeholder="Type Comma Seprated Mobile Numbers." data-validate="{'required':true}"></textarea>
+
+        </div>
+    </div>
+    <div class="admin_bulksms_message">
+        <div class="admin_bulksms_message_lable">
+                    <?php echo __("SMS Text")?>
+        </div>
+        <div class="admin_bulksms_message_text">
+           <textarea class="admin__control-textarea" rows="4" cols="50" id="bulksms_message" name="bulksms_message" placeholder="Enter your Message here" data-validate="{'required':true}" /></textarea>
+       </div>
+    </div>
+    <div class="admin_bulksms_formsubmit">
+
+        <button type="submit" id="bulksms_submit" class="primary">
+            <?php echo __("Send Bulk SMS"); ?>
+        </button>
+            
+    </div>    
+    <div class="bulksms_notice">
+        <div>
+           <?php echo __(" Note : "); ?>
+        </div>
+        <div>
+             <?php echo __(" -- Import Customer Number : This will import phone numbers from Customer's Account. "); ?>
+        </div>
+        <div>
+           <?php echo __(" -- Phonebook: You can import CSV from configuration and see phonebook grid menu, that data will be imported here. "); ?>
+        </div>
+    </div>
+    </form>
+</div>
+<script type="text/javascript">
+    require(
+        ['jquery'],
+        function($) {
+            $("#get-customer-telephone").on('click',function () {
+                $("#bulksms_submit").removeClass('disabled');
+                var tempurl = $(".getcustomerurl").text();
+                tempurl = $.trim(tempurl);
+                $.ajax({url: tempurl,
+                    type: 'POST',
+                    data: {form_key: window.FORM_KEY},
+                    showLoader: true,
+                    success: function(response) {
+
+                        $("#bulksms_numbers").val(response);
+                    }
+                });
+            });
+            $("#get-phonebook-mobile").on('click',function () {
+                $("#bulksms_submit").removeClass('disabled');
+                var tempurl = $(".getphonenumber").text();
+                tempurl = $.trim(tempurl);
+                $.ajax({url: tempurl,
+                    type: 'POST',
+                    data: {form_key: window.FORM_KEY},
+                    showLoader: true,
+                    success: function(response) {
+
+                        $("#bulksms_numbers").val(response);
+                    }
+                });
+            });
+            $("#bulksms_numbers").blur(function () {
+                $("#bulksms_submit").removeClass('disabled');
+               if(!this.value.match("^[-+]?[0-9,]*.?[0-9]*([eE][-+]?[0-9]+)?$")){
+                  alert("You Have Entered Invalid Value");
+                  $("#bulksms_submit").addClass('disabled');
+                  return false;
+                }
+            });
+        }
+    );
+</script>

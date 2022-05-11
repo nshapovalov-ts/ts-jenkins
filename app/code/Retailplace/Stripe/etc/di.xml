@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="StripeIntegration\Payments\Model\Config" type="Retailplace\Stripe\Rewrite\Model\Config"/>
+    <preference for="StripeIntegration\Payments\Model\Stripe\Invoice" type="Retailplace\Stripe\Rewrite\Model\Stripe\Invoice"/>
+    <preference for="StripeIntegration\Payments\Model\Stripe\Coupon" type="Retailplace\Stripe\Rewrite\Model\Stripe\Coupon"/>
+    <preference for="StripeIntegration\Payments\Model\Stripe\InvoiceItem" type="Retailplace\Stripe\Rewrite\Model\Stripe\InvoiceItem"/>
+    <preference for="StripeIntegration\Payments\Model\Method\Invoice" type="Retailplace\Stripe\Rewrite\Model\Method\Invoice"/>
+    <preference for="StripeIntegration\Payments\Helper\Webhooks" type="Retailplace\Stripe\Rewrite\Helper\Webhooks"/>
+    <preference for="StripeIntegration\Payments\Block\PaymentInfo\Invoice" type="Retailplace\Stripe\Block\PaymentInfo\Invoice"/>
+    <preference for="StripeIntegration\Payments\Model\PaymentIntent" type="Retailplace\Stripe\Rewrite\Model\PaymentIntent"/>
+    <preference for="StripeIntegration\Payments\Observer\WebhooksObserver" type="Retailplace\Stripe\Rewrite\Observer\WebhooksObserver"/>
+    <preference for="Retailplace\Stripe\Api\Data\PaymentInfoInterface" type="Retailplace\Stripe\Model\PaymentInfo"/>
+    <preference for="StripeIntegration\Payments\Model\InitialFee" type="Retailplace\Stripe\Rewrite\Model\InitialFee"/>
+    <preference for="StripeIntegration\Payments\Model\Invoice\Total\InitialFee" type="Retailplace\Stripe\Rewrite\Model\Invoice\Total\InitialFee"/>
+    <preference for="StripeIntegration\Payments\Model\Creditmemo\Total\InitialFee" type="Retailplace\Stripe\Rewrite\Model\Creditmemo\Total\InitialFee"/>
+    <preference for="StripeIntegration\Payments\Model\Ui\SepaConfigProvider" type="Retailplace\Stripe\Rewrite\Model\Ui\SepaConfigProvider"/>
+    <preference for="Retailplace\Stripe\Api\Data\PaymentCardsInterface" type="Retailplace\Stripe\Model\PaymentCards"/>
+
+    <virtualType name="StripePaymentsInvoiceFacade" type="Retailplace\Stripe\Rewrite\Model\Method\Invoice">
+        <arguments>
+            <argument name="eventManager" xsi:type="object">\Magento\Framework\Event\ManagerInterface</argument>
+            <argument name="valueHandlerPool" xsi:type="object">StripePaymentsInvoiceValueHandlerPool</argument>
+            <argument name="paymentDataObjectFactory" xsi:type="object">Magento\Payment\Gateway\Data\PaymentDataObjectFactory</argument>
+            <argument name="code" xsi:type="string">stripe_payments_invoice</argument>
+            <argument name="formBlockType" xsi:type="string">StripeIntegration\Payments\Block\Method\Invoice</argument>
+            <argument name="infoBlockType" xsi:type="string">StripeIntegration\Payments\Block\PaymentInfo\Invoice</argument>
+            <argument name="config" xsi:type="object">StripeIntegration\Payments\Model\Config</argument>
+            <argument name="helper" xsi:type="object">StripeIntegration\Payments\Helper\Generic</argument>
+            <argument name="productFactory" xsi:type="object">StripeIntegration\Payments\Model\Stripe\ProductFactory</argument>
+            <argument name="priceFactory" xsi:type="object">StripeIntegration\Payments\Model\Stripe\PriceFactory</argument>
+            <argument name="couponFactory" xsi:type="object">StripeIntegration\Payments\Model\Stripe\CouponFactory</argument>
+            <argument name="invoiceItemFactory" xsi:type="object">StripeIntegration\Payments\Model\Stripe\InvoiceItemFactory</argument>
+            <argument name="invoiceFactory" xsi:type="object">StripeIntegration\Payments\Model\Stripe\InvoiceFactory</argument>
+            <argument name="cache" xsi:type="object">\Magento\Framework\App\CacheInterface</argument>
+            <argument name="validatorPool" xsi:type="object">StripePaymentsValidatorPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="payment_date" xsi:type="string">sales_order.payment_date</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Invoice\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="stripe_invoice_paid" xsi:type="string">sales_invoice.stripe_invoice_paid</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="retailplace_stripe_processing" xsi:type="object">Retailplace\Stripe\Console\Processing</item>
+                <item name="retailplace_stripe_update_max_credit_limit" xsi:type="object">Retailplace\Stripe\Console\UpdateMaxCreditLimit</item>
+                <item name="retailplace_stripe_update_credit_card_info" xsi:type="object">Retailplace\Stripe\Console\UpdatePaymentsCreditCardInfo</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Retailplace\Stripe\Model\CollectionProcessor\JoinProcessor">
+        <arguments>
+            <argument name="customJoins" xsi:type="array">
+                <item name="invoice.stripe_invoice_paid" xsi:type="object">Retailplace\Stripe\Model\CollectionProcessor\JoinProcessor\OrderInvoice</item>
+                <item name="invoice.created_at" xsi:type="object">Retailplace\Stripe\Model\CollectionProcessor\JoinProcessor\OrderInvoice</item>
+                <item name="payment.method" xsi:type="object">Retailplace\Stripe\Model\CollectionProcessor\JoinProcessor\OrderPayment</item>
+                <item name="address.postcode" xsi:type="object">Retailplace\Stripe\Model\CollectionProcessor\JoinProcessor\OrderAddress</item>
+            </argument>
+            <argument name="fieldMapping" xsi:type="array">
+                <item name="invoice.stripe_invoice_paid" xsi:type="string">invoice.stripe_invoice_paid</item>
+                <item name="invoice.stripe_invoice_id" xsi:type="string">invoice.stripe_invoice_id</item>
+                <item name="payment.method" xsi:type="string">payment.method</item>
+                <item name="address.postcode" xsi:type="string">address.postcode</item>
+                <item name="address.telephone" xsi:type="string">address.telephone</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Retailplace\Stripe\Model\CollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="join" xsi:type="object">Retailplace\Stripe\Model\CollectionProcessor\JoinProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Retailplace\Stripe\Model\OrderRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Retailplace\Stripe\Model\CollectionProcessor</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Block\Adminhtml\Order\Invoice\View">
+        <plugin name="Retailplace_Stripe::sendOrderView" type="Retailplace\Stripe\Plugin\PluginBtnPayInvoice"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Cart\CartTotalRepository">
+        <plugin name="Retailplace_Stripe::cart_total_repository_get" type="Retailplace\Stripe\Plugin\Cart\CartTotalRepository"/>
+    </type>
+
+    <type name="Magento\Checkout\Model\PaymentInformationManagement">
+        <plugin name="stripe_payments_paymentinformation" type="StripeIntegration\Payments\Plugin\PaymentInformationManagement" sortOrder="30" />
+    </type>
+    <type name="Magento\Checkout\Model\GuestPaymentInformationManagement">
+        <plugin name="stripe_payments_paymentinformationguest" type="StripeIntegration\Payments\Plugin\GuestPaymentInformationManagement" sortOrder="30" />
+    </type>
+</config>

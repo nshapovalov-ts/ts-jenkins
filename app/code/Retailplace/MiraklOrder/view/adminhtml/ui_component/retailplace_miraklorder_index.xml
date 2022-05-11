@@ -1,0 +1,172 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_MiraklOrder
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+ -->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">retailplace_miraklorder_index.retailplace_miraklorder_grid_data_source</item>
+            <item name="deps" xsi:type="string">retailplace_miraklorder_index.retailplace_miraklorder_grid_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">retailplace_miraklorder_columns</item>
+    </argument>
+    <dataSource name="retailplace_miraklorder_grid_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
+            <argument name="name" xsi:type="string">retailplace_miraklorder_grid_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" path="mui/index/render" xsi:type="url"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">entity_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <paging name="listing_paging"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+    </listingToolbar>
+    <columns name="retailplace_miraklorder_columns">
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="mirakl_order_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">Order ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_increment_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">Magento Order ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="mirakl_shop_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">Shop Id</item>
+                </item>
+            </argument>
+        </column>
+        <column name="mirakl_shop_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">Shop Name</item>
+                </item>
+            </argument>
+        </column>
+        <column name="mirakl_order_status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">Status</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_lines">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">Order Lines</item>
+                </item>
+            </argument>
+        </column>
+        <column name="has_invoice" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno" />
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Has Invoice</label>
+            </settings>
+        </column>
+        <column name="has_incident" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno" />
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Has Incident</label>
+            </settings>
+        </column>
+        <column name="has_incident" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno" />
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Has Incident</label>
+            </settings>
+        </column>
+        <column name="actual_shipping_uploaded" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Config\Model\Config\Source\Yesno" />
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Shipping Invoice Uploaded</label>
+            </settings>
+        </column>
+        <column name="total_commission" class="Magento\Catalog\Ui\Component\Listing\Columns\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" translate="true" xsi:type="string">Total Commission</item>
+                </item>
+            </argument>
+        </column>
+        <column name="total_price" class="Magento\Catalog\Ui\Component\Listing\Columns\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" translate="true" xsi:type="string">Total Price</item>
+                </item>
+            </argument>
+        </column>
+        <column name="actual_shipping_amount" class="Magento\Catalog\Ui\Component\Listing\Columns\Price">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" translate="true" xsi:type="string">Actual Shipping Amount</item>
+                </item>
+            </argument>
+        </column>
+        <actionsColumn name="actions" class="Retailplace\MiraklOrder\Ui\Component\MiraklOrderListing\Grid\Column\Action">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="urlEntityParamName" xsi:type="string">id</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+</listing>

@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Retailplace_MiraklQuote
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+declare(strict_types=1);
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<div id="mirakl-quote-add" data-bind="scope:'miraklQuoteAdd'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "#mirakl-quote-add": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "miraklQuoteAdd": {
+                        "component": "Retailplace_MiraklQuote/js/mirakl-quote-add",
+                        "sellerId": "<?= $block->getRequest()->getParam('seller') ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

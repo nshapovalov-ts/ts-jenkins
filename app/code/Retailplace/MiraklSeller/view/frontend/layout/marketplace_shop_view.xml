@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="page.main.title" remove="true"/>
+        <referenceBlock name="sidebar.additional" remove="true"/>
+        <referenceBlock name="product.info.details" remove="true"/>
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Framework\View\Element\Template" name="seller_js" as="seller_js" template="Retailplace_MiraklSeller::shop/js.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <referenceBlock name="mirakl.shop.view">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">Retailplace_MiraklSeller::shop/view.phtml</argument>
+                </action>
+            </referenceBlock>
+
+            <block class="Magento\Catalog\Block\Product\ListProduct" name="category.products.marketplace"  as="marketplace_product_list" template="Retailplace_MiraklSeller::shop/list.phtml">
+                <container name="category.product.list.additional" as="additional"/>
+                <block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+                    <block class="Magento\Framework\View\Element\Template" name="category.product.type.details.renderers.default" as="default"/>
+                </block>
+                <block class="Magento\Catalog\Block\Product\ProductList\Item\Container" name="category.product.addto" as="addto">
+                    <block class="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare"
+                           name="category.product.addto.compare" as="compare"
+                           template="Magento_Catalog::product/list/addto/compare.phtml"/>
+                </block>
+                <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                    <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                </block>
+                <action method="setToolbarBlockName">
+                    <argument name="name" xsi:type="string">product_list_toolbar</argument>
+                </action>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="sidebar.main">
+            <block class="Retailplace\MiraklSeller\Block\Shop\Search" name="search_sku" before="-"
+                   template="Retailplace_MiraklSeller::shop/search_sku.phtml"/>
+            <block class="Amasty\Shopby\Block\Navigation\Cms" name="catalog.leftnav" before="search_sku" template="Magento_LayeredNavigation::layer/view.phtml">
+                <action method="setData">
+                    <argument name="data" xsi:type="array">
+                        <item name="hideAttributes" xsi:type="string">min_order_amount,agha_member,boutique,mirakl_shop_ids</item>
+                    </argument>
+                </action>
+                <block class="Amasty\Shopby\Block\Navigation\State"
+                       name="catalogsearch.navigation.state" as="state" />
+                <block class="Amasty\Shopby\Block\Navigation\FilterRenderer"
+                       name="catalogsearch.navigation.renderer" as="renderer"
+                       template="Magento_LayeredNavigation::layer/filter.phtml"/>
+            </block>
+            <block class="Retailplace\MiraklSeller\Block\Shop\Report" name="report-seller" as="report-seller" template="Retailplace_MiraklSeller::shop/report.phtml"/>
+        </referenceContainer>
+        <move element="mirakl.shop.view" destination="page.top" before="-"/>
+        <move element="catalog.leftnav" destination="sidebar.main" after="search_sku"/>
+        <move element="report-seller" destination="sidebar.main" after="catalog.leftnav"/>
+    </body>
+</page>

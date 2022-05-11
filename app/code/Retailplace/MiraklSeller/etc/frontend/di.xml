@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="miraklseller" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">40</item>
+                </item>
+                <item name="sale" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">41</item>
+                </item>
+                <item name="madeinau" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">42</item>
+                </item>
+                <item name="clearance" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">43</item>
+                </item>
+                <item name="au_post" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">44</item>
+                </item>
+                <item name="boutique" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">45</item>
+                </item>
+                <item name="seller-specials" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">46</item>
+                </item>
+                <item name="new-suppliers" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">48</item>
+                </item>
+                <item name="new-products" xsi:type="array">
+                    <item name="class" xsi:type="string">Retailplace\MiraklSeller\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">50</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Layer\Category">
+        <plugin name="mirakl_seller_collection" type="Retailplace\MiraklSeller\Plugin\Magento\Catalog\Model\Layer\Category" sortOrder="10"/>
+    </type>
+    <type name="Magento\Catalog\Model\Layer\Category\CollectionFilter">
+        <plugin name="retailplace_mirakl_category_collection_filter" type="Retailplace\MiraklSeller\Plugin\Magento\Catalog\Model\Layer\Category\CollectionFilter" sortOrder="10"/>
+    </type>
+    <type name="Magento\Catalog\Model\Layer\Search\CollectionFilter">
+        <plugin name="retailplace_mirakl_search_collection_filter" type="Retailplace\MiraklSeller\Plugin\Magento\Catalog\Model\Layer\Search\CollectionFilter" sortOrder="10"/>
+    </type>
+    <type name="Amasty\Shopby\Model\Layer\Filter\Category">
+        <plugin  name="Retailplace_MiraklSeller_Plugin_Amasty_Shopby_Model_Layer_Filter_Category" sortOrder="10" type="Retailplace\MiraklSeller\Plugin\Amasty\Shopby\Model\Layer\Filter\Category"/>
+    </type>
+    <type name="Amasty\Shopby\Model\Layer\Filter\Attribute">
+        <plugin name="retailplace_miraklseller_layer_attribute_filter" type="Retailplace\MiraklSeller\Plugin\Amasty\Shopby\Model\Layer\Filter\Attribute" sortOrder="10"/>
+    </type>
+    <type name="Magento\Catalog\Helper\Product">
+        <plugin name="retailplace_miraklseller_product_helper" type="Retailplace\MiraklSeller\Plugin\Magento\Catalog\Helper\Product" sortOrder="10"/>
+    </type>
+</config>

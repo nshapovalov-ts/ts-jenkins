@@ -1,0 +1,50 @@
+{
+    "mirakl_additionalfield_industryexclusions": {
+        "column": {
+            "industryexclusions_id": true,
+            "code": true,
+            "label": true,
+            "visible_for": true,
+            "sort": true,
+            "status": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "mirakl_additionalfield_channelexclusions": {
+        "column": {
+            "channelexclusions_id": true,
+            "code": true,
+            "label": true,
+            "sort": true,
+            "status": true,
+            "option_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "mirakl_additionalfield_exclusionslogic": {
+        "column": {
+            "exclusionslogic_id": true,
+            "code": true,
+            "label": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "mirakl_shop": {
+        "column": {
+            "industry-exclusions": true,
+            "channel-exclusions": true,
+            "exclusions-logic": true,
+            "leadtime_to_ship": true,
+            "id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

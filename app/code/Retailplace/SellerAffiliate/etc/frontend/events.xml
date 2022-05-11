@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_SellerAffiliate
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_login">
+        <observer name="add_affiliate_after_login" instance="Retailplace\SellerAffiliate\Observer\CustomerLogin" />
+    </event>
+</config>

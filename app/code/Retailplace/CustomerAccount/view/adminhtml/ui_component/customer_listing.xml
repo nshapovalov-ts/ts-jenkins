@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="customer_columns">
+        <column name="incomplete_application" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+            <settings>
+                <options class="Retailplace\CustomerAccount\Model\Config\Source\IncompleteApplicationStatus"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Incomplete Application</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

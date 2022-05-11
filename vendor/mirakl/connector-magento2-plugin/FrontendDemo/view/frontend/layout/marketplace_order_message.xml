@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <update handle="marketplace_order_info_links"/>
+    <head>
+        <css src="Mirakl_FrontendDemo::css/marketplace.css"/>
+    </head>
+    <body>
+        <referenceContainer name="page.main.title">
+            <block class="Mirakl\FrontendDemo\Block\Order\Info" name="order.status" template="order/order_status.phtml"/>
+            <block class="Mirakl\FrontendDemo\Block\Order\Info" name="order.date" template="Magento_Sales::order/order_date.phtml"/>
+            <block class="Mirakl\FrontendDemo\Block\Order\Info" name="order.buttons" template="order/order_buttons.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Mirakl\FrontendDemo\Block\Message\Order" name="sales.order.message" template="Mirakl_FrontendDemo::message/order_tab.phtml" cacheable="false" />
+        </referenceContainer>
+    </body>
+</page>

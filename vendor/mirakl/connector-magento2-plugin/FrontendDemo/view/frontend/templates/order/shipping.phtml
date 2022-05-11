@@ -1,0 +1,28 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Order\Info $block */
+/** @var \Mirakl\MMP\FrontOperator\Domain\Order $_miraklOrder */
+/** @var \Magento\Sales\Model\Order $_order */
+$_miraklOrder = $this->getMiraklOrder();
+$_order = $this->getOrder();
+$_shipping = $_miraklOrder->getShipping();
+$_shippingPrice = $this->helper('Mirakl\Connector\Helper\Order')->getMiraklShippingPriceInclTax($_order, $_miraklOrder);
+$_baseShippingPrice = $this->helper('Mirakl\Connector\Helper\Order')->getMiraklBaseShippingPriceInclTax($_order, $_miraklOrder);
+?>
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Shipping Information') ?></strong>
+    </div>
+    <div class="block-content">
+        <p><strong><?php echo __('Shipping Type: ') ?></strong><?php echo $_shipping->getType()->getLabel() ?><p>
+        <p><strong><?php echo __('Shipping Price: ') ?></strong><?php echo $_shippingPrice > 0 ? $_order->formatPrice($_shippingPrice) : __('Free') ?><?php if ($_order->isCurrencyDifferent()): ?> [<?php echo $_order->formatBasePrice($_baseShippingPrice) ?>]<?php endif ?></p>
+        <?php if (!empty($_shipping->getTrackingUrl())): ?>
+            <p><strong><?php echo __('Shipping Company: ') ?></strong><?php echo $_shipping->getCarrier() ?>
+            <p><strong><?php echo __('Shipping Tracking: ') ?></strong><?php echo $_shipping->getTrackingNumber() ?>
+            <p><strong><?php echo __('Shipping URL: ') ?></strong><a href="<?php echo $_shipping->getTrackingUrl() ?>" name="tracking_url">
+                <?php echo $_shipping->getTrackingUrl() ?>
+            </a>
+        <?php else: ?>
+            <p><strong><?php echo __('The carrier selected by the seller and tracking information will be available after your order is shipped.') ?></strong></p>
+        <?php endif ?>
+    </div>
+</div>

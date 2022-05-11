@@ -1,0 +1,223 @@
+<fieldset class="fieldset create account" data-hasrequired="<?php echo __('* Required Fields') ?>">
+    <legend class="legend"></legend>
+    <div id="smserrordiv" name="smserrordiv" class="message error"></div>
+    <div id="smssuccessdiv" name="smssuccessdiv" class="message success"></div>
+    <div class="field">
+        <div class="control">
+            <input type="text" name="mobilenumber" id="mobilenumber" title="<?php echo __('Mobile Number') ?>" class="input-text mobilenumber" autocomplete="off" placeholder="Mobile Number" maxlength="12" pattern="[0-9]">
+            <input type="hidden" value="" id="countryreg" name="countryreg" />
+        </div>
+        <div class="comment"><?php echo __('Enter Number With Country code & without any sign. e.g:-(91xxxxxxx09)') ?></div>
+        <div id="otpdiv" class="control">
+            <input type="password" name="otp" id="otp" title="<?php echo __('otp') ?>" class="input-text" autocomplete="off" placeholder="OTP" maxlength="10">
+        </div>
+        <div id="waitsmsdiv">
+            <img src='<?php echo $this->getViewFileUrl('images/loader-1.gif'); ?>' alt="Please Wait..." width="30px" height="30px">
+        </div>
+        <div id="otpbtndiv">
+            <button id="getotpbtn" name="getotpbtn" type="button" class="<?php echo $block->getButtonclass();?>" title="Get OTP">
+                <span><?php echo __('Get OTP') ?></span>
+            </button>
+            <button id="resendotpbtn" name="resendotpbtn" type="button" class="<?php echo $block->getButtonclass();?>" title="Resend OTP">
+                <span><?php echo __('Resend OTP') ?></span>
+            </button>
+        </div>
+        <div style="clear: both;"></div>
+        <div id="confirmationdiv">
+            <button id="confirmotpbtn" name="confirmotpbtn" type="button" class="<?php echo $block->getButtonclass();?>" title="Verify Mobile Number">
+                <span><?php echo __('Verify Mobile Number') ?></span>
+            </button>
+        </div>
+        <div style="clear: both;"></div>
+        <div id="existingnumberdiv">
+            <p class="empty"><?php echo __('Please verify your Mobile Number before proceeding to checkout.') ?></p>
+        </div>
+        <div id="procedtocheckoutdiv">
+            <button id="procedtocheckoutbtn" name="procedtocheckoutbtn" type="button" class="<?php echo $block->getButtonclass();?>" title="Proceed to Checkout">
+                <span><?php echo __('Proceed to Checkout') ?></span>
+            </button>
+        </div>
+    </div>
+</fieldset>
+<script>
+    require(['jquery', 'jquery/ui'], function($)
+    {
+        function Smsresetdata()
+        {
+            $('#mobilenumber').removeClass('mage-error');
+            $('#otp').removeClass('mage-error');
+            $('#smserrordiv').hide();
+            $('#smserrordiv').html('');
+        }
+
+        function Smstoggeldata(Elementid)
+        {
+            $(Elementid).toggle();
+        }
+
+        $("#getotpbtn").click(function(e)
+        {
+            //Reset Everything
+            Smsresetdata();
+
+            //Number Validation
+            var mobile = $('#mobilenumber').val();
+            if(mobile == null || mobile == '')
+            {
+                $('#mobilenumber').addClass('mage-error');
+                $('#smserrordiv').show();
+                $('#smserrordiv').html('<?php echo __('Please, First Enter Your Mobile Number.') ?>');
+                return false;
+            }
+            if(!$.isNumeric(mobile) || mobile.length <= 9 || mobile.substring(0,1)=='+' || mobile.substring(0,1)=='-')
+            {
+                $('#mobilenumber').addClass('mage-error');
+                $('#smserrordiv').show();
+                $('#smserrordiv').html('<?php echo __('Please, Enter Valid Mobile Number.') ?>');
+                return false;
+            }
+
+            var countrycode = $("#countryreg").val();
+            mobile = countrycode.concat(mobile);
+
+            //Send OTP To Number
+            $.ajax({
+                type: "POST",
+                url: '<?php echo $this->getUrl('smspro/customer/checkoutotp')?>',
+                data:{'mobile':mobile},
+                beforeSend: function()
+                {
+                    Smsresetdata();
+                    Smstoggeldata('#getotpbtn');
+                    Smstoggeldata('#waitsmsdiv');
+                },
+                success: function(data)
+                {
+                    if(data == 'success')
+                    {
+                        Smstoggeldata('#waitsmsdiv');
+                        Smstoggeldata('#otpdiv');
+                        Smstoggeldata('#resendotpbtn');
+                        Smstoggeldata('#confirmationdiv');
+                        $('#mobilenumber').attr('readonly', true);
+                    }
+                    else
+                    {
+                        Smstoggeldata('#waitsmsdiv');
+                        Smstoggeldata('#getotpbtn');
+                        $('#smserrordiv').show();
+                        $('#smserrordiv').html(data);
+                    }
+                },
+                error: function() {
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#getotpbtn');
+                    $('#smserrordiv').show();
+                    $('#smserrordiv').html('<?php echo __('Something Went Wrong, Try Again Later.') ?>');
+                }
+            });
+        });
+
+        $("#resendotpbtn").click(function(e)
+        {
+            //Reset Everything
+            Smsresetdata();
+
+            var mobile = $('#mobilenumber').val();
+            var countrycode = $("#countryreg").val();
+            mobile = countrycode.concat(mobile);
+
+            //Re-Send OTP To Number
+            $.ajax({
+                type: "POST",
+                url: '<?php echo $this->getUrl('smspro/customer/checkoutotp')?>',
+                data:{'mobile':mobile},
+                beforeSend: function()
+                {
+                    Smsresetdata();
+                    Smstoggeldata('#resendotpbtn');
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                },
+                success: function(data)
+                {
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                    if(data != 'success')
+                    {
+                        $('#smserrordiv').show();
+                        $('#smserrordiv').html(data);
+                    }
+                },
+                error: function() {
+                    Smstoggeldata('#waitsmsdiv');
+                    $('#smserrordiv').show();
+                    $('#smserrordiv').html('<?php echo __('Something Went Wrong, Try Again Later.') ?>');
+                }
+            });
+        });
+
+        $("#confirmotpbtn").click(function(e)
+        {
+            //OTP Validation
+            var otpstring = $('#otp').val();
+            if(otpstring == null || otpstring == '')
+            {
+                $('#otp').addClass('mage-error');
+                $('#smserrordiv').show();
+                $('#smserrordiv').html('<?php echo __('Please, Enter OTP.') ?>');
+                return false;
+            }
+
+            var mobile = $('#mobilenumber').val();
+            var countrycode = $("#countryreg").val();
+            mobile = countrycode.concat(mobile);
+
+            //Verify Mobile & OTP
+            $.ajax({
+                type: "POST",
+                url: '<?php echo $this->getUrl('smspro/customer/checkoutotpnumber')?>',
+                data:{'mobile':mobile,'otp':otpstring},
+                beforeSend: function()
+                {
+                    Smsresetdata();
+                    Smstoggeldata('#otpbtndiv');
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                },
+                success: function(data)
+                {
+                    Smstoggeldata('#waitsmsdiv');
+                    if(data == 'success')
+                    {
+                        $('#smssuccessdiv').html('<?php echo __('Your Mobile Number is Verified Successfully! Now You Can Proceed to Checkout.') ?>');
+                        $('#smssuccessdiv').show();
+                        $('#procedtocheckoutdiv').show();
+                    }
+                    else
+                    {
+                        $('#smserrordiv').html(data);
+                        Smstoggeldata('#smserrordiv');
+                        Smstoggeldata('#confirmationdiv');
+                    }
+                },
+                error: function() {
+                    Smstoggeldata('#waitsmsdiv');
+                    Smstoggeldata('#confirmationdiv');
+                    $('#smserrordiv').html('<?php echo __('Something Went Wrong, Try Again Later.') ?>');
+                    Smstoggeldata('#smserrordiv');
+                }
+            });
+        });
+
+        $("#procedtocheckoutbtn").click(function(e) {
+            window.location.href = '<?php echo $block->getCheckoutURL(); ?>';
+        });
+
+        $("#mobilenumber").intlTelInput({
+            initialCountry: "<?php echo $block->getDefaultContry();?>",
+            utilsScript: "<?php echo $this->getViewFileUrl('Magecomp_Smspro::countryflag/js/utils.js'); ?>"
+        });
+
+    });
+</script>

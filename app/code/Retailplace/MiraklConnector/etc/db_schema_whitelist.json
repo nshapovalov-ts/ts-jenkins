@@ -1,0 +1,15 @@
+{
+    "mirakl_offer": {
+        "column": {
+            "offer_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "mirakl_shop": {
+        "column": {
+            "differentiators": true
+        }
+    }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table comment="retailplace_product_import table" engine="innodb" name="retailplace_product_import"
+           resource="default">
+        <column comment="Entity Id" identity="true" name="id" nullable="false" padding="6" unsigned="true"
+                xsi:type="int"/>
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RETAILPLACE_PRODUCT_IMPORT_MIRAKL_PRODUCT_ID">
+            <column name="mirakl_product_id"/>
+        </constraint>
+        <column name="mirakl_product_id" xsi:type="varchar" nullable="false" length="56" comment="Mirakl Product Id"/>
+        <column name="sku" xsi:type="varchar" nullable="true" length="64" comment="SKU"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <column xsi:type="timestamp" name="mirakl_created_at" on_update="false" nullable="true" comment="Mirakl Created At"/>
+        <column xsi:type="timestamp" name="mirakl_updated_at" on_update="false" nullable="true" comment="Mirakl Updated At"/>
+        <column xsi:type="text" name="data" nullable="false" comment="Import Product Data"/>
+        <column name="status" xsi:type="smallint" padding="6" unsigned="true" nullable="false" identity="false" default="0" comment="Status"/>
+        <column name="send_status" xsi:type="smallint" padding="6" unsigned="true" nullable="false" identity="false" default="0" comment="Send Status"/>
+        <column xsi:type="text" name="error" nullable="false" comment="Import Product Data"/>
+        <index referenceId="RETAILPLACE_PRODUCT_IMPORT_MIRAKL_STATUS" indexType="btree">
+            <column name="status"/>
+            <column name="send_status"/>
+        </index>
+    </table>
+
+</schema>

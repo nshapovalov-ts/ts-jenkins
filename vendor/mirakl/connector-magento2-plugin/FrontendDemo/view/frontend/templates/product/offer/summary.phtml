@@ -1,0 +1,16 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Product\Offer\Summary $block */
+/** @var \Magento\Framework\Pricing\Helper\Data $_pricingHelper */
+$_offersSummary = $block->getSummary();
+$_pricingHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');
+?>
+<?php if (count($_offersSummary) > 0): ?>
+    <div class="list-choice-box">
+        <h3><?php echo __('More Buying Choices')?></h3>
+        <?php foreach ($_offersSummary as $_conditionName => $_summary): ?>
+            <div class="offer-summary">
+                <div><span class="offer-summary-best-price"><?php echo $_pricingHelper->currency($_summary['best_price'], true, false)?></span>&nbsp;<?php echo __('%1 (%2 offer%3)', __($_conditionName), intval($_summary['nb']), ($_summary['nb'] > 1 ? 's' : '')) ?></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_event" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Events</label>
+            <tab>mirakl</tab>
+            <resource>Mirakl_Config::event</resource>
+            <group id="mirakl_api_notice" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Mirakl\Api\Block\Adminhtml\System\Config\Fieldset\Hint</frontend_model>
+            </group>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Mirakl Events Configuration</label>
+                <field id="event_async_active" translate="label comment" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Asynchronous Active For</label>
+                    <source_model>Mirakl\Event\Model\System\Config\Source\Event\Type</source_model>
+                    <comment><![CDATA[Modifications made in selected entities will not be sent immediately to Mirakl but stored in the event queue and sent at regular interval to Mirakl.]]></comment>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

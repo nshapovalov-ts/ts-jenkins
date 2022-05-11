@@ -1,0 +1,54 @@
+<div class="mirakl-quote quotes-listing" id="quotes-listing">
+    <!-- ko if: miraklQuoteRequests().length -->
+    <section class="quote-requests-block">
+        <table class="quote-products">
+            <thead>
+                <tr>
+                    <th data-bind="i18n: 'RFQ #'"></th>
+                    <th data-bind="i18n: 'Date'"></th>
+                    <th data-bind="i18n: 'Status'"></th>
+                    <th data-bind="i18n: 'Seller'"></th>
+                    <th data-bind="i18n: 'Related Order'"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ko foreach: miraklQuoteRequests() -->
+                    <!-- ko with: shop_quote_requests[0] -->
+                        <tr class="quote-request">
+                                <td data-th="RFQ #" class="quote-id">
+                                    <a data-bind="text: id, attr: {href: url}"></a>
+                                </td>
+                                <td data-th="Date" class="quote-date" data-bind="text: date_formatted"></td>
+                                <td data-th="Status" class="quote-status">
+                                    <span data-bind="text: state_label, attr: {class: state_lowercase}"></span>
+                                </td>
+                                <td data-th="Seller" class="quote-shop-name" data-bind="text: shop_name"></td>
+                                <td data-th="Related Order" class="quote-related-order">
+                                    <!-- ko if: quotes.length && quotes[0].mirakl_orders.length -->
+                                        <div data-bind="foreach: quotes[0].mirakl_orders">
+                                            <div>
+                                                <a data-bind="text: id, attr: {href: url}"></a>
+                                            </div>
+                                        </div>
+                                    <!-- /ko -->
+                                    <!-- ko ifnot: quotes.length && quotes[0].mirakl_orders.length -->
+                                        <span> - </span>
+                                    <!-- /ko -->
+                                </td>
+                        </tr>
+                    <!-- /ko -->
+                <!-- /ko -->
+            </tbody>
+        </table>
+        <!-- ko if: pagination -->
+        <div data-bind="html: pagination" afterRender="ajaxPaginationInit"></div>
+        <!-- /ko -->
+    </section>
+    <!-- /ko -->
+
+    <!-- if pageErrors().length -->
+    <div class="page-errors-block" data-bind="foreach: pageErrors()">
+        <div data-bind="text: $data"></div>
+    </div>
+    <!-- /ko -->
+</div>

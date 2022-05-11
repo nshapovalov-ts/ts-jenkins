@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklOrder
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+ -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mirakl_order" resource="sales">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true"
+                comment="This is a Clustered Identity Primary Key"/>
+        <column xsi:type="varchar" name="mirakl_order_id" length="32"/>
+        <column xsi:type="varchar" name="order_id" length="32"/>
+        <column xsi:type="varchar" name="order_increment_id" length="32"/>
+        <column xsi:type="boolean" name="is_affiliated" nullable="false" default="0"/>
+        <column xsi:type="int" name="mirakl_shop_id" nullable="true" default="0" comment="Mirakl shop id"/>
+        <column xsi:type="varchar" name="mirakl_shop_name" length="255" comment="Mirakl shop name"/>
+        <column xsi:type="varchar" name="mirakl_order_status" length="64" comment="Order status in the Mirakl"/>
+        <column xsi:type="int" name="order_lines" nullable="false" default="0" comment="Order lines"/>
+        <column xsi:type="boolean" name="has_invoice" nullable="false" default="0" comment="Order has invoice"/>
+        <column xsi:type="boolean" name="has_incident" nullable="false" default="0" comment="Order has incident"/>
+        <column xsi:type="float" default="0" name="total_commission" comment="Total commission"/>
+        <column xsi:type="float" default="0" name="total_price" comment="Total price"/>
+        <column xsi:type="float" default="0" name="actual_shipping_amount" comment="Actual shipping amount"/>
+        <column xsi:type="boolean" name="actual_shipping_uploaded" nullable="false" default="0"  comment="Actual shipping was uploaded"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="RETAILPLACE_MIRAKL_ORDER_MIRAKL_ORDER_ID">
+            <column name="mirakl_order_id"/>
+        </constraint>
+    </table>
+</schema>

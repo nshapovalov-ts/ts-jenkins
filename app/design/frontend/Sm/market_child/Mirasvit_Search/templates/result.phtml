@@ -1,0 +1,29 @@
+<?php
+//@codingStandardsIgnoreFile
+/** @var \Mirasvit\Search\Block\Result $block */
+
+$indices = $block->getIndices();
+$minCollectionSize = $block->getMinCollectionSize();
+$lessThanMinIndexes = [];
+$totalCnt = 0;
+?>
+
+<?php foreach ($indices as $index): ?>
+    <?php if ($index->getIdentifier() != 'catalogsearch_fulltext'): ?>
+        <?php continue; ?>
+    <?php endif; ?>
+    <?php $collection = $block->getSearchCollection($index); ?>
+    <?php $totalCnt += $collection->getSize() ?>
+<?php endforeach ?>
+
+<?= $block->getChildHtml("suggestion") ?>
+
+<?php if ($block->getCurrentIndex()->getIdentifier() == 'catalogsearch_fulltext'): ?>
+    <?php if ($block->getSearchCollection($block->getCurrentIndex())->getSize() > 0 || $totalCnt == 0): ?>
+        <?= $block->getCurrentContent() ?>
+    <?php endif ?>
+<?php endif; ?>
+
+<?php if ($totalCnt == 0): ?>
+    <?= $block->getChildHtml("search.no_results") ?>
+<?php endif ?>

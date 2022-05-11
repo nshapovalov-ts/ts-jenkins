@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">cms_page_form.page_form_data_source</item>
+            <item name="deps" xsi:type="string">cms_page_form.page_form_data_source</item>
+        </item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">cms_page_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <dataSource name="page_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Cms\Model\Page\DataProvider</argument>
+            <argument name="name" xsi:type="string">page_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">page_id</argument>
+            <argument name="requestFieldName" xsi:type="string">page_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="cms/page/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="magefan-settings-rules">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string">Display Rules</item>
+                <item name="sortOrder" xsi:type="number">81</item>
+            </item>
+        </argument>
+        <field name="magefan_cms_display_rules[group_id]">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\CmsDisplayRules\Model\Config\Source\CustomerGroups</item>
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="dataScope" xsi:type="string">magefan_cms_display_rules[group_id]</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="label" xsi:type="string" translate="true">Visible For Customer Groups</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/multiselect</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/multiselect</item>
+                    <item name="default" xsi:type="string">all</item>
+                </item>
+            </argument>
+        </field>
+        <field name="magefan_cms_display_rule[start_date]">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Date From</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="dataScope" xsi:type="string">magefan_cms_display_rules[start_date]</item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">MM/dd/yyyy</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="notice" xsi:type="string">The date on which the rule will be activated.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="magefan_cms_display_rules[finish_date]">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Date To</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="dataScope" xsi:type="string">magefan_cms_display_rules[finish_date]</item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">MM/dd/yyyy</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="notice" xsi:type="string">The date after which the rule will be disabled.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="magefan_cms_display_rules[days_of_week]">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\CmsDisplayRules\Model\Config\Source\DaysOfWeek</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="label" xsi:type="string" translate="true">Days Of The Week</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/multiselect</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/multiselect</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="dataScope" xsi:type="string">magefan_cms_display_rules[days_of_week]</item>
+                    <item name="notice" xsi:type="string">The block will be displayed on selected days of the week.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="magefan_cms_display_rules[time_from]">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\CmsDisplayRules\Model\Config\Source\Time</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Time From</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="dataScope" xsi:type="string">magefan_cms_display_rules[time_from]</item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="notice" xsi:type="string">The time of the day when the rule will be activated.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="magefan_cms_display_rules[time_to]">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\CmsDisplayRules\Model\Config\Source\Time</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Time To</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="dataScope" xsi:type="string">magefan_cms_display_rules[time_to]</item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="notice" xsi:type="string">The time of the day when the rule will be disabled.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="magefan_cms_display_rules[another_cms]">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\CmsDisplayRules\Model\Config\Source\CmsPages</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Display Another Page</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="dataScope" xsi:type="string">magefan_cms_display_rules[another_cms]</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="conditions_serialized" >
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <!--                <item name="collapsible" xsi:type="boolean">true</item>-->
+                <!--                <item name="label" xsi:type="string">Static Block Display Conditions</item>-->
+                <item name="sortOrder" xsi:type="number">80</item>
+                <item name="label" xsi:type="string"></item>
+            </item>
+        </argument>
+        <container name="conditions_apply_to" sortOrder="10">
+            <htmlContent name="html_content">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+                <block name="conditions_apply_to" class="Magefan\CmsDisplayRules\Block\Adminhtml\Page\Conditions" />
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

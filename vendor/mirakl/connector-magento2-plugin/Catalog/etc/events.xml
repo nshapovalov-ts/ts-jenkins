@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="catalog_category_save_after">
+        <observer name="mirakl_category_save_after" instance="Mirakl\Catalog\Observer\Category\SaveAfter" />
+    </event>
+    <event name="catalog_category_delete_before">
+        <observer name="mirakl_category_delete_before" instance="Mirakl\Catalog\Observer\Category\DeleteBefore" />
+    </event>
+    <event name="catalog_product_save_after">
+        <observer name="mirakl_product_save_after" instance="Mirakl\Catalog\Observer\Product\SaveAfter" />
+    </event>
+    <event name="catalog_product_delete_before">
+        <observer name="mirakl_product_delete_before" instance="Mirakl\Catalog\Observer\Product\DeleteBefore" />
+    </event>
+    <event name="catalog_product_attribute_update_before">
+        <observer name="mirakl_product_attribute_update_before" instance="Mirakl\Catalog\Observer\Product\AttributeUpdateBefore" />
+    </event>
+    <event name="controller_action_postdispatch_catalog_product_action_attribute_save">
+        <observer name="mirakl_product_attribute_update_after" instance="Mirakl\Catalog\Observer\Product\MassUpdateAttributesAfter" />
+    </event>
+</config>

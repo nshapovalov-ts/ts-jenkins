@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Magento_Sales
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+
+/** @var $block \Magento\Sales\Block\Order\Info */
+?>
+<div class="order-date">
+    <?= $block->escapeHtml(
+        __(
+            '<span class="label">Order Date:</span> %1',
+            '<span>' . $block->formatDate($block->getOrder()->getCreatedAt()) . '</span>'
+        ),
+        ['span']
+    )?>
+</div>

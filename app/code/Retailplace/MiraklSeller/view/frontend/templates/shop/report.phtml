@@ -1,0 +1,43 @@
+<?php
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+use Retailplace\MiraklSeller\Block\Shop\Report;
+
+/**
+ * Category layered navigation
+ *
+ * @var $block Report
+ */
+
+$config = $block->getConfig();
+?>
+<?php if (!empty($config)) : ?>
+    <div class="report-seller-container">
+        <div class="report-seller-notify">
+            <div class="seller-notify-label">
+                <span><?= __("Catalog incomplete <br> or priced wrong?") ?></span>
+            </div>
+            <a href="javascript:void(0)" onclick="document.getElementById('reportSeller').style.display='block';document.getElementById('fadeReportSeller').style.display='block'">
+                <div class="seller-notify-button">
+                    <span><?= __('Notify TradeSquare') ?></span>
+                </div>
+            </a>
+        </div>
+
+        <div id="reportSeller" class="white_content hubspot_from_fx">
+            <!--[if lte IE 8]>
+            <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js" data-template="bundle-option"></script>
+            <![endif]-->
+            <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js" data-template="bundle-option"></script>
+            <script data-template="bundle-option">
+                hbspt.forms.create(<?= json_encode($config) ?>);
+            </script>
+            <a href="javascript:void(0)" onclick="document.getElementById('reportSeller').style.display='none';document.getElementById('fadeReportSeller').style.display='none'" class="close_popup_bt">+</a></div>
+        <div id="fadeReportSeller" class="black_overlay"></div>
+    </div>
+<?php endif; ?>

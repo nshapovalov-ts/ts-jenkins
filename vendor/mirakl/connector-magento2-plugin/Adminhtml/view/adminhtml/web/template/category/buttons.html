@@ -1,0 +1,22 @@
+<div class="admin__field-complex mirakl-sync-all">
+    <div class="admin__field-complex-title">
+        <span class="label" translate="'Set the Synchronization Flag for this category and all children'"></span>
+    </div>
+
+    <div class="admin__field-complex-elements">
+        <button class="action-secondary"
+                type="button"
+                data-bind="click: enableSync">
+            <span text="$t('Enable')"/>
+        </button>
+        <button class="action-secondary"
+                type="button"
+                data-bind="click: disableSync">
+            <span text="$t('Disable')"/>
+        </button>
+    </div>
+
+    <div class="admin__field-complex-content"
+        translate="'Do not forget to save changes before updating category tree'">
+    </div>
+</div>

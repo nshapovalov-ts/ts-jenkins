@@ -1,0 +1,17 @@
+{
+    "sms_verify": {
+        "column": {
+            "sms_verify_id": true,
+            "mobile_number": true,
+            "otp": true,
+            "isverify": true,
+            "customer_id": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SMS_VERIFY_CUSTOMER_ID": true
+        }
+    }
+}

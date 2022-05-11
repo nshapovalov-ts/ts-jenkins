@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_ChannelPricing
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="retailplace" translate="label" sortOrder="10">
+            <label>Retailplace</label>
+        </tab>
+        <section id="retailplace_channel_pricing" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Channel Pricing</label>
+            <tab>retailplace</tab>
+            <resource>Retailplace_ChannelPricing::config</resource>
+            <group id="attributes_visibility" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Attributes Configuration</label>
+                <field id="mapping" translate="label" sortOrder="10" showInDefault="1">
+                    <label>Mapping</label>
+                    <frontend_model>Retailplace\ChannelPricing\Block\Adminhtml\Form\Field\AttributesVisibility</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment>
+                        <![CDATA[Restrict Product Attributes Visibility in Layered Navigation by Customer Groups.
+                    <strong>Selected</strong> attributes will be visible for the mapped Groups.
+                    All the rest Attributes will be visible for the all groups.]]>
+                    </comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

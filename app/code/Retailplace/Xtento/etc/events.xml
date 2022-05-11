@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--~
+  ~ Retailplace_XtentoCrack
+  ~
+  ~ @copyright   Copyright © 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+  ~ @author      Satish Gumudavelly <satish@vdcstore.com>
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="xtento_productexport_export_before_prepare_collection">
+        <observer name="AddActiveOffersToCollection" instance="Retailplace\Xtento\Observer\AddActiveOffersToCollection"/>
+    </event>
+</config>

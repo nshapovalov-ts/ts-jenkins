@@ -1,0 +1,18 @@
+{
+    "sales_order": {
+        "column": {
+            "payment_date": true
+        }
+    },
+    "sales_order_grid": {
+        "column": {
+            "payment_date": true
+        }
+    },
+    "sales_invoice": {
+        "column": {
+            "stripe_invoice_id": true,
+            "stripe_invoice_paid": true
+        }
+    }
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="mirakl_connector_convert_order_after">
+        <observer name="mirakl_connector_convert_order_after_add_customfield" instance="Retailplace\MiraklOrder\Observer\AddAdditionaFieldToMiraklOrder" />
+    </event>
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="mirakl_order_min_order_restrict_sales_model_service_quote_submit_before"
+                  instance="Retailplace\MiraklOrder\Observer\OrderRestrict"/>
+    </event>
+</config>

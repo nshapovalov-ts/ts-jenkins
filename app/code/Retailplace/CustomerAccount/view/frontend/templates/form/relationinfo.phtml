@@ -1,0 +1,13 @@
+<?php
+/** @var \Retailplace\CustomerAccount\Block\AttributesRelation $block */
+?>
+
+<script>
+    require([
+        'Retailplace_CustomerAccount/js/view/relation'
+    ], function (relation) {
+        <?php if ($block->getSerializedRelationData()): ?>
+            relation.init(<?= $block->getSerializedRelationData() ?>);
+        <?php endif; ?>
+    });
+</script>

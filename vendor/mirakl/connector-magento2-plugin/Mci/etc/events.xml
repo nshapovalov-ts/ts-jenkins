@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="mirakl_catalog_product_references">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Product\ProductReferencesObserver" />
+    </event>
+    <event name="catalog_product_delete_before">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Product\DeleteBeforeObserver" />
+    </event>
+    <event name="catalog_entity_attribute_save_after">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Product\Attribute\SaveAfterObserver" />
+    </event>
+    <event name="catalog_entity_attribute_delete_before">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Product\Attribute\DeleteBeforeObserver" />
+    </event>
+    <event name="catalog_entity_attribute_delete_after">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Product\Attribute\DeleteAfterObserver" />
+    </event>
+    <event name="catalog_category_save_after">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Category\SaveAfterObserver" />
+    </event>
+    <event name="catalog_category_delete_before">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Category\DeleteBeforeObserver" />
+    </event>
+    <event name="eav_entity_attribute_set_save_after">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Product\AttributeSet\SaveAfterObserver" />
+    </event>
+    <event name="eav_entity_attribute_set_delete_after">
+        <observer name="mirakl_mci" instance="Mirakl\Mci\Observer\Product\AttributeSet\DeleteAfterObserver" />
+    </event>
+</config>

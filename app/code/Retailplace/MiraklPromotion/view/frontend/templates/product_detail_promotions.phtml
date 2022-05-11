@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * Retailplace_MiraklPromotion
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Retailplace\MiraklPromotion\ViewModel\ProductDetailPromotions $viewModel */
+$viewModel = $block->getViewModel();
+$productPromotions = $viewModel->getProductPromotions();
+?>
+<?php if (count($productPromotions)): ?>
+    <?php foreach ($productPromotions as $sku => $promotionsList): ?>
+        <div class="product-promotions promotions-<?= $sku ?> <?= $viewModel->hidePromotions() ? 'hidden' : ''?>">
+            <div class="block-title"><?= __('Supplier Specials') ?></div>
+            <div class="promotions-list">
+                <?php foreach ($promotionsList as $promotion): ?>
+                    <div class="promotion">
+                        <?php if ($promotion->getEndDate()): ?>
+                            <div class="promotion-date"><?= $viewModel->getDateFormatted($promotion->getEndDate()) ?></div>
+                        <?php endif; ?>
+                        <div class="promotion-description"><?= $block->escapeHtml($promotion->getLocalizedPublicDescription()) ?></div>
+                        <div class="promotion promotion_for_hover">
+                            <?php if ($promotion->getEndDate()): ?>
+                                <div class="promotion-date"><?= $viewModel->getDateFormatted($promotion->getEndDate()) ?></div>
+                            <?php endif; ?>
+                            <div class="promotion-description"><?= $promotion->getLocalizedPublicDescription() ?></div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>

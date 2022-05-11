@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+ EYEMAGINE - The leading Magento Solution Partner
+ HubSpot Integration with Magento
+ @author EYEMAGINE <magento@eyemaginetech.com>
+ @copyright Copyright (c) 2020 EYEMAGINE Technology, LLC (http://www.eyemaginetech.com)
+ @license http://www.eyemaginetech.com/license
+ -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+	<system>
+		<section id="eyehubspot" translate="label" type="text"
+			sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>HubSpot Integration</label>
+			<tab>service</tab>
+			<resource>Eyemagine_HubSpot::eyehubspot</resource>
+			<group id="general" translate="label" type="text" sortOrder="1"
+				showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>About</label>
+				<field id="heading_info" translate="label" sortOrder="20"
+					showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Installed Extension Details</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="version" translate="label" type="note" sortOrder="20"
+					showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Version</label>
+					<frontend_model>Eyemagine\HubSpot\Block\Adminhtml\Version</frontend_model>
+				</field>
+				<field id="support" translate="label" type="note" sortOrder="50"
+					showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Support Email</label>
+					<frontend_model>Eyemagine\HubSpot\Block\Adminhtml\Support</frontend_model>
+				</field>
+
+			</group>
+			<group id="settings" translate="label" type="text" sortOrder="100"
+				showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>HubSpot Integration Settings</label>
+				<attribute type="expanded">1</attribute>
+				<field id="enable" translate="label comment" sortOrder="1"
+					type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Status</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+					<comment>Must be enabled for sync access</comment>
+				</field>
+				<field id="userkey" translate="label" type="label" sortOrder="100"
+					showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>User Key</label>
+					<frontend_model>Eyemagine\HubSpot\Block\Adminhtml\UserKey</frontend_model>
+					<tooltip>Copy this field to the HubSpot Magento app</tooltip>
+				</field>
+				<field id="passcode" translate="label" type="label" sortOrder="110"
+					showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Access Code</label>
+					<frontend_model>Eyemagine\HubSpot\Block\Adminhtml\AccessCode</frontend_model>
+					<tooltip>Copy this field to the HubSpot Magento app</tooltip>
+				</field>
+
+				<field id="regen" translate="label" type="button" sortOrder="120"
+					showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Regenerate Access Codes</label>
+					<frontend_model>Eyemagine\HubSpot\Block\Adminhtml\Regen</frontend_model>
+				</field>
+
+				<field id="heading_link_options" translate="label" sortOrder="200"
+					showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Link Options</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="unavailable_msg" translate="label" type="textarea"
+					sortOrder="210" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Unavailable Message</label>
+
+					<tooltip>Display this message and the search results when requested
+						product is not available on frontend.</tooltip>
+				</field>
+				<field id="hubspot_portal_id" translate="label" type="text"
+					   sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>HubSpot Portal ID</label>
+				</field>
+				<field id="hubspot_api_key" translate="label" type="text"
+					   sortOrder="220" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>HubSpot Api Key</label>
+				</field>
+			</group>
+			<group id="utk" translate="label" type="text" sortOrder="200"
+				showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>HubSpot UTK</label>
+				<attribute type="expanded">1</attribute>
+				<field id="utk_compatibility" translate="label" type="label"
+					sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+					<label>Compatibility Note</label>
+					<frontend_model>Eyemagine\HubSpot\Block\Adminhtml\Utk</frontend_model>
+				</field>
+
+			</group>
+
+		</section>
+	</system>
+</config>

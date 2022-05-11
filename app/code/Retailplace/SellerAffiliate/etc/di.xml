@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Retailplace_SellerAffiliate
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Retailplace\SellerAffiliate\Api\Data\SellerAffiliateInterface" type="Retailplace\SellerAffiliate\Model\SellerAffiliate"/>
+    <preference for="Retailplace\SellerAffiliate\Api\SellerAffiliateRepositoryInterface" type="Retailplace\SellerAffiliate\Model\SellerAffiliateRepository"/>
+    <preference for="Magento\SalesRule\Model\Validator" type="Retailplace\SellerAffiliate\Model\SalesRuleValidator"/>
+    <type name="Retailplace\SellerAffiliate\Model\ResourceModel\SellerAffiliate\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">retailplace_shop_affiliate</argument>
+            <argument name="resourceModel" xsi:type="string">Retailplace\SellerAffiliate\Model\ResourceModel\SellerAffiliate\Collection</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="retailplace_shop_affiliate_listing_data_source" xsi:type="string">Retailplace\SellerAffiliate\Model\ResourceModel\SellerAffiliate\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="retailplace_shop_affiliates_updater" xsi:type="object">
+                    Retailplace\SellerAffiliate\Console\Command\SellerAffiliateUpdater
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Quote\Model\CouponManagement">
+        <plugin name="ts_connect_disable_coupon_code"
+                type="Retailplace\SellerAffiliate\Plugin\QuotesCouponManagement"
+                sortOrder="110"/>
+    </type>
+    <type name="Retailplace\SellerAffiliate\Observer\CustomerLogin">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\SalesRule\Model\Rule\Condition\Product">
+        <plugin name="rules_add_mirakl_shop_id_condition" type="Retailplace\SellerAffiliate\Plugin\MiraklShopIdCondition"/>
+    </type>
+    <type name="Magento\Framework\HTTP\PhpEnvironment\RemoteAddress">
+        <arguments>
+            <argument name="alternativeHeaders" xsi:type="array">
+                <item name="http_client_ip" xsi:type="string">HTTP_CLIENT_IP</item>
+                <item name="http_x_forwarded_for" xsi:type="string">HTTP_X_FORWARDED_FOR</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,145 @@
+<!-- Magecomp SMS Code Start -->
+<style type="text/css">
+    label.mage-error {
+    width: 30% !important;
+    margin-left: 182px;
+}
+</style>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$customerFactory = $objectManager->get('\Magento\Customer\Model\CustomerFactory');
+$customer=$customerFactory->create();
+$customer->load($block->getOrder()->getCustomerId());// load customer by using ID
+
+$mobilenumber = $block->getOrder()->getBillingAddress()->getTelephone();
+$mobile = $customer->getMobilenumber();
+
+if ($mobile != '' && $mobile != null) {
+    $mobilenumber = $mobile;
+}
+
+?>
+<div class="admin_bulksms" style="float:left;margin-bottom: 15px;">
+    <?php $authUrl = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Backend\Helper\Data')->getUrl("magecompsms/send/invoicecustom"); ?>
+    <form action="<?php echo $authUrl ?>" id="custom_form" data-mage-init='{"validation": {}}'>
+        <input type="hidden" value="<?php echo $block->getInvoice()->getId()?>" name="current_invoice_id">
+        <div class="admin_bulksms_mobnumbers required">
+            <div class="admin_bulksms_mobnumbers_lable">
+                <?php echo __("Mobile Number")?>
+            </div>
+            <div class="admin_bulksms_mobnumbers_text">
+                <input class="admin__control-text" type="text" value="<?php echo $mobilenumber?>" id="customsms_mob" name="customsms_mob" placeholder="Mobile Number" data-validate="{required:true,'validate-number':true}" />
+            </div>
+        </div>
+        <div class="admin_bulksms_dltid required">
+            <div class="admin_bulksms_dltid_lable">
+                <?php echo __("DLT Template ID")?>
+            </div>
+            <div class="admin_bulksms_dltid_text">
+                <input class="admin__control-text" type="text" id="dltid" name="dltid" placeholder="DLT Template ID" data-validate="{required:true}" />
+            </div>
+        </div>
+        <div class="admin_bulksms_message required">
+            <div class="admin_bulksms_message_lable">
+                <?php echo __("SMS Text")?>
+            </div>
+            <div class="admin_bulksms_message_text">
+                <textarea class="admin__control-textarea" rows="4" cols="50" id="customsms_message" name="customsms_message" placeholder="Enter your Message here" data-validate="{required:true}" /></textarea>
+            </div>
+        </div>
+        <div class="admin_bulksms_formsubmit">
+            <button type="submit" id="custom_submit" class="primary">
+                <?php echo __("Send Custom SMS"); ?>
+            </button>
+        </div>
+    </form>
+</div>
+<!-- Magecomp SMS Code End -->
+<?php $_invoice = $block->getInvoice() ?>
+<?php $_order = $_invoice->getOrder() ?>
+<?= $block->getChildHtml('order_info') ?>
+
+<section class="admin__page-section order-view-billing-shipping">
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Payment &amp; Shipping Method') ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-payment-method<?php if ($_order->getIsVirtual()): ?> order-payment-method-virtual<?php endif; ?> admin__fieldset-wrapper">
+            <?php /*Billing Address */ ?>
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= /* @escapeNotVerified */ __('Payment Information') ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <div class="order-payment-method-title"><?= $block->getChildHtml('order_payment') ?></div>
+                <div class="order-payment-currency">
+                    <?= /* @escapeNotVerified */ __('The order was placed using %1.', $_order->getOrderCurrencyCode()) ?>
+                </div>
+                <div class="order-payment-additional"><?= $block->getChildHtml('order_payment_additional') ?></div>
+            </div>
+        </div>
+
+        <?php if (!$_order->getIsVirtual()): ?>
+            <div class="admin__page-section-item order-shipping-address">
+                <?php /*Shipping Address */ ?>
+                <div class="admin__page-section-item-title">
+                    <span class="title"><?= /* @escapeNotVerified */ __('Shipping Information') ?></span>
+                </div>
+                <div class="admin__page-section-item-content shipping-description-wrapper">
+                    <div class="shipping-description-title">
+                        <?= $block->escapeHtml($_order->getShippingDescription()) ?>
+                    </div>
+                    <div class="shipping-description-content">
+                        <?= /* @escapeNotVerified */ __('Total Shipping Charges') ?>:
+
+                        <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingPriceIncludingTax()): ?>
+                            <?php $_excl = $block->displayShippingPriceInclTax($_order); ?>
+                        <?php else: ?>
+                            <?php $_excl = $block->displayPriceAttribute('shipping_amount', false, ' '); ?>
+                        <?php endif; ?>
+                        <?php $_incl = $block->displayShippingPriceInclTax($_order); ?>
+
+                        <?= /* @escapeNotVerified */ $_excl ?>
+                        <?php if ($this->helper('Magento\Tax\Helper\Data')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                            (<?= /* @escapeNotVerified */ __('Incl. Tax') ?> <?= /* @escapeNotVerified */ $_incl ?>)
+                        <?php endif; ?>
+                        <div><?= $block->getChildHtml('shipment_tracking') ?></div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+    </div>
+</section>
+
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Items Invoiced') ?></span>
+    </div>
+
+    <div id="invoice_item_container" class="admin__page-section-content">
+        <?= $block->getChildHtml('invoice_items') ?>
+    </div>
+</section>
+
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <span class="title"><?= /* @escapeNotVerified */ __('Order Total') ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-comments-history">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= /* @escapeNotVerified */ __('invoice History') ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <?= $block->getChildHtml('order_comments') ?>
+            </div>
+        </div>
+
+        <div id="history_form" class="admin__page-section-item order-totals">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= /* @escapeNotVerified */ __('invoice Totals') ?></span>
+            </div>
+            <?= $block->getChildHtml('invoice_totals') ?>
+        </div>
+    </div>
+</section>

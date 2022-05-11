@@ -1,0 +1,69 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$connection = $objectManager->get('Magento\Framework\App\ResourceConnection')->getConnection('\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION');
+$woleparterns = $connection->fetchAll("SELECT * FROM magenest_image_gallery_image");
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+    ->getStore()
+    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$currencysymbol = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currency = $currencysymbol->getStore()->getCurrentCurrencyCode();
+$currency = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($currency);
+$currencySymbol = $currency->getCurrencySymbol();
+$countseller = 0;
+?>
+<?php //echo "<pre>";print_r($woleparterns);?>
+
+<?php if ($woleparterns): ?>
+    <h2><?php echo __('Inspired by our wholesale partners '); ?></h2>
+<?php endif; ?>
+<?php $_columnCount = 2 ?>
+<ul class="slider-post-seller">
+    <?php $i = 0;
+    foreach ($woleparterns as $wolepartern): ?>
+        <?php if ($i++ % $_columnCount == 0): ?>
+            <li>
+        <?php endif ?>
+        <div class="seller_block_bg">
+            <?php if ($wolepartern['status'] == '0'): ?>
+                <?php $selerid = $wolepartern['title']; ?>
+                <?php $miracaldata = $connection->fetchAll("SELECT * FROM mirakl_shop where id='$selerid'"); ?>
+
+                <?php if ($miracaldata): ?>
+                    <?php $countseller++; ?>
+                    <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $selerid ?>">
+                        <img src="<?php echo $mediaUrl . $wolepartern['image']; ?>" alt="" width="300" height="200"
+                             class="no-lazy"/>
+                    </a>
+                    <div class="parternt">
+                        <?php foreach ($miracaldata as $value): ?>
+                            <?php $_info = $value['additional_info']; ?>
+                            <div class="seller-name">
+                                <a href="<?php echo $this->getBaseUrl() . 'marketplace/shop/view/id/' . $selerid ?>">
+                                    <?php echo $value['name']; ?>
+                                </a>
+                            </div>
+                            <?php
+                            $data = $this->helper(\Retailplace\Utility\Helper\Data::class)->unserialize($_info);
+                            $minOrderAmount = $value['min-order-amount'];
+                            ?>
+                            <?php if ($minOrderAmount > 0): ?>
+                                <?php echo $currencySymbol . $minOrderAmount . ' Minimum'; ?>
+                            <?php else: ?>
+                                <?php echo __('No Minimum'); ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php
+            if ($countseller == 8) {
+                break;
+            }
+            ?>
+        </div>
+        <?php if ($i % $_columnCount == 0): ?>
+            </li>
+        <?php endif ?>
+    <?php endforeach; ?>
+</ul>
+

@@ -1,0 +1,71 @@
+<?php
+/**
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ * @var \Mirakl\Event\Block\Adminhtml\Event\View $block
+ */
+use Mirakl\Event\Model\Event;
+
+$event = $block->getEvent();
+$types = Event::getTypes();
+$actions = Event::getActions();
+$statuses = Event::getStatuses();
+?>
+<section class="admin__page-section">
+    <div class="admin__page-section-title">
+        <strong class="title"><?php /* @escapeNotVerified */ echo __('Event Information') ?></strong>
+    </div>
+    <div class="admin__page-section-content">
+        <table class="admin__table-secondary">
+            <tbody>
+            <tr>
+                <th><?php echo __('Type') ?></th>
+                <td><?php echo $block->escapeHtml(__($types[$event->getData('type')])) ?></td>
+            </tr>
+            <tr>
+                <th><?php echo __('Action') ?></th>
+                <td><?php echo $block->escapeHtml($actions[$event->getData('action')]) ?></td>
+            </tr>
+            <tr>
+                <th><?php echo __('Code') ?></th>
+                <td><?php echo $block->escapeHtml($event->getCode()) ?></td>
+            </tr>
+            <tr>
+                <th><?php echo __('Status') ?></th>
+                <td><p class="report-status"><span class="<?php echo $event->getStatusClass() ?>"><span><?php echo __(ucwords(str_replace('_', ' ', $statuses[$event->getData('status')]))) ?></span></span></p></td>
+            </tr>
+            <?php if ($event->getProcessId()): ?>
+                <tr>
+                    <th><?php echo __('Process Id') ?></th>
+                    <td><?php echo $block->escapeHtml($event->getProcessId()) ?></td>
+                </tr>
+            <?php endif?>
+            <?php if ($event->getImportId()): ?>
+                <tr>
+                    <th><?php echo __('Import Id') ?></th>
+                    <td><?php echo $block->escapeHtml($event->getImportId()) ?></td>
+                </tr>
+            <?php endif?>
+            <?php if ($event->getMessage()): ?>
+                <tr>
+                    <th><?php echo __('Import Line') ?></th>
+                    <td><?php echo $block->escapeHtml($event->getLine()) ?></td>
+                </tr>
+            <?php endif?>
+            <?php if ($event->getMessage()): ?>
+                <tr>
+                    <th><?php echo __('Error Message') ?></th>
+                    <td><?php echo $block->escapeHtml($event->getMessage()) ?></td>
+                </tr>
+            <?php endif?>
+            <tr>
+                <th><?php echo __('Created At') ?></th>
+                <td><?php echo $block->formatDate($event->getCreatedAt(), \IntlDateFormatter::MEDIUM, true) ?></td>
+            </tr>
+            <tr>
+                <th><?php echo __('Last Updated At') ?></th>
+                <td><?php echo $block->formatDate($event->getCreatedAt(), \IntlDateFormatter::MEDIUM, true) ?></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

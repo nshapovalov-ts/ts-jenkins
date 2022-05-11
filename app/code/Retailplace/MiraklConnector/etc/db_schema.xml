@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklConnector
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ * @author      Satish Gumudavelly <satish@kipanga.com.au>
+ */
+ -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="mirakl_offer">
+        <column xsi:type="int" unsigned="true" nullable="false" name="offer_id" identity="true" comment="Offer Id"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="offer_id"/>
+        </constraint>
+    </table>
+    <table name="mirakl_shop">
+        <column xsi:type="text" name="differentiators" nullable="true" comment="Differentiators"/>
+    </table>
+</schema>

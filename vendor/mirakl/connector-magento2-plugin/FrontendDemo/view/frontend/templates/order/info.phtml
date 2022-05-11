@@ -1,0 +1,45 @@
+<?php /** @var \Magento\Sales\Block\Order\Info $block */ ?>
+<?php $_order = $block->getOrder() ?>
+<?php $_miraklOrder = $block->getMiraklOrder() ?>
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?php /* @escapeNotVerified */ echo __('Order Information') ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="box box-order-shop">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Shop') ?></span>
+            </strong>
+            <div class="box-content">
+                <?php echo $block->escapeHtml($_miraklOrder->getShopName()) ?>
+            </div>
+        </div>
+
+        <div class="box box-order-billing-method box-order-shipping-method">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Payment Method') ?></span>
+            </strong>
+            <div class="box-content">
+                <?php echo $block->getPaymentInfoHtml() ?>
+            </div>
+        </div>
+
+        <?php if (!$_order->getIsVirtual()): ?>
+            <div class="box box-order-shipping-address">
+                <strong class="box-title"><span><?php /* @escapeNotVerified */ echo __('Shipping Address') ?></span></strong>
+                <div class="box-content">
+                    <address><?php /* @escapeNotVerified */ echo $block->getFormattedAddress($_order->getShippingAddress()); ?></address>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div class="box box-order-billing-address">
+            <strong class="box-title">
+                <span><?php /* @escapeNotVerified */ echo __('Billing Address') ?></span>
+            </strong>
+            <div class="box-content">
+                <address><?php /* @escapeNotVerified */ echo $block->getFormattedAddress($_order->getBillingAddress()); ?></address>
+            </div>
+        </div>
+    </div>
+</div>

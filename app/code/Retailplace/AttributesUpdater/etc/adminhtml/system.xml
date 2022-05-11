@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_AttributesUpdater
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="retailplace_attribute_updater" translate="label" sortOrder="150" showInDefault="1">
+            <label>Attributes Updater</label>
+            <tab>retailplace</tab>
+            <resource>Retailplace_AttributesUpdater::config</resource>
+            <group id="data_size" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>Data Size to DB Insert</label>
+                <field id="lines_per_insert" translate="label" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Lines Per Insert</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

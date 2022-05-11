@@ -1,0 +1,286 @@
+<?php
+/** @var AbstractForm $block */
+
+use Mirakl\FrontendDemo\Block\Message\AbstractForm;
+
+$_thread = $block->getThread();
+
+$isViewSubject = ($block->getJsId() == "marketplace-message-form-order");
+
+$reasonLabel = "";
+$isOrder = false;
+if (!empty($_thread) && $_thread->getTopic()) {
+    $isOrder = in_array($_thread->getEntities()->first()->getType(), ['MMP_ORDER', 'MPS_ORDER']);
+    if (!$isViewSubject & $isOrder) {
+        $isViewSubject = true;
+    }
+    $reasonLabel = $_thread->getTopic()->getValue();
+
+    $messages = $_thread->getMessages();
+    if ($messages->count() > 0) {
+        $isViewSubject = false;
+    }
+}
+?>
+<?php if ($block->getAsModal()): ?>
+<div data-bind="mageInit: {
+        'Magento_Ui/js/modal/modal':{
+            'type': 'popup',
+            'trigger': '[data-trigger=trigger]',
+            'responsive': true,
+            'buttons': []
+        }}" style="display: none;">
+    <?php endif; ?>
+
+    <div class="marketplace-messages">
+
+        <?php if ($isViewSubject): ?>
+        <ol class="items message-items">
+            <li class="item message-item first-item">
+                <?php endif; ?>
+
+                <a name="form"></a>
+                <form action="<?php /* @escapeNotVerified */
+                echo $block->getFormAction() ?>" class="message-form" method="post" id="<?= $block->getJsId() ?>" data-role="order-message-form" data-bind="scope: 'messsage-form'" enctype="multipart/form-data">
+                    <?php echo $block->getBlockHtml('formkey'); ?>
+                    <?php echo $block->getChildHtml('form_fields_before') ?>
+                    <fieldset class="fieldset message-fieldset _collapsible"
+                              data-bind="mageInit: {'collapsible':{'openedState': '_active'}}"
+                              data-hasrequired="<?php __('* Required Fields'); ?>">
+                        <?php //if ($title = trim($block->getFormTitle())): ?>
+                        <!--    <legend class="legend message-legend action field choice" data-role="title">-->
+                        <!--        <span class="action-toggle">--><? //= $title ?><!--</span>-->
+                        <!--    </legend>-->
+                        <?php //endif; ?>
+                        <div class="field message-field-summary required" style="display: none">
+                            <label for="<?= $block->getJsId() ?>-message_recipients" class="label"><span><?php /* @escapeNotVerified */
+                                    echo __('Recipients') ?></span></label>
+                            <select name="<?= $block->getFormField('recipients') ?>" id="<?= $block->getJsId() ?>-message_recipients" title="<?php /* @escapeNotVerified */
+                            echo $block->escapeHtmlAttr($block->getReasonsLabel()) ?>" data-validate="{'validate-select':true}">
+                                <option value=""><?php echo __('-- Please Select --') ?></option>
+                                <?php foreach ($block->getRecipients() as $_type => $_name): ?>
+                                    <option <?php if ('BOTH' == $_type): ?>selected="selected" <?php endif; ?>value="<?php echo $_type ?>"><?php echo $_name ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <?php $reasons = $block->getReasons(); ?>
+                        <?php if (!empty($reasons)): ?>
+                            <div class="field message-field-summary required" <?php if (!$isViewSubject): ?>style="display: none" <?php endif; ?>>
+                                <label for="<?= $block->getJsId() ?>-message_subject" class="label"><span><?php /* @escapeNotVerified */
+                                        echo $block->getReasonsLabel() ?></span></label>
+                                <select name="<?= $block->getFormField('subject') ?>" id="<?= $block->getJsId() ?>-message_subject" title="<?php /* @escapeNotVerified */
+                                echo $block->escapeHtmlAttr($block->getReasonsLabel()) ?>" data-validate="{'validate-select':true}">
+                                    <option value=""><?php echo __('-- Please Select --') ?></option>
+                                    <?php foreach ($reasons as $reason): ?>
+                                        <?php $_label = $this->escapeHtml(__($reason->getLabel())); ?>
+                                        <option <?php if ($reasonLabel == $reason->getLabel() || $reasonLabel == $reason->getCode()): ?>selected="selected" <?php endif; ?> value="<?php echo $_label ?>"><?php echo $_label ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        <?php endif; ?>
+                        <div class="field message-container required">
+
+                            <div class="message-container-control">
+                        <textarea
+                            name="<?= $block->getFormField('body') ?>"
+                            id="<?= $block->getJsId() ?>-message_body"
+                            placeholder="<?= __('Your message...') ?>"
+                            data-validate="{required:true}"
+                            oninput="let text = jQuery(this); text.css('height', 'auto'); text.css('height', text[0].scrollHeight - 18 +'px');"
+                            minlength="3"
+                            maxlength="50000"
+                            class="message-container-control-textarea autosize"
+                        ><?php echo $block->getPostMessage($block->getFormField('body')) ?></textarea>
+                            </div>
+                            <button type="submit" class="message-submit"><span><?= $isViewSubject ? __('Send') : __('Reply') ?></span></button>
+                            <?php if ($block->withFile()): ?>
+                                <div class="input-file-container">
+                                    <input
+                                        type="file"
+                                        name="file[]"
+                                        id="<?= $block->getJsId() ?>-message_file"
+                                        class="input-file"
+                                        multiple
+                                    />
+                                    <label tabindex="0" for="<?= $block->getJsId() ?>-message_file" class="input-file-trigger"><?= __('Add file') ?> </label>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="message-your-attachment-files" style="display: none">
+                            <strong><?= __('Your files') ?>
+                                <span>2</span>
+                                <hr class="your-attachment">
+                            </strong>
+                            <div class="attachments"></div>
+                        </div>
+                    </fieldset>
+
+                </form>
+                <script type="text/x-magento-init">
+                    {
+                        "#<?= $block->getJsId() ?>": {
+                           "validation": {}
+                        }
+                    }
+                </script>
+                <script type="text/javascript">
+                    require([
+                        'jquery',
+                        'jquery/ui',
+                        'Magento_Theme/js/view/messages',
+                        'jquery/validate',
+                        'mage/translate'
+                    ], function ($, ui, messagesComponent) {
+
+                        var $fileInput = $(".input-file"),
+                            $button = $(".input-file-trigger"),
+                            $attachmentFiles = $(".message-your-attachment-files .attachments"),
+                            $messageForm = $(".message-form");
+
+                        var messageComponent = messagesComponent();
+
+                        var extensions = ['pdf', 'jpeg', 'jpg', 'gif', 'png', 'tiff', 'zip', 'mov', 'mp4', 'txt', 'doc', 'dot', 'docx', 'xls', 'xlsx', 'xml', 'ods', 'ots', 'odt', 'ott', 'oth', 'odm'];
+
+                        const dt = new DataTransfer();
+
+                        $button.on("keydown", function (event) {
+                            if (event.keyCode == 13 || event.keyCode == 32) {
+                                $fileInput.focus();
+                            }
+                        });
+
+                        $button.on("click", function (event) {
+                            $fileInput.focus();
+                            return false;
+                        });
+
+                        $fileInput.on("change", function (event) {
+                            const files = $(this).prop('files');
+                            if (files.length === 0) {
+                                return;
+                            }
+
+                            cleanMessages();
+
+                            $(files).each(function (index, file) {
+                                let name = file.name;
+                                let type = file.type;
+                                let size = file.size;
+                                var maxSize = 10 * (1024 * 1024);
+
+                                let isExist = false;
+                                for (let i = 0; i < dt.files.length; i++) {
+                                    let file = dt.files[i];
+                                    if (file.name === name) {
+                                        isExist = true;
+                                        break;
+                                    }
+                                }
+
+                                //validate
+                                let isValid = true;
+                                //Validate Image FileSize
+                                if (size === undefined || size > maxSize) {
+                                    isValid = false;
+                                    setMessage({
+                                        type: 'warning',
+                                        text: $.mage.__("The file (" + name + ") is too large and cannot be loaded. Use a file no larger than 10 MB and try uploading again.")
+                                    })
+                                }
+
+                                //Validate File Extensions
+                                let isExtValid = false;
+                                var ext = name.substring(name.lastIndexOf('.') + 1);
+                                for (let i = 0; i < extensions.length; i++) {
+                                    if (ext === extensions[i]) {
+                                        isExtValid = true;
+                                        break
+                                    }
+                                }
+
+                                if (!isExtValid) {
+                                    isValid = false;
+                                    setMessage({
+                                        type: 'warning',
+                                        text: $.mage.__("Disallowed file (" + name + ") type.")
+                                    })
+                                }
+
+                                if (!isExist && isValid) {
+                                    dt.items.add(file);
+                                }
+                            });
+
+                            updateLabel();
+                        });
+
+                        updateLabel = function () {
+                            let files = dt.files;
+                            $(".input-file").prop('files', files);
+                            $attachmentFiles.html("");
+                            for (let i = 0; i < files.length; i++) {
+                                let file = files[i];
+                                let fullName = file.name;
+                                let name = fullName;
+                                if (fullName.length > 22) {
+                                    name = fullName.slice(0, 10) + "..." + fullName.slice(-6);
+                                }
+                                let label = '<div tabindex="0" data-file_name="' + fullName + '" class="attachment-file-label"><div class="attachment_file_text">' + name + '</div><div class="attachment_file_remove"></div></div';
+                                $attachmentFiles.append(label);
+                            }
+
+                            $('.attachment_file_remove').unbind("click").bind("click", function () {
+
+                                let parent = $(this).parent();
+                                let fileName = parent.data('file_name');
+                                let files = dt.files;
+                                for (let i = 0; i < files.length; i++) {
+                                    const file = files[i];
+                                    if (file.name === fileName) {
+                                        dt.items.remove(i);
+                                        parent.remove();
+                                        break;
+                                    }
+                                }
+
+                                updateViewLabel();
+                            })
+
+                            updateViewLabel();
+                        }
+
+                        updateViewLabel = function () {
+                            let files = dt.files;
+
+                            let count = files.length;
+                            $('.message-your-attachment-files span').html(count);
+                            let attachmentFiles = $('.message-your-attachment-files');
+                            if (count > 0) {
+                                attachmentFiles.show();
+                            } else {
+                                attachmentFiles.hide();
+                            }
+                        }
+
+                        setMessage = function (message) {
+                            messageComponent.messages({messages: [message]});
+                        }
+
+                        cleanMessages = function () {
+                            messageComponent.messages({messages: [{type: "clean", text: ""}]});
+                        }
+
+                    });
+                </script>
+
+                <?php if ($isViewSubject): ?>
+            </li>
+        </ol>
+    <?php endif; ?>
+
+    </div>
+
+    <?php if ($block->getAsModal()): ?>
+</div>
+<?php endif; ?>

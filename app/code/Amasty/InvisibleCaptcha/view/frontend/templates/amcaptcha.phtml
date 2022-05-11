@@ -1,0 +1,41 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2021 Amasty (https://www.amasty.com)
+ * @package Amasty_InvisibleCaptcha
+ */
+?>
+<?php
+/**
+ * @var $block Magento\Framework\View\Element\Template
+ * @var $viewModel Amasty\InvisibleCaptcha\ViewModel\Captcha
+ * @var $escaper Magento\Framework\Escaper
+ */
+
+$viewModel = $block->getViewModel();
+?>
+
+<?php if ($viewModel->isNeedToShowCaptcha()): ?>
+    <div id="am-recaptcha-container" data-bind="scope:'amRecaptcha'"></div>
+
+    <script type="text/x-magento-init">
+        {
+            "#am-recaptcha-container": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "amRecaptcha": {
+                            "component": "Amasty_InvisibleCaptcha/js/view/am-recaptcha",
+                            "config": {
+                                "formsToProtect": "<?= $escaper->escapeJs(implode(',', $viewModel->getAllFormSelectors())) ?>",
+                                "lang": "<?= $escaper->escapeJs($viewModel->getLanguage()) ?>",
+                                "theme": "<?= $escaper->escapeHtml($viewModel->getBadgeTheme()) ?>",
+                                "badge": "<?= $escaper->escapeHtml($viewModel->getBadgePosition()) ?>",
+                                "sitekey": "<?= $escaper->escapeHtml($viewModel->getSiteKey()) ?>"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+</script>
+<?php endif; ?>

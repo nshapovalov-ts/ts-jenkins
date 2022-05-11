@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="process" xsi:type="object">Mirakl\Process\Console\Command\ProcessCommand</item>
+                <item name="process:api" xsi:type="object">Mirakl\Process\Console\Command\ApiReturnProcessCommand</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Mirakl\Api\Helper\ClientHelper\MMP">
+        <plugin name="mirakl_process_api" type="Mirakl\Process\Plugin\Api\ClientHelperPlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Api\Helper\ClientHelper\MCI">
+        <plugin name="mirakl_process_api" type="Mirakl\Process\Plugin\Api\ClientHelperPlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Api\Helper\ClientHelper\MCM">
+        <plugin name="mirakl_process_api" type="Mirakl\Process\Plugin\Api\ClientHelperPlugin" sortOrder="100"/>
+    </type>
+    <type name="Mirakl\Process\Helper\Api">
+        <arguments>
+            <argument name="synchroIdKeys" xsi:type="array">
+                <item name="synchro_id" xsi:type="string">synchro_id</item>
+                <item name="import_id" xsi:type="string">import_id</item>
+                <item name="tracking_id" xsi:type="string">tracking_id</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Backend\Model\Auth\Session">
+        <plugin name="mirakl_ajax_sessions_prolong" type="Mirakl\Process\Plugin\Model\Auth\SessionPlugin" sortOrder="99" />
+    </type>
+</config>

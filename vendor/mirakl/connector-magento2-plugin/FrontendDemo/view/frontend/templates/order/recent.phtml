@@ -1,0 +1,21 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Order\SalesList $block */
+?>
+<div class="block block-dashboard-orders">
+<?php $_orders = $block->getOrders(); ?>
+    <div class="block-title order">
+        <strong><?php /* @escapeNotVerified */ echo __('Recent Orders') ?></strong>
+        <?php if (sizeof($_orders->getItems()) > 0): ?>
+            <a class="action view" href="<?php /* @escapeNotVerified */ echo $block->getUrl('sales/order/history') ?>">
+                <span><?php /* @escapeNotVerified */ echo __('View All') ?></span>
+            </a>
+        <?php endif; ?>
+    </div>
+    <div class="block-content">
+        <?php $block->getChildBlock('sales.order.recent.list')->setOrders($_orders)->setHtmlClassName('recent');?>
+        <?php echo $block->getChildHtml()?>
+        <?php if (sizeof($_orders->getItems()) == 0): ?>
+            <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You have placed no orders.'); ?></span></div>
+        <?php endif; ?>
+    </div>
+</div>

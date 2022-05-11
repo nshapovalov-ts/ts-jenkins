@@ -1,0 +1,80 @@
+<?php
+/**
+ * Retailplace_TopMenuFilter
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+/**
+ * @var $block FilterRenderer
+ */
+
+use Amasty\Shopby\Block\Navigation\FilterRenderer;
+use Amasty\Shopby\Model\Layer\Filter\Item;
+use Amasty\ShopbyBase\Model\FilterSetting;
+
+/** @var FilterSetting $filterSetting */
+/** @var FilterRenderer $block */
+/** @var Item $filterItems  */
+
+$filter = $block->getFilter();
+$attributeCode = $filter->getAttributeModel()->getAttributeCode();
+$filterLabel = $block->escapeHtml(__($filter->getName()));
+
+$postfix = uniqid();
+$filterCode = $block->escapeHtml($filterSetting->getFilterCode());
+$max = $block->escapeHtml(ceil($fromToConfig['max']));
+$min = $block->escapeHtml(floor($fromToConfig['min']));
+
+
+?>
+<div class="filter-options-content">
+    <div class="filter-options">
+        <ul>
+            <?php if ($filterSetting->getAddFromToWidget()): ?>
+                <?= /* @noEscape */ $block->getFromToWidget('slider') ?>
+            <?php endif; ?>
+            <form data-amshopby-filter="<?= $block->escapeHtml($filterCode); ?>"
+                  data-amshopby-filter-request-var="<?= $block->escapeHtml($block->getFilter()->getRequestVar()); ?>">
+                <div id="am-shopby-filter-<?= $block->escapeHtml($filterCode . '_' . $postfix); ?>"
+                     class="amshopby-slider-container amshopby_currency_rate"
+                     data-am-js="slider-container"
+                     data-min="<?= /* @noEscape */ $min; ?>"
+                     data-max="<?= /* @noEscape */ $max; ?>"
+                     data-rate="<?= /* @noEscape */ $fromToConfig['curRate']; ?>">
+
+                    <input data-amshopby-slider-id="value"
+                           type=hidden
+                           name="amshopby[<?= $block->escapeHtml($block->getFilter()->getRequestVar())?>][]"/>
+                    <div data-amshopby-slider-id="slider" class="am-slider"></div>
+                    <div data-amshopby-slider-id="display"
+                         class="amshopby-slider-display"
+                         data-am-js="slider-display"></div>
+                </div>
+            </form>
+        </ul>
+    </div>
+    <div class="applyfilter">
+        <button data-request-var="<?= $filter->getRequestVar() ?>" type="button" class="apply" id="apply<?= $attributeCode ?>"><span>Apply</span></button>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#am-shopby-filter-<?= $block->escapeHtml($filterCode . '_' . $postfix); ?>": {
+            "topFilterSlider": {
+                    "collectFilters": <?= /* @noEscape */ $block->collectFilters(); ?>,
+                    "template":"<?= $block->escapeHtml($fromToConfig['template']) ?>",
+                    "step":<?= /* @noEscape */ $block->escapeHtml(floatval($fromToConfig['step'])) ?>,
+                    "from": "<?= /* @noEscape */ $fromToConfig['from']; ?>",
+                    "to": "<?= /* @noEscape */ $fromToConfig['to']; ?>",
+                    "min":<?= /* @noEscape */ $min; ?>,
+                    "max":<?= /* @noEscape */ $max; ?>,
+                    "url": "<?= /* @noEscape */ $block->getSliderUrlTemplate(); ?>",
+                    "code":"<?= $block->escapeHtml($filterSetting->getAttributeModel()->getAttributeCode()); ?>",
+                    "hideDisplay": <?= /* @noEscape */ $filterSetting->getAddFromToWidget() ? "1" : '0'; ?>
+                }
+        }
+    }
+</script>

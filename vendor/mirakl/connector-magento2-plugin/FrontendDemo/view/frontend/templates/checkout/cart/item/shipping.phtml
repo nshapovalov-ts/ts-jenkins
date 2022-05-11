@@ -1,0 +1,69 @@
+<?php
+/**
+ * @var \Magento\Framework\View\TemplateEngine\Php $this
+ * @var \Mirakl\FrontendDemo\Block\Cart\Item\Shipping $block
+ */
+$_item = $block->getItem();
+$_quote = $_item->getQuote();
+$_shippingTypes = $block->getShippingTypes();
+$_selectedShippingType = $block->getSelectedShippingType();
+$_shop = $block->getShop();
+/** @var \Magento\Tax\Helper\Data $_taxHelper */
+$_taxHelper = $this->helper('Magento\Tax\Helper\Data');
+/** @var \Mirakl\FrontendDemo\Helper\Tax $_miraklTaxHelper */
+$_miraklTaxHelper = $this->helper('Mirakl\FrontendDemo\Helper\Tax');
+?>
+<?php if ($_shippingTypes->count()): // Display available shipping types for this item ?>
+    <tr class="shipping-types">
+        <td>
+            <p><?php echo __('Sold by: ') ?><a href="<?php echo $_shop->getUrl() ?>" title="<?php echo $block->escapeHtml($_shop->getName()) ?>"><?php echo $block->escapeHtml($_shop->getName()) ?></a></p>
+            <?php if ($_shop->getLogo()): ?>
+                <p><img src="<?php echo $block->escapeHtml($_shop->getLogo()) ?>" /></p>
+            <?php endif ?>
+        </td>
+        <td colspan="50">
+            <p><?php echo __('Please select a shipping method:') ?></p>
+            <ul class="sp-methods">
+                <?php /** @var \Mirakl\MMP\Front\Domain\Shipping\ShippingFeeType $_shippingType */ ?>
+                <?php foreach ($_shippingTypes as $_shippingType): ?>
+                    <?php
+                        $_id = sprintf('shipping-type-%s-%s', $_item->getMiraklOfferId(), $_shippingType->getCode());
+                        $_totalShippingPrice = $_shippingType->getTotalShippingPrice();
+                    ?>
+                    <li>
+                        <input type="radio" name="cart[offers][<?php echo $_item->getMiraklOfferId() ?>]" value="<?php echo $_shippingType->getCode() ?>" id="<?php echo $_id ?>" <?php if ($_shippingType->getCode() == $_selectedShippingType->getCode()): ?>checked="checked"<?php endif ?> class="radio" />
+                        <label for="<?php echo $_id ?>">
+                            <?php echo $_shippingType->getLabel() ?>
+                            <?php if ($_totalShippingPrice <= 0): ?>
+                                <span class="price"><?php echo __('Free') ?></span>
+                            <?php else: ?>
+                                <?php
+                                    $_shippingAddress = $_quote->getShippingAddress();
+                                    if ($_quote->getMiraklIsShippingInclTax()) {
+                                        // Shipping prices from Mirakl are INCLUDING tax
+                                        $_shippingPriceExclTax = $_miraklTaxHelper->getShippingPriceExclTax($_totalShippingPrice, $_shippingAddress);
+                                        $_shippingPriceInclTax = $_totalShippingPrice;
+                                    } else {
+                                        // Shipping prices from Mirakl are EXCLUDING tax
+                                        $_shippingPriceExclTax = $_totalShippingPrice;
+                                        $_shippingPriceInclTax = $_miraklTaxHelper->getShippingPriceInclTax($_totalShippingPrice, $_shippingAddress);
+                                    }
+                                ?>
+                                <?php if ($_taxHelper->displayShippingBothPrices()): ?>
+                                    <span class="price"><?php echo $block->formatPrice($_shippingPriceInclTax) ?></span><?php if ($_shippingPriceInclTax != $_shippingPriceExclTax): ?> <span class="price-excl-tax">(<?php echo __('Excl. Tax:') ?> <span class="price"><?php echo $block->formatPrice($_shippingPriceExclTax) ?></span>)</span><?php endif ?>
+                                <?php elseif ($_taxHelper->displayShippingPriceExcludingTax()): ?>
+                                    <span class="price"><?php echo $block->formatPrice($_shippingPriceExclTax) ?></span>
+                                <?php elseif ($_taxHelper->displayShippingPriceIncludingTax()): ?>
+                                    <span class="price"><?php echo $block->formatPrice($_shippingPriceInclTax) ?></span>
+                                <?php endif ?>
+                            <?php endif ?>
+                        </label>
+                    </li>
+                <?php endforeach ?>
+                <button type="submit" name="update_cart_action" data-cart-item-update value="update_shipping_type" title="<?php echo $block->escapeHtml(__('Update')); ?>" class="button btn-update">
+                    <span><span><?php echo __('Update'); ?></span></span>
+                </button>
+            </ul>
+        </td>
+    </tr>
+<?php endif ?>

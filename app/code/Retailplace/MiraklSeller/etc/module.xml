@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+ -->
+ <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Retailplace_MiraklSeller" setup_version="1.0.1">
+        <sequence>
+            <module name="Mirakl_Connector"/>
+            <module name="MiraklSeller_Sales"/>
+            <module name="Amasty_Shopby"/>
+            <module name="Sm_MegaMenu"/>
+            <module name="Mirakl_Shop"/>
+        </sequence>
+    </module>
+</config>

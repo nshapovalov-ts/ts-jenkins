@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Offerdetail
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Nikolay Shapovalov <nikolay@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_frontend" translate="label" sortOrder="140" showInDefault="1">
+            <group id="offer">
+                <field id="enable_default_lead_time" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Turn on default value for "Lead time to ship"</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="default_value_lead_time" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default value for "Lead time to ship"</label>
+                    <comment>Please set integer value</comment>
+                    <validate>required-number validate-number validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="enable_default_lead_time">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="seller_youtube_settings" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label">
+                <label>Seller Youtube video settings</label>
+                <field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="youtube_video_link" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+                    <label>Youtube video link</label>
+                    <comment><![CDATA[You need use placeholder {{YOUTUBE_ID}} for youtube video id.]]></comment>
+                </field>
+                <field id="youtube_thumbnail_link" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="text">
+                    <label>Youtube thumbnail link</label>
+                    <comment><![CDATA[You need use placeholder {{YOUTUBE_ID}} for youtube video id.]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

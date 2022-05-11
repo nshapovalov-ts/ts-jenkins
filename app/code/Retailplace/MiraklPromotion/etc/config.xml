@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklPromotion
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <retailplace_mirakl_promotion>
+            <cron_settings>
+                <promotions_sync_enabled>1</promotions_sync_enabled>
+                <promotions_sync_schedule>0 * * * *</promotions_sync_schedule>
+                <promotions_link_sync_enabled>1</promotions_link_sync_enabled>
+                <promotions_link_sync_schedule>0 * * * *</promotions_link_sync_schedule>
+            </cron_settings>
+            <promotions_displaying>
+                <plp_configurable>1</plp_configurable>
+                <plp_promotions_count>5</plp_promotions_count>
+            </promotions_displaying>
+        </retailplace_mirakl_promotion>
+    </default>
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="magecompsms_phonebook_edit"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magecomp\Smspro\Block\Adminhtml\Phonebook\Edit" name="magecomp_phonebook_edit"/>
+        </referenceContainer>
+
+        <referenceContainer name="left">
+            <block class="Magecomp\Smspro\Block\Adminhtml\Phonebook\Edit\Tabs" name="magecomp_smspro_edit_tabs">
+                <block class="Magecomp\Smspro\Block\Adminhtml\Phonebook\Edit\Tab\Phonebook" name="magecomp_smspro_edit_tab_phonebook"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">phonebook_section</argument>
+                    <argument name="block" xsi:type="string">magecomp_smspro_edit_tab_phonebook</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

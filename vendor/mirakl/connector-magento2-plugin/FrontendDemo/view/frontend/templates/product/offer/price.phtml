@@ -1,0 +1,46 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Product\Offer\Price $block */
+/** @var \Magento\Tax\Helper\Data $taxHelper */
+$taxHelper = $this->helper('Magento\Tax\Helper\Data');
+$offer = $block->getOffer();
+$originPrice = $offer->getOriginPrice();
+$finalPrice = $offer->getPrice();
+?>
+<div class="offer-price price-container">
+    <?php if ($taxHelper->displayPriceIncludingTax() || $taxHelper->displayBothPrices()): ?>
+        <span class="price-wrapper price-including-tax" data-label="<?php echo $block->escapeHtml(__('Incl. Tax')); ?>">
+            <?php echo $block->formatCurrency($block->getOfferPriceInclTax()) ?>
+            <?php if ($originPrice != $finalPrice): ?>
+                <span class="offer-old-price"><?php echo $block->formatCurrency($block->getOfferOriginPriceInclTax()) ?></span>
+            <?php endif; ?>
+        </span>
+    <?php endif; ?>
+    <?php if ($taxHelper->displayPriceExcludingTax() || $taxHelper->displayBothPrices()): ?>
+        <span class="price-wrapper price-excluding-tax" data-label="<?php echo $block->escapeHtml(__('Excl. Tax')); ?>">
+            <?php echo $block->formatCurrency($block->getOfferPriceExclTax()) ?>
+            <?php if ($originPrice != $finalPrice): ?>
+                <span class="offer-old-price"><?php echo $block->formatCurrency($block->getOfferOriginPriceExclTax()) ?></span>
+            <?php endif; ?>
+        </span>
+    <?php endif; ?>
+</div>
+
+<?php echo $block->getPriceRangesHtml() ?>
+
+<?php if ($block->getDisplayShippingPrice()): ?>
+    <?php if ($offer->getMinShippingPrice() > 0): ?>
+        <div class="offer-shipping">
+            <?php if ($taxHelper->displayShippingBothPrices()): ?>
+                <?php echo __('+ %1 shipping (Excl. Tax: %2)', $block->formatCurrency($block->getOfferMinShippingPriceInclTax()), $block->formatCurrency($block->getOfferMinShippingPriceExclTax())) ?>
+            <?php else: ?>
+                <?php echo __('+ %1 shipping', $block->formatCurrency($taxHelper->displayShippingPriceIncludingTax() ? $block->getOfferMinShippingPriceInclTax() : $block->getOfferMinShippingPriceExclTax())) ?>
+            <?php endif; ?>
+        </div>
+    <?php else: ?>
+        <div class="offer-shipping"><?php echo __('Free delivery') ?></div>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($offer->getPriceAdditionalInfo()): ?>
+    <div class="offer-price-description"><?php echo $block->escapeHtml($offer->getPriceAdditionalInfo()) ?></div>
+<?php endif; ?>

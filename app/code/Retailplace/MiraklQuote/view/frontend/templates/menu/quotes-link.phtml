@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Retailplace_MiraklQuote
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+declare(strict_types=1);
+
+/** @var \Retailplace\MiraklQuote\Block\Account\MenuLink $block */
+?>
+<?php if ($block->isCurrent()): ?>
+    <li class="nav item current">
+        <strong class="nav_quotes_icon">
+            <?= $block->escapeHtml(__($block->getLabel())) ?>
+        </strong>
+    </li>
+<?php else: ?>
+    <li class="nav item <?= $block->getIsHighlighted() ? ' current' : '' ?> <?= $block->getCssClass() ?>">
+        <a class="nav_quotes_icon" href="<?= $block->escapeHtml($block->getHref()) ?>"
+           title="<?= $block->escapeHtml(__($block->getTitle())) ?>" <?= $block->getAttributesHtml() ?>>
+            <?= $block->escapeHtml(__($block->getLabel())) ?>
+        </a>
+    </li>
+<?php endif; ?>

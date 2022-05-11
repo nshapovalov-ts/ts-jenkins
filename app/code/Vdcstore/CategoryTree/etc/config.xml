@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<category_tree>
+			<general>
+				<enable/>
+				<mirakle_root/>
+				<menu_root/>
+                <remove_unmapped_products>1</remove_unmapped_products>
+                <enable_force_indexing>1</enable_force_indexing>
+			</general>
+		</category_tree>
+	</default>
+</config>

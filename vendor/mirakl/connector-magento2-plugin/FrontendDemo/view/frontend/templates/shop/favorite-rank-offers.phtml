@@ -1,0 +1,36 @@
+<?php
+/** @var Mirakl\FrontendDemo\Block\Shop\FavoriteRankOffers $this */
+$_products = $this->getProductCollection();
+?>
+<?php if ($_products && $_products->count() === 0):?>
+    <?php echo __('The seller has no favorite products') ?>
+<?php else: ?>
+<div class="block widget new">
+    <div class="block-content content" aria-labelledby="block-widget new-heading">
+        <div class="products wrapper grid products-grid products-new-grid">
+            <ol class="products list items product-items">
+                <?php $iterator = 1; ?>
+                <?php foreach ($_products as $_product): ?>
+                <?= /* @escapeNotVerified */ ($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info">
+                    <?php $_productUrl = $this->getProductUrl($_product) ?>
+                    <?php $_productName = $this->escapeHtml($_product->getName()) ?>
+                    <a href="<?= /* @escapeNotVerified */ $_productUrl ?>" class="product photo product-item-photo">
+                        <?php $productImage = $this->getImage($_product, 'new_products_content_widget_grid') ?>
+                        <?= !$productImage ?: $productImage->toHtml() ?>
+                    </a>
+                    <div class="product details product-item-details">
+                        <strong class="product name product-item-name">
+                            <a class="product-item-link" title="<?= $_productName ?>" href="<?= /* @escapeNotVerified */ $_productUrl ?>">
+                                <?= $_productName ?>
+                            </a>
+                        </strong>
+                    </div>
+                </div>
+                <?= ($iterator == count($_products)+1) ? '</li>' : '' ?>
+                <?php endforeach ?>
+            </ol>
+        </div>
+    </div>
+</div>
+<?php endif;?>

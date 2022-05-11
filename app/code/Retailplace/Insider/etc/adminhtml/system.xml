@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Insider
+ *
+ * @copyright   Copyright © 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="retailplace_insider" translate="label" sortOrder="150" showInDefault="1">
+            <label>Insider</label>
+            <tab>retailplace</tab>
+            <resource>Retailplace_Insider::config</resource>
+            <group id="insider_debug" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>Cron Configuration</label>
+                <field id="insider_debug_enabled" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Insider Debug Mode Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="skus" translate="label" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Product SKU's</label>
+                    <comment>SKU's comma separated</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

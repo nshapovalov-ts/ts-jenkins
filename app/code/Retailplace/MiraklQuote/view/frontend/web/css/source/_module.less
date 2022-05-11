@@ -1,0 +1,974 @@
+/**
+/**
+ * Retailplace_MiraklQuote
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+
+& when (@media-common = true) {
+    .login-sinup {
+        .account_dropdown {
+            a.my_quotes_link{
+                background: url('../images/quotes_icon.svg') no-repeat left 16px center #eff1f3; background-size: 16px 16px;
+                &:hover { background: url(../images/quotes_icon_hover.svg) no-repeat left 16px center #753755; background-size: 16px 16px;}
+            }
+        }
+    }
+    .account-nav {
+        .item {
+            a.nav_quotes_icon{
+                background: url(../images/quotes_icon.svg) no-repeat left 16px center #f8f8f8; background-size: 16px 16px;
+                &:hover{
+                    background: url(../images/quotes_icon_hover.svg) no-repeat left 16px center #ee8445; background-size: 16px 16px;
+                }
+            }
+            strong.nav_quotes_icon{background: url(../images/quotes_icon_hover.svg) no-repeat left 16px center #ee8445; background-size: 16px 16px;}
+        }
+    }
+    .quote-requests-block{
+        .quote-products{
+            border-collapse: collapse;
+            thead{
+                tr{
+                    th{
+                        background: #873456;
+                        border-radius: 0px;
+                        font-family: 'Hurme Geometric Sans 3';
+                        font-style: normal;
+                        font-weight: 600;
+                        border: none;
+                        font-size: 14px;
+                        line-height: 130%;
+                        color: #FFFFFF;
+                        padding: 11px 21px;
+                        &:nth-child(1){
+                            border-radius: 10px 0px 0 10px
+                        }
+                        &:nth-last-child(1){
+                            border-radius: 0px 10px 10px 0px;
+                        }                        
+                    }
+                }
+            }
+            tbody{
+                tr{
+                    td{
+                        padding: 24px 21px;
+                        vertical-align: middle;
+                        font-family: 'Hurme Geometric Sans 3';
+                        font-style: normal;
+                        box-shadow: inset 0px -1px 0px #E5E5E5;
+                        &.quote-id{
+                            a{
+                                font-weight: 600;
+                                font-size: 14px;
+                                line-height: 130%;
+                                color: #000000;
+                                &:hover{
+                                    color:#ee8445;
+                                }
+                            }
+                        }
+                        &.quote-date{
+                            font-weight: normal;
+                            font-size: 14px;
+                            line-height: 130%;
+                            color: #999999;
+                        }
+                        &.quote-status{
+                            .to_process{
+                                background: rgba(238, 132, 69, 0.15);
+                                border-radius: 12px;
+                                font-weight: 600;
+                                font-size: 10px;
+                                line-height: 130%;
+                                color: #EE8445;
+                                padding: 6px 10px;
+                                text-transform: uppercase;
+                                display: inline-block;
+                            }
+                            .in_progress{
+                                background: rgba(135, 52, 86, 0.15);
+                                border-radius: 12px;
+                                font-weight: 600;
+                                font-size: 10px;
+                                line-height: 130%;
+                                color: #873456;
+                                padding: 6px 10px;
+                                text-transform: uppercase;
+                                display: inline-block;
+                            }
+                            .accepted{
+                                background: rgba(76, 166, 6, 0.15);
+                                border-radius: 12px;
+                                font-weight: 600;
+                                font-size: 10px;
+                                line-height: 130%;
+                                color: #4CA606;
+                                padding: 6px 10px;
+                                text-transform: uppercase;
+                                display: inline-block;
+                            }
+                            .expired{
+                                background: rgba(227, 55, 65, 0.15);
+                                border-radius: 12px;
+                                font-weight: 600;
+                                font-size: 10px;
+                                line-height: 130%;
+                                color: #E33741;
+                                padding: 6px 10px;
+                                text-transform: uppercase;
+                                display: inline-block;
+                            }
+                            .issued{
+                                background: rgba(227, 55, 65, 0.15);
+                                border-radius: 12px;
+                                font-weight: 600;
+                                font-size: 10px;
+                                line-height: 130%;
+                                color: #E33741;
+                                padding: 6px 10px;
+                                text-transform: uppercase;
+                                display: inline-block;
+                            }
+                        }
+                        &.quote-shop-name{
+                            font-weight: normal;
+                            font-size: 14px;
+                            line-height: 130%;
+                            color: #000000;
+                        }
+                        &.quote-related-order{
+                            font-weight: 600;
+                            font-size: 14px;
+                            line-height: 130%;
+                            color: #000000;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .account {
+        .column.main {
+            .quote-requests-block{
+                .toolbar{
+                    padding: 0 0 90px 0;
+                }
+            }
+        }
+    }
+    .mirakl-quote{
+        .quote-status-progress{ 
+            display: inline-block; 
+            margin: 0 0 40px; 
+            padding: 0px; 
+            width: 100%; 
+            ul.progress-list{
+                margin: 0 auto;
+                padding:0px;
+                list-style: none;
+                width: 100%;
+                max-width: 690px;
+                li{
+                    float: left;
+                    margin: 0px;
+                    padding:0px;
+                    width: 33.33%;
+                    text-align: center;
+                    position:relative;
+                    span{
+                        font-family: 'Hurme Geometric Sans 3';
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 16px;
+                        line-height: 140%;
+                        color: #000000;
+                        display: block;
+                        &.progress-step{
+                            display: inline-block;
+                            background: #E5E5E5;
+                            border-radius: 8px;
+                            width: 32px;
+                            height: 32px;  
+                            font-size: 16px;
+                            line-height: 32px;
+                            color: #999999;
+                            margin: 0 0 14px 0;
+                            text-align: center;
+                            &.progress-active{
+                                background: #EE8445;
+                                color: #ffffff;
+                            }
+                            &.progress-done{
+                                font-size: 0;
+                                background:#4CA606 url(../images/progress-done.png) no-repeat center;
+                            }
+                            &:after{
+                                content: "";
+                                width: ~'calc(50% - 48px)';
+                                position: absolute;
+                                right: 0;
+                                top: 15px;
+                                border-top: 3px dotted #E5E5E5;
+                            }
+                            &:before{
+                                content: "";
+                                width: ~'calc(50% - 48px)';
+                                position: absolute;
+                                left: 0;
+                                top: 15px;
+                                border-top: 3px dotted #E5E5E5;
+                            }
+                        }
+                    }
+                    &:nth-child(1){
+                        span.progress-step:before{
+                            display: none;
+                        }
+                    }
+                    &:nth-last-child(1){
+                        span.progress-step:after{
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+        .quote-request-data, .quote-request-quote-data{
+            display: inline-block;
+            margin: 0 0 40px;
+            padding:0px;
+            width: 100%;
+            .heading.quote-request-heading{
+                float: left;
+                margin: 0 0 19px 0px;
+                padding:0px;
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                .quote-seller-name{
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 24px;
+                    line-height: 150%;
+                    color: #0D385D;
+                    float: left;
+                    width: ~'calc(100% - 315px)';
+                }
+                .quote-status{
+                    float: right;
+                    margin: 0;
+                    padding:0px;
+                    width: 315px;
+                    text-align: right;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 18px;
+                    line-height: 100%;
+                    color: #000000;
+                    span{
+                        font-family: 'Hurme Geometric Sans 3';
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 18px;
+                        line-height: 100%;
+                        color: #000000;
+                        &.status-text{
+                            font-family: 'Hurme Geometric Sans 3';
+                            font-style: normal;
+                            font-weight: 600;
+                            font-size: 18px;
+                            line-height: 100%;
+                            position:relative;
+                            padding-left: 14px;
+                            &:before{
+                                background: #EE8445;
+                                width: 8px;
+                                height: 8px;
+                                border-radius:100%;
+                                position:absolute;
+                                left: 0px;
+                                top: 50%;
+                                transform: translate(0,-50%);
+                                content: "";
+                            }
+                        }
+                    }
+                    .quote-expiration{
+                        margin: 10px 0 0 0;
+                        span{
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+            .quote-products-table{
+                border-radius: 12px;
+                display: block;
+                border-collapse: collapse;
+                clear: both;
+                border: 1px solid #E5E5E5;
+                background: #FFFFFF;
+                padding: 0px 12px;
+                margin: 0 0 24px;
+                .quote-products{
+                    border-collapse: collapse;
+                    thead{
+                        tr{
+                            th{
+                                font-family: 'Hurme Geometric Sans 3';
+                                font-style: normal;
+                                font-weight: normal;
+                                font-size: 12px;
+                                line-height: 150%;
+                                text-transform: uppercase;
+                                color: #999999;
+                                padding:13px 10px 13px 10px;
+                                border-bottom:1px solid #ECEFF0;
+                                &:nth-child(1){
+                                    width: 52%;
+                                }
+                                &.cost{
+                                    text-align: right;
+                                }
+                                &.price{
+                                    text-align: right;
+                                }
+                                &.quantity{
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                    tbody{
+                        tr{
+                            td{
+                                padding:24px 10px 24px 10px;
+                                border-bottom:1px solid #ECEFF0;
+                                .image_block{
+                                    float: left;
+                                    margin: 0 26px 0 0;
+                                    padding:0px;
+                                    width: 77px;
+                                    overflow: visible;
+                                }
+                                .leadtime-to-ship{
+                                    display: flex;
+                                    overflow: visible !important;
+                                    margin: 0 0 7px 0;
+                                    .toolpick {
+                                        display: inline-block;
+                                        vertical-align: middle;
+                                        float: none;
+                                        margin: 0 5px;
+                                        .toolpick-ico {
+                                            display: inline-block;
+                                            margin: 0;
+                                            padding: 0px;
+                                            vertical-align: middle;
+                                            float: left;
+                                            i {
+                                                float: left;
+                                                margin: 0;
+                                                padding: 0px;
+                                                font-family: Montserrat;
+                                                line-height: 12px;
+                                                height: 12px;
+                                                width: 12px;
+                                                background: #666666;
+                                                font-weight: 600;
+                                                border-radius: 100%;
+                                                color: #ffffff;
+                                                text-align: center;
+                                                font-style: normal;
+                                                font-size: 9px;
+                                                cursor: pointer;
+                                            }
+                                        }
+                                    }
+                                    .ship-label{
+                                        display: flex;
+                                        font-family: 'Hurme Geometric Sans 3';
+                                        font-style: normal;
+                                        font-weight: 600;
+                                        font-size: 12px;
+                                        line-height: 100%;
+                                        color: #666666;
+                                    }
+                                    .ship-time{
+                                        font-family: 'Hurme Geometric Sans 3';
+                                        font-style: normal;
+                                        font-weight: normal;
+                                        font-size: 12px;
+                                        line-height: 100%;
+                                        color: #666666;
+                                    }
+                                }
+                                &:nth-child(1){
+                                    width: 52%;
+                                    > div{
+                                        overflow: hidden;
+                                        a{
+                                            font-family: 'Hurme Geometric Sans 3';
+                                            font-style: normal;
+                                            font-weight: 600;
+                                            font-size: 16px;
+                                            line-height: 150%;
+                                            color: #0D385D;
+                                        }
+                                    }
+                                }
+                                &.row_total{
+                                    text-align: right;
+                                    font-family: 'Hurme Geometric Sans 3';
+                                    font-style: normal;
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    line-height: 150%;
+                                    color: #EE8445;
+                                }
+                                &.unit_price{
+                                    text-align: right;
+                                    font-family: 'Hurme Geometric Sans 3';
+                                    font-style: normal;
+                                    font-weight: 600;
+                                    font-size: 16px;
+                                    line-height: 150%;
+                                    color: #999999;
+                                }
+                                &.quantity{
+                                    text-align: center;
+                                    font-family: 'Hurme Geometric Sans 3';
+                                    font-style: normal;
+                                    font-weight: normal;
+                                    font-size: 14px;
+                                    line-height: 150%;
+                                    color: #0D385D;
+                                }
+                            }
+                        }
+                        &:nth-last-child(1){
+                            tr{
+                                td{
+                                    border:none;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .quote-request-quote-data{
+            display: inline-block;
+            margin: 0 0 40px;
+            padding:0px;
+            width: 100%;
+            .heading.quote-data-heading{
+                float: left;
+                margin: 0 0 19px 0px;
+                padding:0px;
+                width: 100%;
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 150%;
+                color: #0D385D;                    
+            }            
+            .quote-accept-button-bg{
+                float: left;
+                margin: 0px;
+                padding:0px;
+                width: 100%;
+                .button.quote-accept-button{
+                    float: right;
+                    margin: 0px;
+                    padding: 16px 20px 14px;
+                    background: #873456;
+                    border-radius: 8px;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 16px;
+                    line-height: 100%;
+                    color: #FFFFFF;
+                }
+            }
+            .quote-totals-bg{
+                float: right;
+                margin: 0 0 24px;
+                padding: 30px 34px 24px;
+                background: #F9F5F1;
+                width: 100%;
+                border-radius: 12px;
+                max-width: 348px;
+                .quote-totals{
+                    float: left;
+                    margin: 0px;
+                    padding:0px;
+                    width: 100%;
+                    .total-row{
+                        float: left;
+                        margin: 0 0 11px;
+                        padding:0px;
+                        width: 100%;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items:center;
+                        .quote-totals-title{
+                            font-family: 'Hurme Geometric Sans 3';
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 14px;
+                            line-height: 150%;
+                            color: #000000;
+                        }
+                        .quote-totals-value{
+                            font-family: 'Hurme Geometric Sans 3';
+                            font-style: normal;
+                            font-weight: 600;
+                            font-size: 14px;
+                            line-height: 18px;
+                            color: #000000;
+                        }
+                        &.total-grand_total{
+                            border-top:1px solid #E4DDD5;
+                            padding-top:20px;
+                            margin-top: 11px;
+                            margin-bottom: 0px;
+                            .quote-totals-title{
+                                font-family: 'Hurme Geometric Sans 3';
+                                font-style: normal;
+                                font-weight: 600;
+                                font-size: 16px;
+                                line-height: 150%;       
+                                color: #000000;
+                            }
+                            .quote-totals-value{
+                                font-family: 'Hurme Geometric Sans 3';
+                                font-style: normal;
+                                font-weight: 600;
+                                font-size: 26px;
+                                line-height: 130%;                  
+                                color: #EE8445;              
+                            }
+                        }
+                    }
+                }
+                .totals-additional{
+                    float: left;
+                    margin: 0px;
+                    padding:0px;
+                    width: 100%;
+                    text-align: right;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 13px;
+                    line-height: 150%;
+                    color: #000000;
+                }
+            }
+        }
+
+
+
+        .quote-request-messages{
+            display: inline-block;
+            margin: 0px;
+            padding: 0px;
+            width: 100%;
+            .section-title{
+                float: left;
+                margin: 0 0 24px;
+                padding:0px;
+                width: 100%;
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 150%;
+                color: #0D385D;
+            }
+            .messenger-names{ 
+                float: left; 
+                margin: 0 0 12px; 
+                padding: 0px; 
+                width: 100%; 
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 100%;
+                color: #000000;
+                strong{
+                    font-weight: 600;
+                }
+            }
+            .messages-list{
+                float: left; 
+                margin: 0 0 12px; 
+                padding: 0px; 
+                width: 100%; 
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+                line-height: 150%;
+                color: #000000;
+                .message-block{
+                    border-radius: 12px;
+                    display: block;
+                    border-collapse: collapse;
+                    clear: both;
+                    margin-bottom: 20px;
+                    border: 1px solid #E5E5E5;
+                    background: #FFFFFF;
+                    padding: 20px 22px;
+                }
+            }
+            form{
+                margin: 0 0 20px 0;
+                display: inline-block;
+                width: 100%;
+                textarea{
+                    float: left;
+                    margin: 0 0 24px;
+                    padding:20px;
+                    width: 100%;
+                    background: #FFFFFF;
+                    border: 1px solid #E5E5E5;
+                    border-radius: 12px;
+                    height: 200px;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 16px;
+                    line-height: 100%;
+                    color: #000000;
+                }
+                button{
+                    padding: 16px 20px 14px !important;
+                    background: #873456;
+                    border-radius: 8px;
+                    float: left;
+                    font-family: 'Hurme Geometric Sans 3';
+                    font-style: normal;
+                    font-weight: 600;
+                    height: auto;
+                    text-transform: none;
+                    font-size: 16px !important;
+                    line-height: 100%;
+                    color: #FFFFFF !important;
+                }
+                .error-message{
+                    div{
+                        font-family: Montserrat;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 14px;
+                        line-height: 150%;
+                        color: #393D3F;
+                        background: rgba(232, 84, 113, 0.1);
+                        padding: 20px 20px 20px 57px; 
+                        margin: 20px 0 10px;
+                        display: block;
+                        position: relative;
+                        &:before {
+                            background: url(../images/error_icon.png) no-repeat center;
+                            width: 32px;
+                            height: 32px;
+                            font-size: 0;
+                            margin: 0;
+                            top: 15px;
+                            left: 14px;
+                            content: "";
+                            position: absolute;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .cart_shipping_top {
+        .quote-request{
+            float: right;
+            margin: 0px;
+            padding: 0px;
+            width: auto;
+            a{
+                float: right;
+                margin: 0px;
+                padding: 6px 12px;
+                text-transform: uppercase;
+                width: auto;
+                font-size: 15px;
+                font-family: 'Hurme Geometric Sans 3';
+                border: 1px solid #425E6B;
+                color: #425E6B;
+                font-weight: bold;
+            }
+            .quote-request-disabled{
+                float: right;
+                margin: 0px;
+                padding: 6px 12px;
+                text-transform: uppercase;
+                width: auto;
+                font-size: 14px;
+                font-family: 'Hurme Geometric Sans 3';
+                border: 1px solid #425E6B;
+                color: #425E6B;
+                font-weight: bold;
+                .toolpick{
+                    display: inline-block;
+                    i{
+                        float: left;
+                        margin: 0;
+                        padding: 0px;
+                        line-height: 12px;
+                        height: 14px;
+                        width: 14px;
+                        background: #425E6B;
+                        font-weight: 600;
+                        border-radius: 100%;
+                        color: #ffffff;
+                        text-transform: none;
+                        text-align: center;
+                        font-style: normal;
+                        font-size: 12px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    .quote-request-link{
+        a {
+            padding: 16px 20px 14px;
+            background: #EE8445;
+            border-radius: 8px;
+            font-family: 'Hurme Geometric Sans 3';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 100%;
+            text-align: center;
+            color: #FFFFFF;
+            display: inline-block;
+            &:visited{
+                color: #ffffff;
+            }
+        }
+    }
+    .services-sidebar{
+       .quote-request-link{
+            a {
+                padding: 13px 20px;
+                border-radius: 6px;
+                font-size: 14px;
+                line-height: 100%;
+            }
+            .quote-request-link-tp{
+                padding: 13px 20px;
+                background: #EE8445;
+                border-radius: 6px;
+                font-family: 'Hurme Geometric Sans 3';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 100%;
+                text-align: center;
+                color: #FFFFFF;
+                display: inline-block;
+                .toolpick{ 
+                    float: none; 
+                    display: inline-block;
+                    vertical-align: middle;
+                    .toolpick-ico{
+                        i{
+                            float: left;
+                            margin: 0;
+                            padding: 0px;
+                            line-height: 16px;
+                            height: 18px;
+                            width: 18px;
+                            background: #ffffff;
+                            font-weight: 600;
+                            border-radius: 100%;
+                            color: #000000;
+                            text-align: center;
+                            font-style: normal;
+                            font-size: 14px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        } 
+    }
+    .seller-shop {
+        .block-content.seller-info-bg {
+            .seller-info {
+                .seller-right-part {
+                    .min-order-amount {
+                        .min-order-seller{
+                            margin: 0 0 30px 0px;
+                            > div{
+                                > div{
+                                    margin-bottom: 20px;
+                                    &.service-content{
+                                        margin-bottom: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width:320px) and (max-width:767px) {
+    .quote-requests-block {
+        .quote-products{
+            width: 100%;
+            thead{
+                display: none;
+            }
+            tbody{
+                float: left;
+                margin: 0px;
+                padding:0px;
+                width: 100%;
+                tr{
+                    float: left;
+                    width: 100%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    border: 1px solid #E5E5E5;
+                    margin: 0 0 20px 0;
+                    border-radius: 10px;
+                    padding: 15px 25px;
+                    td{
+                        padding: 10px 0;
+                        width: 50%;
+                        float: left;
+                        box-shadow: none;
+                        &:before{
+                            content: attr(data-th) ':';
+                            display: inline-block;
+                            font-weight: 600;
+                            color: #000000;
+                            vertical-align: middle;
+                            font-size: 14px;
+                            line-height: normal;
+                            padding: 0;
+                            width: 100%;
+                            margin: 0 0 5px 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .mirakl-quote {
+        .quote-request-data, .quote-request-quote-data{
+            .heading.quote-request-heading {
+                .quote-seller-name{
+                    width: 100%;
+                }
+                .quote-status{
+                    width: 100%;
+                    float: left;
+                    text-align: left;
+                }
+            }
+            .quote-products-table {
+                .quote-products {
+                    thead{ 
+                        display: none; 
+                    }
+                    tbody{
+                        float: left;
+                        margin: 0px;
+                        padding: 0px;
+                        width: 100%;
+                        tr{
+                            float: left;
+                            margin: 0px;
+                            padding: 10px 0px;
+                            width: 100%;
+                            border-bottom: 1px solid #e5e5e5;
+                            td{
+                                float: left;
+                                margin: 0px;                                 
+                                width: 33.33%;
+                                padding: 5px;
+                                &:nth-child(1){
+                                    width: 100%;
+                                    &:before{
+                                        display: none;
+                                    }
+                                }
+                                &:before{
+                                    content: attr(data-th);
+                                    display: inline-block;
+                                    font-weight: 600;
+                                    color: #000000;
+                                    vertical-align: middle;
+                                    font-size: 14px;
+                                    line-height: normal;
+                                    padding: 0;
+                                    width: 100%;
+                                    margin: 0 0 5px 0;
+                                }
+                            }
+                            &:nth-last-child(1){
+                                border-bottom: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .cart_shipping_top {
+        .quote-request{
+            width: 100%;
+            margin: 0 0 15px 0px;
+            a{
+                width: 100%;
+                text-align: center;
+            }
+            .quote-request-disabled{
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+}
+@media screen and (min-width:992px) and (max-width:1200px) {
+    .cart_shipping_top {
+        .quote-request{
+            a{
+                padding: 6px 5px;
+                font-size: 11px;
+            }            
+            .quote-request-disabled{
+                padding: 6px 5px;
+                font-size: 11px;
+            }
+        }
+    }
+}
+
+

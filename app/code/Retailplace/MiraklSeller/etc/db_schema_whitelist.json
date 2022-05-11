@@ -1,0 +1,13 @@
+{
+    "sales_creditmemo": {
+        "column": {
+            "mirakl_refund_ids": true
+        }
+    },
+    "mirakl_shop": {
+        "column": {
+            "ts_first_order_discount": true,
+            "video_id": true
+        }
+    }
+}

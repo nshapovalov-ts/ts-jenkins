@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="mirakl_export_is_enabled">
+        <observer name="mirakl_mcm" instance="Mirakl\Mcm\Observer\McmEnableObserver" />
+    </event>
+    <event name="catalog_product_save_after">
+        <observer name="mirakl_mcm_product_save_after" instance="Mirakl\Mcm\Observer\Product\SaveAfterObserver" />
+    </event>
+    <event name="catalog_product_attribute_update_before">
+        <observer name="mirakl_mcm_product_attribute_update_before" instance="Mirakl\Mcm\Observer\Product\AttributeUpdateBeforeObserver" />
+    </event>
+    <event name="mirakl_api_get_synchronization_report">
+        <observer name="mirakl_mcm_report_error" instance="Mirakl\Mcm\Observer\Api\GetSynchronizationErrorReportObserver" />
+    </event>
+    <event name="mirakl_api_mcm_get_synchronization_report">
+        <observer name="mirakl_mcm" instance="Mirakl\Mcm\Observer\Api\GetSynchronizationReportObserver" />
+    </event>
+    <event name="admin_system_config_changed_section_mirakl_mcm">
+        <observer name="mirakl_mcm_config_changed" instance="Mirakl\Mcm\Observer\Adminhtml\Config\ConfigObserver"/>
+    </event>
+</config>

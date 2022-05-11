@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklPromotion
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="retailplace_mirakl_promotion" translate="label" sortOrder="140" showInDefault="1">
+            <label>Mirakl Promotion</label>
+            <tab>retailplace</tab>
+            <resource>Retailplace_MiraklPromotion::config</resource>
+            <group id="cron_settings" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>Cron Configuration</label>
+                <field id="promotions_sync_enabled" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Promotions Sync Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="promotions_sync_schedule" translate="label" type="text" sortOrder="20" showInDefault="1">
+                    <label>Promotions Sync Schedule</label>
+                </field>
+
+                <field id="promotions_link_sync_enabled" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Promotions Associations Sync Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="promotions_link_sync_schedule" translate="label" type="text" sortOrder="40" showInDefault="1">
+                    <label>Promotions Associations Sync Schedule</label>
+                </field>
+            </group>
+            <group id="promotions_link_sync" translate="label" type="text" sortOrder="20" showInDefault="1">
+                <label>Promotions Sync Configuration</label>
+                <field id="last_sync_date" translate="label" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Last Promotions Mapping Sync Date</label>
+                </field>
+            </group>
+            <group id="promotions_displaying" translate="label" type="text" sortOrder="30" showInDefault="1">
+                <label>Displaying Options</label>
+                <field id="plp_configurable" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Display promotions list in configurable product for all of child simple products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="plp_promotions_count" translate="label" type="text" sortOrder="20" showInDefault="1">
+                    <label>Promotions count limit for PLP</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

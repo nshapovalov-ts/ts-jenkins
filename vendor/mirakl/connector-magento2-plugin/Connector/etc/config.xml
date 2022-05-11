@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mirakl_sync>
+            <offers>
+                <use_direct_database_import>1</use_direct_database_import>
+            </offers>
+        </mirakl_sync>
+        <mirakl_connector>
+            <general>
+                <translation_store/>
+                <locale_codes_for_labels_translation/>
+            </general>
+            <shopping_cart>
+                <auto_remove_offers>1</auto_remove_offers>
+                <auto_update_offers>1</auto_update_offers>
+            </shopping_cart>
+            <tax>
+                <offer_prices>1</offer_prices>
+                <shipping_prices>1</shipping_prices>
+                <calculate_us_taxes>0</calculate_us_taxes>
+            </tax>
+            <order_workflow>
+                <auto_create_order>1</auto_create_order>
+                <auto_create_order_statuses>processing</auto_create_order_statuses>
+                <auto_score_order>1</auto_score_order>
+                <payment_workflow>PAY_ON_ACCEPTANCE</payment_workflow>
+                <enable_multiple_shipments>0</enable_multiple_shipments>
+            </order_workflow>
+            <indexes_caches>
+                <offers_import>
+                    <clear_cache>0</clear_cache>
+                </offers_import>
+            </indexes_caches>
+        </mirakl_connector>
+    </default>
+</config>

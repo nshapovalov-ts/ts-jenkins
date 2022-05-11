@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirakl_FrontendDemo::configuration" title="Frontend" module="Mirakl_FrontendDemo" sortOrder="40" parent="Mirakl_Core::configuration" resource="Mirakl_Config::frontend" action="adminhtml/system_config/edit/section/mirakl_frontend/"/>
+    </menu>
+</config>

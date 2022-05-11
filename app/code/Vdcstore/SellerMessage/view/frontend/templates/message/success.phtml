@@ -1,0 +1,13 @@
+<div class="seller-success-container">
+
+    <div class="user-image-container">
+        <?php if ($block->getSellerImage()) : ?>
+            <img class="user-image" src="<?= $block->getSellerImage() ?>"/>
+        <?php endif; ?>
+    </div>
+
+    <div class="seller-success-conversation">
+        <span
+            class="success-conversation-text"><?= __("Your Message has been sent to %1", $block->getSellerName()); ?></span>
+    </div>
+</div>

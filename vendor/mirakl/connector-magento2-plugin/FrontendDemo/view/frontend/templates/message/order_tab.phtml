@@ -1,0 +1,13 @@
+<?php /** @var \Mirakl\FrontendDemo\Block\Message\Order $block */?>
+<div class="order-details-items">
+    <?php if ($block->getTabTitle()): ?>
+        <div class="marketplace-messages">
+            <div class="block-title">
+                <strong><?= $block->getTabTitle() ?></strong>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php foreach ($block->getTabChildren() as $child): ?>
+        <?= $child->toHtml() ?>
+    <?php endforeach; ?>
+</div>

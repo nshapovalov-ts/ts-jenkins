@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_BestSeller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="retailplace_update_calculated_best_sellers" instance="Retailplace\BestSeller\Cron\CalculateBestSellers"
+             method="execute">
+            <config_path>retailplace_best_sellers/cron_settings/best_sellers_update_schedule</config_path>
+        </job>
+    </group>
+</config>

@@ -1,0 +1,22 @@
+{
+    "name": "retailplace/module-miraklselleradditionalfield",
+    "description": "",
+    "type": "magento2-module",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Retailplace\\MiraklSellerAdditionalField\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

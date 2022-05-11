@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklSellerAdditionalField
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Dmitriy Kosykh <dmitriykosykh@tradesquare.com.au>
+ */
+ -->
+<requests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="urn:magento:framework:Search/etc/search_request.xsd">
+    <request query="quick_search_container" index="catalogsearch_fulltext">
+        <queries>
+            <query xsi:type="boolQuery" name="quick_search_container" boost="1">
+                <queryReference clause="must" ref="ids"/>
+                <queryReference clause="must" ref="am_is_salable"/>
+            </query>
+            <query xsi:type="filteredQuery" name="ids">
+                <filterReference clause="must" ref="ids_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="am_is_salable">
+                <filterReference clause="must" ref="am_is_salable_filter"/>
+            </query>
+        </queries>
+        <filters>
+            <filter xsi:type="termFilter" name="ids_filter" field="id" value="$ids$"/>
+            <filter xsi:type="termFilter" name="am_is_salable_filter" field="am_is_salable" value="$am_is_salable$"/>
+        </filters>
+    </request>
+
+    <request query="catalog_view_container" index="catalogsearch_fulltext">
+        <queries>
+            <query xsi:type="boolQuery" name="catalog_view_container" boost="1">
+                <queryReference clause="should" ref="search" />
+                <queryReference clause="must" ref="ids"/>
+                <queryReference clause="must" ref="am_is_salable"/>
+            </query>
+            <query xsi:type="matchQuery" value="$search_term$" name="search">
+                <match field="sku"/>
+                <match field="name"/>
+            </query>
+            <query xsi:type="filteredQuery" name="ids">
+                <filterReference clause="must" ref="ids_filter"/>
+            </query>
+            <query xsi:type="filteredQuery" name="am_is_salable">
+                <filterReference clause="must" ref="am_is_salable_filter"/>
+            </query>
+        </queries>
+        <filters>
+            <filter xsi:type="termFilter" name="ids_filter" field="id" value="$ids$"/>
+            <filter xsi:type="termFilter" name="am_is_salable_filter" field="am_is_salable" value="$am_is_salable$"/>
+        </filters>
+    </request>
+</requests>

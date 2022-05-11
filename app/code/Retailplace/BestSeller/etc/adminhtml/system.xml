@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_BestSeller
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="retailplace_best_sellers" translate="label" sortOrder="140" showInDefault="1">
+            <label>Best Sellers</label>
+            <tab>retailplace</tab>
+            <resource>Retailplace_BestSeller::config</resource>
+            <group id="cron_settings" translate="label" type="text" sortOrder="10" showInDefault="1">
+                <label>Cron Configuration</label>
+                <field id="best_sellers_update_enabled" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Best Sellers Update Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="best_sellers_update_schedule" translate="label" type="text" sortOrder="20" showInDefault="1">
+                    <label>Best Sellers Update Schedule</label>
+                </field>
+            </group>
+            <group id="best_sellers_update" translate="label" type="text" sortOrder="20" showInDefault="1">
+                <label>Best Sellers Update Configuration</label>
+                <field id="purchase_limit" translate="label" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Product Purchased More than</label>
+                </field>
+                <field id="purchase_period" translate="label" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Purchase Period</label>
+                    <comment>Enter the number of months</comment>
+                </field>
+                <field id="category_id" translate="label" type="text" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Category Id</label>
+                    <comment>Best Seller products will be assigned to this category</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

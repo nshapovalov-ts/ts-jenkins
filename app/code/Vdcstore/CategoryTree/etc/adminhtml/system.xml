@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="vdcstore" sortOrder="999" translate="label">
+			<label>Tradesquare</label>
+		</tab>
+		<section id="category_tree" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+			<label>Category Tree</label>
+			<tab>vdcstore</tab>
+			<resource>Vdcstore_CategoryTree::config_vdcstore_categorytree</resource>
+			<group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>General</label>
+				<field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enable</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="mirakle_root" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="select">
+					<label>Mirakel Root Category</label>
+					<comment/>
+					<source_model>Vdcstore\CategoryTree\Model\Category\Attribute\Source\Categories</source_model>
+				</field>
+				<field id="menu_root" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label>Menu Root Category</label>
+					<comment/>
+					<source_model>Vdcstore\CategoryTree\Model\Category\Attribute\Source\Categories</source_model>
+				</field>
+                <field id="remove_unmapped_products" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+                    <label>Remove unmaped products</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_force_indexing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="select">
+                    <label>Enable Force Indexing</label>
+                    <comment/>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+			</group>
+		</section>
+	</system>
+</config>

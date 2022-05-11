@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklApi
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mirakl\Api\Helper\Order" type="Retailplace\MiraklApi\Helper\Order"/>
+    <preference for="Retailplace\MiraklApi\Api\Data\Queue\MessageInterface"
+                type="Retailplace\MiraklApi\Model\Queue\Message"/>
+    <type name="Mirakl\Api\Helper\Message">
+        <plugin name="miraklapi_update_messages" type="Retailplace\MiraklApi\Plugin\Helper\Message"/>
+    </type>
+</config>

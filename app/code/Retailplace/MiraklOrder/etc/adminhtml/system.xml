@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_sync" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="orders" translate="label comment" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Order Synchronization (OR11)</label>
+                <comment>Import Mirakl orders into Magento</comment>
+                <field id="enable_import" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Orders Sync Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="import_order_schedule" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cronjob Schedule for orders import</label>
+                    <depends>
+                        <field id="enable_import">1</field>
+                    </depends>
+                </field>
+                <field id="last_sync_orders" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Last Synchronization Date</label>
+                    <comment>Last synchronization date of Mirakl orders.</comment>
+                    <depends>
+                        <field id="enable_import">1</field>
+                    </depends>
+                </field>
+                <field id="button_import" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Retailplace\MiraklOrder\Block\Adminhtml\System\Config\Button\Sync\Order</frontend_model>
+                    <depends>
+                        <field id="enable_import">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

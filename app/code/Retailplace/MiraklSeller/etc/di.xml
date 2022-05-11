@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklSeller
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Dmitriy Kosykh <dmitriykosykh@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Model\Layer\ContextInterface" type="Magento\Catalog\Model\Layer\Context"/>
+    <preference for="Magento\Catalog\Model\Layer\ItemCollectionProviderInterface"
+                type="Magento\Catalog\Model\Layer\Category\ItemCollectionProvider"/>
+    <preference for="Magento\Catalog\Model\Layer\StateKeyInterface"
+                type="Magento\Catalog\Model\Layer\Category\StateKey"/>
+    <preference for="Magento\Catalog\Model\Layer\CollectionFilterInterface"
+                type="Magento\Catalog\Model\Layer\Category\CollectionFilter"/>
+    <preference for="Magento\Catalog\Model\Layer\FilterableAttributeListInterface"
+                type="Magento\Catalog\Model\Layer\Category\FilterableAttributeList"/>
+    <preference for="Magento\Catalog\Model\Layer\AvailabilityFlagInterface"
+                type="Magento\Catalog\Model\Layer\Category\AvailabilityFlag"/>
+    <preference for="Magento\Catalog\Model\ResourceModel\Layer\Filter\Price"
+                type="Retailplace\MiraklSeller\Model\ResourceModel\Layer\Filter\Price"/>
+    <!-- <preference for="\Mirakl\Connector\Model\ResourceModel\Offer\Collection" type="Retailplace\MiraklSeller\Rewrite\OfferCollection" /> -->
+
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="retailplace_miraklseller" type="Retailplace\MiraklSeller\Plugin\Order"/>
+    </type>
+
+    <type name="Mirakl\Connector\Model\Offer\ImportFileBuilder">
+        <plugin name="offer_import_file_builder" type="Retailplace\MiraklSeller\Plugin\OfferImportFileBuilder"/>
+    </type>
+
+    <type name="StripeIntegration\Payments\Block\Button">
+        <plugin name="StripeIntegrationPaymentsBlockButtonMinOrderAmountRestrict"
+                type="Retailplace\MiraklSeller\Plugin\StripeIntegrationButtonMinOrderRestriction"/>
+    </type>
+    <type name="Amasty\Shopby\Model\Request\Builder">
+        <plugin name="RetailplaceMiraklSellerRequestBuilder"
+                type="Retailplace\MiraklSeller\Plugin\Amasty\Shopby\Model\Request\Builder"/>
+    </type>
+    <type name="Magento\Sitemap\Model\Sitemap">
+        <plugin name="Retailplace_MiraklSeller::add-custom-pages-to-default_sitemap" type="Retailplace\MiraklSeller\Plugin\Sitemap"/>
+    </type>
+
+    <type name="Mirakl\FrontendDemo\Controller\Shop\View">
+        <plugin name="Retailplace_MiraklSeller::shop_view" type="Retailplace\MiraklSeller\Plugin\Controller\Shop\View"/>
+    </type>
+
+    <!-- Hide attribute other categories for seller page only TS-158 Starts -->
+    <!--For decimal restriction has been added in Retailplace_Minorderamount module -->
+    <preference for="Magento\Catalog\Model\Layer\Filter\Category" type="Retailplace\MiraklSeller\Override\Magento\Catalog\Model\Layer\Filter\Category" />
+    <preference for="Magento\Catalog\Model\Layer\Filter\Price" type="Retailplace\MiraklSeller\Override\Magento\Catalog\Model\Layer\Filter\Price" />
+    <preference for="Magento\Catalog\Model\Layer\Filter\Attribute" type="Retailplace\MiraklSeller\Override\Magento\Catalog\Model\Layer\Filter\Attribute" />
+    <!-- Hide attribute other categories for seller page only TS-158 Ends -->
+    <preference for="MiraklSeller\Sales\Model\Create\Refund" type="Retailplace\MiraklSeller\Rewrite\MiraklSeller\Sales\Model\Create\Refund" />
+    <preference for="MiraklSeller\Sales\Helper\CreditMemo" type="Retailplace\MiraklSeller\Helper\Creditmemo" />
+
+    <virtualType name="miraklRefundHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">var/log/refund-error.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="miraklRefundLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="object">miraklRefundHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Retailplace\MiraklSeller\Rewrite\MiraklSeller\Sales\Model\Create\Refund">
+        <arguments>
+            <argument name="logger" xsi:type="object">miraklRefundLogger</argument>
+        </arguments>
+    </type>
+
+    <preference for="Amasty\Shopby\Model\Layer\Filter\Attribute" type="Retailplace\MiraklSeller\Rewrite\Amasty\Shopby\Model\Layer\Filter\Attribute"/>
+    <type name="Retailplace\MiraklSeller\Rewrite\Amasty\Shopby\Model\Layer\Filter\Attribute">
+        <arguments>
+            <argument name="filterItemFactory" xsi:type="object">Amasty\Shopby\Model\Layer\Filter\ItemFactory</argument>
+        </arguments>
+    </type>
+
+    <type name="Retailplace\MiraklSeller\Plugin\Magento\Catalog\Model\Layer\Category">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+</config>

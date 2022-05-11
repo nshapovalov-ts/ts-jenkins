@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_MiraklShop
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Dmitriy Fionov <dmitriy@tradesquare.com.au>
+ */
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="adminhtml.shop.grid.container">
+            <referenceBlock  name="shop.grid">
+                <referenceBlock name="shop.grid.columnSet">
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="industry-exclusions">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Industry Exclusion</argument>
+                            <argument name="index" xsi:type="string">industry-exclusions</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="channel-exclusions">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Channel Exclusion</argument>
+                            <argument name="index" xsi:type="string">channel-exclusions</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" as="exclusions-logic">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Exclusion Logic</argument>
+                            <argument name="index" xsi:type="string">exclusions-logic</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                        </arguments>
+                    </block>
+                </referenceBlock>
+            </referenceBlock>
+        </referenceBlock>
+    </body>
+</page>

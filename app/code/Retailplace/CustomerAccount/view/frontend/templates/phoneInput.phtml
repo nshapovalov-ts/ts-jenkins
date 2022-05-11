@@ -1,0 +1,47 @@
+<?php
+/**
+* Retailplace_CustomerAccount
+*
+* @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+* @author      Natalia Sekulich <natalia@tradesquare.com.au>
+*/
+/** @var  \Magecomp\Countryflag\Block\IntPhoneInput $block */
+?>
+<script type="text/javascript">
+    var int_phone_input_element = 'input[name="telephone"]';
+</script>
+
+<script>
+
+    require([
+            'jquery',
+            'Magecomp_Countryflag/js/intlTelInput',
+            'domReady!'
+        ],
+        function($) {
+            var checkPhoneInputExist = setInterval(function () {
+                if ($(int_phone_input_element).length) {
+                    // let's wait until input appear
+                    $(int_phone_input_element).intlTelInput({
+                        utilsScript: "<?=$block->getViewFileUrl("Magecomp_Countryflag::js/utils.js"); ?>",
+                        nationalMode: true,
+                        onlyCountries:  ["au"],
+                        allowDropdown: false,
+                        initialCountry: "au"
+                    });
+                    <?php if(!$this->getDetectByIp()) : ?>
+                    $(int_phone_input_element).val("<?=$this->getDefaultCountryCodeNumber(); ?>");
+                    <?php else : ?>
+                    $(int_phone_input_element).val("1");
+                    <?php endif; ?>
+                    $(int_phone_input_element).focus(function(){
+                        var str = $(".selected-flag").attr("title")
+                        $(int_phone_input_element).val(str.split(': ')[1]);
+                    });
+                    clearInterval(checkPhoneInputExist);
+                }
+            }, 100);
+
+        }
+    );
+</script>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+		<section id="smspro">
+				<group id="smsgatways">
+					<field id="msgclubsenderid" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>MsgClub Sender ID</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msgclub</field>
+						</depends>
+						<validate>required-entry</validate>
+					</field>
+					<field id="msgclubauthkey" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>MsgClub Authentication Key</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msgclub</field>
+						</depends>
+						<validate>required-entry</validate>
+					</field>
+					<field id="msgclubapiurl" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>API URL</label>
+						<comment><![CDATA[http://msg.msgclub.net/rest/services/sendSMS/sendGroupSms]]></comment>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msgclub</field>
+						</depends>
+						<validate>required-entry validate-url</validate>
+					</field>
+					<field id="msgclubcontenttype" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>SMS Content Type</label>
+						<depends>
+							<field id="smspro/general/enable">1</field>
+							<field id="gateway">msgclub</field>
+						</depends>
+						<source_model>Magecomp\Smsmsgclub\Model\Config\Contenttype</source_model>
+						<validate>required-entry</validate>
+					</field>
+				</group>
+		</section>
+    </system>
+</config>

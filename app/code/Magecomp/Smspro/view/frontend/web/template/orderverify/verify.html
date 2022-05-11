@@ -1,0 +1,70 @@
+<div class="block discount" id="block-smsorderverify" data-bind="visible: canVisibleOrderVerify">
+    
+    <div class="sms-order-popup-verification" style="display: none">
+
+        <div role="alert" class="messages otp-success" style="display: none">
+            <div class="message-success success message" data-ui-id="message-success">
+                <div><!-- ko i18n: 'Verified mobile number successfully'--><!-- /ko --></div>
+            </div>
+        </div>
+        <div role="alert" class="messages otp-error" style="display: none">
+            <div class="message-error error message" data-ui-id="message-error">
+                <div><!-- ko i18n: 'Invalid OTP'--><!-- /ko --></div>
+            </div>
+        </div>
+        <div role="alert" class="messages otp-senderror" style="display: none">
+            <div class="message-error error message" data-ui-id="message-error">
+                <div><!-- ko i18n: 'Unable to send OTP'--><!-- /ko --></div>
+            </div>
+        </div>
+        <div role="alert" class="messages otp-resend" style="display: none">
+            <div class="message-success success message" data-ui-id="message-success">
+                <div><!-- ko i18n: 'OTP send successfully'--><!-- /ko --></div>
+            </div>
+        </div>
+        <div class="title" data-role="title">
+            <strong id="order-verify-mobilenumber" role="heading" aria-level="2"><!-- ko i18n: 'Mobile Number'-->
+                <!-- /ko --></strong>
+        </div>
+        <div class="content" data-role="content" aria-labelledby="block-smsorderverify-heading">
+            <div class="fieldset">
+                <div class="field">
+                    <div class="control">
+                        <input type="text" class="input-text otp-input" id="orderVerifyMobValue" name="orderVerifyMobValue"
+                               data-bind="attr:{placeholder: $t('Mobile Number'),value:mobileNumber}"
+                               data-validate="{required:true,'validate-number':true}">
+                        <span data-bind="text: $t('Check Number Should be With Country Code Without + Sign For Example 919876543210')" style="font-size: 11px;"> 
+                            <!-- ko i18n: 'Check Number Should be With Country Code Without + Sign For Example 919876543210'-->
+                                    <!-- /ko -->
+                        </span>
+
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                    <input class="action primary orderVerifySendOtp" type="button" id="orderVerifySendOtp" name="orderVerifySendOtp"
+                           data-bind="attr:{value: $t('Send OTP')}" style="float: right">
+                              
+                    </div>
+                </div>
+            </div>
+            <div class="title" data-role="title">
+                <strong id="block-smsorderverify-heading" role="heading" aria-level="2"><!-- ko i18n: 'Verify OTP'-->
+                    <!-- /ko --></strong>
+            </div>
+            <form id="otp-verification-form" method="post" action="#" data-mage-init='{"validation":{}}'>
+                <input type="hidden" id="verified" value="0" />
+                <div class="fieldset">
+                    <div class="field">
+                        <div class="control">
+                            <input type="password" class="input-text otp-input" autocomplete="off" maxlength="10" id="otpvalue" name="otpvalue"
+                                   data-bind="attr:{placeholder: $t('Enter OTP')}"
+                                   data-validate="{required:true}">
+                                   
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="mirakl_adminhtml_update_category_tree_after">
+        <observer name="mirakl_catalog" instance="Mirakl\Catalog\Observer\Category\UpdateTreeSyncFlagObserver" />
+    </event>
+</config>

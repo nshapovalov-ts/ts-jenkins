@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Ruslan Mukhatov <ruslan@tradesquare.com.au>
+ */
+
+use Retailplace\Stripe\Block\PaymentInfo\Invoice;
+
+/** @var $block Invoice */
+?>
+<b><?= __("Method Name") ?>: </b> <?= __($block->getMethodTitle()) ?><br/>
+<b><?= __("Payment Date"); ?>: </b> <?= $block->formatDate($block->getPaymentDate()) ?>

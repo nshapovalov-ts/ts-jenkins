@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_AjaxCart
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="checkout" frontName="checkout">
+            <module name="Retailplace_AjaxCart" before="Magento_Checkout" />
+        </route>
+    </router>
+</config>

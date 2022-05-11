@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mirakl_sync">
+            <group id="values_lists" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="130" translate="label">
+                <label>Value Lists Synchronization (VL01)</label>
+                <comment>Export all attribute value lists to Mirakl</comment>
+                <field id="enable_values_lists" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="last_sync_values_lists" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="text">
+                    <label>Last Synchronization Date</label>
+                    <comment><![CDATA[Last synchronization date of operator attribute value lists.]]></comment>
+                </field>
+                <field id="button_values_lists" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="button_label">
+                    <frontend_model>Mirakl\Mci\Block\Adminhtml\System\Config\Button\Sync\ValuesLists</frontend_model>
+                </field>
+            </group>
+            <group id="hierarchies" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="140" translate="label">
+                <label>Catalog Categories Synchronization (H01)</label>
+                <comment>Export all Catalog categories to Mirakl</comment>
+                <field id="enable_hierarchies" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="last_sync_hierarchies" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="text">
+                    <label>Last Synchronization Date</label>
+                    <comment><![CDATA[Last synchronization date of Catalog categories.]]></comment>
+                </field>
+                <field id="button_hierarchies" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30">
+                    <frontend_model>Mirakl\Mci\Block\Adminhtml\System\Config\Button\Sync\Hierarchies</frontend_model>
+                </field>
+            </group>
+            <group id="attributes" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label">
+                <label>Attributes Synchronization (PM01)</label>
+                <comment>Export all attributes to Mirakl</comment>
+                <field id="enable_attributes" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="last_sync_attributes" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="text">
+                    <label>Last Synchronization Date</label>
+                    <comment><![CDATA[Last synchronization date of operator attributes.]]></comment>
+                </field>
+                <field id="button_attributes" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="button_label">
+                    <frontend_model>Mirakl\Mci\Block\Adminhtml\System\Config\Button\Sync\Attributes</frontend_model>
+                </field>
+            </group>
+            <group id="images_import" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment">
+                <label>Catalog Images Import</label>
+                <comment>Will download and import pending products images into Magento.</comment>
+                <field id="button_images_import" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="button_label">
+                    <frontend_model>Mirakl\Mci\Block\Adminhtml\System\Config\Button\Import\Images</frontend_model>
+                </field>
+            </group>
+        </section>
+        <section id="mirakl_mci" translate="label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="25">
+            <label>Catalog Integration (MCI)</label>
+            <tab>mirakl</tab>
+            <resource>Mirakl_Config::mci</resource>
+            <group id="mirakl_api_notice" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Mirakl\Api\Block\Adminhtml\System\Config\Fieldset\Hint</frontend_model>
+            </group>
+            <group id="hierarchy" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label">
+                <label>Catalog Categories Synchronization (H01)</label>
+                <field id="root_category" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label comment" type="select">
+                    <label>Catalog Categories Root Category</label>
+                    <comment><![CDATA[This is the root category that will be used for Catalog categories export. By default, the root category of the default store view will be used.<br>Be careful, the root category is not sent to Mirakl platform but only children.]]></comment>
+                    <source_model>Mirakl\Mci\Model\System\Config\Source\Category</source_model>
+                </field>
+            </group>
+            <group id="import_shop_product" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label">
+                <label>Shops Products Import</label>
+                <field id="file" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="5" translate="label comment" type="file">
+                    <label>File</label>
+                    <comment>File in CSV format.</comment>
+                    <backend_model>Mirakl\Mci\Model\System\Config\Backend\Import\Product</backend_model>
+                </field>
+                <field id="button" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="6">
+                    <frontend_model>Mirakl\Mci\Block\Adminhtml\System\Config\Button\Import\Products</frontend_model>
+                </field>
+                <field id="import_path" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label comment" type="text">
+                    <label>Import Path</label>
+                    <comment><![CDATA[This path will be used to monitor sellers products files that will be imported to Magento.]]></comment>
+                </field>
+                <field id="enable_product_import" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="select">
+                    <label>Enable Product Import on Store</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Do you allow product data import on that store? If yes, any product data coming from Mirakl will be imported in that store if the product language is the same as the one associated to the store view.]]></comment>
+                </field>
+                <field id="deduplication_attributes" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="30" translate="label comment" type="multiselect">
+                    <label>Attributes Used for Deduplication</label>
+                    <comment><![CDATA[Selected attributes will be used to deduplicate products during import. Only attributes defined as unique and in global scope are listed here.]]></comment>
+                    <source_model>Mirakl\Core\Model\System\Config\Source\Attribute\Product\Identifier</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="enable_deduplication_multivalues" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="40" translate="label comment" type="select">
+                    <label>Enable Multivalues for Deduplication Attributes</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[If enabled, multivalues for deduplication attributes is allowed. This may highly slow down product import.]]></comment>
+                </field>
+                <field id="deduplication_delimiter" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="50" translate="label comment" type="text">
+                    <label>Deduplication Delimiter</label>
+                    <comment><![CDATA[This delimiter will be used to split the deduplication attribute value for products files that will be imported to Magento.]]></comment>
+                    <depends>
+                        <field id="enable_deduplication_multivalues">1</field>
+                    </depends>
+                </field>
+                <field id="auto_create_configurable_products" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="55" translate="label comment" type="select">
+                    <label>Automatically Create Configurable Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[If enabled, incoming products that have variants will trigger parent configurable product creation if it does not exist yet.]]></comment>
+                </field>
+                <field id="update_existing_products" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="60" translate="label comment" type="select">
+                    <label>Update Existing Products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[If enabled, existing products will be updated during import. If not, only product creation is allowed.]]></comment>
+                </field>
+                <field id="auto_enable_product" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="70" translate="label comment" type="select">
+                    <label>Automatically Enable Product</label>
+                    <comment><![CDATA[If enabled, imported products will be automatically active.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="auto_flag_product_sync" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="70" translate="label comment" type="select">
+                    <label>Automatically Flag Product as Synchronizable</label>
+                    <comment><![CDATA[If enabled, imported products will be automatically flagged as synchronizable with Mirakl platform (for API P21).]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="auto_assign_category" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="80" translate="label comment" type="select">
+                    <label>Automatically Assign Category</label>
+                    <comment><![CDATA[If enabled, the category associated with the product will be automatically assigned to the product created in Magento (for API P21).]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="default_visibility" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="90" translate="label comment" type="select">
+                    <label>Default Visibility</label>
+                    <comment><![CDATA[Automatically sets the selected visibility to newly added products.]]></comment>
+                    <source_model>Mirakl\Mci\Model\System\Config\Source\Visibility</source_model>
+                </field>
+                <field id="default_tax_class" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="100" translate="label comment" type="select">
+                    <label>Default Tax Class</label>
+                    <comment><![CDATA[This parameter allows you to define a default tax class to apply on created products.]]></comment>
+                    <source_model>Mirakl\Mci\Model\System\Config\Source\Attribute\Product\Tax</source_model>
+                </field>
+                <field id="check_data_hash" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="110" translate="label comment" type="select">
+                    <label>Check Data Hash Before Import</label>
+                    <comment><![CDATA[If enabled, product data will be skipped if already processed before. This is useful to speed up products import and avoid updating products data that has not changed.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="button_clear_data_hashes" sortOrder="111" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <button_label>Clear Hashes</button_label>
+                    <button_url>mirakl/clear/hashes</button_url>
+                    <frontend_model>Mirakl\Mci\Block\Adminhtml\System\Config\Button\Clear\DataHash</frontend_model>
+                </field>
+                <field id="send_import_report" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="120" translate="label comment" type="select">
+                    <label>Send Import Report to Mirakl (API P43)</label>
+                    <comment><![CDATA[If enabled, products import report will be sent to Mirakl through P43 API (import status, success and errors files).]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="product_import_indexing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
+                <label>Product Import Indexing</label>
+                <field id="enable_indexing_import" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Indexing During Product Import</label>
+                    <comment><![CDATA[If disabled, all indexers for imported products will be turned off.<br>Disable this option when importing a large number of products.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_indexing_import_after" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Indexing at the End of the Import Process</label>
+                    <comment><![CDATA[If enabled, all products imported will be sent to indexers at the end of the import and not for each product if indexer mode is 'Update On Save'.<br>You will have to reindex manually if you disable this option.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enable_indexing_import">0</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+        <section id="mirakl_images_import" translate="label" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30">
+            <label>Catalog Images Import</label>
+            <tab>mirakl</tab>
+            <resource>Mirakl_Config::mci</resource>
+            <group id="mirakl_api_notice" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <frontend_model>Mirakl\Api\Block\Adminhtml\System\Config\Fieldset\Hint</frontend_model>
+            </group>
+            <group id="general" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="50" translate="label">
+                <label>General Settings</label>
+                <field id="image_max_size" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="10" translate="label comment" type="text">
+                    <label>Image Max Size</label>
+                    <comment><![CDATA[Maximum size of the image to import in kilobytes. This setting is sent to Mirakl and is not used in Magento. Default is 5000 kb.]]></comment>
+                </field>
+                <field id="limit" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="15" translate="label comment" type="text">
+                    <label>Limit</label>
+                    <comment><![CDATA[Maximum number of images to import on each process.]]></comment>
+                </field>
+                <field id="headers" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="20" translate="label comment" type="textarea">
+                    <label>Headers</label>
+                    <comment><![CDATA[Configure headers used when downloading images. One header per line.]]></comment>
+                </field>
+                <field id="protocol_version" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="21" translate="label comment" type="select">
+                    <label>Protocol Version</label>
+                    <comment><![CDATA[HTTP protocol version to use when downloading images.]]></comment>
+                    <source_model>Mirakl\Mci\Model\System\Config\Source\HttpProtocolVersion</source_model>
+                </field>
+                <field id="timeout" showInDefault="1" showInStore="0" showInWebsite="0" sortOrder="22" translate="label comment" type="text">
+                    <label>Timeout</label>
+                    <comment><![CDATA[Maximum time in seconds for an image to be downloaded. Default is 10s.]]></comment>
+                    <validate>validate-digits</validate>
+                </field>
+                <field id="button" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30">
+                    <comment><![CDATA[Will download and import pending products images into Magento.]]></comment>
+                    <frontend_model>Mirakl\Mci\Block\Adminhtml\System\Config\Button\Import\Images</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

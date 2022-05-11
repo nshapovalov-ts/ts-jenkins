@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirakl_Mci::configuration" title="Catalog Integration (MCI)" module="Mirakl_Mci" sortOrder="30" parent="Mirakl_Core::configuration" resource="Mirakl_Config::mci" action="adminhtml/system_config/edit/section/mirakl_mci/"/>
+        <add id="Mirakl_Mci::images_import" title="Catalog Images Import" module="Mirakl_Mci" sortOrder="35" parent="Mirakl_Core::configuration" resource="Mirakl_Config::mci" action="adminhtml/system_config/edit/section/mirakl_images_import/"/>
+    </menu>
+</config>

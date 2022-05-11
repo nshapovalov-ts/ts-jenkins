@@ -1,0 +1,13 @@
+<?php
+/** @var Mirakl\FrontendDemo\Block\Shop\View $this */
+/** @var Mirakl\Core\Model\Shop $_shop */
+$_shop = $this->getShop();
+$_info = $_shop->getAdditionalInfo();
+?>
+<div class="block-content">
+    <?php if ($_info->getDataByKey('return_policy')): ?>
+        <?php echo nl2br($_info->getDataByKey('return_policy')) ?>
+    <?php else: ?>
+        <?php echo __('Seller has no return policy') ?>
+    <?php endif; ?>
+</div>

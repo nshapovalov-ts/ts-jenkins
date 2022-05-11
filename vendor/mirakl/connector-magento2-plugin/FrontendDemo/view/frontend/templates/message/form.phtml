@@ -1,0 +1,90 @@
+<?php
+/** @var \Mirakl\FrontendDemo\Block\Message\AbstractForm $block */
+$_thread = $block->getThread();
+?>
+<?php if ($block->getAsModal()): ?>
+    <div class="<?= $block->escapeHtmlAttr($block->getJsId()) ?>-button">
+        <button type="button" class="action" data-trigger="trigger">
+            <span data-bind="i18n: '<?= $block->escapeJsQuote($block->getFormTitle()) ?>'"><?= $block->escapeJsQuote($block->getFormTitle()) ?></span>
+        </button>
+    </div>
+    <div data-bind="mageInit: {
+        'Magento_Ui/js/modal/modal':{
+            'type': 'popup',
+            'trigger': '[data-trigger=trigger]',
+            'responsive': true,
+            'buttons': []
+        }}" style="display: none;">
+<?php endif; ?>
+
+    <div class="marketplace-messages">
+        <a name="form"></a>
+        <form action="<?php /* @escapeNotVerified */ echo $block->getFormAction() ?>" class="message-form" method="post" id="<?= $block->getJsId() ?>" data-role="order-message-form" data-bind="scope: 'messsage-form'" enctype="multipart/form-data">
+            <?php echo $block->getBlockHtml('formkey'); ?>
+            <?php echo $block->getChildHtml('form_fields_before')?>
+            <fieldset class="fieldset message-fieldset _collapsible"
+                      data-bind="mageInit: {'collapsible':{'openedState': '_active'}}"
+                      data-hasrequired="<?php __('* Required Fields'); ?>" >
+                <?php if ($title = trim($block->getFormTitle())): ?>
+                    <legend class="legend message-legend action field choice" data-role="title">
+                        <span class="action-toggle"><?= $title ?></span>
+                    </legend>
+                <?php endif; ?>
+                <div class="field message-field-summary required">
+                    <label for="<?= $block->getJsId() ?>-message_recipients" class="label"><span><?php /* @escapeNotVerified */ echo __('Recipients') ?></span></label>
+                    <div class="control">
+                        <select name="<?= $block->getFormField('recipients') ?>" id="<?= $block->getJsId() ?>-message_recipients" title="<?php /* @escapeNotVerified */ echo $block->escapeHtmlAttr($block->getReasonsLabel()) ?>" data-validate="{'validate-select':true}">
+                            <option value=""><?php echo __('-- Please Select --') ?></option>
+                            <?php foreach ($block->getRecipients() as $_type => $_name): ?>
+                                <option <?php if ($block->getPostMessage($block->getFormField('recipients')) == $_type): ?>selected="selected" <?php endif;?>value="<?php echo $_type ?>"><?php echo $_name ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <?php if (!empty($block->getReasons())): ?>
+                    <div class="field message-field-summary required">
+                        <label for="<?= $block->getJsId() ?>-message_subject" class="label"><span><?php /* @escapeNotVerified */ echo $block->getReasonsLabel() ?></span></label>
+                        <div class="control">
+                            <select name="<?= $block->getFormField('subject') ?>" id="<?= $block->getJsId() ?>-message_subject" title="<?php /* @escapeNotVerified */ echo $block->escapeHtmlAttr($block->getReasonsLabel()) ?>" data-validate="{'validate-select':true}">
+                                <option value=""><?php echo __('-- Please Select --') ?></option>
+                                <?php foreach ($block->getReasons() as $reason): ?>
+                                    <?php $_label = $this->escapeHtml(__($reason->getLabel())); ?>
+                                    <option <?php if ($block->isReasonSelected($reason)): ?>selected="selected" <?php endif; ?>value="<?php echo $_label ?>"><?php echo $_label ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <div class="field message-field-text required">
+                    <label for="<?= $block->getJsId() ?>-message_body" class="label"><span><?php /* @escapeNotVerified */ echo __('Message') ?></span></label>
+                    <div class="control">
+                        <textarea name="<?= $block->getFormField('body') ?>" id="<?= $block->getJsId() ?>-message_body" cols="5" rows="3" data-validate="{required:true,minlength:3}"><?php echo $block->getPostMessage($block->getFormField('body')) ?></textarea>
+                    </div>
+                </div>
+                <?php if ($block->withFile()): ?>
+                    <div class="field message-field-text">
+                        <label for="<?= $block->getJsId() ?>-message_file" class="label"><span><?php /* @escapeNotVerified */ echo __('File') ?></span></label>
+                        <div class="control">
+                            <input type="file" name="file" id="<?= $block->getJsId() ?>-message_file" />
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </fieldset>
+            <div class="actions-toolbar message-form-actions">
+                <div class="primary actions-primary">
+                    <button type="submit" class="action submit primary"><span><?php /* @escapeNotVerified */ echo __('Send Message') ?></span></button>
+                </div>
+            </div>
+        </form>
+        <script type="text/x-magento-init">
+            {
+                "#<?= $block->getJsId() ?>": {
+                   "validation": {}
+                }
+            }
+        </script>
+    </div>
+
+<?php if ($block->getAsModal()): ?>
+    </div>
+<?php endif; ?>

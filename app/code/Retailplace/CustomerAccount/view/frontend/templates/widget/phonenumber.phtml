@@ -1,0 +1,46 @@
+<?php
+
+/** @var \Retailplace\CustomerAccount\Block\Widget\PhoneNumber $block */
+?>
+<div class="field business-name">
+    <label for="phone_number" class="label">
+        <span>
+            <?= $block->escapeHtml(__('Phone Number')) ?>
+        </span>
+    </label>
+    <div class="control">
+        <input type="text"
+               name="phone_number"
+               id="phone_number"
+               value="<?= $block->escapeHtmlAttr($block->getPhoneNumberValue()) ?>"
+               title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>"
+               placeholder="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>"
+               class="input-text required-entry aumobilenumber"
+        >
+    </div>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'jquery/ui',
+            'jquery/validate',
+            'mage/translate'
+        ],
+        function($) {
+            'use strict';
+            $.validator.addMethod(
+                "aumobilenumber",
+                function(value, element) {
+                    if(value.startsWith('+61')){
+                        var mobile = value.substring(3);
+                        return /^-?[\d.]+(?:e-?\d+)?$/.test(mobile);
+                    }else{
+                        return /^-?[\d.]+(?:e-?\d+)?$/.test(value);
+                    }
+                },
+                $.mage.__("Please add valid AU. Mobile No.")
+            );
+        }
+    );
+</script>

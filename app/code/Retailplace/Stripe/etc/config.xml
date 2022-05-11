@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Retailplace_Stripe
+ *
+ * @copyright   Copyright (c) 2022 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ * @author      Evgeniy Derevyanko <evgeniy@tradesquare.com.au>
+ * @author      Natalia Sekulich <natalia@tradesquare.com.au>
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <stripe_payments_invoice>
+                <active>1</active>
+                <model>StripePaymentsInvoiceFacade</model>
+                <terms_and_conditions>/net30-0-0-1-0</terms_and_conditions>
+                <title>Net %days%</title>
+                <frontend_title>Pay with Net %days% terms</frontend_title>
+                <frontend_description>Buy now, pay in %days% days-interest free. Your cart won't be charged until %date%</frontend_description>
+                <payment_action>authorize_capture</payment_action>
+                <sort_order>5</sort_order>
+                <use_store_currency>1</use_store_currency>
+                <off_session>1</off_session>
+                <ccsave>1</ccsave>
+                <can_capture>1</can_capture>
+                <can_capture_partial>1</can_capture_partial>
+                <can_refund_partial_per_invoice>1</can_refund_partial_per_invoice>
+                <can_use_internal>1</can_use_internal>
+                <can_use_checkout>1</can_use_checkout>
+                <can_use_for_multishipping>0</can_use_for_multishipping>
+                <can_refund>1</can_refund>
+                <can_void>1</can_void>
+                <can_cancel>1</can_cancel>
+                <can_cancel_invoice>1</can_cancel_invoice>
+                <can_save_cc>0</can_save_cc>
+                <days_due>30</days_due>
+                <default_max_credit_limit>2000</default_max_credit_limit>
+                <payment_card_verification>1</payment_card_verification>
+                <payment_card_verification_suffix>pcv</payment_card_verification_suffix>
+                <payment_card_verification_description>Payment Card Verification</payment_card_verification_description>
+                <disable_cc>0</disable_cc>
+                <frontend_description_disable_net30_v1>The order amount is above %days% day credit limit ($%limit%), Your credit will be charged upfront, you can either request to increase credit limit here or select  ZIP payment.</frontend_description_disable_net30_v1>
+                <frontend_description_disable_net30_v2>The order amount is above %days% day credit limit (Credit limit $%limit%, pending payment $%duty%), Your credit will be charged upfront, you can either request to increase credit limit here or select  ZIp payment.</frontend_description_disable_net30_v2>
+                <check_for_n_days>180</check_for_n_days>
+                <fail_message_for_duplicate_credit_card><![CDATA[The payment details you have provided already match an account on our system. Please contact our Customer Support Team via online chat or email support@tradesquare.com.au]]></fail_message_for_duplicate_credit_card>
+            </stripe_payments_invoice>
+        </payment>
+    </default>
+</config>

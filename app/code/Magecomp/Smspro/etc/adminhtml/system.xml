@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/system_file.xsd">
+    <system>
+		<tab id="magecomp" translate="label" sortOrder="100" class="magecomp-logo">
+			<label><![CDATA[]]></label>
+		</tab>
+        <section id="smspro" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+			 <tab>magecomp</tab>
+             <label>SMS Notification</label>
+          	 <resource>Magecomp_Smspro::smsconfig</resource>
+			 <group id="general" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Configuration</label>
+					<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+						<label>SMS Notification</label>
+						<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+					</field>
+			 </group>
+			 <group id="smsgatways" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+			 	<depends>
+                    <field id="smspro/general/enable">1</field>
+                </depends>
+				<label>SMS Gateway</label>
+				<field id="gateway" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>SMS Gateway</label>
+					<depends>
+                    <field id="smspro/general/enable">1</field>
+                	</depends>
+					<source_model>Magecomp\Smspro\Model\Config\Gateways</source_model>
+					<config_path>smspro/smsgatways/gateway</config_path>
+				</field>
+			 </group>
+			<group id="generalsection" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Configuration</label>
+			 	<depends>
+                    <field id="smspro/general/enable">1</field>
+                </depends>
+				<field id="otptype" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>OTP Type</label>
+					<source_model>Magecomp\Smspro\Model\Config\Otp\Type</source_model>
+				</field>
+				<field id="otplength" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>OTP Length</label>
+					<source_model>Magecomp\Smspro\Model\Config\Otp\Length</source_model>
+				</field>
+				<field id="buttonclass" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Button Style Class</label>
+					<comment><![CDATA[Add Multiple css class with space.]]></comment>
+				</field>
+				<field id="importcsv" translate="label" type="Magecomp\Smspro\Block\Adminhtml\System\Config\Form\Field\Import" showInDefault="1"
+					   sortOrder="50" showInWebsite="1" showInStore="1">
+					<label>Import Phonebook</label>
+					<backend_model>Magecomp\Smspro\Model\Config\Backend\Phonebook</backend_model>
+					<comment><![CDATA[ Upload CSV file along with Name And Mobile Number Field.]]> </comment>
+				</field>
+			</group>
+		 </section>
+		<section id="usertemplate" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+			<tab>magecomp</tab>
+			<label>User Templates</label>
+			<resource>Magecomp_Smspro::smsconfig</resource>
+			<group id="usersignupconfirm" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>OTP at Registration</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Confirmation</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[OTP will be Required for Customer Registration]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Confirmation Text</label>
+					<comment><![CDATA[Variable : {{var otp}}]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="usersignup" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Registration Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent After Customer Registration]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}} <br /> <b>Objects : </b>customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="usermobileconfirm" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>OTP at My Account</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Confirmation</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[OTP to Change The Mobile Number From My Account Section]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Confirmation Text</label>
+					<comment><![CDATA[Variable : {{var otp}}]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="userorderconfirm" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>OTP at Checkout</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Confirmation</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Order Verification by OTP Based on Payment Method and Customer Group]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Confirmation Text</label>
+					<comment><![CDATA[Variable : {{var otp}}]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+				<field id="payment_method" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1"
+					   showInStore="1" canRestore="1">
+					<label>Payment Methods</label>
+					<source_model>Magecomp\Smspro\Model\Config\Source\PaymentMethods</source_model>
+					<validate>validate-select</validate>
+					<depends>
+						<field id="enable">1</field>
+					</depends>
+					<comment><![CDATA[Order Verification Popup at Checkout will Show Based on Selected Payment Methods]]></comment>
+				</field>
+				<field id="customer_groups" translate="label" type="multiselect" sortOrder="40" showInDefault="1"
+					   showInWebsite="1" showInStore="1" canRestore="1">
+					<label>Customer Groups</label>
+					<source_model>Magecomp\Smspro\Model\Config\Source\CustomerGroups</source_model>
+					<validate>validate-select</validate>
+					<comment><![CDATA[Order Verification Popup at Checkout will Show Based on Selected Customer Groups]]></comment>
+					<depends>
+						<field id="enable">1</field>
+					</depends>
+				</field>
+			</group>
+			<group id="userorderplace" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Place Order Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent After Order Place]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var order_total}} <br /> <b>Objects : </b>order,customer  (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="userinvoice" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Invoice Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent After Invoice Generation]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var invoice_total}} <br /> <b>Objects : </b>invoice,order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="usershipment" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Shipment Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent After Shipment Generation]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var shippingcarrier}},{{var trackingnumber}} <br /> <b>Objects : </b>shipment,order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="usershipmenttrack" sortOrder="75" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Manual Shipment Tracking Information</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[This Notification will be Sent If You Click <b>Send Tracking SMS</b> Button on Shipment View Page in Order.</br>Sales -> Orders -> Shipments Or Sales - Shipments]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var trackingnumber}},{{var carriername}}, {{var trackurl}} <br /> <b>Objects : </b>shipment,order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+				<field id="trackinglink" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Tracking URL</label>
+				</field>
+
+			</group>
+			<group id="usercreditmemo" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Credit Memo Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent After Credit Memo Generation]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}} <br /> <b>Objects : </b>creditmemo,order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+
+			<group id="usercancelorder" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Cancel Order Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent After Order Cancellation.]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}} <br /> <b>Objects : </b>order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="userholdorder" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Hold Order Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent After Order On Hold.]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var status}},{{var order_total}} <br /> <b>Objects : </b>order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+
+			<group id="usercontactus" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Contact Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[This Notification will be Sent to Customer, Once He/She Fill-up the Contact Form.]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b> {{var name}},{{var email}},{{var telephone}},{{var comment}},{{var store_name}}]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+
+		</section>
+		<section id="admintemplate" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+			<tab>magecomp</tab>
+			<label>Admin Templates</label>
+			<resource>Magecomp_Smspro::smsconfig</resource>
+			<group id="admingeneral" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General</label>
+				<field id="mobile" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Admin Mobile Number(s)</label>
+					<comment><![CDATA[Add Number With Country Code e.g:-(91xxxxxx013) <br />You can Enter Multiple Admin Numbers by Comma Separated (,)]]></comment>
+					<validate>required-entry</validate>
+				</field>
+			</group>
+			<group id="adminsignup" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Registration Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent To Admin After Customer Registration]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}} <br /> <b>Objects : </b>customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="adminorderplace" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Place Order Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent To Admin After Order Placed]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var order_total}} <br /> <b>Objects : </b>order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="admininvoice" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Invoice Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent To Admin After Invoice Generation]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var invoice_total}} <br /> <b>Objects : </b>invoice,order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="adminshipment" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Shipment Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent To Admin After Shipment Generation]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}},{{var shippingcarrier}},{{var trackingnumber}}  <br /> <b>Objects : </b>shipment,order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="admincreditmemo" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Credit Memo Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[SMS Notification will be Sent To Admin After Credit Memo Generation]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b>{{var mobilenumber}} <br /> <b>Objects : </b>creditmemo,order,customer (<a href="https://magecomp.com/support/docs/magento-2-sms-notification-basic-extension/sms-variables-objects-list/" target="__blank">User Manual</a>)]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+			<group id="admincontactus" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Contact Notification</label>
+				<field id="enable" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Notification</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[This Notification will be Sent to Admin, Once Customer Fill-up the Contact Form]]></comment>
+				</field>
+				<field id="template" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" >
+					<label>Notification Text</label>
+					<comment><![CDATA[<b>Variables : </b> {{var name}},{{var email}},{{var telephone}},{{var comment}},{{var store_name}}]]></comment>
+					<depends><field id="enable">1</field></depends>
+					<validate>required-entry</validate>
+				</field>
+				<field id="dltid" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>DLT Template ID</label>
+                    <depends><field id="enable">1</field></depends>
+                </field>
+			</group>
+		</section>
+    </system>
+</config>

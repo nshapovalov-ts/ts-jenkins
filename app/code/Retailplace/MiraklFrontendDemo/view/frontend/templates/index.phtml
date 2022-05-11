@@ -1,0 +1,174 @@
+<?php
+/**
+ * Retailplace_MiraklFrontendDemo
+ *
+ * @copyright   Copyright (c) 2021 TRADESQUARE PTY LTD (www.tradesquare.com.au)
+ * @author      Alexander Korsun <aleksandr@tradesquare.com.au>
+ */
+
+use Retailplace\MiraklFrontendDemo\Block\Invoice\View;
+
+/** @var View $block */
+
+$invoices = $block->getInvoices();
+$messageSeparator = "message-separator";
+$isSeparator = true;
+?>
+<?php if (!empty($invoices)) : ?>
+    <div class="table-wrapper customer-invoices">
+        <table class="data table table-customer-invoices" id="table-customer-invoices-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Messages')) ?></caption>
+            <thead class="desktop_view">
+                <tr>
+                    <th scope="col" class="col order"><?= $block->escapeHtml(__('Order')) ?></th>
+                    <th scope="col" class="col date"><?= $block->escapeHtml(__('Date')) ?></th>
+                    <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                    <th scope="col" class="col order-amount"><?= $block->escapeHtml(__('Order Amount')) ?></th>
+                    <th scope="col" class="col amount-due"><?= $block->escapeHtml(__('Amount Due')) ?></th>
+                    <th scope="col" class="col due-date"><?= $block->escapeHtml(__('Due Date')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php foreach ($invoices as $invoiceId => $invoice): ?>
+                    <?php /** mobile version */ ?>
+                    <tr class="mobile_view <?= $isSeparator ? 'message-separator' : '' ?>">
+                        <td class="col participants mobile">
+
+                            <div>
+                                <div class="invoices-group">
+                                    <div class="order">
+                                        <a href="<?= $invoice->getInvoiceUrl() ?>">
+                                            <div class="invoice-attachment-file-icon"></div>
+                                        </a>
+                                        <div>
+                                            <?= $block->escapeHtmlAttr(__($invoice->getOrderNumber())) ?>
+                                        </div>
+                                    </div>
+                                    <div class="order-amount con-row">
+                                        <div class="con-col-1"><?= $block->escapeHtmlAttr(__('Order Amount:')) ?></div>
+                                        <div class="con-col-2"><?= $invoice->getOrderAmount() ?></div>
+                                    </div>
+
+                                    <div class="amount-due con-row">
+                                        <div class="con-col-1"><?= $block->escapeHtmlAttr(__('Amount Due:')) ?></div>
+                                        <div class="con-col-2"><?= $invoice->getAmountDue() ?></div>
+                                    </div>
+                                </div>
+
+                                <div class="invoices-group">
+                                    <div class="status">
+                                        <?= '<span class="status_' . $invoice->getStatusType() . '">' . $block->escapeHtmlAttr(__($invoice->getStatus())) . '</span>' ?>
+                                    </div>
+
+                                    <div class="due-date con-row">
+                                        <div class="con-col-1"><?= $block->escapeHtmlAttr(__('Due Date:')) ?></div>
+                                        <div class="con-col-2"><?= $invoice->getDueDate()->format("d.m.y") ?></div>
+                                    </div>
+
+                                    <div class="date con-row">
+                                        <div class="con-col-1"><?= $block->escapeHtmlAttr(__('Date:')) ?></div>
+                                        <div class="con-col-2"><?= $invoice->getDate()->format("d.m.y") ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <?php /** desktop version */ ?>
+                    <tr class="desktop_view <?= $isSeparator ? 'message-separator' : '' ?>">
+
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Order')) ?>" class="col order">
+
+                            <div class="order">
+                                <a href="<?= $invoice->getInvoiceUrl() ?>">
+                                    <div class="invoice-attachment-file-icon"></div>
+                                </a>
+                                <div>
+                                    <?= $block->escapeHtmlAttr(__($invoice->getOrderNumber())) ?>
+                                </div>
+                            </div>
+
+                        </td>
+
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Date')) ?>" class="col">
+                            <div class="date">
+                                <?= $invoice->getDate()->format("M j, Y") ?>
+                            </div>
+                        </td>
+
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Status')) ?>" class="col">
+                            <div class="status">
+                                <?= '<span class="status_' . $invoice->getStatusType() . '">' . $block->escapeHtmlAttr(__($invoice->getStatus())) . '</span>' ?>
+                            </div>
+                        </td>
+
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Order Amount')) ?>" class="col">
+                            <div class="order-amount">
+                                <?= $invoice->getOrderAmount() ?>
+                            </div>
+                        </td>
+
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Amount Due')) ?>" class="col">
+                            <div class="amount-due">
+                                <?= $invoice->getAmountDue() ?>
+                            </div>
+                        </td>
+
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Due Date')) ?>" class="col">
+                            <div class="due-date">
+                                <?= $invoice->getDueDate()->format("j M y") ?>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getNextPage() || $block->getPreviousPage()): ?>
+        <div class="toolbar bottom">
+            <div class="pager">
+                <div class="pages">
+                    <strong class="label pages-label" id="paging-label"><?= $block->escapeHtml(__('Page')) ?></strong>
+                    <ul class="items pages-items" aria-labelledby="paging-label">
+                        <?php if ($block->getPreviousPage()): ?>
+                            <li class="item pages-item-previous">
+                                <a class="action previous"
+                                   href="<?= $block->getPreviousPage() ?>"
+                                   title="<?= $block->escapeHtml(__('Previous')) ?>">
+                                    <span class="label"><?= $block->escapeHtml(__('Page')) ?></span>
+                                    <span><?= $block->escapeHtml(__('Prev')) ?></span>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                        <?php $currentPage = $block->getCurrentPage(); ?>
+                        <?php foreach ($block->getPages() as $name => $url): ?>
+                            <li class="item pages-item <?= $currentPage == $name ? 'current' : '' ?>">
+                                <a class="action page"
+                                   href="<?= $url ?>"
+                                   title="<?= $block->escapeHtml(__($name)) ?>">
+                                    <span class="label_item"><?= $block->escapeHtml(__($url == '#' ? '...' : $name)) ?></span>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+
+                        <?php if ($block->getNextPage()): ?>
+                            <li class="item pages-item-next">
+                                <a class="action next"
+                                   href="<?= $block->getNextPage() ?>"
+                                   title="<?= $block->escapeHtmlAttr(__('Next')) ?>">
+                                    <span class="label"><?= $block->escapeHtml(__('Page')) ?></span>
+                                    <span><?= $block->escapeHtml(__('Next')) ?></span>
+                                </a>
+                            </li>
+                        <?php endif ?>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    <?php endif ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have no invoices.')) ?></span></div>
+<?php endif ?>
