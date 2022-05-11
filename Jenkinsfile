@@ -6,5 +6,15 @@ pipeline {
                 sh 'php --version'
             }
         }
+        stage("CodeSniffer Tests") {
+            steps {
+                sh './validate-phpcs.sh'
+           }
+        }
+        stage("CodeSniffer Tests") {
+            steps {
+                sh './validate-phpcs.sh'
+            }
+        }
     }
 }
