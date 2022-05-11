@@ -9,11 +9,11 @@ pipeline {
         stage("CodeSniffer Tests") {
             steps {
                 sh './validate-phpcs.sh'
-           }
+            }
         }
-        stage("CodeSniffer Tests") {
+        stage("PhpMd Tests") {
             steps {
-                sh './validate-phpcs.sh'
+                sh './validate-phpmd.sh'
             }
         }
     }
