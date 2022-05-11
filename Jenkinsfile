@@ -1,5 +1,11 @@
 pipeline {
     agent { label 'staging_dev4' }
+    parameters {
+        booleanaram(name: 'BUILD_FRONTEND',
+            defaultValue:true,
+            description:'Should we run frontend build?'
+        )
+    }
     stages {
         stage("Build") {
             steps {
