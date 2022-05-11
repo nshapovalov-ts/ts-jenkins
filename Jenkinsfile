@@ -1,6 +1,7 @@
 pipeline {
     agent { label 'staging_dev4' }
     parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
         booleanParam(name: 'COMPOSER_INSTALL',
             defaultValue:true,
             description:'Run composer install'
@@ -50,7 +51,7 @@ pipeline {
                         sh 'chmod 777 validate-phpmd.sh'
                         sh './validate-phpmd.sh'
                     } else {
-                        echo "PHP Code Sniffer skipped"
+                        echo "PHP Mess Detector skipped"
                     }
                 }
             }
