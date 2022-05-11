@@ -45,8 +45,14 @@ pipeline {
         }
         stage("PhpMd Tests") {
             steps {
-                sh 'chmod 777 validate-phpmd.sh'
-                sh './validate-phpmd.sh'
+                script {
+                    if (env.RUN_MD_TEST == 'true') {
+                        sh 'chmod 777 validate-phpmd.sh'
+                        sh './validate-phpmd.sh'
+                    } else {
+                        echo "PHP Code Sniffer skipped"
+                    }
+                }
             }
         }
     }
