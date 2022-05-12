@@ -19,22 +19,11 @@ pipeline {
         )
     }
     stages {
-        stage("Build") {
-            steps {
-                script {
-                    if (env.COMPOSER_INSTALL == 'true') {
-                        sh 'php --version'
-                        sh 'composer install'
-                    } else {
-                        echo "Composer install skipped"
-                    }
-                }
-            }
-        }
-        stage("CodeSniffer Tests") {
+        stage("PHP Code Sniffer Tests") {
             steps {
                 script {
                     if (env.RUN_CS_TEST == 'true') {
+                        echo "Run PHP Code Sniffer tests"
                         sh 'chmod 777 validate-phpcs.sh'
                         sh './validate-phpcs.sh'
                     } else {
@@ -43,14 +32,27 @@ pipeline {
                 }
             }
         }
-        stage("PhpMd Tests") {
+        stage("PHP Mess Detector Tests") {
             steps {
                 script {
                     if (env.RUN_MD_TEST == 'true') {
+                        echo "Run PHP Mess Detector tests"
                         sh 'chmod 777 validate-phpmd.sh'
                         sh './validate-phpmd.sh'
                     } else {
                         echo "PHP Mess Detector skipped"
+                    }
+                }
+            }
+        }
+        stage("Build") {
+            steps {
+                script {
+                    if (env.COMPOSER_INSTALL == 'true') {
+                        sh 'php --version'
+                        sh 'composer install'
+                    } else {
+                        echo "Composer install skipped"
                     }
                 }
             }
