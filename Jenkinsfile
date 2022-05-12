@@ -50,6 +50,7 @@ pipeline {
                 script {
                     if (env.COMPOSER_INSTALL == 'true') {
                         sh 'php --version'
+                        sh 'rm -rf vendor/*'
                         sh 'composer install'
                     } else {
                         echo "Composer install skipped"
